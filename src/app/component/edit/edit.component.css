@@ -1,0 +1,22 @@
+.submit{
+    color:#fff;
+    width: 100px;
+}
+mat-radio-button{
+    margin:0 5px;
+    vertical-align: sub;
+}
+#radio-group-label{
+    margin: 5px 5px 5px 0;
+}
+.clr{
+    background-color: var(--fifth-color);
+    color:#fff;
+}
+mat-toolbar{
+    background-color: var(--main-color);
+    color:#fff;
+}
+mat-form-field{
+    margin-bottom: 15px !important;
+}

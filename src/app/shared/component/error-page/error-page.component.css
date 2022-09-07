@@ -1,0 +1,27 @@
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("../../../../assets/image/404-error.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.Big{
+    position:fixed;
+    z-index: 999999;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-image: url("../../../../assets/image/404-error.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+          
+  }

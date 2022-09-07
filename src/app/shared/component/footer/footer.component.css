@@ -1,0 +1,9 @@
+img{
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+}
+span{
+    font-size: 14px;
+    color: var(--seconed-color);
+}

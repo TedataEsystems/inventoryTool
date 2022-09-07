@@ -1,0 +1,94 @@
+main{
+    padding:80px 10px 20px 10px;
+}
+  img{
+      margin-top: 40px;
+  }
+mat-toolbar{
+    height: 140px;
+    background: #ffffff;
+    color: var(--main-color);
+    border-bottom: 1px solid #dddddd;
+   
+   
+}
+.mat-toolbar-row, .mat-toolbar-single-row{
+    padding:0 50px !important
+}
+.active{
+    /* color: var(--main-color) !important;
+    border-bottom: 2px solid var(--main-color); */
+    background-color: var(--forth-color);
+    color: #fff;
+    border-radius: 0;
+}
+.active1{
+    background-color: var(--forth-color);
+    color: #fff;
+ 
+  border-radius: 0;
+}
+.mat-button:not(.active,.active1):hover{
+    background: var(--main-color) !important;
+    color: #fff !important;
+    border-bottom: 2px solid var(--main-color) !important;
+    border-radius: 0 !important;
+  
+  }
+  
+  .mat-button{
+    margin-top: 42.4px;
+    height: 95.2px;
+    width: 130px;
+    padding-top: 29px;
+    font-family: 'Unica One', cursive;
+    font-size: 17px;
+    font-weight: 500;
+    text-transform: uppercase;
+
+  }
+  .arrow{
+      color: var(--main-color);
+  }
+  .example-container .mat-button{
+      margin: 0 10px;
+     
+  }
+  .scroll-to-top{
+    position: fixed;
+    background:var(--forth-color);
+    bottom: 10px;
+    right: 10px;
+    color:#fff;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    border: 0 !important;
+    box-shadow: 3px 3px 5px grey;
+    z-index: 1000;
+  }
+  /* .scroll-to-top mat-icon{
+      font-size: 50px;
+  } */
+  app-footer{
+      bottom: 0;
+     
+      width: inherit;
+  }
+  .menu-icon{
+      margin-top: 38px;
+    
+  }
+  .menu-icon mat-icon{
+    font-size: 30px;
+    font-weight: bold;
+    width:auto !important;
+  }
+  @media screen and (max-width: 960px) {
+    .mat-toolbar-row, .mat-toolbar-single-row {
+       
+        padding:0 50px 0 10px !important;
+       
+    }
+
+}

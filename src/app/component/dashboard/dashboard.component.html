@@ -1,0 +1,141 @@
+
+<div class="search-div" fxLayout="row">
+    <mat-list-item class="header-tag mr-0 home"  routerLink="/" > <mat-icon>home</mat-icon></mat-list-item>
+    <mat-list-item class="header-tag ml-0"  routerLink="/"> Home </mat-list-item>/
+    
+    <mat-list-item class="header-tag active" routerLink="#" >  Request</mat-list-item>
+
+</div>
+
+
+
+<mat-card class="example-card">
+    <mat-card-header>
+        <mat-card-title>
+          Request
+        </mat-card-title>
+      
+        <button mat-button>
+            <mat-icon>file_download</mat-icon>
+            Generate Report
+        </button>
+        <button mat-button (click)="onCreate()">
+            <mat-icon class="add-new" >add</mat-icon>
+           New
+        </button>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+<div class="search-div" fxLayout="row">
+    
+    <mat-form-field class="search-form-field" floatLabel="never">
+        <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()"> 
+       <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+            <mat-icon>close</mat-icon>
+        </button> 
+    </mat-form-field>
+</div>
+
+<div *ngIf="dataSource==null;else table">
+    <app-loading-page></app-loading-page>
+  </div>
+  
+<ng-template #table>
+    <div class="example-container mat-elevation-z8">
+
+<mat-table [dataSource]="dataSource" multiTemplateDataRows  matSort >
+
+   
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> No. </mat-header-cell>
+        <mat-cell *matCellDef="let element" data-label="ID"> {{element.id}} </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="name">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+        <mat-cell *matCellDef="let element" data-label="name"> {{element.name}} </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="age">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Age </mat-header-cell>
+        <mat-cell *matCellDef="let element" data-label="Age"> {{element.age}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="address">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Address </mat-header-cell>
+        <mat-cell *matCellDef="let element" data-label="Address"> {{element.address}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="history">
+        <mat-header-cell mat-header-cell *matHeaderCellDef> History</mat-header-cell>
+        <mat-cell *matCellDef="let row" data-label="action">
+            <button mat-button class="text-warning"  (click)="showHistory()">
+                <mat-icon>history</mat-icon>
+                Show History
+            </button>
+            
+            
+        </mat-cell>
+
+    </ng-container>
+    <ng-container matColumnDef="action">
+        <mat-header-cell mat-header-cell *matHeaderCellDef> Action</mat-header-cell>
+        <mat-cell *matCellDef="let row" data-label="action">
+            <button mat-button class="btn-warning"    matTooltip="View Details" (click)="row.isExpanded = !row.isExpanded">
+                <mat-icon>content_paste_search</mat-icon>
+            </button>
+            
+            <button mat-button   class="btn-success mx-1"  matTooltip="Edit" (click)="onEdit()">
+                <mat-icon>edit</mat-icon>
+            </button>
+           
+            <button mat-button   class="btn-danger"   matTooltip="Delete" (click)="onDelete()">
+                <mat-icon>delete_forever</mat-icon>
+            </button>
+        </mat-cell>
+
+    </ng-container>
+    <ng-container matColumnDef="expandedDetail">
+        <mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+  
+          <div class="row student-element-detail" [@detailExpand]="element.isExpanded ? 'expanded' : 'collapsed'">
+            <mat-list>
+              <div mat-subheader>Subjects of {{element.name}}</div>
+              <mat-list-item *ngFor="let subject of element.subjects">
+                <div mat-line>{{subject.name}}</div>
+                <div mat-line> {{subject.type}} | Grade: {{subject.grade}}</div>
+              </mat-list-item>
+            </mat-list>
+          </div>
+  
+        </mat-cell>
+      </ng-container>
+      
+    <ng-container matColumnDef="noData">
+        <mat-footer-cell *matFooterCellDef colspan="6">
+           No Data ...
+        </mat-footer-cell>
+
+    </ng-container>
+  
+  
+    
+    <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource.data.length==0 && dataSource !=null)}"></mat-footer-row>
+    <mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" class="student-element-row"
+    [class.student-expanded-row]="row.isExpanded"></mat-row>
+     <!-- Extra row to show detail content column -->
+    <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="student-detail-row"></mat-row>
+
+</mat-table>
+<!-- end test -->
+</div>
+
+</ng-template>
+
+<mat-paginator [pageSizeOptions]="[5,25, 50, 100]"   [pageSize]="5"   showFirstLastButtons></mat-paginator>
+
+</mat-card>
+
+
+<!-- <button mat-raised-button class="export">Generate Report</button> -->
