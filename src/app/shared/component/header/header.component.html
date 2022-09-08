@@ -1,33 +1,65 @@
 <mat-toolbar>
-    <div>
-        
-        <a routerLink="#">
-            <img src="../../../../assets/image/slogan.gif" height="40" width="250"/>
-          
-        </a>
-    </div>
-    
-   
-    <div fxFlex fxLayout fxLayoutAlign="end" >
-        <ul fxLayout fxLayoutGap="5px" class="navigation.items">
-        
-            <li>
-            
-                <button mat-icon-button>
-                   
-                    <mat-icon>account_circle</mat-icon> 
-                 </button>
-                 <span> UserName </span>
-                 
-            </li>
-            <li>
-                <button mat-icon-button  (click)="logOut()">
-                    <mat-icon>logout</mat-icon> 
-                 </button>
-            </li>
-           
-            
-        </ul>
-    </div>
+  <div>
+
+      <a routerLink="/">
+          <!-- <img src="../../../../assets/image/we-Logo/we-black.jpg" height="38" width="80"/> -->
+          <!-- <span>Inventory</span> -->
+
+      </a>
+  </div>
+
+
+  <div fxFlex fxLayout fxLayoutAlign="end" >
+      <ul fxLayout fxLayoutGap="5px" class="navigation.items">
+
+          <li>
+
+              <button mat-icon-button >
+
+                  <mat-icon>account_circle</mat-icon>
+               </button>
+               <span> UserName </span>
+
+
+          </li>
+          <li>
+
+              <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="الاعدادات"  aria-label="Example icon-button with a menu">
+                  <mat-icon>settings</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <a mat-menu-item routerLink="/store">
+
+                    <span> المخزن</span>
+
+                  </a>
+                  <a mat-menu-item routerLink="/incoming">
+
+                      <span>الوارد </span>
+
+                    </a>
+                    <a mat-menu-item routerLink="/outgoing">
+
+                      <span> المنصرف</span>
+
+                    </a>
+
+                </mat-menu>
+
+          </li>
+          <li>
+              <a mat-icon-button   matTooltip="السجلات" routerLink="/history" routerLinkActive="active">
+                  <mat-icon>history</mat-icon>
+              </a>
+          </li>
+          <li>
+              <button mat-icon-button  (click)="logOut()"   matTooltip="تسجيل الخروج">
+                  <mat-icon>logout</mat-icon>
+               </button>
+          </li>
+
+
+      </ul>
+  </div>
 
 </mat-toolbar>

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 import { EditFormService } from 'src/app/shared/service/edit-form.service';
-import { NotificationService } from 'src/app/shared/service/notification.service';
+
 
 @Component({
   selector: 'app-edit',
@@ -10,7 +11,7 @@ import { NotificationService } from 'src/app/shared/service/notification.service
 })
 export class EditComponent implements OnInit {
 
-  constructor(public service :EditFormService, public dialogRef: MatDialogRef<EditComponent>,public notificationService: NotificationService) { }
+  constructor(public service :EditFormService, public dialogRef: MatDialogRef<EditComponent>,public toastr:ToastrService) { }
 
   departments =[
     {id:3 ,value:"Dep-1"},
@@ -23,14 +24,12 @@ export class EditComponent implements OnInit {
   onClear(){
     this.service.form.reset();
     this.service.initializeFormGroup();
-    //this.notificationService.success(':: Submitted successfully');
   }
   onSubmit(){
     if(this.service.form.valid){
-      //this.service.insertEmployee(this.service.form.value)
       this.service.form.reset();
     this.service.initializeFormGroup();
-    this.notificationService.success(':: Submitted successfully');
+    this.toastr.success(':: Submitted successfully');
     this.onClose();
 
     }

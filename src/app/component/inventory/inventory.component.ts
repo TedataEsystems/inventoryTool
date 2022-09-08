@@ -1,23 +1,22 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Title } from '@angular/platform-browser';
+import { ToastrService } from 'ngx-toastr';
+import { DeleteService } from 'src/app/shared/service/delete.service';
 import { EditComponent } from '../edit/edit.component';
+
+
 @Component({
-  selector: 'app-history-list',
-  templateUrl: './history-list.component.html',
-  styleUrls: ['./history-list.component.css'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ]
+  selector: 'app-inventory',
+  templateUrl: './inventory.component.html',
+  styleUrls: ['./inventory.component.css']
 })
-export class HistoryListComponent implements OnInit {
+export class InventoryComponent implements OnInit {
+
   searchKey:string ='' ;
   isTableExpanded = false;
   TICKETS_DATA = [
@@ -68,18 +67,18 @@ export class HistoryListComponent implements OnInit {
   ];
 
 
-  constructor(private titleService:Title)
+  constructor(private titleService:Title, private toastr:ToastrService,private deleteService:DeleteService,private dialog: MatDialog,private _bottomSheet: MatBottomSheet)
 
   {
 
-    this.titleService.setTitle(" Home");
+    this.titleService.setTitle("Inventory");
 
   }
 
 
   @ViewChild(MatSort) sort?:MatSort ;
   @ViewChild(MatPaginator) paginator?:MatPaginator ;
-  displayedColumns: string[] = ['id' ,'elementId','descirption', 'parentType', 'actionType', 'userName','creationDate'];
+  displayedColumns: string[] = ['id', 'name', 'age', 'address','history','action'];
   dataSource = new MatTableDataSource(this.TICKETS_DATA);
   // searchKey!:string;
 
@@ -99,25 +98,29 @@ export class HistoryListComponent implements OnInit {
     applyFilter(){
       this.dataSource.filter=this.searchKey.trim().toLowerCase();
     }
+    onCreate(){
+     // this.service.initializeFormGroup();
+      const dialogGonfig = new MatDialogConfig();
+      dialogGonfig.disableClose=true;
+      dialogGonfig.autoFocus= true;
+      dialogGonfig.width="50%";
+      dialogGonfig.panelClass='modals-dialog';
+      this.dialog.open(EditComponent,dialogGonfig);
+    }
 
-lastcol: string = 'Id';
-lastdir: string = 'asc';
+    onEdit(){
+      //this.service.initializeFormGroup();
+      const dialogGonfig = new MatDialogConfig();
+      dialogGonfig.disableClose=true;
+      dialogGonfig.autoFocus= true;
+      dialogGonfig.width="50%";
+      dialogGonfig.panelClass='modals-dialog';
+      this.dialog.open(EditComponent,dialogGonfig);
 
-sortData(sort: any) {
-
-    window.location.reload();
-  if (this.lastcol == sort.active && this.lastdir == sort.direction) {
-    if (this.lastdir == 'asc')
-      sort.direction = 'desc';
-    else
-      sort.direction = 'asc';
-  }
-  this.lastcol = sort.active; this.lastdir = sort.direction;
-
-
+    }
+    onDelete(){
+      this.deleteService.openConfirmDialog();
 }
-
-
 toggleTableRows() {
   this.isTableExpanded = !this.isTableExpanded;
 
@@ -125,6 +128,10 @@ toggleTableRows() {
     row.isExpanded = this.isTableExpanded;
   })
 }
+
+exportExcel(){}
+ExportTOEmptyExcel(){}
+openBottomSheet(){}
 
 
 }

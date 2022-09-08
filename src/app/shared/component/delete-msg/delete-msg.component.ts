@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { NotificationService } from '../../service/notification.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-delete-msg',
@@ -9,23 +9,23 @@ import { NotificationService } from '../../service/notification.service';
 })
 export class DeleteMsgComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<DeleteMsgComponent>,public notificationService: NotificationService,
-    
+  constructor(public dialogRef: MatDialogRef<DeleteMsgComponent>,public toastr: ToastrService,
+
     ) { }
 
   ngOnInit(): void {
   }
   onClose(){
-  
+
     this.dialogRef.close();
 
   }
   onDelete(){
     //if(confirm('Are you sure to delete this record ?')){
-  
+
         this.onClose();
 
-        this.notificationService.success(' Deleted successfully');
+        this.toastr.success('Deleted successfully');
     //}
   }
 

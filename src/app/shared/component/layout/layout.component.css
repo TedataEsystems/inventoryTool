@@ -1,94 +1,118 @@
 main{
-    padding:80px 10px 20px 10px;
+  padding:80px 10px 20px 10px;
 }
-  img{
-      margin-top: 40px;
-  }
-mat-toolbar{
-    height: 140px;
-    background: #ffffff;
-    color: var(--main-color);
-    border-bottom: 1px solid #dddddd;
-   
-   
+img{
+    margin-top: 46px;
 }
-.mat-toolbar-row, .mat-toolbar-single-row{
-    padding:0 50px !important
+.brand{
+  color: #354654;
+    text-shadow: 0px 2px 2px #9b9191;
+    font-size: 20px;
 }
-.active{
-    /* color: var(--main-color) !important;
-    border-bottom: 2px solid var(--main-color); */
-    background-color: var(--forth-color);
-    color: #fff;
-    border-radius: 0;
-}
-.active1{
-    background-color: var(--forth-color);
-    color: #fff;
- 
-  border-radius: 0;
-}
-.mat-button:not(.active,.active1):hover{
-    background: var(--main-color) !important;
-    color: #fff !important;
-    border-bottom: 2px solid var(--main-color) !important;
-    border-radius: 0 !important;
-  
-  }
-  
-  .mat-button{
-    margin-top: 42.4px;
-    height: 95.2px;
-    width: 130px;
-    padding-top: 29px;
+.brandTitle{
+     margin-top: 42.4px;
+    height: 67.2px;
+    min-width: 130px;
+    padding-top: 19px;
     font-family: 'Unica One', cursive;
-    font-size: 17px;
+    font-size: 20px;
     font-weight: 500;
     text-transform: uppercase;
+}
+.brand-box{
+  width: 80px;
+    text-align: right;
+    background: #000;
+    margin-left: -60px;
+}
+mat-toolbar{
+  height: 110px;
+  background: #ffffff;
+  color: var(--main-color);
+  border-bottom: 1px solid #dddddd;
+  box-shadow: 0px 4px 10px #cdcdcd;
+  position: sticky;
+  position: -webkit-sticky; /* For macOS/iOS Safari */
+  top: 0; /* Sets the sticky toolbar to be on top */
+  z-index: 19; /* Ensure that your app's content doesn't overlap the toolbar */
+
+
+}
+.mat-toolbar-row, .mat-toolbar-single-row{
+  padding:0 50px !important
+}
+.active{
+  color: var(--fifth-color);
+  font-weight: bolder !important;
+  border-radius: 0;
+}
+.active1{
+  background-color: var(--forth-color);
+  color: #fff;
+
+border-radius: 0;
+}
+.mat-button:not(.active,.active1):hover{
+  background: var(--main-color) !important;
+  color: #fff !important;
+  border-bottom: 2px solid var(--main-color) !important;
+  border-radius: 0 !important;
+
+}
+
+.mat-button{
+  margin-top: 42.4px;
+  height: 67.2px;
+  min-width: 130px;
+  padding-top: 19px;
+  font-family: 'Unica One', cursive;
+  font-size: 17px;
+  font-weight: 500;
+  text-transform: uppercase;
+
+}
+.arrow{
+    color: var(--main-color);
+}
+.example-container .mat-button{
+    margin: 0 10px;
+
+}
+.scroll-to-top{
+  position: fixed;
+  background:var(--forth-color);
+  bottom: 10px;
+  right: 10px;
+  color:#fff;
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+  border: 0 !important;
+  box-shadow: 3px 3px 5px grey;
+  z-index: 1000;
+}
+/* .scroll-to-top mat-icon{
+    font-size: 50px;
+} */
+app-footer{
+    bottom: 0;
+
+    width: inherit;
+}
+.menu-icon{
+    margin-top: 38px;
+
+}
+.menu-icon mat-icon{
+  font-size: 30px;
+  font-weight: bold;
+  width:auto !important;
+}
+@media screen and (max-width: 960px) {
+  .mat-toolbar-row, .mat-toolbar-single-row {
+
+      padding:0 50px 0 10px !important;
 
   }
-  .arrow{
-      color: var(--main-color);
-  }
-  .example-container .mat-button{
-      margin: 0 10px;
-     
-  }
-  .scroll-to-top{
-    position: fixed;
-    background:var(--forth-color);
-    bottom: 10px;
-    right: 10px;
-    color:#fff;
-    width: 45px;
-    height: 45px;
-    cursor: pointer;
-    border: 0 !important;
-    box-shadow: 3px 3px 5px grey;
-    z-index: 1000;
-  }
-  /* .scroll-to-top mat-icon{
-      font-size: 50px;
-  } */
-  app-footer{
-      bottom: 0;
-     
-      width: inherit;
-  }
-  .menu-icon{
-      margin-top: 38px;
-    
-  }
-  .menu-icon mat-icon{
-    font-size: 30px;
-    font-weight: bold;
-    width:auto !important;
-  }
-  @media screen and (max-width: 960px) {
-    .mat-toolbar-row, .mat-toolbar-single-row {
-       
-        padding:0 50px 0 10px !important;
-       
-    }
 
 }

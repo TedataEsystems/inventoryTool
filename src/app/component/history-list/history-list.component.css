@@ -1,0 +1,88 @@
+mat-cell:first-of-type, mat-header-cell:first-of-type, mat-footer-cell:first-of-type {
+  padding-right: 24px;
+}
+/* mat-cell > span.ellipsis {
+text-overflow: ellipsis;
+overflow: hidden;
+white-space: nowrap;
+} */
+/* mat-cell, mat-header-cell,mat-header-cell{
+word-wrap: break-word !important;
+white-space: unset !important;
+flex: 0 0 7%  !important;
+width: 7%  !important;
+overflow-wrap: break-word;
+word-wrap: break-word;
+word-break: break-word;
+-ms-hyphens: auto;
+-moz-hyphens: auto;
+-webkit-hyphens: auto;
+hyphens: auto;
+
+} */
+/* mat-cell:nth-child(1), mat-header-cell:nth-child(1),
+mat-cell:nth-child(2), mat-header-cell:nth-child(2){
+word-wrap: break-word !important;
+white-space: unset !important;
+flex: 0 0 7%  !important;
+width: 7%  !important;
+overflow-wrap: break-word;
+word-wrap: break-word;
+word-break: break-word;
+padding:0 5px;
+-ms-hyphens: auto;
+-moz-hyphens: auto;
+-webkit-hyphens: auto;
+hyphens: auto;
+
+} */
+/* mat-cell:nth-child(4), mat-header-cell:nth-child(4){
+word-wrap: break-word !important;
+white-space: unset !important;
+flex: 0 0 10%  !important;
+width: 10%  !important;
+overflow-wrap: break-word;
+word-wrap: break-word;
+word-break: break-word;
+padding:0 5px;
+-ms-hyphens: auto;
+-moz-hyphens: auto;
+-webkit-hyphens: auto;
+hyphens: auto;
+
+} */
+/* mat-cell:nth-child(3), mat-header-cell:nth-child(3){
+word-wrap: break-word !important;
+white-space: unset !important;
+flex: 0 0 55%  !important;
+width: 55%  !important;
+overflow-wrap: break-word;
+word-wrap: break-word;
+word-break: break-word;
+padding:0 5px;
+-ms-hyphens: auto;
+-moz-hyphens: auto;
+-webkit-hyphens: auto;
+hyphens: auto;
+text-overflow: ellipsis;
+overflow: hidden;
+white-space: nowrap;
+
+} */
+
+
+.student-element-detail{
+width: 100%;
+}
+.student-detail-row {
+min-height: 0;
+}
+.student-detail-row mat-cell
+{
+background: var(--body-color);
+  box-shadow: inset 3px 0px 5px var(--third-color),inset -3px 0px 5px var(--third-color);
+
+}
+.text-success{
+text-shadow: 2px 2px 5px #a4a9ac;
+}
