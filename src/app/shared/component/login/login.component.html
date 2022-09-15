@@ -1,60 +1,53 @@
 <!-- loader for loading login page -->
-<!-- <ngx-spinner>
-    <h3>Loading</h3>
-</ngx-spinner> -->
-
-
 <div class="content-body">
   <mat-card>
-    <div class="banner">
 
-      <div class="speci-login first-look">
-        <img src="../../../../assets/image/we-Logo/user.png" alt="" class="img-circle img-responsive">
-
-    </div>
-
-    </div>
       <mat-card-content>
 
+          <div class="tool">
+
+             <span class="topic">Inventory</span>
+
+          </div>
 
            <h2>
 
            Login
            </h2>
 
-          <form  name="form">
-              <!-- <div class="email-input form-input"> -->
-                  <!--     Email       -->
-                  <mat-form-field class="full-width" >
-                      <mat-label>User Name</mat-label>
-                      <input  matInput required>
-                      <button mat-icon-button matSuffix >
-                        <mat-icon>account_circle</mat-icon>
-                      </button>
+           <form  class="mt-4" (ngSubmit)="onSubmit()" name="form" [formGroup]="form">
+            <mat-form-field class="full-width" >
+              <mat-label>Username </mat-label>
+              <input formControlName="username" matInput required>
+
+                <mat-icon  mat-icon-button matSuffix>account_circle</mat-icon>
 
 
-                      <!-- <mat-error *ngIf="form.controls['username'].errors?.required">
-                       Required UserName
-                      </mat-error> -->
 
-                  </mat-form-field>
-              <!-- </div>
-              <div class="form-input"> -->
-                  <!-- <span class="aLink">Forgot Password ?</span> -->
+              <mat-error *ngIf="form.controls['username'].errors?.required">
+                *Username is Required
+              </mat-error>
 
-                   <!--    Password      -->
-                   <mat-form-field class="full-width" >
-                      <mat-label>Password</mat-label>
-                      <input matInput type="password" required>
-                       <button mat-icon-button matSuffix >
-                          <mat-icon>https</mat-icon>
-                       </button>
+          </mat-form-field>
 
-                      <!-- <mat-error *ngIf="form.controls['password'].errors?.required">Required password.</mat-error> -->
 
-                  </mat-form-field>
+           <!--    Password      -->
+           <mat-form-field class="full-width" >
+              <mat-label>Password </mat-label>
+              <input formControlName="password" matInput type="password" required>
 
-              <!-- </div> -->
+                  <mat-icon mat-icon-button matSuffix>https</mat-icon>
+
+
+              <mat-error *ngIf="form.controls['password'].errors?.required">*Password is Required </mat-error>
+
+          </mat-form-field>
+          <div class="msg-error">
+            <mat-error *ngIf="warning">
+               <mat-icon>warning</mat-icon>
+               Invalid Username or Password
+              </mat-error>
+         </div>
               <button mat-flat-button class="login"   type="submit">Login</button>
           </form>
 
@@ -62,8 +55,18 @@
 
   </mat-card>
 
-  <div class="text-center">
-     <span class="text-white">© Copyright 2022. All Rights Reserved. | Powered by : Esystems</span>
+  <div class="text-center mt-2">
+     <span class="rights">© Copyright 2022. All Rights Reserved. | Powered by <span class="text-white">:Esystems</span> </span>
 
       </div>
+  <div class="WElogo">
+
+     <img src="../../../../assets/image/we-Logo/mini_logo.png" width="150" height="200">
+
+ </div>
+ <div class="Esystems">
+
+  <img src="../../../../assets/image/ccc.png" width="150" height="50">
+
+</div>
 </div>
