@@ -1,39 +1,199 @@
-<mat-card class="example-card">
-    <div class="container-fluid py-4 px-4" >
-      <div class="row g-4">
-          <div class="col-sm-5 col-xl-5  text-center">
-            <div class="chart-wrapper rounded mb-4">
-                <canvas baseChart 
-                [data]="doughnutChartDatap"
+<!--  ------main----------------- -->
+<mat-card class="example-card" style="padding-bottom: 10px !important;text-align: right; ">
+
+  <!-- first card -->
+  <div class="pt-5 row d-flex">
+      <div class="col-sm-4 col-md-4 mb-4">
+          <div class="card border-left-info shadow h-100">
+              <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                          <div class="font-weight-bold text-info text-uppercase mb-1">المخزن</div>
+                          <div class="row no-gutters align-items-center">
+                              <div class="col-auto">
+                                  <div class="h5 mb-1 ml-5 font-weight-bold text-gray-800">اجمالي الوارد :<span
+                                          class="res">50</span></div>
+                                  <div class="h5 mb-0 ml-5 font-weight-bold text-gray-800">اجمالي المنصرف :<span
+                                          class="res">90</span> </div>
+                              </div>
+                              <div class="col">
+                                  <div class="progress progress-sm w-75">
+                                      <div class="progress-bar bg-info " role="progressbar" [style.width.%]="92"
+                                          aria-valuenow="92" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-auto">
+                          <span class="percentage ml-2"> 92</span>
+                          <mat-icon style="vertical-align: baseline;">%</mat-icon>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- second card -->
+      <div class="col-sm-4 col-md-4 mb-4">
+          <div class="card border-left-info shadow h-100">
+              <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                          <div class="font-weight-bold text-info text-uppercase mb-1"> الوارد</div>
+                          <div class="row no-gutters align-items-center">
+                              <div class="col-auto">
+                                  <div class="h5 mb-1 ml-5 font-weight-bold text-gray-800">ترمنيت :<span
+                                          class="res">12/5/2020</span> </div>
+                                  <div class="h5 mb-0 ml-5 font-weight-bold text-gray-800">صيانة : <span
+                                          class="res">Success</span></div>
+                              </div>
+                              <div class="col">
+                                  <div class="progress progress-sm w-75">
+                                      <div class="progress-bar bg-info" role="progressbar" [style.width.%]="54"
+                                          aria-valuenow="54" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-auto">
+                          <span class="percentage ml-2"> 54</span>
+                          <mat-icon style="vertical-align: baseline;">%</mat-icon>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-sm-4 col-md-4 mb-4">
+        <div class="card border-left-info shadow h-100">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="font-weight-bold text-info text-uppercase mb-1">المنصرف </div>
+                        <div class="row no-gutters align-items-center">
+                            <div class="col-auto">
+                                <div class="h5 mb-1 ml-5 font-weight-bold text-gray-800">تالف : <span
+                                        class="res">12/5/2020</span></div>
+                                <div class="h5 mb-1 ml-5 font-weight-bold text-gray-800">صيانة :<span
+                                        class="res">Success</span> </div>
+                                        <div class="h5 mb-0 ml-5 font-weight-bold text-gray-800">تركيبات :<span
+                                          class="res">Success</span> </div>
+                            </div>
+                            <div class="col">
+                                <div class="progress progress-sm w-75">
+                                    <div class="progress-bar bg-info" role="progressbar" [style.width.%]="92"
+                                        aria-valuenow="92" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <span class="percentage ml-2"> 92</span>
+                        <mat-icon style="vertical-align: baseline;">%</mat-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  </div>
+  <div class="row">
+      <div class="col-sm-6 col-md-6">
+
+          <div class="mx-0 pt-4  shadow card border-left-info  " style="height:468px;">
+
+              <div class="chart-wrapper mb-5 ">
+                  <canvas baseChart
+                  [data]="doughnutChartDatap"
                 [labels]="doughnutChartLabelsp"
                 [colors]="colors"
                 [plugins]="doughnutChartPlugins"
                 [chartType]="doughnutChartType">
-              </canvas>
-            </div>
-            <span class="total" matBadgeColor="warn" matBadge="{{TotalNumorderStat}}" matBadgeOverlap="false"> TOTAL </span>
-          <span>حالة الوارد</span>
+                  </canvas>
+              </div>
+              <div class="detailscharttxt">
+                  <div class="detailschartblocks">
+
+
+                      <span id="MainContent_monthstat_lbl" class="lblbigtxt">9.734</span>
+                      <label class="lblbigtxtunder">This Month</label>
+                  </div>
+                  <div class="detailschartblocks">
+
+                      <span id="MainContent_totalevu_lbl" class="lblbigtxt">125,457</span>
+
+                      <label class="lblbigtxtunder">Total Evaluate</label>
+                  </div>
+
+                  <div class="detailschartblocks">
+
+
+                      <span id="MainContent_totalevoustat_lbl" class="lblbigtxt">+ 17%</span>
+                      <label class="lblbigtxtunder">Total </label>
+                  </div>
+
+              <hr class="breakline">
+              <div class="detailschartblocks w-100" style="margin-top: -14px;">
+                <label class="lblevaulatestat ">
+                  الوارد
+                </label>
+              </div>
           </div>
-          <div class="col-sm-2 col-xl-2  "></div>
-          <div class="col-sm-5 col-xl-5  text-center">
-           
-            <div class="chart-wrapper rounded mb-4">
-              <canvas baseChart 
-              [data]="doughnutChartData"
+
+          </div>
+
+
+
+      </div>
+      <div class="col-sm-6 col-md-6">
+
+        <div class="mx-0 pt-4  shadow card border-left-info  " style="height:468px;">
+
+            <div class="chart-wrapper mb-5 ">
+                <canvas baseChart
+                [data]="doughnutChartData"
               [labels]="doughnutChartLabels"
               [colors]="colors"
               [plugins]="doughnutChartPlugins"
               [chartType]="doughnutChartType">
-            </canvas>
-          </div>
-          <span class="total"  matBadgeColor="warn" matBadge="{{TotalNumReceiptStat}}" matBadgeOverlap="false">TOTAL</span>
-           <span>موقف  المنصرف</span>
-         
+                </canvas>
+            </div>
+            <div class="detailscharttxt">
+                <div class="detailschartblocks">
 
-          </div>
-         
-      </div>
+
+                    <span id="MainContent_monthstat_lbl" class="lblbigtxt">9.734</span>
+                    <label class="lblbigtxtunder">This Month</label>
+                </div>
+                <div class="detailschartblocks">
+
+                    <span id="MainContent_totalevu_lbl" class="lblbigtxt">125,457</span>
+
+                    <label class="lblbigtxtunder">Total Evaluate</label>
+                </div>
+
+                <div class="detailschartblocks">
+
+
+                    <span id="MainContent_totalevoustat_lbl" class="lblbigtxt">+ 17%</span>
+                    <label class="lblbigtxtunder">Total </label>
+                </div>
+
+            <hr class="breakline">
+            <div class="detailschartblocks w-100" style="margin-top: -14px;">
+              <label class="lblevaulatestat ">
+                المنصرف
+              </label>
+            </div>
+
+        </div>
+
+        </div>
+
+
+
+    </div>
+
+
   </div>
 
-
 </mat-card>
+

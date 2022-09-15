@@ -43,8 +43,12 @@ li span{
   margin: 0;
 }
 mat-toolbar{
-  background: linear-gradient(351deg,#0f1323,#1b3c51,#791a75,#8e2279);
+  /* background: linear-gradient(351deg,#0f1323,#1b3c51,#791a75,#8e2279); */
   color: #fff;
+  background: linear-gradient(114deg,#000,#0f1323,#1b3c51,#791a75,#8e2279 50%,#1b3c51,#0f1323);
+  background: -moz-linear-gradient(114deg,#000,#0f1323,#1b3c51,#791a75,#8e2279 50%,#1b3c51,#0f1323);
+  background: -o-linear-gradient(114deg,#000,#0f1323,#1b3c51,#791a75,#8e2279 50%,#1b3c51,#0f1323);
+
 }
 .mat-toolbar-row, .mat-toolbar-single-row {
   height: 45px !important;
