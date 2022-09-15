@@ -20,6 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IncomingComponent } from 'src/app/component/setting/incoming/incoming.component';
 import { OutgoingComponent } from 'src/app/component/setting/outgoing/outgoing.component';
 import { StoreComponent } from 'src/app/component/setting/store/store.component';
+import { ChartsModule } from 'ng2-charts';
 
 
 
@@ -46,6 +47,7 @@ import { StoreComponent } from 'src/app/component/setting/store/store.component'
     CommonModule,
     RouterModule,
     MaterialModule,
+    ChartsModule,
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,

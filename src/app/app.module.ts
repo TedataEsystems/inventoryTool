@@ -1,15 +1,15 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from './shared/Module/layout/layout.module';
 import { MaterialModule } from './shared/Module/material/material.module';
 import { LoginModule } from './shared/Module/login/login.module';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { ChartsModule } from 'ng2-charts';
 
 
 
@@ -30,6 +30,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     AppRoutingModule,
     NgbModule,
     BrowserAnimationsModule,
+    ChartsModule,
     LayoutModule,
     MaterialModule,
     LoginModule,
