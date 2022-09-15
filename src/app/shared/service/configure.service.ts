@@ -10,7 +10,7 @@ export class ConfigureService {
 
   UserName()
    {
-       return  localStorage.getItem("usernam");
+       return  localStorage.getItem("userName");
    }
 
    UserGroup()
@@ -36,7 +36,7 @@ export class ConfigureService {
    
     localStorage.removeItem("userGroup");
     localStorage.removeItem("tokNum");
-    localStorage.removeItem("usernam");
+    localStorage.removeItem("userName");
     this.router.navigateByUrl('/login');
     
    }

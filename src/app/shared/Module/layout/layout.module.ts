@@ -20,7 +20,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IncomingComponent } from 'src/app/component/setting/incoming/incoming.component';
 import { OutgoingComponent } from 'src/app/component/setting/outgoing/outgoing.component';
 import { StoreComponent } from 'src/app/component/setting/store/store.component';
-
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TypeStatusComponent } from 'src/app/component/setting/type-status/type-status.component';
 
 
 
@@ -40,7 +41,8 @@ import { StoreComponent } from 'src/app/component/setting/store/store.component'
     InventoryComponent,
     StoreComponent,
     IncomingComponent,
-    OutgoingComponent
+    OutgoingComponent,
+    TypeStatusComponent
   ],
   imports: [
     CommonModule,
@@ -50,6 +52,7 @@ import { StoreComponent } from 'src/app/component/setting/store/store.component'
     ReactiveFormsModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-top-right',

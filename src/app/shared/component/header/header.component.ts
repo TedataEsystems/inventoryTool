@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { ConfigureService } from '../../service/configure.service';
 
 @Component({
   selector: 'app-header',
@@ -7,30 +8,30 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
- 
+  userName =  localStorage.getItem("userName");
+  isNotAdmin=false;
   @Output() public sidenavToggle = new EventEmitter();
-  constructor(private router :Router) { }
-// constructor( private router :Router,private accountService : AccountService,private notificationService:NotificationMsgService) { }
-UserName:any="";
+  constructor(private router :Router ,private config:ConfigureService) {
+    var teamval=  localStorage.getItem("userGroup");
+ 
+    if(teamval?.toLocaleLowerCase() != 'admin'){
+   this.isNotAdmin=true;  
+    
+ }
+   }
+
+
 ngOnInit(): void {
 // this.UserName=this.conser.UserName();
 }
 
 logOut(){
-  // localStorage.clear();
-  // this.accountService.logout().subscribe(res=>{
-    // this.conser.Logout();
+  this.config.Logout();
     this.router.navigateByUrl('/login');
-    
-  // } 
-  
-  // ,error=>{this.notificationService.warn('occured an error ')}
-  // );
 
 }
 public onToggleSidenav=()=> {
-this.sidenavToggle.emit();
-}
+  this.sidenavToggle.emit();
+  }
 
 }

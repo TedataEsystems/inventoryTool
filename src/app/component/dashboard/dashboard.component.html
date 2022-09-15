@@ -1,0 +1,39 @@
+<mat-card class="example-card">
+    <div class="container-fluid py-4 px-4" >
+      <div class="row g-4">
+          <div class="col-sm-5 col-xl-5  text-center">
+            <div class="chart-wrapper rounded mb-4">
+                <canvas baseChart 
+                [data]="doughnutChartDatap"
+                [labels]="doughnutChartLabelsp"
+                [colors]="colors"
+                [plugins]="doughnutChartPlugins"
+                [chartType]="doughnutChartType">
+              </canvas>
+            </div>
+            <span class="total" matBadgeColor="warn" matBadge="{{TotalNumorderStat}}" matBadgeOverlap="false"> TOTAL </span>
+          <span>حالة الوارد</span>
+          </div>
+          <div class="col-sm-2 col-xl-2  "></div>
+          <div class="col-sm-5 col-xl-5  text-center">
+           
+            <div class="chart-wrapper rounded mb-4">
+              <canvas baseChart 
+              [data]="doughnutChartData"
+              [labels]="doughnutChartLabels"
+              [colors]="colors"
+              [plugins]="doughnutChartPlugins"
+              [chartType]="doughnutChartType">
+            </canvas>
+          </div>
+          <span class="total"  matBadgeColor="warn" matBadge="{{TotalNumReceiptStat}}" matBadgeOverlap="false">TOTAL</span>
+           <span>موقف  المنصرف</span>
+         
+
+          </div>
+         
+      </div>
+  </div>
+
+
+</mat-card>

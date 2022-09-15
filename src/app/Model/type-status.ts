@@ -1,8 +1,8 @@
 export interface TypeStatus {
-    id?: number;
-    name?: string;
-    createdBy?:string;
-    creationDate?:Date;
-   updatedBy?:string;
-   updateDate?:Date;
+    Id?: number;
+    Name?: string;
+    CreatedBy?:string;
+    CreationDate?:Date;
+   UpdatedBy?:string;
+   UpdateDate?:Date;
 }

@@ -18,37 +18,28 @@
 
                   <mat-icon>account_circle</mat-icon>
                </button>
-               <span> UserName </span>
+               <span> {{userName}} </span>
 
 
           </li>
           <li>
 
-              <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="الاعدادات"  aria-label="Example icon-button with a menu">
+              <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="الاعدادات"  aria-label="Example icon-button with a menu" *ngIf="!isNotAdmin">
                   <mat-icon>settings</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                  <a mat-menu-item routerLink="/store">
+                  <a mat-menu-item routerLink="/Type">
 
-                    <span> المخزن</span>
+                    <span> Type</span>
 
                   </a>
-                  <a mat-menu-item routerLink="/incoming">
-
-                      <span>الوارد </span>
-
-                    </a>
-                    <a mat-menu-item routerLink="/outgoing">
-
-                      <span> المنصرف</span>
-
-                    </a>
+          
 
                 </mat-menu>
 
           </li>
           <li>
-              <a mat-icon-button   matTooltip="السجلات" routerLink="/history" routerLinkActive="active">
+              <a mat-icon-button   matTooltip="السجلات" routerLink="/history" routerLinkActive="active" *ngIf="!isNotAdmin">
                   <mat-icon>history</mat-icon>
               </a>
           </li>

@@ -1,13 +1,13 @@
 export interface Logs {
-    elementId?: number;
-    id?: number;
-    descirption?: string;
-    actionType?: string;
-    userName?: string;
-    creationDate?: Date;
-    groupName?: string;
-    updateDate?: Date;
-    isDeleted?: boolean;
-    createdBy?: string;
-    updatedBy?: string;
+    ElementId?: number;
+    Id?: number;
+    Descirption?: string;
+    ActionType?: string;
+    UserName?: string;
+    CreationDate?: Date;
+    GroupName?: string;
+    UpdateDate?: Date;
+    IsDeleted?: boolean;
+    CreatedBy?: string;
+    UpdatedBy?: string;
 }

@@ -2,8 +2,8 @@ mat-cell:first-of-type, mat-header-cell:first-of-type, mat-footer-cell:first-of-
   padding-right: 24px;
 }
 /* mat-cell > span.ellipsis {
-text-overflow: ellipsis;
-overflow: hidden;
+text-overflow: ellipsis; 
+overflow: hidden; 
 white-space: nowrap;
 } */
 /* mat-cell, mat-header-cell,mat-header-cell{
@@ -64,8 +64,8 @@ padding:0 5px;
 -moz-hyphens: auto;
 -webkit-hyphens: auto;
 hyphens: auto;
-text-overflow: ellipsis;
-overflow: hidden;
+text-overflow: ellipsis; 
+overflow: hidden; 
 white-space: nowrap;
 
 } */

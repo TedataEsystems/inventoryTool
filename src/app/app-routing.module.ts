@@ -9,6 +9,8 @@ import { StoreComponent } from './component/setting/store/store.component';
 import { ErrorPageComponent } from './shared/component/error-page/error-page.component';
 import { LayoutComponent } from './shared/component/layout/layout.component';
 import { LoginComponent } from './shared/component/login/login.component';
+import { AuthGuardService } from './auth-guard.service';
+import { TypeStatusComponent } from './component/setting/type-status/type-status.component';
 
 const routes: Routes = [
   {
@@ -32,10 +34,11 @@ const routes: Routes = [
     },
     {
       path:'inventory',
-      component:InventoryComponent
+      component:InventoryComponent,
+      canActivate: [AuthGuardService] 
     },
-    {path:'store',
-    component:StoreComponent
+    {path:'Type',
+    component:TypeStatusComponent
 
     },
     {

@@ -19,6 +19,7 @@ export class InventoryService {
    }
 
    AddInventory(model: any): Observable<any> {
+    
     return this.httpClient.post<any>(`${environment.API_URL}api/Inventory/AddInventory`, model);
   }
 
@@ -32,6 +33,7 @@ export class InventoryService {
 
 
   getInventory(PageNumber :number , PageSize :number , searchValue:string ,sortcolumn:string,sortcolumndir:string){
+    debugger
     let params = new HttpParams();
     if(PageNumber !== null && PageSize !== null){
       params = params.append('pageNumber' , PageNumber.toString());
@@ -49,7 +51,7 @@ export class InventoryService {
   }
 
 
-  UpdateHardwareStatus(model: Inventory): Observable<any> {
+  UpdateInventory(model: Inventory): Observable<any> {
     return this.httpClient.post<Inventory>(`${environment.API_URL}api/Inventory/UpdateInventory`, model
     );
   }
@@ -67,8 +69,9 @@ export class InventoryService {
 
   public importExcelFile(file : any)
   {
-    //console.log("importservice",file)
-    return this.httpClient.post<any>(`${environment.API_URL}api/Inventory/ImportExcelFile` , file , {headers : this.headers});
+    console.log("importservice",file)
+    return this.httpClient.post<any>(`${environment.API_URL}api/Inventory/ImportExcelFile` , file, {headers : this.headers});
+
   }
 
 

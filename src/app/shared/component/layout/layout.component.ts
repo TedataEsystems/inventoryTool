@@ -18,17 +18,18 @@ import { Component, HostListener, OnInit } from '@angular/core';
 })
 export class LayoutComponent implements OnInit {
 
- isMenuOpen = true;
- contentMargin = 240;
+  isMenuOpen = true;
+  contentMargin = 240;
  
- pageYoffset = 0;
- @HostListener('window:scroll', ['$event']) onScroll(event:any){
-   this.pageYoffset = window.pageYOffset;
- }
+  pageYoffset = 0;
+  @HostListener('window:scroll', ['$event']) onScroll(event:any){
+    this.pageYoffset = window.pageYOffset;
+  }
 
   constructor(private scroll: ViewportScroller) { 
 
   }
+
 
  ngOnInit(): void {
    
@@ -38,8 +39,9 @@ export class LayoutComponent implements OnInit {
 
   scrollToTop(){
   
-  this.scroll.scrollToPosition([0,0]);
-  }
+    this.scroll.scrollToPosition([0,0]);
+    }
+  
 
 
 }

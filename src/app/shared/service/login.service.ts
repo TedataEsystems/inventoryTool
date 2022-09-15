@@ -15,6 +15,7 @@ export class LoginService {
 
   getLogin(model: Login):Observable<IUser>
   {
-    return this.httpClient.post<any>(`${environment.API_URL}api/account/login`,model);
+    
+    return this.httpClient.post<any>(`${environment.API_URL}api/account/Login`,model);
   }
 }
