@@ -58,31 +58,41 @@
           <input formControlName="ReceivedDate" matInput [matDatepicker]="picker" placeholder="تاريخ الوارد *">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
-          <mat-error>مطلوب</mat-error> 
-        </mat-form-field>
-        <mat-form-field>
-
+          
+        </mat-form-field>    
+       
+          <mat-checkbox (click)='toggle()'>
+            الوارد
+         </mat-checkbox>               
+        
+        <mat-form-field [hidden]='isHidden'>       
           <mat-select formControlName="ReceviedStatusId" placeholder=" *حالة الوارد (--اختار--) "  >
-            <mat-option>-- Please select --</mat-option>
-            <mat-option  *ngFor="let ReceviedStatus of ReceivedStatuslist"   [value]="ReceviedStatus.Id">
-              {{ReceviedStatus.Name}}
+             <mat-option>-- Please select --</mat-option> 
+            <mat-option  *ngFor="let ReceviedStatus of ReceivedStatuslist"    [value]="ReceviedStatus.id">
+              {{ReceviedStatus.name}}
             </mat-option>
           </mat-select>
+       
           <!-- <mat-error>مطلوب</mat-error> -->
         </mat-form-field>
+       
         <mat-form-field>
           <input formControlName="ExpriyDate" matInput [matDatepicker]="picker1" placeholder="تاريخ المنصرف *">
           <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
-          <mat-error>مطلوب</mat-error> 
+          
         </mat-form-field>
+         
+          <mat-checkbox (click)='outgoingtoggle()'>
+            المنصرف
+         </mat-checkbox>               
         
-        <mat-form-field>
+        <mat-form-field *ngIf="outgoingisHidden">
 
           <mat-select formControlName="OutgoingStatusId" placeholder=" *حالة المنصرف (--اختار--) "  >
             <mat-option>-- Please select --</mat-option>
-            <mat-option  *ngFor="let OutgoingStatus of OutgoingStatuslist"   [value]="OutgoingStatus.Id">
-              {{OutgoingStatus.Name}}
+            <mat-option  *ngFor="let OutgoingStatus of OutgoingStatuslist"   [value]="OutgoingStatus.id">
+              {{OutgoingStatus.name}}
             </mat-option>
           </mat-select>
           <!-- <mat-error>مطلوب</mat-error> -->
@@ -91,8 +101,8 @@
 
           <mat-select formControlName="TypeStatusId" placeholder=" *الحالة  (--اختار--) "  >
             <mat-option>-- Please select --</mat-option>
-            <mat-option  *ngFor="let TypeStatus of TypeStatuslist"   [value]="TypeStatus.Id">
-              {{TypeStatus.Name}}
+            <mat-option  *ngFor="let TypeStatus of TypeStatuslist"   [value]="TypeStatus.id">
+              {{TypeStatus.name}}
             </mat-option>
           </mat-select>
           <!-- <mat-error>مطلوب</mat-error>  -->

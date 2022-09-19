@@ -17,6 +17,10 @@ export class DashboardService {
 
   GetOutgoingStatusChart():Observable<any>
   {
-return this.httpClient.get<any>(`${environment.API_URL}api/Dashboard/GetOutgoingStatusChart`);
+    return this.httpClient.get<any>(`${environment.API_URL}api/Dashboard/GetOutgoingStatusChart`);
+  }
+  GetTotalChart():Observable<any>
+  {
+    return this.httpClient.get<any>(`${environment.API_URL}api/Dashboard/GetTotalChart`);
   }
 }

@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import {ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Color, Label,MultiDataSet } from 'ng2-charts';
+import { DashboardService } from 'src/app/shared/service/dashboard.service';
+import { NotificationService } from 'src/app/shared/service/notification.service';
 
 
 
@@ -12,8 +15,17 @@ import { Color, Label,MultiDataSet } from 'ng2-charts';
 
 })
 export class DashboardComponent implements OnInit {
+  TotalNumorderStat:number=0;
+  TotalNumReceiptStat:number=0;
+  TotalinvenStat:number=0;
+  count:number=0;
+  userRole= localStorage.getItem('userGroup');
+ 
+  ternumber:number=0;
+  sennumber:number=0;
+  tefnumber:number=0;
 
-  constructor(private titleService:Title)
+
 
  constructor(
     //private hardwareService:HardwareService,
@@ -24,27 +36,26 @@ export class DashboardComponent implements OnInit {
     this.titleService.setTitle("Home"); 
     
   }
-  ngOnInit() {
-    
-  }
+
  
  
    
 
 
   /////////////////donut chart//////////////////
-  doughnutChartLabels: Label[] = ['BMW', 'Ford', 'Tesla'];
+  doughnutChartLabels: Label[] = [];
   doughnutChartData: MultiDataSet = [
-    [55, 25, 20]
+    []
   ];
-  doughnutChartLabelsp: Label[] = ['BMW', 'Ford', 'Tesla'];
+  doughnutChartLabelsp: Label[] = [];
   doughnutChartDatap: MultiDataSet = [
-    [55, 25, 20]
+    []
   ];
-  // doughnutChartLabels: Label[] = ['BMW', 'Ford', 'Tesla'];
-  // doughnutChartData: MultiDataSet = [
-  //   [55, 25, 20]
-  // ];
+
+  doughnutChartLabelsps: Label[] = [];
+  doughnutChartDataps: MultiDataSet = [
+    []
+  ];
   doughnutChartType: ChartType = 'doughnut';
   colors: Color[] = [
     {
@@ -69,7 +80,59 @@ export class DashboardComponent implements OnInit {
       )
     }
   }];
+  ngOnInit(){
+    debugger
+    console.log("side ");
+this.dashboard.GetReceviedStatusChart().subscribe(res=>
+{
+//  console.log(res.key,"Firstkey");
+//  console.log(res.val,"Firstval");
+this.doughnutChartLabelsp=res.key;
+this. doughnutChartDatap=res.val;
+for(var val of res.val)
+{
+if(val>0){
+this.TotalNumorderStat +=val;
+}
+}
 
+}
+
+)///
+
+this.dashboard.GetOutgoingStatusChart().subscribe(res=>
+{
+
+  // console.log(res.key,"key");
+  //  console.log(res.val,"val");
+  this.doughnutChartLabels=res.key;
+  this. doughnutChartData=res.val;
+  for(var val of res.val)
+{
+  if(val>0){
+    this.TotalNumReceiptStat +=val;
+  }
+}
+})
+
+this.dashboard.GetTotalChart().subscribe(res=>
+  {
+  
+    // console.log(res.key,"key");
+    //  console.log(res.val,"val");
+    this.doughnutChartLabelsps=res.key;
+this. doughnutChartDataps=res.val;
+    for(var val of res.val)
+  {
+    if(val>0){
+      this.TotalinvenStat +=val;
+    }
+  }
+  })
+
+
+
+ }//oninit
 
 
 //////////line chart//////////////////////

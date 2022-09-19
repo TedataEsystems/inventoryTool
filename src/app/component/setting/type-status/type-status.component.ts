@@ -225,8 +225,8 @@ export class TypeStatusComponent implements OnInit {
     this.loader = true;
     let TypeStatusEdit: TypeStatus =
     {
-      Id: row.id,
-      Name: row.name,
+      id: row.id,
+      name: row.name,
       CreatedBy:row.createdBy,
       CreationDate:row.creationDate,
       UpdatedBy: localStorage.getItem('userName') || ''

@@ -46,7 +46,7 @@ loading: boolean = true;
 
   @ViewChild(MatSort) sort?:MatSort ;
   @ViewChild(MatPaginator) paginator?:MatPaginator ;
-  displayedColumns: string[] = ['Id', 'M', 'TypeStatusName', 'Comment','CustomerName','SerielNumber','DeviceType','RecipientName','Team','ReceivedDate','ReceviedStatusName','ExpriyDate','OutgoingStatusName','CreationDate','CreatedBy','UpdateDate','UpdatedBy','action'];
+  displayedColumns: string[] = ['Id', 'M', 'TypeStatusName', 'Comment','CustomerName','SerielNumber','DeviceType','OrderNumber','RecipientName','Team','ReceivedDate','ReceviedStatusName','ExpriyDate','OutgoingStatusName','CreationDate','CreatedBy','UpdateDate','UpdatedBy','action'];
   dataSource =new MatTableDataSource();
   columnsToDisplay: string[] = this.displayedColumns.slice();
 

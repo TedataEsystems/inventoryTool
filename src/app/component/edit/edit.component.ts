@@ -18,12 +18,18 @@ import {  MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class EditComponent implements OnInit {
   dialogTitle:string = "";
   appear:boolean=false;
+  isHidden:boolean=true;
+  outgoingisHidden:boolean=false;
 
   TypeStatuslist: TypeStatus[] = [];
    ReceivedStatuslist: ReceivedStatusList[] = [];
   OutgoingStatuslist: OutgoingStatusList[] = [];
 
-  constructor(public inventoryserv:InventoryService,public service :EditFormService, public dialogRef: MatDialogRef<EditComponent>,public notificationService: NotificationService,@Inject(MAT_DIALOG_DATA) public data: any ) { }
+  
+
+  constructor(public inventoryserv:InventoryService,public service :EditFormService, public dialogRef: MatDialogRef<EditComponent>,public notificationService: NotificationService,@Inject(MAT_DIALOG_DATA) public data: any ) { 
+   
+  }
 
   
 
@@ -46,7 +52,7 @@ export class EditComponent implements OnInit {
     this.TypeStatuslist=res.typeStatus;
     this.ReceivedStatuslist=res.receviedStatus;
     this.OutgoingStatuslist=res.outgoingStatus;
-    console.log(this.ReceivedStatuslist)
+ console.log(this.ReceivedStatuslist)
     if(this.data)
     {
       //set list in update
@@ -55,10 +61,10 @@ export class EditComponent implements OnInit {
       var outgoingstatuscount=0;
       for(var typeStatus of this.TypeStatuslist )
       {
-        if(this.data.TypeStatusId==typeStatus.Id)
+        if(this.data.typeStatusId==typeStatus.id)
         { 
           typstatuscount ++;
-          this.service.form.controls['TypeStatusId'].setValue(this.data.TypeStatusId);
+          this.service.form.controls['TypeStatusId'].setValue(this.data.typeStatusId);
           break;
         }
       }
@@ -66,33 +72,40 @@ export class EditComponent implements OnInit {
       {
         this.service.form.controls['TypeStatusId'].setValue(null);
       }
+    
       for(var received of this.ReceivedStatuslist )
       {
-        if(this.data.ReceviedStatusId==received.Id)
-        { 
+         debugger;
+        if(this.data.receviedStatusId==received.id)
+        {        
           recviedstatuscount ++;
-          this.service.form.controls['ReceviedStatusId'].setValue(this.data.ReceviedStatusId);
+          this.service.form.controls['ReceviedStatusId'].setValue(this.data.receviedStatusId);
+          //this.isHidden=false;
+          this.toggle();
           break;
         }
       }
       if(recviedstatuscount==0)
       {
         this.service.form.controls['ReceviedStatusId'].setValue(null);
+        //this.toggle();
       }
       for(var outgoing of this.OutgoingStatuslist )
       {
-        debugger;
-        if(this.data.OutgoingStatusId==outgoing.Id)
+        
+        if(this.data.outgoingStatusId==outgoing.id)
         { 
           outgoingstatuscount ++;
-          console.log("OutgoingStatusId",this.data.OutgoingStatusId);
-          this.service.form.controls['OutgoingStatusId'].setValue(this.data.OutgoingStatusId);
+         
+          this.service.form.controls['OutgoingStatusId'].setValue(this.data.outgoingStatusId);
+          this.outgoingtoggle();
           break;
         }
       }
       if(outgoingstatuscount==0)
       {
         this.service.form.controls['OutgoingStatusId'].setValue(null);
+        
       }
     }
     }
@@ -134,6 +147,12 @@ export class EditComponent implements OnInit {
   onClear(){
     this.service.form.reset();
     this.service.initializeFormGroup();
+  }
+  toggle(){
+    this.isHidden=!this.isHidden;
+  }
+  outgoingtoggle(){
+    this.outgoingisHidden=!this.outgoingisHidden;
   }
   onSubmit(){
     this.appear=true;

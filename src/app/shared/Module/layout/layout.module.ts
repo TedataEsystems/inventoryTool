@@ -20,13 +20,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IncomingComponent } from 'src/app/component/setting/incoming/incoming.component';
 import { OutgoingComponent } from 'src/app/component/setting/outgoing/outgoing.component';
 import { StoreComponent } from 'src/app/component/setting/store/store.component';
-<<<<<<< HEAD
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TypeStatusComponent } from 'src/app/component/setting/type-status/type-status.component';
-=======
 import { ChartsModule } from 'ng2-charts';
 
->>>>>>> b2d7c5a625cbf001359252ddd7ff3d8773228f76
 
 
 
