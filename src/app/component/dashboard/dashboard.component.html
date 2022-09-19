@@ -98,9 +98,13 @@
   <mat-card class="example-card">
     <div class="container-fluid py-4 px-4" >
       <div class="row g-4">
-          <div class="col-sm-5 col-xl-5  text-center">
+
+
+
+
+          <div class="col-sm-4 col-xl-4  text-center">
             <div class="chart-wrapper rounded mb-4">
-                <canvas baseChart 
+                <canvas baseChart
                 [data]="doughnutChartDatap"
                 [labels]="doughnutChartLabelsp"
                 [colors]="colors"
@@ -111,11 +115,27 @@
             <span class="total" matBadgeColor="warn" matBadge="{{TotalNumorderStat}}" matBadgeOverlap="false"> TOTAL </span>
           <span>الوارد </span>
           </div>
-          <div class="col-sm-2 col-xl-2  "></div>
-          <div class="col-sm-5 col-xl-5  text-center">
-           
+          <div class="col-sm-4 col-xl-4  text-center shadow box">
+
             <div class="chart-wrapper rounded mb-4">
-              <canvas baseChart 
+              <canvas baseChart
+              [data]="doughnutChartDataps"
+              [labels]="doughnutChartLabelsps"
+              [colors]="colors"
+              [plugins]="doughnutChartPlugins"
+              [chartType]="doughnutChartType">
+            </canvas>
+          </div>
+          <span class="tot"  matBadgeColor="warn" matBadge="{{TotalinvenStat}}" matBadgeOverlap="false">TOTAL</span>
+           <span>المخزن  </span>
+
+
+          </div>
+          <!-- <div class="col-sm-2 col-xl-2  "></div> -->
+          <div class="col-sm-4 col-xl-4  text-center">
+
+            <div class="chart-wrapper rounded mb-4">
+              <canvas baseChart
               [data]="doughnutChartData"
               [labels]="doughnutChartLabels"
               [colors]="colors"
@@ -125,14 +145,14 @@
           </div>
           <span class="total"  matBadgeColor="warn" matBadge="{{TotalNumReceiptStat}}" matBadgeOverlap="false">TOTAL</span>
            <span>المنصرف  </span>
-         
+
 
           </div>
           <!-- <div class="col-sm-2 col-xl-2  "></div>
           <div class="col-sm-5 col-xl-5  text-center">
-           
+
             <div class="chart-wrapper rounded mb-4">
-              <canvas baseChart 
+              <canvas baseChart
               [data]="doughnutChartDataps"
               [labels]="doughnutChartLabelsps"
               [colors]="colors"
@@ -142,10 +162,10 @@
           </div>
           <span class="total"  matBadgeColor="warn" matBadge="{{TotalinvenStat}}" matBadgeOverlap="false">TOTAL</span>
            <span>المخزن  </span>
-         
+
 
           </div> -->
-         
+
       </div>
   </div>
 
