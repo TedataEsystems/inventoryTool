@@ -17,10 +17,11 @@ import { NotificationService } from 'src/app/shared/service/notification.service
 export class DashboardComponent implements OnInit {
   TotalNumorderStat:number=0;
   TotalNumReceiptStat:number=0;
+  Total:number=0;
   TotalinvenStat:number=0;
   count:number=0;
   userRole= localStorage.getItem('userGroup');
- 
+
   ternumber:number=0;
   sennumber:number=0;
   tefnumber:number=0;
@@ -33,16 +34,17 @@ export class DashboardComponent implements OnInit {
    // public service:EmpService ,
     private titleService:Title,private dashboard:DashboardService,private router:Router ){
 
-    this.titleService.setTitle("Home"); 
-    
+    this.titleService.setTitle("Home");
+
   }
 
- 
- 
-   
+
+
+
 
 
   /////////////////donut chart//////////////////
+
   doughnutChartLabels: Label[] = [];
   doughnutChartData: MultiDataSet = [
     []
@@ -60,9 +62,13 @@ export class DashboardComponent implements OnInit {
   colors: Color[] = [
     {
       backgroundColor: [
-      '#d7d7d7',
-      '#80868b',
         '#8e2279',
+        '#80868b',
+      '#d7d7d7',
+"#0f1323",
+ "#1b3c51",
+ "#791a75",
+
         'blue', 'red','pink','orange','purple','brown','DeepPink','DarkOrange'
       ]
     }
@@ -98,7 +104,7 @@ this.TotalNumorderStat +=val;
 
 }
 
-)///
+)
 
 this.dashboard.GetOutgoingStatusChart().subscribe(res=>
 {
@@ -115,9 +121,11 @@ this.dashboard.GetOutgoingStatusChart().subscribe(res=>
 }
 })
 
+
+
 this.dashboard.GetTotalChart().subscribe(res=>
   {
-  
+
     // console.log(res.key,"key");
     //  console.log(res.val,"val");
     this.doughnutChartLabelsps=res.key;

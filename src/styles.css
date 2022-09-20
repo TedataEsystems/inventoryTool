@@ -9,6 +9,7 @@ html, body { height: 100%;
   animation:scroll
  }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
 :root{
   --main-color:#222;
   --seconed-color:#3a3e41 ;
@@ -17,6 +18,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   --forth-color:   #394b5b;/*#ffad00*/
   --fifth-color:#9c1396;
   --font-color:#80868b;
+  --cr-color:#0f1323;
+  --cr2-color:#1b3c51;
+  --cr3-color:#791a75;
+  --cr4-color:#8e2279;
 }
 button,[mat-icon-button]{
     outline: none !important;
@@ -450,7 +455,7 @@ snack-bar-container.success {
              background-color:var(--forth-color);
            }
            .mat-datepicker-content{
-            background-color:var(--third-color)  !important;
+            background-color:#fff  !important;
 
            }
            .mat-calendar-body-selected{
@@ -657,7 +662,7 @@ cursor:  pointer !important;
 
 }
 .mat-raised-button{
-background-color: #4ba705;
+background-color:var(--fifth-color);
 }
 a,span,input,h2,.mat-raised-button,.mat-menu-panel,.mat-list-item,.mat-menu-item,.mat-body, .mat-body-1, .mat-typography{
   font-family: 'ZCOOL XiaoWei', serif !important;
@@ -1010,7 +1015,7 @@ mat-header-row {
 .mat-datepicker-content{
   /* background-color: #a0a68d  !important; */
 
-  background-color: #eee  !important;
+  background-color: #fff !important;
   color:#012535 !important
 }
 .mat-stroked-button:not(.mat-button-disabled) {
