@@ -70,7 +70,7 @@ export class HistoryListComponent implements OnInit {
   }
 
   getRequestdata(pageNum: number, pageSize: number, search: string, sortColumn: string, sortDir: string) {
-    debugger
+    //debugger
     this.loader = true;
     this.LogsServ.getLogs(pageNum, pageSize, search, sortColumn, sortDir).subscribe(response => {
       this.logsList = response?.data;

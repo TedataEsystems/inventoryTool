@@ -65,7 +65,7 @@
             الوارد
          </mat-checkbox>               
         
-        <mat-form-field [hidden]='isHidden'>       
+        <mat-form-field *ngIf="isHidden">       
           <mat-select formControlName="ReceviedStatusId" placeholder=" *حالة الوارد (--اختار--) "  >
              <mat-option>-- Please select --</mat-option> 
             <mat-option  *ngFor="let ReceviedStatus of ReceivedStatuslist"    [value]="ReceviedStatus.id">

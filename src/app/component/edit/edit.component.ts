@@ -18,7 +18,7 @@ import {  MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class EditComponent implements OnInit {
   dialogTitle:string = "";
   appear:boolean=false;
-  isHidden:boolean=true;
+  isHidden:boolean=false;
   outgoingisHidden:boolean=false;
 
   TypeStatuslist: TypeStatus[] = [];
@@ -75,7 +75,7 @@ export class EditComponent implements OnInit {
     
       for(var received of this.ReceivedStatuslist )
       {
-         debugger;
+        // debugger;
         if(this.data.receviedStatusId==received.id)
         {        
           recviedstatuscount ++;

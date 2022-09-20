@@ -81,7 +81,7 @@ export class DashboardComponent implements OnInit {
     }
   }];
   ngOnInit(){
-    debugger
+    //debugger
     console.log("side ");
 this.dashboard.GetReceviedStatusChart().subscribe(res=>
 {

@@ -33,7 +33,7 @@ export class InventoryService {
 
 
   getInventory(PageNumber :number , PageSize :number , searchValue:string ,sortcolumn:string,sortcolumndir:string){
-    debugger
+    //debugger
     let params = new HttpParams();
     if(PageNumber !== null && PageSize !== null){
       params = params.append('pageNumber' , PageNumber.toString());

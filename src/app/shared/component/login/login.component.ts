@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
 
   }
   onSubmit() {
-    debugger
+  
     if (this.form.invalid) {
       return;
     }
@@ -57,6 +57,7 @@ export class LoginComponent implements OnInit {
   }, 3600000);
     this.loginmodel.userName = this.form.value.username.trim();
     this.loginmodel.password = this.form.value.password;
+    
     this.login.getLogin(this.loginmodel).subscribe(res => {
     console.log("subscribe"+res.status);
       if (res.status == true) {

@@ -72,7 +72,7 @@ loading: boolean = true;
   // searchKey!:string;
 
   getRequestdata(pageNum: number, pageSize: number, search: string, sortColumn: string, sortDir: string) {
-    debugger
+    //debugger
     this.loader = true;
     this.InventoryServ.getInventory(pageNum, pageSize, search, sortColumn, sortDir).subscribe(response => {
       console.log(response?.data)
@@ -175,7 +175,7 @@ loading: boolean = true;
 
     }
     onDelete(row:any){
-      debugger
+      //debugger
       if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
       {
         this.router.navigateByUrl('/login');
@@ -400,7 +400,7 @@ upLoadF() {
 }
 ExportTOEmptyExcel()
 {
-  debugger
+  //debugger
   if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
   {
     this.router.navigateByUrl('/login');
