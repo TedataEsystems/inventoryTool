@@ -919,10 +919,13 @@ app-sidebar {
     float: right !important;
 
 } */
-.nav-caption {
-  display: inline-block;
-  padding-left: 6px;
-}
+.nav-caption{
+    display: inline-block;
+    padding-left: 6px;
+
+  }
+
+
 
 .mat-list-base .mat-list-item .mat-list-item-content,
 .mat-list-base .mat-list-option .mat-list-item-content {

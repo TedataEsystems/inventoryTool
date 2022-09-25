@@ -47,7 +47,7 @@ loading: boolean = true;
 
   @ViewChild(MatSort) sort?:MatSort ;
   @ViewChild(MatPaginator) paginator?:MatPaginator ;
-  displayedColumns: string[] = ['Id', 'M', 'TypeStatusName', 'Comment','CustomerName','SerielNumber','DeviceType','OrderNumber','RecipientName','Team','ReceivedDate','ReceviedStatusName','ExpriyDate','OutgoingStatusName','CreationDate','CreatedBy','UpdateDate','UpdatedBy','action'];
+  displayedColumns: string[] = ['Id', 'M', 'TypeStatusName', 'Comment','CustomerName','SerielNumber','DeviceType','OrderNumber','RecipientName','Team','Status','ReceivedDate','ReceviedStatusName','ExpriyDate','OutgoingStatusName','CreationDate','CreatedBy','UpdateDate','UpdatedBy','action'];
   dataSource =new MatTableDataSource();
   columnsToDisplay: string[] = this.displayedColumns.slice();
 
@@ -76,7 +76,7 @@ loading: boolean = true;
     //debugger
     this.loader.busy();
     this.InventoryServ.getInventory(pageNum, pageSize, search, sortColumn, sortDir).subscribe(response => {
-      console.log(response?.data)
+      //console.log(response?.data)
       this.InventoryList = response?.data as Inventory[];
       this.InventoryList.length = response?.pagination.totalCount;
       //console.log("fromreqquest",this.InventoryList)
@@ -371,10 +371,10 @@ openBottomSheetMsg() {
 }
 
 upLoadF() {
-  console.log("uploadF","param:",this.param,"fileUploaded:", this.fileuploaded)
+  //console.log("uploadF","param:",this.param,"fileUploaded:", this.fileuploaded)
   const fd = new FormData();
   fd.append(this.param, this.fileuploaded);
-  console.log("data to api",fd)
+ // console.log("data to api",fd)
   this.InventoryServ.importExcelFile(fd).subscribe(res => {
     if (res.status == true) {
       this.getRequestdata(1, 25, '', this.sortColumnDef, this.SortDirDef);
@@ -438,15 +438,15 @@ onselectcheckall(event: any) {
   }
 
   else {
-    console.log("isall", this.isall);
-    console.log("hhh", event);
+    //console.log("isall", this.isall);
+   // console.log("hhh", event);
     this.Ids = [];
     this.selectedRows = false;
     this.alll = false;
     this.isall = false;
-    console.log(this.Ids, "idsssss");
-    console.log("all", this.alll);
-    console.log("isall", this.isall);
+    //console.log(this.Ids, "idsssss");
+    //console.log("all", this.alll);
+    //console.log("isall", this.isall);
 
   }
 }
@@ -455,7 +455,7 @@ onselectcheck(event: any, row: any) {
   if (event.checked) {
     this.selectedRows = true;
     this.Ids.push(row.id);
-    console.log(this.Ids);
+   // console.log(this.Ids);
 
   }
 

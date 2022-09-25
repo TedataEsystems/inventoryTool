@@ -131,17 +131,16 @@ this.dashboard.GetOutgoingStatusChart().subscribe(res=>
 
 this.dashboard.GetTotalChart().subscribe(res=>
   {
-
-    // console.log(res.key,"key");
-    //  console.log(res.val,"val");
+    //debugger
+    console.log("tt",this.TotalNumorderStat);
+    console.log("tt",this.TotalNumReceiptStat);
+     console.log(res.val,"val");
     this.doughnutChartLabelsps=res.key;
 this. doughnutChartDataps=res.val;
-    for(var val of res.val)
-  {
-    if(val>0){
-      this.TotalinvenStat +=val;
-    }
-  }
+
+
+this.TotalinvenStat =(res.val[0])-(res.val[1] );
+ 
   })
 
 

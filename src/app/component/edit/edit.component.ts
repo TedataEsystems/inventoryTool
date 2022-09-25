@@ -26,6 +26,8 @@ export class EditComponent implements OnInit {
    ReceivedStatuslist: ReceivedStatusList[] = [];
   OutgoingStatuslist: OutgoingStatusList[] = [];
 
+ flag:boolean=false;
+
 
 
   constructor(public inventoryserv:InventoryService,private loader: LoaderService,public service :EditFormService, public dialogRef: MatDialogRef<EditComponent>,public notificationService: NotificationService,@Inject(MAT_DIALOG_DATA) public data: any ) {
@@ -40,6 +42,7 @@ export class EditComponent implements OnInit {
     //console.log("rowOnInt",this.data);
     if(this.data.dialogTitle !=="اضافة جديد"){
       this.dialogTitle= 'تعديل';
+      this.flag=true;
     }
     else{
       this.dialogTitle = this.data.dialogTitle;
@@ -128,6 +131,7 @@ export class EditComponent implements OnInit {
     this.service.form.controls['SerielNumber'].setValue(this.data.serielNumber);
     this.service.form.controls['RecipientName'].setValue(this.data.recipientName);
     this.service.form.controls['Team'].setValue(this.data.team);
+    this.service.form.controls['Status'].setValue(this.data.status);
     this.service.form.controls['Comment'].setValue(this.data.comment);
     this.service.form.controls['ReceivedDate'].setValue(this.data.receivedDate);
     this.service.form.controls['ExpriyDate'].setValue(this.data.expriyDate);
@@ -151,8 +155,10 @@ export class EditComponent implements OnInit {
   }
   toggle(){
     this.isHidden=!this.isHidden;
+    //this.outgoingisHidden=!this.outgoingisHidden;
   }
   outgoingtoggle(){
+    //this.isHidden=!this.isHidden;
     this.outgoingisHidden=!this.outgoingisHidden;
   }
   onSubmit(){
@@ -173,6 +179,7 @@ export class EditComponent implements OnInit {
   SerielNumber :this.service.form.value.SerielNumber,
   RecipientName :this.service.form.value.RecipientName,
   Team:this.service.form.value.Team,
+  Status:this.service.form.value.Status,
   ReceivedDate:this.service.form.value.ReceivedDate,
   ExpriyDate:this.service.form.value.ExpriyDate,
   Comment :this.service.form.value.Comment,
@@ -190,10 +197,14 @@ export class EditComponent implements OnInit {
 
 if(this.data.dialogTitle=="اضافة جديد")
 {
+  debugger
   // console.log("add",this.service.form.value);
-  // console.log("HwStatus",HwStatus);
+  // console.log("date",inventory.ExpriyDate);
+  if(inventory.ExpriyDate !=null){
     var changeHour= new Date(inventory.ExpriyDate.getFullYear(), inventory.ExpriyDate.getMonth(), inventory.ExpriyDate.getDate(), 5, 0, 0);
     inventory.ExpriyDate=changeHour;
+  }
+
     var changeHour1= new Date(inventory.ReceivedDate.getFullYear(), inventory.ReceivedDate.getMonth(), inventory.ReceivedDate.getDate(), 5, 0, 0);
     inventory.ReceivedDate=changeHour1;
   //Add
