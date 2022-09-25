@@ -208,7 +208,9 @@ padding: 16px;
 .student-element-description-attribution {
 opacity: 0.5;
 } */
-
+mat-form-field{
+  margin-top: 15px !important;
+}
 .export{
 /* position: fixed; */
 background:var(--main-color);
