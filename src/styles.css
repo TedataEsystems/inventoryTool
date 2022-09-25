@@ -912,10 +912,10 @@ app-sidebar{
     background-color: #fafafa;
     border-radius: 5px;
 }
-.total{
+/* .total{
     float: right !important;
 
-}
+} */
 .nav-caption{
     display: inline-block;
     padding-left: 6px;

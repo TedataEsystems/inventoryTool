@@ -8,6 +8,7 @@ export interface Inventory {
     SerielNumber:string;
     RecipientName :string;
     Team :string;
+    Status:string;
     ReceivedDate :Date;
     ExpriyDate :Date;
     TypeStatusId? :number;

@@ -75,6 +75,10 @@
         <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Type   </mat-header-cell>
         <mat-cell *matCellDef="let element" data-label="Type"> {{element.typeStatusName}} </mat-cell>
     </ng-container>
+    <ng-container matColumnDef="Comment">
+      <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> كومنت </mat-header-cell>
+      <mat-cell *matCellDef="let element" data-label="كومنت"> {{element.comment}} </mat-cell>
+  </ng-container>
     <ng-container matColumnDef="CustomerName">
         <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> اسم العميل  </mat-header-cell>
         <mat-cell *matCellDef="let element" data-label="اسم العميل "> {{element.customerName}} </mat-cell>
@@ -105,11 +109,11 @@
         <mat-cell *matCellDef="let element" data-label=" Team"> {{element.team}} </mat-cell>
     </ng-container>
 
-
-    <ng-container matColumnDef="Comment">
-        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> كومنت </mat-header-cell>
-        <mat-cell *matCellDef="let element" data-label="كومنت"> {{element.comment}} </mat-cell>
-    </ng-container>
+    <ng-container matColumnDef="Status">
+      <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>الحالة</mat-header-cell>
+      <mat-cell *matCellDef="let element" data-label=" الحالة"> {{element.status}} </mat-cell>
+  </ng-container>
+    
 
     <ng-container matColumnDef="ReceivedDate">
         <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> تاريخ الوارد </mat-header-cell>
