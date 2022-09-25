@@ -1,8 +1,8 @@
 <!--  ------main----------------- -->
-<mat-card class="example-card" style="padding-bottom: 10px !important;text-align: right; ">
+<!-- <mat-card class="" style="padding-bottom: 10px !important;text-align: right; "> -->
 
   <!-- first card -->
-  <div class="pt-5 row d-flex ">
+  <!-- <div class="pt-5 row d-flex ">
       <div class="col-sm-4 col-md-4 mb-4">
           <div class="card border-left-info shadow h-100">
               <div class="card-body">
@@ -16,87 +16,19 @@
                                   <div class="h5 mb-0 ml-5 font-weight-bold text-gray-800">اجمالي المنصرف :<span
                                           class="res">{{this.TotalNumReceiptStat}}</span> </div>
                               </div>
-                              <!-- <div class="col">
-                                  <div class="progress progress-sm w-75">
-                                      <div class="progress-bar bg-info " role="progressbar" [style.width.%]="92"
-                                          aria-valuenow="92" aria-valuemin="0" aria-valuemax="100"></div>
-                                  </div>
-                              </div> -->
+
                           </div>
                       </div>
-                      <!-- <div class="col-auto">
-                          <span class="percentage ml-2"> 92</span>
-                          <mat-icon style="vertical-align: baseline;">%</mat-icon>
-                      </div> -->
+
                   </div>
               </div>
           </div>
       </div>
-      <!-- second card -->
-      <!-- <div class="col-sm-4 col-md-4 mb-4">
-          <div class="card border-left-info shadow h-100">
-              <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
-                          <div class="font-weight-bold text-info text-uppercase mb-1"> الوارد</div>
-                          <div class="row no-gutters align-items-center">
-                              <div class="col-auto">
-                                  <div class="h5 mb-1 ml-5 font-weight-bold text-gray-800">ترمنيت :<span
-                                          class="res">12/5/2020</span> </div>
-                                  <div class="h5 mb-0 ml-5 font-weight-bold text-gray-800">صيانة : <span
-                                          class="res">Success</span></div>
-                              </div>
-                              <div class="col">
-                                  <div class="progress progress-sm w-75">
-                                      <div class="progress-bar bg-info" role="progressbar" [style.width.%]="54"
-                                          aria-valuenow="54" aria-valuemin="0" aria-valuemax="100"></div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="col-auto">
-                          <span class="percentage ml-2"> 54</span>
-                          <mat-icon style="vertical-align: baseline;">%</mat-icon>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div> -->
-      <!-- <div class="col-sm-4 col-md-4 mb-4">
-        <div class="card border-left-info shadow h-100">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="font-weight-bold text-info text-uppercase mb-1">المنصرف </div>
-                        <div class="row no-gutters align-items-center">
-                            <div class="col-auto">
-                                <div class="h5 mb-1 ml-5 font-weight-bold text-gray-800">تالف : <span
-                                        class="res">12/5/2020</span></div>
-                                <div class="h5 mb-1 ml-5 font-weight-bold text-gray-800">صيانة :<span
-                                        class="res">Success</span> </div>
-                                        <div class="h5 mb-0 ml-5 font-weight-bold text-gray-800">تركيبات :<span
-                                          class="res">Success</span> </div>
-                            </div>
-                            <div class="col">
-                                <div class="progress progress-sm w-75">
-                                    <div class="progress-bar bg-info" role="progressbar" [style.width.%]="92"
-                                        aria-valuenow="92" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <span class="percentage ml-2"> 92</span>
-                        <mat-icon style="vertical-align: baseline;">%</mat-icon>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
 
-  </div>
-  <mat-card class="example-card">
-    <div class="container-fluid py-4 px-4" >
+
+  </div> -->
+  <mat-card class="example-card p-3 pb-0">
+    <div class="container-fluid pt-4 px-4" >
       <div class="row g-4">
 
 
@@ -115,7 +47,7 @@
             <span class="total" matBadgeColor="warn" matBadge="{{TotalNumorderStat}}" matBadgeOverlap="false"> TOTAL </span>
           <span>الوارد </span>
           </div>
-          <div class="col-sm-4 col-xl-4  text-center shadow box">
+          <div class="col-sm-4 col-xl-4  text-center shadow box" style="height:500px">
 
             <div class="chart-wrapper rounded mb-4">
               <canvas baseChart
@@ -126,9 +58,23 @@
               [chartType]="doughnutChartType">
             </canvas>
           </div>
-          <span class="tot"  matBadgeColor="warn" matBadge="{{TotalinvenStat}}" matBadgeOverlap="false">TOTAL</span>
+          <span class="total"  matBadgeColor="warn" matBadge="{{TotalinvenStat}}" matBadgeOverlap="false">TOTAL</span>
            <span>المخزن  </span>
+           <hr class="breakline">
+           <div class="detailscharttxt">
+               <div class="detailschartblocks">
 
+
+                   <span id="MainContent_monthstat_lbl" class="lblbigtxt">{{TotalNumorderStat}}</span>
+                   <label class="lblbigtxtunder">اجمالي الوارد</label>
+               </div>
+               <div class="detailschartblocks">
+
+                   <span id="MainContent_totalevu_lbl" class="lblbigtxt">{{TotalNumReceiptStat}}</span>
+
+                   <label class="lblbigtxtunder">اجمالي المنصرف</label>
+               </div>
+               </div>
 
           </div>
           <!-- <div class="col-sm-2 col-xl-2  "></div> -->
@@ -172,5 +118,8 @@
 
 </mat-card>
 
-</mat-card>
+<!-- </mat-card> -->
 
+<ngx-spinner type="timer">
+  <h5>Loading</h5>
+</ngx-spinner>

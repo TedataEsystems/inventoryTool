@@ -17,6 +17,7 @@ import {saveAs} from 'file-saver';
 import { TypeStatus } from 'src/app/Model/type-status';
 import { ReceivedStatusList } from 'src/app/Model/received-status-list';
 import { OutgoingStatusList } from 'src/app/Model/outgoing-status-list';
+import { LoaderService } from 'src/app/shared/service/loader.service';
 
 @Component({
   selector: 'app-inventory',
@@ -29,20 +30,20 @@ TypeStatus: TypeStatus[] = [];
 ReceivedStatus: ReceivedStatusList[] = [];
 OutgoingStatus: OutgoingStatusList[] = [];
 isNotAdmin= false ;
-loader: boolean = false;
+//loader: boolean = false;
 valdata="";valuid=0;
 listName:string ='';
 loading: boolean = true;
   searchKey:string ='' ;
   isTableExpanded = false;
 
- 
 
 
- 
-  
- 
- 
+
+
+
+
+
 
   @ViewChild(MatSort) sort?:MatSort ;
   @ViewChild(MatPaginator) paginator?:MatPaginator ;
@@ -50,13 +51,13 @@ loading: boolean = true;
   dataSource =new MatTableDataSource();
   columnsToDisplay: string[] = this.displayedColumns.slice();
 
-  constructor(private dailogService:DeleteService,private titleService:Title, private note:NotificationService,private deleteService:DeleteService,private dialog: MatDialog, private route: ActivatedRoute,
+  constructor(private dailogService:DeleteService,private loader: LoaderService,private titleService:Title, private note:NotificationService,private deleteService:DeleteService,private dialog: MatDialog, private route: ActivatedRoute,
     private router: Router, private InventoryServ: InventoryService, private config: ConfigureService, private _bottomSheet: MatBottomSheet)
 
   {
 
     this.titleService.setTitle("Inventory");
-    var teamval=  localStorage.getItem("userGroup");  
+    var teamval=  localStorage.getItem("userGroup");
     if(teamval?.toLocaleLowerCase() != 'admin'){
       this.isNotAdmin=true;  }
 
@@ -73,17 +74,17 @@ loading: boolean = true;
 
   getRequestdata(pageNum: number, pageSize: number, search: string, sortColumn: string, sortDir: string) {
     //debugger
-    this.loader = true;
+    this.loader.busy();
     this.InventoryServ.getInventory(pageNum, pageSize, search, sortColumn, sortDir).subscribe(response => {
       console.log(response?.data)
       this.InventoryList = response?.data as Inventory[];
       this.InventoryList.length = response?.pagination.totalCount;
       //console.log("fromreqquest",this.InventoryList)
-     
+
       this.dataSource = new MatTableDataSource<any>(this.InventoryList);
       this.dataSource._updateChangeSubscription();
       this.dataSource.paginator = this.paginator as MatPaginator;
-    
+
     })
 
     this.InventoryServ.GettingLists().subscribe(res => {
@@ -91,8 +92,8 @@ loading: boolean = true;
       this.ReceivedStatus = res.recivedstatus as ReceivedStatusList[];
       this.OutgoingStatus = res.outgoingstatus as OutgoingStatusList[];
     });
-      
-    setTimeout(()=> this.loader = false,2000) ;
+
+    setTimeout(()=> this.loader.idle(),2000) ;
   }
 
 
@@ -166,11 +167,12 @@ loading: boolean = true;
       dialogGonfig.disableClose=true;
       dialogGonfig.autoFocus= true;
       dialogGonfig.width="50%";
+
       dialogGonfig.panelClass='modals-dialog';
        this.dialog.open(EditComponent,{disableClose:true,autoFocus:true, width:"50%",data:row}).afterClosed().subscribe(result => {
         this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef)});
 
-      
+
        }
 
     }
@@ -181,7 +183,7 @@ loading: boolean = true;
         this.router.navigateByUrl('/login');
       }
       else{
-        
+
       this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
         if (res) {
           this.InventoryServ.DeleteInventory(row.id).subscribe(
@@ -206,7 +208,7 @@ previousSizedef = 100;
 pagesizedef: number = 100;
 public pIn: number = 0;
 
-pageChanged(event: any) {  
+pageChanged(event: any) {
   if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
 {
   this.router.navigateByUrl('/login');
@@ -231,19 +233,19 @@ getRequestdataNext(cursize: number, pageNum: number, pageSize: number, search: s
     else{
     this.InventoryServ.getInventory(pageNum, pageSize, search, sortColumn, sortDir).subscribe(res => {
       if (res.status == true) {
-       
+
         this.InventoryList.length = cursize;
         this.InventoryList.push(...res?.data);
         this.InventoryList.length = res?.pagination.totalCount;
         this.dataSource = new MatTableDataSource<any>(this.InventoryList);
         this.dataSource._updateChangeSubscription();
         this.dataSource.paginator = this.paginator as MatPaginator;
-       
+
       }
       else  this.note.success(":: add successfully");
     }, err => {
       this.note.warn(":: failed");
-    
+
 
     })
     }
@@ -476,7 +478,7 @@ onselectcheck(event: any, row: any) {
 
   }
   else{
-    
+
     this.alll = false;
     if(this.Ids.length!=0)
     {

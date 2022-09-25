@@ -8,6 +8,7 @@ import { EditFormService } from 'src/app/shared/service/edit-form.service';
 import { InventoryService } from 'src/app/shared/service/inventory.service';
 import { NotificationService } from 'src/app/shared/service/notification.service';
 import {  MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { LoaderService } from 'src/app/shared/service/loader.service';
 
 
 @Component({
@@ -25,15 +26,15 @@ export class EditComponent implements OnInit {
    ReceivedStatuslist: ReceivedStatusList[] = [];
   OutgoingStatuslist: OutgoingStatusList[] = [];
 
-  
 
-  constructor(public inventoryserv:InventoryService,public service :EditFormService, public dialogRef: MatDialogRef<EditComponent>,public notificationService: NotificationService,@Inject(MAT_DIALOG_DATA) public data: any ) { 
-   
+
+  constructor(public inventoryserv:InventoryService,private loader: LoaderService,public service :EditFormService, public dialogRef: MatDialogRef<EditComponent>,public notificationService: NotificationService,@Inject(MAT_DIALOG_DATA) public data: any ) {
+
   }
 
-  
 
-  
+
+
   ngOnInit(){
     // this.dialogTitle = this.data.dialogTitle;
     //console.log("rowOnInt",this.data);
@@ -44,7 +45,7 @@ export class EditComponent implements OnInit {
       this.dialogTitle = this.data.dialogTitle;
     }
 
-    
+
    this.inventoryserv.GettingLists().subscribe(res=>{
    // debugger
     if(res.status==true)
@@ -62,7 +63,7 @@ export class EditComponent implements OnInit {
       for(var typeStatus of this.TypeStatuslist )
       {
         if(this.data.typeStatusId==typeStatus.id)
-        { 
+        {
           typstatuscount ++;
           this.service.form.controls['TypeStatusId'].setValue(this.data.typeStatusId);
           break;
@@ -72,12 +73,12 @@ export class EditComponent implements OnInit {
       {
         this.service.form.controls['TypeStatusId'].setValue(null);
       }
-    
+
       for(var received of this.ReceivedStatuslist )
       {
         // debugger;
         if(this.data.receviedStatusId==received.id)
-        {        
+        {
           recviedstatuscount ++;
           this.service.form.controls['ReceviedStatusId'].setValue(this.data.receviedStatusId);
           //this.isHidden=false;
@@ -92,11 +93,11 @@ export class EditComponent implements OnInit {
       }
       for(var outgoing of this.OutgoingStatuslist )
       {
-        
+
         if(this.data.outgoingStatusId==outgoing.id)
-        { 
+        {
           outgoingstatuscount ++;
-         
+
           this.service.form.controls['OutgoingStatusId'].setValue(this.data.outgoingStatusId);
           this.outgoingtoggle();
           break;
@@ -105,7 +106,7 @@ export class EditComponent implements OnInit {
       if(outgoingstatuscount==0)
       {
         this.service.form.controls['OutgoingStatusId'].setValue(null);
-        
+
       }
     }
     }
@@ -117,7 +118,7 @@ export class EditComponent implements OnInit {
 //debugger
    if(this.data)
    {
-    
+
     //console.log("condition entered")
     this.service.form.controls['Id'].setValue(this.data.id);
     this.service.form.controls['M'].setValue(this.data.m);
@@ -135,10 +136,10 @@ export class EditComponent implements OnInit {
     this.service.form.controls['OutgoingStatusId'].setValue(this.data.outgoingStatusId);*/
     this.service.form.controls['CreatedBy'].setValue(this.data.createdBy);
     this.service.form.controls['CreationDate'].setValue(this.data.creationDate);
-   
+
 
    }
-   
+
 
 
 
@@ -155,9 +156,11 @@ export class EditComponent implements OnInit {
     this.outgoingisHidden=!this.outgoingisHidden;
   }
   onSubmit(){
-    this.appear=true;
+    this.loader.busy();
+    //this.appear=true;
     if(this.service.form.invalid){
-      this.appear=false;
+      //this.appear=false;
+      this.loader.idle();
     return;
     }
 
@@ -181,7 +184,7 @@ export class EditComponent implements OnInit {
   OutgoingStatusName :this.service.form.value.OutgoingStatus,
   CreationDate :this.service.form.value.CreationDate,
   CreatedBy:this.service.form.value.CreatedBy,
-  
+
 };
 
 
@@ -203,19 +206,20 @@ inventory.CreatedBy=localStorage.getItem('userName') || '';
         {
       this.notificationService.success(':: Submitted successfully');
       this.service.form.reset();
+      this.loader.idle();
       this.dialogRef.close('save');
         }
         else{
           this.notificationService.warn(':: Failed');
-    
+          this.loader.idle();
         }
-      
+
     },
-   
+
   )
   }else
   {
-    
+
     //update
      this.service.form.controls['UpdatedBy'].setValue(localStorage.getItem('userName') || '');
     //console.log("update",this.service.form.value);
@@ -228,23 +232,25 @@ inventory.CreatedBy=localStorage.getItem('userName') || '';
         {
         this.notificationService.success(':: Updated successfully');
         this.service.form.reset();
+        this.loader.idle();
         this.dialogRef.close('save');
       // this.onClose();
 
-    
+
         }
         else{
           this.notificationService.warn(':: Failed');
-    
+          this.loader.idle();
+
         }
-      
+
     },
-   
+
   )
-  } 
+  }
 
 
-   
+
 
 
 

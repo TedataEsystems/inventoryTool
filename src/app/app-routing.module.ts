@@ -26,7 +26,7 @@ const routes: Routes = [
       {
       path:'',
       component: DashboardComponent,
-      canActivate:  [AuthGuardService] 
+      canActivate:  [AuthGuardService]
 
     },
     {
@@ -36,7 +36,7 @@ const routes: Routes = [
     {
       path:'inventory',
       component:InventoryComponent,
-      canActivate: [AuthGuardService] 
+      canActivate: [AuthGuardService]
     },
     {path:'Type',
     component:TypeStatusComponent
@@ -49,15 +49,16 @@ const routes: Routes = [
     {
       path:'outgoing',
       component:OutgoingComponent
+    },
+    {
+      path:'**',
+     pathMatch: 'full',
+    component:ErrorPageComponent,
     }
   ]
 
 },
-{
-  path:'**',
- pathMatch: 'full',
-component:ErrorPageComponent,
-},
+
 ];
 
 @NgModule({

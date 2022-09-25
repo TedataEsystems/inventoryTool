@@ -16,6 +16,9 @@ mat-radio-button{
 mat-toolbar{
     background-color: var(--main-color);
     color:#fff;
+    position: absolute;
+    top: 0;
+    z-index: 2;
 }
 mat-form-field{
     margin-top: 25px !important;
@@ -26,4 +29,5 @@ mat-checkbox{
     margin-top: 15px;
 
 }
+
 

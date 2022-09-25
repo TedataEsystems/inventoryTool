@@ -52,17 +52,17 @@
   </mat-form-field>
 </div>
 
-<div *ngIf="dataSource==null;else table">
+<!-- <div *ngIf="dataSource==null;else table">
   <app-loading-page></app-loading-page>
 </div>
 
-<ng-template #table>
+<ng-template #table> -->
     <div class="example-container mat-elevation-z8">
 
 <mat-table [dataSource]="dataSource" multiTemplateDataRows   matSort (matSortChange)="sortData($event)" matSortActive="name"matSortDirection="asc" matSortDisableClear >
- 
-    
-   
+
+
+
     <ng-container matColumnDef="Id">
         <mat-header-cell *matHeaderCellDef mat-sort-header> ID</mat-header-cell>
         <mat-cell *matCellDef="let element" data-label="رقم"> {{element.id}} </mat-cell>
@@ -149,40 +149,40 @@
     <ng-container matColumnDef="action">
         <mat-header-cell mat-header-cell *matHeaderCellDef> الاجراء</mat-header-cell>
         <mat-cell *matCellDef="let row" data-label="الاجراء">
-            
-            
+
+
             <button mat-button   class="btn-success mx-1"  matTooltip="Edit" (click)="onEdit(row)">
                 <mat-icon>edit</mat-icon>
             </button>
-           
+
             <button mat-button   class="btn-danger" *ngIf="!isNotAdmin" matTooltip="Delete" (click)="onDelete(row)">
                 <mat-icon>delete_forever</mat-icon>
             </button>
         </mat-cell>
 
     </ng-container>
-   
-      
+
+
     <ng-container matColumnDef="noData">
         <mat-footer-cell *matFooterCellDef colspan="19">
-          .... لا يوجد بيانات 
+          .... لا يوجد بيانات
         </mat-footer-cell>
 
     </ng-container>
-  
-  
-    
+
+
+
     <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource.data.length==0 && dataSource !=null)}"></mat-footer-row>
     <mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;" class="student-element-row"
     [class.student-expanded-row]="row.isExpanded"></mat-row>
-    
+
 
 </mat-table>
 <!-- end test -->
 </div>
-
-</ng-template>
+<!--
+</ng-template> -->
 
 <mat-paginator [pageSizeOptions]="[10,25, 50, 100]"   [pageSize]="10"   showFirstLastButtons></mat-paginator>
 
@@ -233,5 +233,11 @@
       </div>
     </ng-template>
 
-   
+
   </div>
+
+
+
+<ngx-spinner type="timer">
+  <h5>Loading</h5>
+</ngx-spinner>
