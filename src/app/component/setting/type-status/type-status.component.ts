@@ -7,6 +7,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TypeStatus } from 'src/app/Model/type-status';
 import { DeleteService } from 'src/app/shared/service/delete.service';
+import { LoaderService } from 'src/app/shared/service/loader.service';
 import { NotificationService } from 'src/app/shared/service/notification.service';
 import { TypeStatusService } from 'src/app/shared/service/type-status.service';
 
@@ -45,7 +46,7 @@ export class TypeStatusComponent implements OnInit {
   editUsr: any;
   editdisabled: boolean = false;
   constructor(private titleService: Title
-    , private notser: NotificationService, private router: Router, private route: ActivatedRoute, private TypeStatusServ: TypeStatusService, private dailogService: DeleteService
+    , private notser: NotificationService, private router: Router, private loader: LoaderService,private route: ActivatedRoute, private TypeStatusServ: TypeStatusService, private dailogService: DeleteService
   ) {
     this.titleService.setTitle('Type');
 
@@ -53,7 +54,7 @@ export class TypeStatusComponent implements OnInit {
   TypeStatusName: string = '';
   TypeStatusId: number = 0;
  // show: boolean = false;
-  loader: boolean = false;
+  //loader: boolean = false;
   isDisabled = false;
   pageNumber = 1;
   pageSize = 100;
@@ -79,13 +80,13 @@ export class TypeStatusComponent implements OnInit {
   }
 
   getRequestdata(pageNum: number, pageSize: number, search: string, sortColumn: string, sortDir: string) {
-    
+
     if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
     {
       this.router.navigateByUrl('/login');
     }
     else{
-    this.loader = true;
+    this.loader.busy();;
     this.TypeStatusServ.getTypeStatus(pageNum, pageSize, search, sortColumn, sortDir).subscribe(response => {
       this.typeStatusList = response?.data;
       this.typeStatusList.length = response?.pagination.totalCount;
@@ -93,7 +94,7 @@ export class TypeStatusComponent implements OnInit {
       this.dataSource._updateChangeSubscription();
       this.dataSource.paginator = this.paginator as MatPaginator;
     })
-    setTimeout(() => this.loader = false, 2000);
+    setTimeout(() => this.loader.idle(), 2000);
   }
   }
 
@@ -141,7 +142,7 @@ export class TypeStatusComponent implements OnInit {
 
 
   onCreateUpdate() {
-    
+
     this.isDisable = true;
     this.Type.Name = this.form.value.Name;
     this.Type.Id = this.form.value.Id;
@@ -154,12 +155,12 @@ export class TypeStatusComponent implements OnInit {
     }
 
     else {
-      
+
       if (this.form.value.Id == 0 || this.form.value.Id == '' ) {
         this.isDisable = true;
         this.TypeStatusServ.AddTypeStatus(this.Type).subscribe(res => {
           setTimeout(() => {
-            this.loader = false;
+            this.loader.idle();
           }, 1500)
           this.notser.success(":: add successfully");
           this.LoadCompanyName();
@@ -171,7 +172,7 @@ export class TypeStatusComponent implements OnInit {
         },
           error => {
             setTimeout(() => {
-              this.loader = false;
+              this.loader.idle();
             }, 0)
             this.notser.warn(":: failed");
           }
@@ -181,7 +182,7 @@ export class TypeStatusComponent implements OnInit {
         //not used
         this.TypeStatusServ.UpdateTypeStatus(this.Type).subscribe(res => {
           setTimeout(() => {
-            this.loader = false;
+            this.loader.idle();
           }, 1500)
           this.notser.success(":: update successfully");
           this.LoadCompanyName();
@@ -191,17 +192,17 @@ export class TypeStatusComponent implements OnInit {
         },
           error => {
             setTimeout(() => {
-              this.loader = false;
+              this.loader.idle();
             }, 0)
             this.notser.warn(":: failed");
           }
         )
       }//else
-  
+
   }
     this.isShowDiv = false;
-  }//end of 
-  
+  }//end of
+
   editROw(r: any) {
     if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
     {
@@ -214,15 +215,15 @@ export class TypeStatusComponent implements OnInit {
   }
 
   cancelEdit() {
-    
+
     this.editdisabled = false;
     this.isNameUpdatedRepeated = false;
     this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
   }
 
   updateEdit(row: any) {
-  
-    this.loader = true;
+
+    this.loader.busy();;
     let TypeStatusEdit: TypeStatus =
     {
       id: row.id,
@@ -234,7 +235,7 @@ export class TypeStatusComponent implements OnInit {
     this.TypeStatusServ.UpdateTypeStatus(TypeStatusEdit).subscribe(res => {
       if (res.status == true) {
         setTimeout(() => {
-          this.loader = false;
+          this.loader.idle();
         }, 1500)
         this.notser.success(":: update successfully");
         this.LoadCompanyName();
@@ -246,7 +247,7 @@ export class TypeStatusComponent implements OnInit {
       }//if
       else {
         setTimeout(() => {
-          this.loader = false;
+          this.loader.idle();
         }, 0)
         this.notser.warn(":: failed");
       }
@@ -266,7 +267,7 @@ export class TypeStatusComponent implements OnInit {
       this.router.navigateByUrl('/login');
     }
     else{
-    this.loader = true;
+    this.loader.busy();;
     this.pIn = event.pageIndex;
     this.pageIn = event.pageIndex;
     this.pagesizedef = event.pageSize;
@@ -295,12 +296,12 @@ export class TypeStatusComponent implements OnInit {
         this.dataSource = new MatTableDataSource<any>(this.typeStatusList);
         this.dataSource._updateChangeSubscription();
         this.dataSource.paginator = this.paginator as MatPaginator;
-        this.loader = false;
+        this.loader.idle();
       }
       else this.notser.success(":: add successfully");
     }, err => {
       this.notser.warn(":: failed");
-      this.loader = false;
+      this.loader.idle();
 
     })
 
@@ -411,7 +412,7 @@ export class TypeStatusComponent implements OnInit {
       // this.form['controls']['id'].setValue(0);
 
     }
-   
+
   }
 
 }

@@ -3,32 +3,32 @@
       <mat-card-title>
           السجل
       </mat-card-title>
-     
+
   </mat-card-header>
   <mat-divider></mat-divider>
 
   <div class="search-div" fxLayout="row">
-      
-  
-   
-     
+
+
+
+
     <mat-form-field class="search-form-field" floatLabel="never">
-      <input matInput [(ngModel)]="searchKey" placeholder="بحث" autocomplete="off" (keyup)="applyFilter($event)"> 
+      <input matInput [(ngModel)]="searchKey" placeholder="بحث" autocomplete="off" (keyup)="applyFilter($event)">
       <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
            <mat-icon>close</mat-icon>
-       </button> 
-      
+       </button>
+
    </mat-form-field>
   </div>
-   
-  <div class="spinner" *ngIf="dataSource==null || loader ;else table">
+
+  <!-- <div class="spinner" *ngIf="dataSource==null || loader ;else table">
     <span>Loading Data ...</span>
     <mat-progress-bar class="example-margin"  mode="buffer" value="50">
   </mat-progress-bar>
-    
+
   </div>
 
-  <ng-template #table>
+  <ng-template #table> -->
     <div class="example-container mat-elevation-z8" >
 
     <mat-table [dataSource]="dataSource"  #table multiTemplateDataRows  matSort (matSortChange)="sortData($event)" matSortActive="name" matSortDirection="asc" matSortDisableClear >
@@ -51,25 +51,25 @@
       </ng-container>
       <ng-container matColumnDef="expandedDetail">
           <mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
-    
+
             <div class="row student-element-detail" [@detailExpand]="element.isExpanded ? 'expanded' : 'collapsed'">
               <mat-list>
-               
+
                 <mat-list-item >
                   {{element.descirption}}
-                
+
                 </mat-list-item>
               </mat-list>
           </div>
-    
+
           </mat-cell>
         </ng-container>
 
 
-  
 
 
-   
+
+
       <ng-container matColumnDef="ActionType">
           <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> نوع الاجراء</mat-header-cell>
           <mat-cell *matCellDef="let element" data-label="نوع الاجراء"> {{element.actionType}} </mat-cell>
@@ -79,7 +79,7 @@
           <mat-cell *matCellDef="let element" data-label="اسم المستخدم">{{element.userName}} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="CreationDate">
-          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> التاريخ 
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> التاريخ
           </mat-header-cell>
           <!-- {{element.creationDate|date : 'yyyy-MM-dd'}}  -->
           <mat-cell *matCellDef="let element" data-label="تاريخ الانشاء"> {{element.creationDate|date : 'yyyy-MM-dd'}} </mat-cell>
@@ -90,20 +90,20 @@
           </mat-header-cell>
           <mat-cell *matCellDef="let element" data-label="تاريخ التعديل"> {{element.updateDate|date}} </mat-cell>
       </ng-container> -->
-      
-    
-  
 
- 
- 
+
+
+
+
+
 <ng-container matColumnDef="noData">
   <mat-footer-cell *matFooterCellDef colspan="10">
-      .... لا يوجد بيانات 
+      .... لا يوجد بيانات
   </mat-footer-cell>
 
 </ng-container>
 
-   
+
   <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource.data.length==0 && dataSource !=null)}"></mat-footer-row>
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <!-- <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row> -->
@@ -115,7 +115,7 @@
 </mat-table>
 <!-- end test -->
 </div>
-</ng-template>
+<!-- </ng-template> -->
 
 <mat-paginator [pageSizeOptions]="[10, 25,50, 100]" [pageSize]="10" (page)="pageChanged($event)" showFirstLastButtons>
 </mat-paginator>
@@ -123,3 +123,6 @@
 
 
 
+<ngx-spinner type="timer">
+  <h5>Loading</h5>
+</ngx-spinner>

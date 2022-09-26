@@ -20,9 +20,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IncomingComponent } from 'src/app/component/setting/incoming/incoming.component';
 import { OutgoingComponent } from 'src/app/component/setting/outgoing/outgoing.component';
 import { StoreComponent } from 'src/app/component/setting/store/store.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TypeStatusComponent } from 'src/app/component/setting/type-status/type-status.component';
 import { ChartsModule } from 'ng2-charts';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoadingInterceptor } from 'src/app/interceptors/loading.interceptor';
 
 
 
@@ -56,6 +58,7 @@ import { ChartsModule } from 'ng2-charts';
     FlexLayoutModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    NgxSpinnerModule,
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-top-right',
@@ -63,6 +66,7 @@ import { ChartsModule } from 'ng2-charts';
     }),
 
 
-  ]
+  ],
+  providers:[{provide:HTTP_INTERCEPTORS , useClass:LoadingInterceptor , multi:true}]
 })
 export class LayoutModule { }

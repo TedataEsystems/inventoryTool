@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import {ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Color, Label,MultiDataSet } from 'ng2-charts';
 import { DashboardService } from 'src/app/shared/service/dashboard.service';
+import { LoaderService } from 'src/app/shared/service/loader.service';
 import { NotificationService } from 'src/app/shared/service/notification.service';
 
 
@@ -14,7 +15,7 @@ import { NotificationService } from 'src/app/shared/service/notification.service
   styleUrls: ['./dashboard.component.css'],
 
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit ,AfterViewInit {
   TotalNumorderStat:number=0;
   TotalNumReceiptStat:number=0;
   Total:number=0;
@@ -31,15 +32,20 @@ export class DashboardComponent implements OnInit {
  constructor(
     //private hardwareService:HardwareService,
     public notificationService: NotificationService,
+    private loader:LoaderService,
    // public service:EmpService ,
     private titleService:Title,private dashboard:DashboardService,private router:Router ){
 
     this.titleService.setTitle("Home");
+    this.loader.busy();
 
   }
 
 
+  ngAfterViewInit() {
+    setTimeout(()=>this.loader.idle(),1000)
 
+  }
 
 
 

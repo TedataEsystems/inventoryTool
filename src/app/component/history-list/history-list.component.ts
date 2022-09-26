@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Logs } from 'src/app/Model/logs';
+import { LoaderService } from 'src/app/shared/service/loader.service';
 import { LogsService } from 'src/app/shared/service/logs.service';
 import { NotificationService } from 'src/app/shared/service/notification.service';
 import { EditComponent } from '../edit/edit.component';
@@ -22,9 +23,9 @@ import { EditComponent } from '../edit/edit.component';
   ]
 })
 export class HistoryListComponent implements OnInit {
-  isShowDiv = false;  
- 
- 
+  isShowDiv = false;
+
+
   logsList:Logs[]=[];
   logsListTab?:Logs[]=[];
   valdata="";valuid=0;
@@ -41,17 +42,17 @@ export class HistoryListComponent implements OnInit {
     settingtype=''
 
 
-    constructor(private titleService:Title
+    constructor(private titleService:Title, private loader: LoaderService
       ,private notser:NotificationService,private router: Router,private route: ActivatedRoute, private LogsServ:LogsService
       ) {
         this.titleService.setTitle('logs');
-     
+
     }
 
     typestatus: string = '';
     typestatusId: number = 0;
     show: boolean = false;
-    loader:boolean=false;
+    //loader:boolean=false;
     isDisabled = false;
     pageNumber = 1;
     pageSize =100;
@@ -65,13 +66,13 @@ export class HistoryListComponent implements OnInit {
         this.logsList.length = response?.pagination.totalCount;
         this.dataSource = new MatTableDataSource<any>(this.logsList);
         this.dataSource.paginator = this.paginator as MatPaginator;
-  
+
       })
   }
 
   getRequestdata(pageNum: number, pageSize: number, search: string, sortColumn: string, sortDir: string) {
     //debugger
-    this.loader = true;
+    this.loader.busy();
     this.LogsServ.getLogs(pageNum, pageSize, search, sortColumn, sortDir).subscribe(response => {
       this.logsList = response?.data;
       this.logsList.length = response?.pagination.totalCount;
@@ -79,7 +80,7 @@ export class HistoryListComponent implements OnInit {
       this.dataSource._updateChangeSubscription();
       this.dataSource.paginator = this.paginator as MatPaginator;
     })
-    setTimeout(()=> this.loader = false,2000) ;
+    setTimeout(()=> this.loader.idle(),2000) ;
   }
 
 
@@ -101,22 +102,22 @@ export class HistoryListComponent implements OnInit {
   onSearchClear() {
     this.searchKey = '';
     this.getRequestdata(1, 10, this.searchKey, this.sortColumnDef, "desc");
-    
+
   }
- 
-applyFilter(filterValue: Event) { 
+
+applyFilter(filterValue: Event) {
   if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
     {
       this.router.navigateByUrl('/login');
     }
     else{
   this.dataSource.filter =(<HTMLInputElement>filterValue.target).value.trim().toLowerCase();
- 
+
   if (this.dataSource.paginator) {
     this.dataSource.paginator.firstPage();
   }
 }
- 
+
 }
 
   isDisable=false;
@@ -131,7 +132,7 @@ applyFilter(filterValue: Event) {
       this.router.navigateByUrl('/login');
     }
     else{
-    this.loader = true;
+    this.loader.busy();
     this.pIn = event.pageIndex;
     this.pageIn = event.pageIndex;
     this.pagesizedef = event.pageSize;
@@ -151,30 +152,30 @@ applyFilter(filterValue: Event) {
     else{
       this.LogsServ.getLogs(pageNum, pageSize, search, sortColumn, sortDir).subscribe(res => {
         if (res.status == true) {
-         
+
           this.logsList.length = cursize;
           this.logsList.push(...res?.data);
           this.logsList.length = res?.pagination.totalCount;
           this.dataSource = new MatTableDataSource<any>(this.logsList);
           this.dataSource._updateChangeSubscription();
           this.dataSource.paginator = this.paginator as MatPaginator;
-          this.loader = false;
+          this.loader.idle();
         }
         else  this.notser.success(":: add successfully");
       }, err => {
         this.notser.warn(":: failed");
-        this.loader = false;
+        this.loader.idle();
 
       })
 
-    
+
     }
   }
 
 
   lastcol: string = 'Id';
   lastdir: string = 'asc';
-  
+
   sortData(sort: any) {
     if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
     {
@@ -193,14 +194,14 @@ applyFilter(filterValue: Event) {
     var c = this.pageIn;
     this.getRequestdata(1, 100, '', sort.active, this.lastdir);
   }
-  
+
   }
-  
+
 
 
   toggleTableRows() {
     this.isTableExpanded = !this.isTableExpanded;
-  
+
     this.dataSource.data.forEach((row: any) => {
       row.isExpanded = this.isTableExpanded;
     })

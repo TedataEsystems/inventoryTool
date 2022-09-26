@@ -6,12 +6,16 @@ span{
     text-shadow: 2px 2px 2px grey;
   }
   span.total{
-    width: 90px;
-    margin: auto;
-    display: block;
-    font-size: 20px;
-    font-weight: bold;
-    color: gray;
+    /* position: absolute;
+      left: 44%;
+      top: 50%;
+      transform: translateY(-50%); */
+      display: block;
+      width: 90px;
+      margin: auto;
+      font-size: 20px;
+      font-weight: bold;
+      color: gray;
 
   }
   span.tot{
@@ -77,9 +81,69 @@ span{
     height: .9rem;
 }
 .box{
-  margin-top: -80px;
+  margin-top: -40px;
   position: relative;
   background: #fff;
   padding-top: 50px;
 }
 
+.detailscharttxt {
+  width: 100%;
+  height: 60px;
+  /* float: left; */
+  margin-bottom: 5px;
+
+}
+.breakline {
+  border: 1px solid #efefef;
+  width: 100%;
+  float: left;
+  margin-top: 10px;
+}
+.detailschartblocks {
+  border-right: 1px solid #e1e1e1;
+  width: 50%;
+  height: 60px;
+  float: left;
+
+}
+.detailschartblocks:last-child {
+  border-right: none;
+}
+.lblevaulatestat {
+  text-align: center;
+  display: block;
+  padding: 18px;
+  font-size: 22px;
+  color: #fff;
+  background-color:#19374b;
+}
+.lblevaulatestat2 {
+  text-align: center;
+  display: block;
+  padding: 17px;
+  font-size: 22px;
+  color: #333;
+}
+.lblbigtxt {
+  font-size: 25px;
+  width: 100%;
+  float: left;
+  text-align: center;
+  color: #3a3a3a;
+}
+.lblbigtxtunder {
+  font-size: 20px;
+  font-weight: 500;
+  width: 100%;
+  float: left;
+  text-align: center;
+  color: var(--font-color);
+}
+.lblevaulatestat3 {
+  text-align: center;
+  display: block;
+  padding: 17px;
+  font-size: 22px;
+  color: #c93a3a;
+}

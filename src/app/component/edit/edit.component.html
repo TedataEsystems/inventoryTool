@@ -6,7 +6,7 @@
 
 </mat-toolbar>
 <form [formGroup]="service.form" class="normal-form" (submit)="onSubmit()" dir="rtl">
-  <mat-grid-list cols="2" rowHeight="570px">
+  <mat-grid-list cols="2" rowHeight="530px">
     <mat-grid-tile>
       <div class="controles-container">
         <input type="hidden" formControlName="Id">
@@ -154,8 +154,10 @@
     </mat-grid-list>
 </form>
 
+<ngx-spinner type="timer">
+  <h5>Loading</h5>
+</ngx-spinner>
 
-
-<div *ngIf="appear">
+<!-- <div *ngIf="appear">
   <app-loading-page></app-loading-page>
-</div>
+</div> -->

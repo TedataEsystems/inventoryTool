@@ -139,10 +139,14 @@
 
             <router-outlet>
             </router-outlet>
+            <ngx-spinner type="timer">
+              <h5>Loading</h5>
+            </ngx-spinner>
             <button  (click)="scrollToTop()" [@fadeInOut] class="scroll-to-top" *ngIf="pageYoffset > 0" >
               <mat-icon>arrow_upward</mat-icon>
             </button>
          <app-footer></app-footer>
+
         </mat-sidenav-content>
       </mat-sidenav-container>
 
