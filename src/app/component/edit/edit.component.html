@@ -35,13 +35,14 @@
           <mat-error>مطلوب</mat-error>
         </mat-form-field>
         <mat-form-field>
-          <input formControlName="DeviceType" matInput placeholder="نوع الجهاز*">
+          <input formControlName="SerielNumber"  matInput placeholder="السيريال نامبر *">
           <mat-error>مطلوب</mat-error>
         </mat-form-field>
         <mat-form-field>
-          <input formControlName="OrderNumber" type="number" min="0" matInput placeholder="رقم الاوردر*">
+          <input formControlName="DeviceType" matInput placeholder="نوع الجهاز*">
           <mat-error>مطلوب</mat-error>
         </mat-form-field>
+       
        
         
 
@@ -51,16 +52,17 @@
     <mat-grid-tile>
       <div class="controles-container">
         <mat-form-field>
-          <input formControlName="Team" matInput placeholder="Team*">
+          <input formControlName="OrderNumber" type="number" min="0" matInput placeholder="رقم الاوردر*">
           <mat-error>مطلوب</mat-error>
         </mat-form-field>
+       
 
         <mat-form-field>
           <input formControlName="RecipientName" matInput placeholder="اسم المستلم *">
           <mat-error>مطلوب</mat-error>
         </mat-form-field>
         <mat-form-field>
-          <input formControlName="SerielNumber"  matInput placeholder="السيريال نامبر *">
+          <input formControlName="Team" matInput placeholder="Team*">
           <mat-error>مطلوب</mat-error>
         </mat-form-field>
 
@@ -96,7 +98,7 @@
           <input formControlName="ReceivedDate" matInput [matDatepicker]="picker" placeholder="تاريخ الوارد *">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
-
+          <mat-error>مطلوب</mat-error> 
         </mat-form-field>
 
           
@@ -109,7 +111,7 @@
             </mat-option>
           </mat-select>
 
-          <!-- <mat-error>مطلوب</mat-error> -->
+           <mat-error>مطلوب</mat-error> 
         </mat-form-field>
         <!-- <mat-checkbox (click)='outgoingtoggle()'>
           المنصرف

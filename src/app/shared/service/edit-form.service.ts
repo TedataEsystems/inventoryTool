@@ -10,7 +10,7 @@ export class EditFormService {
   constructor() { }
   form: FormGroup = new FormGroup({
     Id: new FormControl(0),
-    M: new FormControl(0,[Validators.min(1),Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
+    M: new FormControl(0,[Validators.min(0),Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     CustomerName: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     RecipientName: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     OrderNumber: new FormControl(0,[Validators.required,Validators.min(1),Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
@@ -19,9 +19,9 @@ export class EditFormService {
     DeviceType: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     SerielNumber: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     Comment: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
-    ReceivedDate: new FormControl('',[Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
+    ReceivedDate: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     ExpriyDate: new FormControl('',[Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
-    ReceviedStatusId: new FormControl(0),//,[Validators.required]),
+    ReceviedStatusId: new FormControl(0,[Validators.required]),//,[Validators.required]),
     OutgoingStatusId: new FormControl(0),//[Validators.required]),
     TypeStatusId: new FormControl(0,[Validators.required]),
     CreationDate :new FormControl(null),

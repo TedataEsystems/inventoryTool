@@ -192,16 +192,16 @@ export class EditComponent implements OnInit {
 
 if(this.data.dialogTitle=="اضافة جديد")
 {
-  debugger
+ // debugger
   // console.log("add",this.service.form.value);
   // console.log("date",inventory.ExpriyDate);
-  if(inventory.ExpriyDate !=null){
+   if(inventory.ExpriyDate !=null){
     var changeHour= new Date(inventory.ExpriyDate.getFullYear(), inventory.ExpriyDate.getMonth(), inventory.ExpriyDate.getDate(), 5, 0, 0);
     inventory.ExpriyDate=changeHour;
-  }
+   }
    
-    var changeHour1= new Date(inventory.ReceivedDate.getFullYear(), inventory.ReceivedDate.getMonth(), inventory.ReceivedDate.getDate(), 5, 0, 0);
-    inventory.ReceivedDate=changeHour1;
+     var changeHour1= new Date(inventory.ReceivedDate.getFullYear(), inventory.ReceivedDate.getMonth(), inventory.ReceivedDate.getDate(), 5, 0, 0);
+     inventory.ReceivedDate=changeHour1;
   //Add
 inventory.CreatedBy=localStorage.getItem('userName') || '';
     this.inventoryserv.AddInventory(inventory).subscribe(
@@ -226,9 +226,19 @@ inventory.CreatedBy=localStorage.getItem('userName') || '';
   {
     
     //update
+    debugger
+   
      this.service.form.controls['UpdatedBy'].setValue(localStorage.getItem('userName') || '');
-    //console.log("update",this.service.form.value);
-
+     if(inventory.ExpriyDate !=null){
+      
+      var changeHour= new Date(inventory.ExpriyDate.getFullYear(), inventory.ExpriyDate.getMonth(), inventory.ExpriyDate.getDate(),5,0,0);
+      inventory.ExpriyDate= changeHour;
+      this.service.form.controls['ExpriyDate'].setValue(changeHour);
+      
+     }
+     
+       //var changHour1= new Date(inventory.ReceivedDate.getFullYear(), inventory.ReceivedDate.getMonth(), inventory.ReceivedDate.getDate(), 5, 0, 0);
+      //this.service.form.controls['ReceivedDate'].setValue(changHour1.getDate());
     this.inventoryserv.UpdateInventory(this.service.form.value).subscribe(
       res=>{
         // console.log("ResponseInUpdate",this.service.form.value)

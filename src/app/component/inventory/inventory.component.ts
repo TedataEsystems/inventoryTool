@@ -175,7 +175,7 @@ loading: boolean = true;
 
     }
     onDelete(row:any){
-      //debugger
+     
       if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
       {
         this.router.navigateByUrl('/login');
@@ -183,14 +183,24 @@ loading: boolean = true;
       else{
         
       this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
+       // debugger;
         if (res) {
-          this.InventoryServ.DeleteInventory(row.id).subscribe(
-            rs => {
-              this.note.success(':: successfully Deleted');
-             this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
-            },
-            error => { this.note.warn(':: An Error Occured') }
-          );
+          this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
+            if (res) {
+              //console.log("row"+row.id);
+              this.InventoryServ.DeleteInventory(row.id).subscribe(
+                rs => {
+                  this.note.success(':: successfully Deleted');
+                  this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+                  //  this.getRequestdata(1, 100, searchData, this.sortColumnDef, "asc");
+                },
+                error => { this.note.warn(':: An Error Occured') }
+              );
+            }
+            else {
+              // this.note.warn(':: test')
+            }
+          });
         }
         else
         {
