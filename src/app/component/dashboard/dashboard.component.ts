@@ -18,6 +18,7 @@ import { NotificationService } from 'src/app/shared/service/notification.service
 export class DashboardComponent implements OnInit ,AfterViewInit {
   TotalNumorderStat:number=0;
   TotalNumReceiptStat:number=0;
+  TotalNumR:number=0;
   Total:number=0;
   TotalinvenStat:number=0;
   count:number=0;
@@ -132,13 +133,13 @@ this.dashboard.GetOutgoingStatusChart().subscribe(res=>
 this.dashboard.GetTotalChart().subscribe(res=>
   {
     //debugger
-    console.log("tt",this.TotalNumorderStat);
-    console.log("tt",this.TotalNumReceiptStat);
-     console.log(res.val,"val");
+    //console.log("tt",this.TotalNumorderStat);
+   // console.log("tt",this.TotalNumReceiptStat);
+    // console.log(res.val,"val");
     this.doughnutChartLabelsps=res.key;
 this. doughnutChartDataps=res.val;
 
-
+this.TotalNumR = res.val[0];
 this.TotalinvenStat =(res.val[0])-(res.val[1] );
  
   })

@@ -22,7 +22,7 @@ export class EditFormService {
     ReceivedDate: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     ExpriyDate: new FormControl('',[Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     ReceviedStatusId: new FormControl(0,[Validators.required]),//,[Validators.required]),
-    OutgoingStatusId: new FormControl(0),//[Validators.required]),
+    OutgoingStatusId: new FormControl(0),
     TypeStatusId: new FormControl(0,[Validators.required]),
     CreationDate :new FormControl(null),
     UpdateDate :new FormControl(null),

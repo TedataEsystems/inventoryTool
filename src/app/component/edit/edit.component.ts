@@ -21,6 +21,8 @@ export class EditComponent implements OnInit {
   appear:boolean=false;
   isHidden:boolean=false;
   outgoingisHidden:boolean=false;
+  hidden:boolean=true;
+  hidden1:boolean=true;
 
   TypeStatuslist: TypeStatus[] = [];
    ReceivedStatuslist: ReceivedStatusList[] = [];
@@ -197,16 +199,14 @@ export class EditComponent implements OnInit {
 
 if(this.data.dialogTitle=="اضافة جديد")
 {
- // debugger
-  // console.log("add",this.service.form.value);
-  // console.log("date",inventory.ExpriyDate);
-   if(inventory.ExpriyDate !=null){
-    var changeHour= new Date(inventory.ExpriyDate.getFullYear(), inventory.ExpriyDate.getMonth(), inventory.ExpriyDate.getDate(), 5, 0, 0);
-    inventory.ExpriyDate=changeHour;
-   }
+  debugger
+  // if(inventory.ExpriyDate !=null){
+    //var changeHour= new Date(inventory.ExpriyDate.getFullYear(), inventory.ExpriyDate.getMonth(), inventory.ExpriyDate.getDate(), 5, 0, 0);
+   // inventory.ExpriyDate=changeHour;
+  // }
    
-     var changeHour1= new Date(inventory.ReceivedDate.getFullYear(), inventory.ReceivedDate.getMonth(), inventory.ReceivedDate.getDate(), 5, 0, 0);
-     inventory.ReceivedDate=changeHour1;
+   //  var changeHour1= new Date(inventory.ReceivedDate.getFullYear(), inventory.ReceivedDate.getMonth(), inventory.ReceivedDate.getDate(), 5, 0, 0);
+   //  inventory.ReceivedDate=changeHour1;
   //Add
 inventory.CreatedBy=localStorage.getItem('userName') || '';
     this.inventoryserv.AddInventory(inventory).subscribe(
@@ -230,49 +230,74 @@ inventory.CreatedBy=localStorage.getItem('userName') || '';
   )
   }else
   {
-
     //update
     debugger
-   
-     this.service.form.controls['UpdatedBy'].setValue(localStorage.getItem('userName') || '');
-     if(inventory.ExpriyDate !=null){
-      
-      var changeHour= new Date(inventory.ExpriyDate.getFullYear(), inventory.ExpriyDate.getMonth(), inventory.ExpriyDate.getDate(),5,0,0);
-      inventory.ExpriyDate= changeHour;
-      this.service.form.controls['ExpriyDate'].setValue(changeHour);
-      
-     }
-     
-       //var changHour1= new Date(inventory.ReceivedDate.getFullYear(), inventory.ReceivedDate.getMonth(), inventory.ReceivedDate.getDate(), 5, 0, 0);
-      //this.service.form.controls['ReceivedDate'].setValue(changHour1.getDate());
-    this.inventoryserv.UpdateInventory(this.service.form.value).subscribe(
-      res=>{
-        // console.log("ResponseInUpdate",this.service.form.value)
-        // console.log("Status response",res)
-        if(res.status=true)
-        {
-        this.notificationService.success(':: Updated successfully');
-        this.service.form.reset();
-        this.loader.idle();
-        this.dialogRef.close('save');
-      // this.onClose();
-
-
+      if(inventory.Status=="منصرف")
+      {
+        if(inventory.ExpriyDate==null && inventory.OutgoingStatusId==null){
+           //alert("تاريخ المنصرف مطلوب");
+           this.hidden = !this.hidden;
+           this.hidden1 = !this.hidden1;
+           this.loader.idle();
+          return;
         }
+        else if(inventory.ExpriyDate==null){
+          alert("تاريخ المنصرف مطلوب");
+          this.hidden = !this.hidden;
+          //this.hidden1 = !this.hidden1;
+           this.loader.idle();
+           return;
+        }
+        else if(inventory.OutgoingStatusId==null){
+          alert("حالة المنصرف مطلوب");
+          //this.hidden = !this.hidden;
+          this.hidden1 = !this.hidden1;
+           this.loader.idle();
+           return;
+       }
         else{
-          this.notificationService.warn(':: Failed');
-          this.loader.idle();
-
-        }
-
-    },
-
-  )
+          this.service.form.controls['UpdatedBy'].setValue(localStorage.getItem('userName') || '');
+         // if(inventory.ExpriyDate !=null){
+           
+         //  var chanHour= new Date(inventory.ExpriyDate.getFullYear(), inventory.ExpriyDate.getMonth(), inventory.ExpriyDate.getDate(),5,0,0);
+        //   inventory.ExpriyDate= chanHour;
+         //  this.service.form.controls['ExpriyDate'].setValue(chanHour);
+           
+         // }
+          
+            //var changHour1= new Date(inventory.ReceivedDate.getFullYear(), inventory.ReceivedDate.getMonth(), inventory.ReceivedDate.getDate(), 5, 0, 0);
+           //this.service.form.controls['ReceivedDate'].setValue(changHour1.getDate());
+         this.inventoryserv.UpdateInventory(this.service.form.value).subscribe(
+           res=>{
+             // console.log("ResponseInUpdate",this.service.form.value)
+             // console.log("Status response",res)
+             if(res.status=true)
+             {
+             this.notificationService.success(':: Updated successfully');
+             this.service.form.reset();
+             this.loader.idle();
+             this.dialogRef.close('save');
+           // this.onClose();
+     
+     
+             }
+             else{
+               this.notificationService.warn(':: Failed');
+               this.loader.idle();
+     
+             }
+           
+         },
+     
+       )
+       }
+      }
+ 
   }
 
 
 
-
+  this.loader.idle();
 
 
 
@@ -282,5 +307,11 @@ inventory.CreatedBy=localStorage.getItem('userName') || '';
     // this.service.initializeFormGroup();
      this.dialogRef.close();
 
+  }
+  change(){
+    this.hidden1=true;
+  }
+  changhide(){
+    this.hidden=true;
   }
 }
