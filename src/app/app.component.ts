@@ -10,13 +10,13 @@ export class AppComponent implements OnInit,AfterViewInit{
   title = '';
 
 constructor(private loader: LoaderService){
-    this.loader.busy();
+    // this.loader.busy();
 }
 ngOnInit(): void {
 
 }
   ngAfterViewInit() {
-    this.loader.idle();
+    //this.loader.idle();
   }
 }
 

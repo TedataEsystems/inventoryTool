@@ -1204,3 +1204,11 @@ mat-footer-cell:first-of-type {
 .ico {
   box-shadow: 2px 2px 4px #82919b;
 }
+.cdk-global-scrollblock
+{position: inherit !important;
+  left: 0 !important;
+  top:0px !important
+}
+/* app-edit{
+  position: relative;
+} */
