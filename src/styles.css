@@ -258,7 +258,6 @@ mat-card-title {
 
 .cdk-global-overlay-wrapper .cdk-overlay-pane.modals-dialog {
   position: absolute !important;
-
   height: 600px;
   overflow-y: auto;
   max-width: 50%;

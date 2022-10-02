@@ -164,12 +164,11 @@ loading: boolean = true;
       else{
        const dialogGonfig = new MatDialogConfig();
       dialogGonfig.data= {dialogTitle: " تعديل"};
-      dialogGonfig.disableClose=true;
-      dialogGonfig.autoFocus= true;
-      dialogGonfig.width="50%";
-     
-      dialogGonfig.panelClass='modals-dialog';
-       this.dialog.open(EditComponent,{disableClose:true,autoFocus:true, width:"50%",data:row}).afterClosed().subscribe(result => {
+      dialogGonfig.disableClose = true;
+      dialogGonfig.autoFocus = true;
+      dialogGonfig.width = "50%";
+      dialogGonfig.panelClass = 'modals-dialog';
+       this.dialog.open(EditComponent,{panelClass:'modals-dialog',disableClose:true,autoFocus:true, width:"50%",data:row}).afterClosed().subscribe(result => {
         this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef)});
 
 
@@ -177,16 +176,16 @@ loading: boolean = true;
 
     }
     onDelete(row:any){
-     
+
       if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
       {
         this.router.navigateByUrl('/login');
       }
       else{
 
-      this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
+      //this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
        // debugger;
-        if (res) {
+        //if (res) {
           this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
             if (res) {
               //console.log("row"+row.id);
@@ -200,16 +199,12 @@ loading: boolean = true;
               );
             }
             else {
-              // this.note.warn(':: test')
+             // this.note.warn(':: An Error Occured')
             }
           });
         }
-        else
-        {
-          // this.note.warn(':: test')
-        }
-      });
-    }
+
+    //}
 }
 
 

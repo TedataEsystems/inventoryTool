@@ -204,7 +204,7 @@ if(this.data.dialogTitle=="اضافة جديد")
     //var changeHour= new Date(inventory.ExpriyDate.getFullYear(), inventory.ExpriyDate.getMonth(), inventory.ExpriyDate.getDate(), 5, 0, 0);
    // inventory.ExpriyDate=changeHour;
   // }
-   
+
    //  var changeHour1= new Date(inventory.ReceivedDate.getFullYear(), inventory.ReceivedDate.getMonth(), inventory.ReceivedDate.getDate(), 5, 0, 0);
    //  inventory.ReceivedDate=changeHour1;
   //Add
@@ -242,14 +242,14 @@ inventory.CreatedBy=localStorage.getItem('userName') || '';
           return;
         }
         else if(inventory.ExpriyDate==null){
-          alert("تاريخ المنصرف مطلوب");
+          //alert("تاريخ المنصرف مطلوب");
           this.hidden = !this.hidden;
           //this.hidden1 = !this.hidden1;
            this.loader.idle();
            return;
         }
         else if(inventory.OutgoingStatusId==null){
-          alert("حالة المنصرف مطلوب");
+          //alert("حالة المنصرف مطلوب");
           //this.hidden = !this.hidden;
           this.hidden1 = !this.hidden1;
            this.loader.idle();
@@ -258,13 +258,13 @@ inventory.CreatedBy=localStorage.getItem('userName') || '';
         else{
           this.service.form.controls['UpdatedBy'].setValue(localStorage.getItem('userName') || '');
          // if(inventory.ExpriyDate !=null){
-           
+
          //  var chanHour= new Date(inventory.ExpriyDate.getFullYear(), inventory.ExpriyDate.getMonth(), inventory.ExpriyDate.getDate(),5,0,0);
         //   inventory.ExpriyDate= chanHour;
          //  this.service.form.controls['ExpriyDate'].setValue(chanHour);
-           
+
          // }
-          
+
             //var changHour1= new Date(inventory.ReceivedDate.getFullYear(), inventory.ReceivedDate.getMonth(), inventory.ReceivedDate.getDate(), 5, 0, 0);
            //this.service.form.controls['ReceivedDate'].setValue(changHour1.getDate());
          this.inventoryserv.UpdateInventory(this.service.form.value).subscribe(
@@ -278,21 +278,21 @@ inventory.CreatedBy=localStorage.getItem('userName') || '';
              this.loader.idle();
              this.dialogRef.close('save');
            // this.onClose();
-     
-     
+
+
              }
              else{
                this.notificationService.warn(':: Failed');
                this.loader.idle();
-     
+
              }
-           
+
          },
-     
+
        )
        }
       }
- 
+
   }
 
 

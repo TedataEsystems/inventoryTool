@@ -29,10 +29,10 @@ mat-checkbox{
     margin-top: 15px;
 
 }
-.req {    
+.req {
      position: absolute;
     bottom: -18px;
     right: 0;
     color: #f44336;
-    font-size: 75%; 
+    font-size: 75%;
 }
