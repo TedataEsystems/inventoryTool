@@ -16,7 +16,7 @@ export class EditFormService {
     OrderNumber: new FormControl(0,[Validators.required,Validators.min(1),Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     Team: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     Status: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
-    DeviceType: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
+    DeviceType: new FormControl('',[Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     SerielNumber: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     Comment: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     ReceivedDate: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),

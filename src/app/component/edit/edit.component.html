@@ -18,7 +18,7 @@
           <input formControlName="M" type="number" min="0" matInput placeholder="M*">
         </mat-form-field>
         <mat-form-field>
-          <mat-select formControlName="TypeStatusId" placeholder=" *Type"  >
+          <mat-select formControlName="TypeStatusId" placeholder=" *Devices Type"  >
             <mat-option>-- Please select --</mat-option>
             <mat-option  *ngFor="let TypeStatus of TypeStatuslist"   [value]="TypeStatus.id">
               {{TypeStatus.name}}
@@ -38,10 +38,10 @@
           <input formControlName="SerielNumber"  matInput placeholder="السيريال نامبر *">
           <mat-error>مطلوب</mat-error>
         </mat-form-field>
-        <mat-form-field>
-          <input formControlName="DeviceType" matInput placeholder="نوع الجهاز*">
+         <!-- <mat-form-field>
+          <input  formControlName="DeviceType" matInput placeholder="نوع الجهاز*">
           <mat-error>مطلوب</mat-error>
-        </mat-form-field>
+        </mat-form-field>  -->
 
 
 
