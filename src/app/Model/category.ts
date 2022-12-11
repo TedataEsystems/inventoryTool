@@ -1,8 +1,6 @@
-export interface TypeStatus {
+export interface Category {
     id?: number;
     name?: string;
-    CategoryId?:number;
-    CategoryName? :string;
     CreatedBy?:string;
     CreationDate?:Date;
    UpdatedBy?:string;

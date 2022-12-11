@@ -9,6 +9,11 @@ import { InventoryService } from 'src/app/shared/service/inventory.service';
 import { NotificationService } from 'src/app/shared/service/notification.service';
 import {  MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LoaderService } from 'src/app/shared/service/loader.service';
+import { Category } from 'src/app/Model/category';
+import { ReceviedType } from 'src/app/Model/recevied-type';
+import { CompanyName } from 'src/app/Model/company-name';
+import { Acceptance } from 'src/app/Model/acceptance';
+import { LocationName } from 'src/app/Model/location';
 
 
 @Component({
@@ -27,12 +32,18 @@ export class EditComponent implements OnInit {
   TypeStatuslist: TypeStatus[] = [];
    ReceivedStatuslist: ReceivedStatusList[] = [];
   OutgoingStatuslist: OutgoingStatusList[] = [];
+  Category: Category[] = [];
+ReceviedType: ReceviedType[] = [];
+CompanyName: CompanyName[] = [];
+Location: LocationName[] = [];
+Acceptance: Acceptance[] = [];
 
  flag:boolean=false;
 
 
 
-  constructor(public inventoryserv:InventoryService,private loader: LoaderService,public service :EditFormService, public dialogRef: MatDialogRef<EditComponent>,public notificationService: NotificationService,@Inject(MAT_DIALOG_DATA) public data: any ) {
+  constructor(public inventoryserv:InventoryService,private loader: LoaderService,public service :EditFormService,
+     public dialogRef: MatDialogRef<EditComponent>,public notificationService: NotificationService,@Inject(MAT_DIALOG_DATA) public data: any ) {
 
   }
 
@@ -58,13 +69,23 @@ export class EditComponent implements OnInit {
     this.TypeStatuslist=res.typeStatus;
     this.ReceivedStatuslist=res.receviedStatus;
     this.OutgoingStatuslist=res.outgoingStatus;
- console.log(this.ReceivedStatuslist)
+    this.Category = res.category;
+      this.ReceviedType = res.receviedType;
+      this.Location = res.location;
+      this.CompanyName = res.companyName;
+      this.Acceptance = res.acceptance;
+ //console.log(this.ReceivedStatuslist)
     if(this.data)
     {
       //set list in update
       var typstatuscount=0;
       var recviedstatuscount=0;
       var outgoingstatuscount=0;
+      var categorycount=0;
+      var companynamecount=0;
+      var acceptancecount=0;
+      var receviedtypecount=0;
+      var locationcount=0;
       for(var typeStatus of this.TypeStatuslist )
       {
         if(this.data.typeStatusId==typeStatus.id)
@@ -113,6 +134,79 @@ export class EditComponent implements OnInit {
         this.service.form.controls['OutgoingStatusId'].setValue(null);
 
       }
+      for(var category of this.Category )
+      {
+        if(this.data.categoryId==category.id)
+        {
+          categorycount ++;
+          this.service.form.controls['CategoryId'].setValue(this.data.categoryId);
+          break;
+        }
+      }
+      if(categorycount==0)
+      {
+        this.service.form.controls['CategoryId'].setValue(null);
+      }
+
+      for(var company of this.CompanyName )
+      {
+        if(this.data.companyId==company.id)
+        {
+          companynamecount ++;
+          this.service.form.controls['CompanyId'].setValue(this.data.companyId);
+          break;
+        }
+      }
+      if(companynamecount==0)
+      {
+        this.service.form.controls['CompanyId'].setValue(null);
+      }
+
+
+      for(var location of this.Location )
+      {
+        if(this.data.locationId==location.id)
+        {
+          locationcount ++;
+          this.service.form.controls['LocationId'].setValue(this.data.locationId);
+          break;
+        }
+      }
+      if(locationcount==0)
+      {
+        this.service.form.controls['LocationId'].setValue(null);
+      }
+      for(var acceptance of this.Acceptance )
+      {
+        if(this.data.acceptanceId==acceptance.id)
+        {
+          acceptancecount ++;
+          this.service.form.controls['AcceptanceId'].setValue(this.data.acceptanceId);
+          break;
+        }
+      }
+      if(acceptancecount==0)
+      {
+        this.service.form.controls['AcceptanceId'].setValue(null);
+      }
+      for(var received of this.ReceviedType )
+      {
+        // debugger;
+        if(this.data.receviedTypeId==received.id )
+        {
+          receviedtypecount ++;
+          this.service.form.controls['ReceviedTypeId'].setValue(this.data.receviedTypeId);
+          //this.isHidden=false;
+          this.toggle();
+          break;
+        }
+      }
+      if(receviedtypecount==0)
+      {
+        this.service.form.controls['ReceviedTypeId'].setValue(null);
+        //this.toggle();
+      }
+  
     }
     }
     else{this.notificationService.warn(':: error')}
@@ -126,10 +220,15 @@ export class EditComponent implements OnInit {
 
     //console.log("condition entered")
     this.service.form.controls['Id'].setValue(this.data.id);
-    this.service.form.controls['M'].setValue(this.data.m);
+   // this.service.form.controls['M'].setValue(this.data.m);
     this.service.form.controls['CustomerName'].setValue(this.data.customerName);
     this.service.form.controls['DeviceType'].setValue(this.data.deviceType);
     this.service.form.controls['OrderNumber'].setValue(this.data.orderNumber);
+    this.service.form.controls['ReorderingPoint'].setValue(this.data.reorderingPoint);
+    this.service.form.controls['BR'].setValue(this.data.bR);
+    this.service.form.controls['ItemCode'].setValue(this.data.itemCode);
+    this.service.form.controls['Meter'].setValue(this.data.meter);
+    this.service.form.controls['Number'].setValue(this.data.number);
     this.service.form.controls['SerielNumber'].setValue(this.data.serielNumber);
     this.service.form.controls['RecipientName'].setValue(this.data.recipientName);
     this.service.form.controls['Team'].setValue(this.data.team);
@@ -164,20 +263,26 @@ export class EditComponent implements OnInit {
     this.outgoingisHidden=!this.outgoingisHidden;
   }
   onSubmit(){
-    this.loader.busy();
+   
+   //// this.loader.busy();
     //this.appear=true;
-    if(this.service.form.invalid){
+   //// if(this.service.form.invalid){
       //this.appear=false;
-      this.loader.idle();
-    return;
-    }
+   ////   this.loader.idle();
+   //// return;
+    ////}
 
 
   let inventory=  {
-  M:this.service.form.value.M ,
+  //M:this.service.form.value.M ,
   CustomerName:this.service.form.value.CustomerName,
   DeviceType:this.service.form.value.DeviceType,
   OrderNumber :this.service.form.value.OrderNumber,
+  ReorderingPoint :this.service.form.value.ReorderingPoint,
+  BR :this.service.form.value.BR,
+  ItemCode :this.service.form.value.ItemCode,
+  Meter :this.service.form.value.Meter,
+  Number :this.service.form.value.Number,
   SerielNumber :this.service.form.value.SerielNumber,
   RecipientName :this.service.form.value.RecipientName,
   Team:this.service.form.value.Team,
@@ -191,6 +296,16 @@ export class EditComponent implements OnInit {
   receviedStatus :this.service.form.value.ReceviedStatus,
   OutgoingStatusId :this.service.form.value.OutgoingStatusId,
   OutgoingStatusName :this.service.form.value.OutgoingStatus,
+  CategoryId :this.service.form.value.CategoryId,
+  CategoryName :this.service.form.value.Category,
+  CompanyId :this.service.form.value.CompanyId,
+  CompanyName :this.service.form.value.CompanyName,
+  LocationId :this.service.form.value.LocationId,
+  LocationName :this.service.form.value.LocationName,
+  ReceviedTypeId :this.service.form.value.ReceviedTypeId,
+  ReceviedTypeName :this.service.form.value.ReceviedType,
+  AcceptanceId :this.service.form.value.AcceptanceId,
+  AcceptanceName :this.service.form.value.Acceptance,
   CreationDate :this.service.form.value.CreationDate,
   CreatedBy:this.service.form.value.CreatedBy,
 
@@ -199,7 +314,7 @@ export class EditComponent implements OnInit {
 
 if(this.data.dialogTitle=="اضافة جديد")
 {
-  debugger
+  debugger;
   // if(inventory.ExpriyDate !=null){
     //var changeHour= new Date(inventory.ExpriyDate.getFullYear(), inventory.ExpriyDate.getMonth(), inventory.ExpriyDate.getDate(), 5, 0, 0);
    // inventory.ExpriyDate=changeHour;
@@ -231,7 +346,7 @@ inventory.CreatedBy=localStorage.getItem('userName') || '';
   }else
   {
     //update
-    debugger
+    
       if(inventory.Status=="منصرف")
       {
         if(inventory.ExpriyDate==null && inventory.OutgoingStatusId==null){
@@ -351,4 +466,6 @@ inventory.CreatedBy=localStorage.getItem('userName') || '';
   changhide(){
     this.hidden=true;
   }
+
+
 }

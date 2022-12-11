@@ -14,9 +14,9 @@
         <input type="hidden" formControlName="CreatedBy">
         <input type="hidden" formControlName="UpdateDate">
         <input type="hidden" formControlName="UpdatedBy">
-        <mat-form-field>
+        <!-- <mat-form-field>
           <input formControlName="M" type="number" min="0" matInput placeholder="M*">
-        </mat-form-field>
+        </mat-form-field> -->
         <mat-form-field>
           <mat-select formControlName="TypeStatusId" placeholder=" *نوع الجهاز ">
             <mat-option>-- Please select --</mat-option>
@@ -38,6 +38,68 @@
           <input formControlName="SerielNumber"  matInput placeholder="السيريال نامبر *">
           <mat-error>مطلوب</mat-error>
         </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="ReceviedTypeId" placeholder=" *نوع الوارد ">
+            <mat-option>-- Please select --</mat-option>
+            <mat-option  *ngFor="let Recevied of ReceviedType"   [value]="Recevied.id">
+              {{Recevied.name}}
+            </mat-option>
+          </mat-select>
+            
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select formControlName="LocationId" placeholder="Location">
+              <mat-option>-- Please select --</mat-option>
+              <mat-option  *ngFor="let Location of Location"   [value]="Location.id">
+                {{Location.name}}
+              </mat-option>
+            </mat-select>
+              
+            </mat-form-field>
+            <mat-form-field *ngIf="outgoingisHidden">
+              <mat-select formControlName="AcceptanceId" placeholder=" Acceptance">
+                <mat-option>-- Please select --</mat-option>
+                <mat-option  *ngFor="let Acceptance of Acceptance"   [value]="Acceptance.id">
+                  {{Acceptance.name}}
+                </mat-option>
+              </mat-select>
+                
+              </mat-form-field>
+              <mat-form-field *ngIf="outgoingisHidden">
+                <mat-select formControlName="CompanyId" placeholder=" *اسم الشركة ">
+                  <mat-option>-- Please select --</mat-option>
+                  <mat-option  *ngFor="let Company of CompanyName"   [value]="Company.id">
+                    {{Company.name}}
+                  </mat-option>
+                </mat-select>
+                  
+                </mat-form-field>
+                <mat-form-field *ngIf="isHidden">
+                  <mat-select formControlName="CategoryId" placeholder=" Category ">
+                    <mat-option>-- Please select --</mat-option>
+                    <mat-option  *ngFor="let Category of Category"   [value]="Category.id">
+                      {{Category.name}}
+                    </mat-option>
+                  </mat-select>
+                    
+                  </mat-form-field>
+          <mat-form-field *ngIf="isHidden">
+            <input formControlName="BR" type="number" min="0" matInput placeholder="BR*">
+          </mat-form-field>
+          <mat-form-field *ngIf="isHidden">
+            <input formControlName="ReorderingPoint" type="number" min="0" matInput placeholder="ReorderingPoint*">
+          </mat-form-field>
+          <mat-form-field>
+            <input formControlName="Meter" type="number" min="0" matInput placeholder="Meter*">
+          </mat-form-field>
+        
+          <mat-form-field>
+            <input formControlName="Number" type="number" min="0" matInput placeholder="Number*">
+          </mat-form-field>
+          <mat-form-field *ngIf="isHidden">
+            <input formControlName="ItemCode" type="number" min="0" matInput placeholder="ItemCode*">
+          </mat-form-field>
+        
          <!-- <mat-form-field>
           <input  formControlName="DeviceType" matInput placeholder="نوع الجهاز*">
           <mat-error>مطلوب</mat-error>
@@ -51,6 +113,7 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <div class="controles-container">
+       
         <mat-form-field>
           <input formControlName="OrderNumber" type="number" min="0" matInput placeholder="رقم الاوردر*">
           <mat-error>مطلوب</mat-error>

@@ -1,10 +1,16 @@
 export interface Inventory {
     Id:number;
-    M:number;
+    //M:number;
     Comment :string;
     Customername :string;
     DeviceType :string;
     OrderNumber :number;
+    ReorderingPoint :number;
+    BR :number;
+    ItemCode :number;
+    Meter :number;
+    Number :number;
+
     SerielNumber:string;
     RecipientName :string;
     Team :string;
@@ -17,6 +23,16 @@ export interface Inventory {
     ReceviedStatusName? :string;
     OutgoingStatusId? :number;
     OutgoingStatusName? :string;
+    CategoryId? :number;
+    CategoryName? :string;
+    CompanyId? :number;
+    CompanyName? :string;
+    ReceviedTypeId? :number;
+    ReceviedTypeName? :string;
+    AcceptanceId? :number;
+    AcceptanceName? :string;
+    LocationId? :number;
+    LocationName? :string;
     CreatedBy?:string;
     CreationDate?:Date;
    UpdatedBy?:string;

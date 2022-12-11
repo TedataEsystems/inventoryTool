@@ -1,0 +1,33 @@
+export interface InventorySearch {
+    CreatedDateFrom:Date;
+    CreatedDateTo:Date;
+    UpdatedDateFrom :Date;
+    UpdatedDateTo :Date;
+    CreatedBy?:string;
+    UpdatedBy :string;
+    Comment :string;
+    Customername :string;
+    DeviceType :string;
+    OrderNumber :number;
+    ReorderingPoint :number;
+    BR :number;
+    ItemCode :number;
+    Meter :number;
+    Number :number;
+    SerielNumber:string;
+    RecipientName :string;
+    Team :string;
+    Status:string;
+     ExpriyDateTo :Date;
+     ExpriyDateFrom :Date;
+     ReceivedDateTo :Date;
+     ReceivedDateFrom :Date;
+     TypeStatusId? :number;
+     ReceviedStatusId?:number;
+     OutgoingStatusId? :number;
+     CategoryId? :number;
+     CompanyId? :number;
+     ReceviedTypeId? :number;
+     AcceptanceId? :number;
+     LocationId? :number;
+}

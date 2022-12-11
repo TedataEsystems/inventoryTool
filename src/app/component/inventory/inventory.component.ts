@@ -18,6 +18,14 @@ import { TypeStatus } from 'src/app/Model/type-status';
 import { ReceivedStatusList } from 'src/app/Model/received-status-list';
 import { OutgoingStatusList } from 'src/app/Model/outgoing-status-list';
 import { LoaderService } from 'src/app/shared/service/loader.service';
+import { Category } from 'src/app/Model/category';
+import { ReceviedType } from 'src/app/Model/recevied-type';
+import { CompanyName } from 'src/app/Model/company-name';
+import { Acceptance } from 'src/app/Model/acceptance';
+import { LocationName } from 'src/app/Model/location';
+import { InventorySearch } from 'src/app/Model/inventory-search';
+import { FormControl, FormGroup } from '@angular/forms';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-inventory',
@@ -29,25 +37,28 @@ InventoryList:Inventory[]=[];
 TypeStatus: TypeStatus[] = [];
 ReceivedStatus: ReceivedStatusList[] = [];
 OutgoingStatus: OutgoingStatusList[] = [];
+Category: Category[] = [];
+ReceivedType: ReceviedType[] = [];
+CompanyName: CompanyName[] = [];
+Location: LocationName[] = [];
+Acceptance: Acceptance[] = [];
 isNotAdmin= false ;
 //loader: boolean = false;
+
 valdata="";valuid=0;
 listName:string ='';
 loading: boolean = true;
   searchKey:string ='' ;
   isTableExpanded = false;
+  inventorySearch: InventorySearch = <InventorySearch>{};
 
-
-
-
-
-
-
-
-
+  isFilterationData: Boolean = false;
+  panelOpenState = false;
+  appear=false;
   @ViewChild(MatSort) sort?:MatSort ;
   @ViewChild(MatPaginator) paginator?:MatPaginator ;
-  displayedColumns: string[] = ['Id', 'M', 'TypeStatusName', 'Comment','CustomerName','SerielNumber','OrderNumber','RecipientName','Team','Status','ReceivedDate','ReceviedStatusName','ExpriyDate','OutgoingStatusName','CreationDate','CreatedBy','UpdateDate','UpdatedBy','action'];
+  displayedColumns: string[] = ['Id',  'TypeStatusName', 'Comment','CustomerName','SerielNumber','OrderNumber','RecipientName',
+  'Team','Status','ReceivedDate','ReceviedStatusName','ExpriyDate','OutgoingStatusName','CategoryName','CompanyName','ReceviedTypeName','AcceptanceName','LocationName','CreationDate','CreatedBy','UpdateDate','UpdatedBy','action'];
   dataSource =new MatTableDataSource();
   columnsToDisplay: string[] = this.displayedColumns.slice();
 
@@ -91,6 +102,11 @@ loading: boolean = true;
       this.TypeStatus = res.typestatus as TypeStatus[];
       this.ReceivedStatus = res.recivedstatus as ReceivedStatusList[];
       this.OutgoingStatus = res.outgoingstatus as OutgoingStatusList[];
+      this.Category = res.category as Category[];
+      this.ReceivedType = res.recivedtype as ReceviedType[];
+      this.Location = res.location as LocationName[];
+      this.CompanyName = res.company as CompanyName[];
+      this.Acceptance = res.acceptance as Acceptance[];
     });
 
     setTimeout(()=> this.loader.idle(),2000) ;
@@ -494,6 +510,196 @@ onselectcheck(event: any, row: any) {
 
 }
 
+////////advanced search
+form: FormGroup = new FormGroup({
+  CreatedDateFrom: new FormControl(''),
+  CreatedDateTo: new FormControl(''),
+  UpdatedDateFrom: new FormControl(''),
+  UpdatedDateTo: new FormControl(''),
+  ExpriyDateTo: new FormControl(''),
+  ExpriyDateFrom: new FormControl(''),
+  ReceivedDateTo: new FormControl(''),
+  ReceivedDateFrom: new FormControl(''),
+  CreatedBy: new FormControl(''),
+  UpdatedBy: new FormControl(''),
+  Comment: new FormControl(''),
+  Customername: new FormControl(''),
+  DeviceType: new FormControl(''),
+  OrderNumber: new FormControl(''),
+  ReorderingPoint: new FormControl(''),
+  BR: new FormControl(''),
+  ItemCode: new FormControl(''),
+  Meter: new FormControl(''),
+  Number: new FormControl(''),
+  SerielNumber: new FormControl(''),
+  RecipientName: new FormControl(''),
+  Team: new FormControl(''),
+  Status: new FormControl(''),
+  TypeStatusId: new FormControl(''),
+  ReceviedStatusId: new FormControl(''),
+  OutgoingStatusId: new FormControl(''),
+  CategoryId: new FormControl(''),
+  CompanyId: new FormControl(''),
+  ReceviedTypeId: new FormControl(''),
+  AcceptanceId: new FormControl(''),
+  LocationId: new FormControl(''),
+});
 
 
+AdvancedSearch() {
+  this.isFilterationData = true;
+  this.panelOpenState = true;
+this.loader.busy();
+  this.inventorySearch.CreatedDateFrom = this.form.value.CreatedDateFrom == "" ? null : this.form.value.CreatedDateFrom;
+  this.inventorySearch.CreatedDateTo = this.form.value.CreatedDateTo == "" ? null : this.form.value.CreatedDateTo;
+  //
+  this.inventorySearch.UpdatedDateFrom = this.form.value.UpdatedDateFrom == "" ? null : this.form.value.UpdatedDateFrom;
+  this.inventorySearch.UpdatedDateTo = this.form.value.UpdatedDateTo == "" ? null : this.form.value.UpdatedDateTo;
+  //
+  this.inventorySearch.ExpriyDateFrom = this.form.value.ExpriyDateFrom == "" ? null : this.form.value.ExpriyDateFrom;
+  this.inventorySearch.ExpriyDateTo = this.form.value.ExpriyDateTo == "" ? null : this.form.value.ExpriyDateTo;
+  //
+  this.inventorySearch.ReceivedDateFrom = this.form.value.ReceivedDateFrom == "" ? null : this.form.value.ReceivedDateFrom;
+  this.inventorySearch.ReceivedDateTo = this.form.value.ReceivedDateTo == "" ? null : this.form.value.ReceivedDateTo;
+  //
+  this.inventorySearch.CreatedBy = this.form.value.CreatedBy;
+  this.inventorySearch.UpdatedBy = this.form.value.UpdatedBy;
+  this.inventorySearch.Comment = this.form.value.Comment;
+  this.inventorySearch.Comment = this.form.value.Comment;
+  this.inventorySearch.Customername = this.form.value.Customername;
+  this.inventorySearch.DeviceType = this.form.value.DeviceType;
+  this.inventorySearch.OrderNumber = Number(this.form.value.OrderNumber);
+  this.inventorySearch.ReorderingPoint = Number(this.form.value.ReorderingPoint);
+  this.inventorySearch.BR = Number(this.form.value.BR);
+  this.inventorySearch.ItemCode = Number(this.form.value.ItemCode);
+  this.inventorySearch.Meter = Number(this.form.value.Meter);
+  this.inventorySearch.Number = Number(this.form.value.Number);
+  this.inventorySearch.SerielNumber = this.form.value.SerielNumber;
+  this.inventorySearch.RecipientName = this.form.value.RecipientName;
+  this.inventorySearch.Team = this.form.value.Team;
+  this.inventorySearch.Status = this.form.value.Status;
+ 
+  this.inventorySearch.TypeStatusId = Number(this.form.value.TypeStatusId);
+  this.inventorySearch.ReceviedStatusId = Number(this.form.value.ReceviedStatusId);
+  this.inventorySearch.OutgoingStatusId = Number(this.form.value.OutgoingStatusId);
+  this.inventorySearch.CategoryId = Number(this.form.value.CategoryId);
+  this.inventorySearch.CompanyId = Number(this.form.value.CompanyId);
+  this.inventorySearch.ReceviedTypeId = Number(this.form.value.ReceviedTypeId);
+  this.inventorySearch.AcceptanceId = Number(this.form.value.AcceptanceId);
+  this.inventorySearch.LocationId = Number(this.form.value.LocationId);
+ 
+  console.log("ad", this.inventorySearch);
+  this.InventoryServ.AdvancedSearch(this.inventorySearch).subscribe(res => {
+    console.log("ff", res);
+    this.InventoryList = res as Inventory[];
+    // this.dataSource = new MatTableDataSource(this.hwList);
+    this.dataSource = new MatTableDataSource<any>(this.InventoryList);
+    this.dataSource.paginator = this.paginator as MatPaginator;
+    this.dataSource.sort = this.sort as MatSort;
+    ////setTimeout(() => this.loader = false, 3000);
+    // this.form.reset();
+    this.loader.idle();
+  }
+  )//subsribe
+}//advanced
+
+IntialValCreateBy: string = "";
+  IntialValDate: string = "";
+  clearAdvancedSearch() {
+this.appear=false
+    this.isFilterationData = false;
+    this.form.reset();
+    this.IntialValCreateBy = "--اختار تعديل او اضافة--";
+    this.IntialValDate="--  اختار التاريخ--";
+    this.getRequestdata(1, 25, '', this.sortColumnDef, this.SortDirDef);
+  }
+  //get lists
+  public LocationList: LocationName[] = [];
+  public CategoryList: Category[] = [];
+  public CompanyNameList: CompanyName[] = [];
+  public OutgoingStatusList: OutgoingStatusList[] = [];
+  public ReceivedStatusList: ReceivedStatusList[] = [];
+  public AcceptanceList: Acceptance[] = [];
+  public ReceviedTypeList: ReceviedType[] = [];
+  public TypeStatusList: TypeStatus[] = [];
+  openAdvancedSearch() {
+    this.panelOpenState = false;
+    this.InventoryServ.GettingLists().subscribe(res => {
+      if (res.status == true) {
+        this.LocationList = res.locationName;
+        this.CategoryList = res.category;
+        this.CompanyNameList = res.companyName;
+        this.OutgoingStatusList = res.OutgoingStatusList;
+        this.ReceivedStatusList = res.receivedStatusList;
+        this.AcceptanceList = res.acceptance;
+        this.ReceviedTypeList = res.receviedType;
+        this.TypeStatusList = res.typeStatus;
+      }
+    })
+  }
+
+  by: boolean = true;
+
+  selectedValue(event: MatSelectChange) {
+    
+    if (event.value == "CreatedBy") {
+      this.by = true;
+      this.form['controls']['UpdatedBy'].setValue('');
+
+    }
+    else if (event.value == "UpdatedBy") {
+      this.by = false;
+      
+      this.form['controls']['CreatedBy'].setValue('');
+
+    }
+  }
+
+
+  dateType: number = 1;
+  selectedValueOfDate(event: MatSelectChange) {
+    
+    this.appear=true
+    if (event.value == "ExpriyDate") {
+      this.form['controls']['CreatedDateFrom'].setValue('');
+      this.form['controls']['CreatedDateTo'].setValue('');
+      this.form['controls']['UpdatedDateFrom'].setValue('');
+      this.form['controls']['UpdatedDateTo'].setValue('');
+      this.form['controls']['ReceivedDateFrom'].setValue('');
+      this.form['controls']['ReceivedDateTo'].setValue('');
+      this.dateType = 2;
+      
+    }
+    else if
+      (event.value == "UpdatedDate") {
+        this.form['controls']['CreatedDateFrom'].setValue('');
+        this.form['controls']['CreatedDateTo'].setValue('');
+        this.form['controls']['ExpriyDateFrom'].setValue('');
+        this.form['controls']['ExpriyDateTo'].setValue('');
+        this.form['controls']['ReceivedDateFrom'].setValue('');
+        this.form['controls']['ReceivedDateTo'].setValue('');
+      this.dateType = 4;
+
+    }
+    else if (event.value == "CreatedDate") {
+      this.form['controls']['UpdatedDateFrom'].setValue('');
+        this.form['controls']['UpdatedDateTo'].setValue('');
+        this.form['controls']['ExpriyDateFrom'].setValue('');
+        this.form['controls']['ExpriyDateTo'].setValue('');
+        this.form['controls']['ReceivedDateFrom'].setValue('');
+        this.form['controls']['ReceivedDateTo'].setValue('');
+      this.dateType = 3;
+   
+    }
+    else if (event.value == "ReceivedDate") {
+      this.form['controls']['UpdatedDateFrom'].setValue('');
+        this.form['controls']['UpdatedDateTo'].setValue('');
+        this.form['controls']['ExpriyDateFrom'].setValue('');
+        this.form['controls']['ExpriyDateTo'].setValue('');
+        this.form['controls']['CreatedDateFrom'].setValue('');
+        this.form['controls']['CreatedDateTo'].setValue('');
+      this.dateType = 1;
+   
+    }
+  }
 }
