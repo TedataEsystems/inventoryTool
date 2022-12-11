@@ -16,6 +16,7 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
+         
           "options": {
             "outputPath": "dist/PscSystem",
             "index": "src/index.html",
@@ -54,7 +55,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -65,6 +66,7 @@
             }
           }
         },
+       
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
@@ -128,5 +130,8 @@
       }
     }
   },
-  "defaultProject": "PscSystem"
+  "defaultProject": "PscSystem",
+  "cli": {
+    "analytics": false
+  }
 }

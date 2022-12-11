@@ -47,6 +47,8 @@ isNotAdmin= false ;
 
 valdata="";valuid=0;
 listName:string ='';
+R:string='وارد';
+O:string='منصرف';
 loading: boolean = true;
   searchKey:string ='' ;
   isTableExpanded = false;

@@ -58,19 +58,19 @@
       <mat-form-field appearance="fill" class="serch">
         <mat-select formControlName="Status" placeholder=" *  (--اختر--) الحالة"  >
           <mat-option>-- Please select --</mat-option>
-          <mat-option    [value]="وارد">
-            {{وارد}}
+          <mat-option    [value]=R>
+            وارد
           </mat-option>
-          <mat-option    [value]="منصرف">
-            {{منصرف}}
+          <mat-option    [value]=O>
+           منصرف
           </mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field appearance="fill" class="serch">
-        <mat-select formControlName="ReceviedStatusId" placeholder=" *حالة الوارد  (--اختر--) "  >
+        <mat-select formControlName="ReceviedTypeId" placeholder=" *نوع الوارد  (--اختر--) "  >
           <mat-option>-- Please select --</mat-option>
-          <mat-option  *ngFor="let ReceviedStatus of ReceviedTypeList"   [value]="ReceviedStatus.id">
-            {{ReceviedStatus.name}}
+          <mat-option  *ngFor="let ReceviedType of ReceviedTypeList"   [value]="ReceviedType.id">
+            {{ReceviedType.name}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -82,6 +82,15 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+      <mat-form-field appearance="fill" class="serch">
+        <mat-select formControlName="ReceviedStatusId" placeholder=" *حالة الوارد  (--اختر--) "  >
+          <mat-option>-- Please select --</mat-option>
+          <mat-option  *ngFor="let ReceviedStatus of ReceivedStatusList"   [value]="ReceviedStatus.id">
+            {{ReceviedStatus.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    
       <mat-form-field appearance="fill" class="serch">
         <mat-select formControlName="TypeStatusId" placeholder=" *Type  (--اختر--) "  >
           <mat-option>-- Please select --</mat-option>
