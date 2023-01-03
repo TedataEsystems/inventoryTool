@@ -1,0 +1,266 @@
+
+<mat-toolbar class="top" dir="rtl">
+    <span class="fill-remaining-space">{{dialogTitle}}</span>
+    <div class="w-100">
+      <button  class="btn-dialog-close" mat-button  tabIndex="-1" (click)="onClose()"><mat-icon>clear</mat-icon></button>
+    </div>
+  
+  </mat-toolbar>
+ 
+
+    <form [formGroup]="service.form1" class="normal-form mx-0" (submit)="onSubmit()" dir="rtl">
+      <mat-grid-list cols="2" [rowHeight]="rowHeig" class="mx-3">
+        <mat-grid-tile>
+          <div class="controles-container">
+            <input type="hidden" formControlName="Id">
+            <input type="hidden" formControlName="CreationDate">
+            <input type="hidden" formControlName="CreatedBy">
+            <input type="hidden" formControlName="UpdateDate">
+            <input type="hidden" formControlName="UpdatedBy">
+            <!-- <mat-form-field>
+              <input formControlName="M" type="number" min="0" matInput placeholder="M*">
+            </mat-form-field> -->
+            <mat-form-field>
+              <mat-select #mySelect (selectionChange)="OnChangePopName($event)"  formControlName="TypeStatusId" placeholder=" *نوع الجهاز ">
+                <mat-option>-- Please select --</mat-option>
+                <mat-option   *ngFor="let TypeStatus of TypeStatuslist"   [value]="TypeStatus.id">
+                  {{TypeStatus.name}}
+                </mat-option>
+              </mat-select>
+                
+              </mat-form-field>
+              <mat-form-field *ngIf="MetterHidden">
+                <input formControlName="Meter" type="number" min="0" matInput placeholder="Meter*">
+              </mat-form-field>
+             
+              <mat-form-field *ngIf="statusflag==1" > 
+                <mat-select    formControlName="CategoryId" placeholder=" Category ">
+                  <mat-option>-- Please select --</mat-option>
+                  <mat-option    *ngFor="let Category of Category"   [value]="Category.id">
+                    {{Category.name}}
+                  </mat-option>
+                </mat-select>
+                  
+                </mat-form-field>
+              
+              
+            <mat-form-field>
+              <input formControlName="CustomerName" matInput placeholder="اسم العميل*">
+             
+            </mat-form-field>
+            <mat-form-field>
+              <input formControlName="SerielNumber"  matInput placeholder="السيريال نامبر *" (keyup)="onCheckSerialIsalreadysign()">
+              <mat-error>مطلوب</mat-error>
+             
+              <span class='req' *ngIf="serialflag==1">هذا السيريال موجود ك وارد</span>
+            </mat-form-field>
+            <mat-form-field *ngIf="statusflag==1">
+              <mat-select  formControlName="ReceviedTypeId" placeholder=" *نوع الوارد ">
+                <mat-option>-- Please select --</mat-option>
+                <mat-option  *ngFor="let Recevied of ReceviedType"   [value]="Recevied.id">
+                  {{Recevied.name}}
+                </mat-option>
+              </mat-select>
+                
+              </mat-form-field>
+
+              <mat-form-field *ngIf="statusflag==1">
+                <mat-select formControlName="LocationId" placeholder="Location">
+                  <mat-option>-- Please select --</mat-option>
+                  <mat-option  *ngFor="let Location of Location"   [value]="Location.id">
+                    {{Location.name}}
+                  </mat-option>
+                </mat-select>
+                  
+                </mat-form-field>
+                <!-- <mat-form-field *ngIf="outgoingisHidden">
+                  <mat-select formControlName="AcceptanceId" placeholder=" Acceptance">
+                    <mat-option>-- Please select --</mat-option>
+                    <mat-option  *ngFor="let Acceptance of Acceptance"   [value]="Acceptance.id">
+                      {{Acceptance.name}}
+                    </mat-option>
+                  </mat-select>
+                    
+                  </mat-form-field> -->
+                  <!-- <mat-form-field *ngIf="outgoingisHidden">
+                    <mat-select formControlName="CompanyId" placeholder=" *اسم الشركة ">
+                      <mat-option>-- Please select --</mat-option>
+                      <mat-option  *ngFor="let Company of CompanyName"   [value]="Company.id">
+                        {{Company.name}}
+                      </mat-option>
+                    </mat-select>
+                      
+                    </mat-form-field> -->
+                   
+                    
+              <mat-form-field *ngIf="statusflag==1" >
+                <input formControlName="BR" type="number" min="0" matInput placeholder="BR*" *ngIf="flagh"  >
+                <input formControlName="BR" type="number" min="0" matInput placeholder="BR*" *ngIf="!flagh" readonly  >
+              </mat-form-field>
+        
+              <mat-form-field *ngIf="statusflag==1">
+                <input formControlName="ReorderingPoint" type="number" min="0" matInput placeholder="ReorderingPoint*" *ngIf="flagh">
+                <input formControlName="ReorderingPoint" type="number" min="0" matInput placeholder="ReorderingPoint*" *ngIf="!flagh" readonly>
+              </mat-form-field>
+             
+            
+             
+              <mat-form-field  class="hid"  *ngIf="!MetterHidden" >
+                <input   matInput >
+              </mat-form-field>
+              <mat-form-field  class="hid"  *ngIf="statusflag==0" >
+                <input matInput >
+              </mat-form-field>
+            
+             <!-- <mat-form-field>
+              <input  formControlName="DeviceType" matInput placeholder="نوع الجهاز*">
+              <mat-error>مطلوب</mat-error>
+            </mat-form-field>  -->
+    
+    
+    
+    
+    
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div class="controles-container">
+            <mat-form-field *ngIf="statusflag==1">
+              <input formControlName="Number" type="number" min="0" matInput placeholder="Number*">
+            </mat-form-field>
+            
+
+            <mat-form-field *ngIf="statusflag==1">
+              <input formControlName="ItemCode" type="number" min="0" matInput placeholder="ItemCode*">
+            </mat-form-field>
+            <mat-form-field>
+              <input formControlName="OrderNumber" type="number" min="0" matInput placeholder="رقم الاوردر*">
+             
+            </mat-form-field>
+    
+    
+            <mat-form-field>
+              <input formControlName="RecipientName" matInput placeholder="اسم المستلم *">
+           
+            </mat-form-field>
+            <mat-form-field>
+              <input formControlName="Comment" matInput placeholder="ملاحظات*">
+             
+            </mat-form-field>
+            <mat-form-field>
+              <input formControlName="Team" matInput placeholder="Team*">
+            
+            </mat-form-field>
+    
+             <mat-form-field >
+    
+              <mat-select (selectionChange)="OnChangeStatus($event)" formControlName="Status" placeholder=" * الحالة "  >
+                
+                 <mat-option    value="وارد">
+                  وارد
+                </mat-option>
+                <mat-option *ngIf="flag"   (click)="outgoingtoggle()" value="منصرف" >
+                  منصرف
+                </mat-option>
+                <!-- <mat-option *ngIf="flag" >
+                  <mat-checkbox (click)='outgoingtoggle()'>
+                    المنصرف
+                 </mat-checkbox>
+                 </mat-option> -->
+              </mat-select>
+    
+            </mat-form-field>
+            <!-- <mat-action-list>
+              <button mat-list-item (click)="toggle()"> الوارد </button>
+              <button mat-list-item (click)="outgoingtoggle()"> المنصرف </button>
+            </mat-action-list> -->
+            <!-- <mat-checkbox (click)='toggle()'>
+              الوارد
+           </mat-checkbox>  -->
+           
+              <!-- <input formControlName="ReceivedDate" matInput [matDatepicker]="picker" placeholder="تاريخ الوارد *">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker> -->
+            
+           
+  
+
+            <mat-form-field *ngIf="statusflag==1">
+
+            <input [ngxMatDatetimePicker]="ReceivedDate"  formControlName="ReceivedDate" matInput
+              placeholder="تاريخ الوارد*" readonly>
+            <mat-datepicker-toggle matSuffix [for]="$any(ReceivedDate)"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #ReceivedDate >
+            </ngx-mat-datetime-picker>
+            <mat-error>مطلوب</mat-error>
+          </mat-form-field> 
+    
+            <mat-form-field *ngIf="statusflag==1">
+              <mat-select   #myReceived (selectionChange)="OnChangeReceivedName($event)" formControlName="ReceviedStatusId" placeholder=" *حالة الوارد (--اختار--) "  >
+                 
+                <mat-option   *ngFor="let ReceviedStatus of ReceivedStatuslist"    [value]="ReceviedStatus.id">
+                  {{ReceviedStatus.name}}
+                </mat-option>
+              </mat-select>
+    
+               
+            </mat-form-field>
+            <!-- <mat-checkbox (click)='outgoingtoggle()'>
+              المنصرف
+           </mat-checkbox>  -->
+            <mat-form-field *ngIf="outgoingisHidden">
+              <input formControlName="ExpriyDate" matInput [matDatepicker]="picker1" placeholder="تاريخ المنصرف *"   (dateChange)="changhide()" [min]="service.form.controls.ReceivedDate?.value" >
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+              <span class='req' [hidden]="hidden">مطلوب</span>
+                     <!-- <mat-error class='req' [hidden]="hidden">مطلوب</mat-error>  -->
+    
+            </mat-form-field>
+    
+    
+    
+            <mat-form-field *ngIf="outgoingisHidden">
+    
+              <mat-select formControlName="OutgoingStatusId" placeholder=" *حالة المنصرف (--اختار--) "  (selectionChange)="change()">
+                <!-- <mat-option>-- Please select --</mat-option> -->
+                <mat-option  *ngFor="let OutgoingStatus of OutgoingStatuslist"   [value]="OutgoingStatus.id">
+                  {{OutgoingStatus.name}}
+                </mat-option>
+              </mat-select>
+              <span class='req' [hidden]="hidden1">مطلوب</span>
+              <!-- <mat-error class='req' [hidden]="hidden1">مطلوب</mat-error> -->
+            </mat-form-field>
+    
+    
+    
+    
+    
+          </div>
+        </mat-grid-tile>
+    
+      </mat-grid-list>
+      <mat-toolbar class="bottom">
+       
+        <div class="button-row w-100 text-center">
+          <button mat-raised-button class="btn-success w-50" type="submit" >ارسال</button>
+    
+        </div>
+      
+      </mat-toolbar>
+      <!-- <mat-grid-list cols="1" rowHeight="50px">
+        <mat-grid-tile>
+        <div class="button-row w-100 text-center">
+          <button mat-raised-button class="btn-success w-50" type="submit" >ارسال</button>
+    
+        </div>
+        </mat-grid-tile>
+        </mat-grid-list> -->
+    </form>
+  
+  
+  <ngx-spinner type="timer">
+    <h5>Loading</h5>
+  </ngx-spinner>
+  
+
+  

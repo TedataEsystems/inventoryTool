@@ -23,33 +23,68 @@
 
           </li>
           <li>
-
-              <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="الاعدادات"  aria-label="Example icon-button with a menu" *ngIf="!isNotAdmin">
+            <!-- *ngIf="!isNotAdmin" -->
+              <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="الاعدادات"  aria-label="Example icon-button with a menu" *ngIf="flag!=0">
                   <mat-icon>settings</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                  <a mat-menu-item routerLink="/Type">
+
+                  <!-- <a mat-menu-item routerLink="/Type">
 
                     <span> Type</span>
 
+                  </a> -->
+                  <a mat-menu-item routerLink="/Type" *ngIf="flag==2 || flag==3" >
+                    <span> Type</span>
                   </a>
-                  <a mat-menu-item routerLink="/incoming">
+                  <a mat-menu-item routerLink="/incoming" *ngIf="flag==1 || flag==3">
 
                     <span> حالة الوارد</span>
 
                   </a>
-                  <a mat-menu-item routerLink="/outgoing">
+                  
+                  <a mat-menu-item routerLink="/outgoing" *ngIf="flag==1 || flag==3" >
 
                     <span>  حالة المنصرف </span>
 
                   </a>
-          
+                 
+                  <a mat-menu-item  routerLink="/Category"   *ngIf="flag==2 || flag==3" >
+
+                    <span> Category</span>
+
+                  </a>
+                 
+                  <a mat-menu-item routerLink="/ReceviedType" *ngIf="flag==1 || flag==3" >
+
+                    <span> نوع الوارد</span>
+
+                  </a>
+                 
+                  <a mat-menu-item routerLink="/CompanyName" *ngIf="flag==1 || flag==3">
+
+                    <span>   اسم الشركة </span>
+
+                  </a>
+                
+                  <a mat-menu-item routerLink="/Location" *ngIf="flag==1|| flag==3">
+
+                    <span> Location </span>
+
+                  </a>
+                
+                  <a mat-menu-item routerLink="/Acceptance" *ngIf="flag==1 || flag==3" >
+
+                    <span>   Acceptance </span>
+
+                  </a>
+                 
 
                 </mat-menu>
 
           </li>
           <li>
-              <a mat-icon-button   matTooltip="السجلات" routerLink="/history" routerLinkActive="active" *ngIf="!isNotAdmin">
+              <a mat-icon-button   matTooltip="السجلات" routerLink="/history" routerLinkActive="active" >
                   <mat-icon>history</mat-icon>
               </a>
           </li>

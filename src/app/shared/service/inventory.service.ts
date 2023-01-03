@@ -60,7 +60,11 @@ export class InventoryService {
     return this.httpClient.get<any>(`${environment.API_URL}api/Inventory/getSettingsList`
     );
   }
-
+  GetCategoryByTypeId(id:any):Observable<any>
+  {
+    
+    return this.httpClient.get(`${environment.API_URL}api/Inventory/GetCategoryByTypeId/`+id );
+  }
 
   DownloadAllDisplayDataOfExcel():Observable<Blob>{
     return this.httpClient.get(`${environment.API_URL}api/Inventory/ExportExcel`,{responseType: 'blob',headers: this.headers}); 
@@ -79,10 +83,36 @@ export class InventoryService {
     return this.httpClient.get(`${environment.API_URL}api/Inventory/ExportEmptyExcel`,{responseType: 'blob',headers: this.headers});
     
   }
+
+  UpdateInventoryStatusToRecevied(ids:number[]):Observable<any>
+{
+  
+  return this.httpClient.post(`${environment.API_URL}api/Inventory/UpdateInventoryStatusToRecevied`,ids );
+}
+
+UpdateInventoryStatusToOutgoing(ids:number[]):Observable<any>
+{
+  
+  return this.httpClient.post(`${environment.API_URL}api/Inventory/UpdateInventoryStatusToOutgoing`,ids );
+}
+
   AdvancedSearch(data:any): Observable<any> {
     console.log("ff",data);
     return this.httpClient.post<any>(`${environment.API_URL}api/Inventory/AdvancedSearch`, data);
   }
 
-
+  SerielNumberIsAlreadySigned(SerielNumber:string ):Observable<any>
+  {
+   return this.httpClient.get<any>(`${environment.API_URL}api/Inventory/SerielNumberIsAlreadySigned/`+SerielNumber);  
+  }
+///////////////
+SerielNumberIsAlreadySignedInEdit(SerielNumber:string,id:number ):Observable<any>
+{
+ return this.httpClient.get<any>(`${environment.API_URL}api/Inventory/SerielNumberIsAlreadySignedInEdit/`+SerielNumber+`/`+id);  
+}
+  GetLocationByReceivedId(id:any):Observable<any>
+  {
+    
+    return this.httpClient.get(`${environment.API_URL}api/Inventory/GetLocationByReceivedId/`+id );
+  }
 }

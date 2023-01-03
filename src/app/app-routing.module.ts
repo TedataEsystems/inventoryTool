@@ -11,6 +11,11 @@ import { LayoutComponent } from './shared/component/layout/layout.component';
 import { LoginComponent } from './shared/component/login/login.component';
 import { AuthGuardService } from './auth-guard.service';
 import { TypeStatusComponent } from './component/setting/type-status/type-status.component';
+import { CategoryComponent } from './component/setting/category/category.component';
+import { ReceviedTypeComponent } from './component/setting/recevied-type/recevied-type.component';
+import { CompanyNameComponent } from './component/setting/company-name/company-name.component';
+import { LocationComponent } from './component/setting/location/location.component';
+import { AcceptanceComponent } from './component/setting/acceptance/acceptance.component';
 
 const routes: Routes = [
   {
@@ -49,6 +54,27 @@ const routes: Routes = [
     {
       path:'outgoing',
       component:OutgoingComponent
+    },
+    
+    {path:'Category',
+    component:CategoryComponent
+
+    },
+    {
+      path:'ReceviedType',
+      component:ReceviedTypeComponent
+    },
+    {
+      path:'CompanyName',
+      component:CompanyNameComponent
+    },
+    {
+      path:'Location',
+      component:LocationComponent
+    },
+    {
+      path:'Acceptance',
+      component:AcceptanceComponent
     },
     {
       path:'**',

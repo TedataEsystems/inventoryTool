@@ -26,6 +26,8 @@ import { LocationName } from 'src/app/Model/location';
 import { InventorySearch } from 'src/app/Model/inventory-search';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
+import { AddComponent } from '../add/add.component';
+import { LogsService } from 'src/app/shared/service/logs.service';
 
 @Component({
   selector: 'app-inventory',
@@ -57,15 +59,18 @@ loading: boolean = true;
   isFilterationData: Boolean = false;
   panelOpenState = false;
   appear=false;
+  allow=false;
   @ViewChild(MatSort) sort?:MatSort ;
   @ViewChild(MatPaginator) paginator?:MatPaginator ;
-  displayedColumns: string[] = ['Id',  'TypeStatusName', 'Comment','CustomerName','SerielNumber','OrderNumber','RecipientName',
+  displayedColumns: string[] = ['all','Id', 'TypeStatusName', 'Comment','CustomerName','SerielNumber','OrderNumber','RecipientName',
   'Team','Status','ReceivedDate','ReceviedStatusName','ExpriyDate','OutgoingStatusName','CategoryName','CompanyName','ReceviedTypeName','AcceptanceName','LocationName','CreationDate','CreatedBy','UpdateDate','UpdatedBy','action'];
   dataSource =new MatTableDataSource();
   columnsToDisplay: string[] = this.displayedColumns.slice();
+  team=  localStorage.getItem("userGroup");
+
 
   constructor(private dailogService:DeleteService,private loader: LoaderService,private titleService:Title, private note:NotificationService,private deleteService:DeleteService,private dialog: MatDialog, private route: ActivatedRoute,
-    private router: Router, private InventoryServ: InventoryService, private config: ConfigureService, private _bottomSheet: MatBottomSheet)
+    private router: Router, private InventoryServ: InventoryService, private config: ConfigureService, private _bottomSheet: MatBottomSheet,private logserv:LogsService)
 
   {
 
@@ -124,6 +129,18 @@ loading: boolean = true;
     else{
      this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
     }
+
+
+    ///////delete admin
+if(this.team=='Inventory_Hady' || this.team=='Inventory_User')
+// if(this.team =='admin')
+{
+  this.allow=true;
+
+}
+else{
+  this.allow=false;
+}
   }
 
   ngAfterViewInit() {
@@ -165,10 +182,10 @@ loading: boolean = true;
        const dialogGonfig = new MatDialogConfig();
       dialogGonfig.data = { dialogTitle: "اضافة جديد" };
       dialogGonfig.disableClose = true;
-      dialogGonfig.autoFocus = true;
+      dialogGonfig.autoFocus = false;
       dialogGonfig.width = "50%";
       dialogGonfig.panelClass = 'modals-dialog';
-      this.dialog.open(EditComponent, dialogGonfig).afterClosed().subscribe(result => {
+      this.dialog.open(AddComponent, dialogGonfig).afterClosed().subscribe(result => {
         this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
       });
      }
@@ -224,7 +241,25 @@ loading: boolean = true;
 
     //}
 }
-
+///////////////////////////GetLogs
+GetLog(row:any){
+  
+    if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
+    {
+      this.router.navigateByUrl('/login');
+    }
+    else{ 
+           
+           
+             this.logserv.SendLogId(row.id);
+              this.router.navigateByUrl('/history');
+          
+        
+      
+  
+  //}
+  }
+}
 
 pageIn = 0;
 previousSizedef = 100;
@@ -276,7 +311,7 @@ getRequestdataNext(cursize: number, pageNum: number, pageSize: number, search: s
 }
 
 lastcol: string = 'Id';
-lastdir: string = 'asc';
+lastdir: string = 'desc';
 
 sortData(sort: any) {
   if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
@@ -286,7 +321,7 @@ sortData(sort: any) {
   else{
   if (this.pIn != 0)
     window.location.reload();
-  if (this.lastcol == sort.active && this.lastdir == sort.direction) {
+  if (this.lastcol == sort.active && this.lastdir ==sort.direction) {
     if (this.lastdir == 'asc')
       sort.direction = 'desc';
     else
@@ -475,6 +510,7 @@ onselectcheckall(event: any) {
 }
 onselectcheck(event: any, row: any) {
 
+  
   if (event.checked) {
     this.selectedRows = true;
     this.Ids.push(row.id);
@@ -511,6 +547,95 @@ onselectcheck(event: any, row: any) {
 
 
 }
+
+UpdateGroupToRecevied() {
+
+  if (localStorage.getItem("userName") == "" || localStorage.getItem("userName") == undefined || localStorage.getItem("userName") == null) {
+    this.router.navigateByUrl('/login');
+  }
+  else {
+
+
+    if (this.selectedRows == true) {
+
+       
+
+          this.InventoryServ.UpdateInventoryStatusToRecevied(this.Ids).subscribe(res => {
+            if (res.status == true) {
+              console.log(this.Ids);
+              this.note.success(' تم النعديل بنجاح');
+              this.selectedRows = false;
+              this.Ids = [];
+              this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+              this.onSearchClear();
+            }
+            else {
+              this.note.warn(':: An Error Occured')
+            }
+
+            // },
+            // error => { this.note.warn(':: An Error Occured')
+          }
+          );
+        
+      
+     
+    }
+
+
+    else {
+      this.note.warn(" يجب ان تختار صفوف اولا");
+    }
+
+
+
+
+  }
+
+  //
+}
+UpdateGroupToOutgoing() {
+
+  if (localStorage.getItem("userName") == "" || localStorage.getItem("userName") == undefined || localStorage.getItem("userName") == null) {
+    this.router.navigateByUrl('/login');
+  }
+  else {
+    if (this.selectedRows == true) {
+
+       
+
+      this.InventoryServ.UpdateInventoryStatusToOutgoing(this.Ids).subscribe(res => {
+        if (res.status == true) {
+          console.log(this.Ids);
+          this.note.success(' تم النعديل بنجاح');
+          this.selectedRows = false;
+          this.Ids = [];
+          this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+          this.onSearchClear();
+        }
+        else {
+          this.note.warn(':: An Error Occured')
+        }
+
+        // },
+        // error => { this.note.warn(':: An Error Occured')
+      }
+      );
+    
+  
+ 
+}
+
+
+else {
+  this.note.warn(" يجب ان تختار صفوف اولا");
+}
+  }
+
+  //
+}
+
+
 
 ////////advanced search
 form: FormGroup = new FormGroup({
@@ -620,7 +745,7 @@ this.appear=false
   public CategoryList: Category[] = [];
   public CompanyNameList: CompanyName[] = [];
   public OutgoingStatusList: OutgoingStatusList[] = [];
-  public ReceivedStatusList: ReceivedStatusList[] = [];
+  public ReceviedStatusList: ReceivedStatusList[] = [];
   public AcceptanceList: Acceptance[] = [];
   public ReceviedTypeList: ReceviedType[] = [];
   public TypeStatusList: TypeStatus[] = [];
@@ -628,11 +753,14 @@ this.appear=false
     this.panelOpenState = false;
     this.InventoryServ.GettingLists().subscribe(res => {
       if (res.status == true) {
-        this.LocationList = res.locationName;
+        this.LocationList = res.location;
         this.CategoryList = res.category;
+    
         this.CompanyNameList = res.companyName;
-        this.OutgoingStatusList = res.OutgoingStatusList;
-        this.ReceivedStatusList = res.receivedStatusList;
+       
+        this.OutgoingStatusList = res.outgoingStatus;
+        ////////////
+        this.ReceviedStatusList = res.receviedStatus;
         this.AcceptanceList = res.acceptance;
         this.ReceviedTypeList = res.receviedType;
         this.TypeStatusList = res.typeStatus;
@@ -704,4 +832,12 @@ this.appear=false
    
     }
   }
+
+///////////////////////////////////////////
+
+
+
+
+
+
 }

@@ -258,9 +258,29 @@ mat-card-title {
 
 .cdk-global-overlay-wrapper .cdk-overlay-pane.modals-dialog {
   position: absolute !important;
-  height: 600px;
+  height: 480px;
   overflow-y: auto;
   max-width: 50%;
+}
+.cdk-global-overlay-wrapper .cdk-overlay-pane.modals-dialog:nth-child(2){
+  position: absolute !important;
+  height: 300px !important;
+  overflow-y: auto;
+  top:50px !important;
+  max-width: 50%;
+}
+.cdk-global-overlay-wrapper .cdk-overlay-pane.confirm{
+  position: absolute !important;
+  height: 300px !important;
+  top:50px;
+  overflow-y: auto;
+  max-width: 50%;
+}
+.mat-header-cell .mat-checkbox-inner-container{
+  margin-right: 0 !important;
+}
+.mat-checkbox-label{
+  margin-right: 2px;
 }
 .mat-dialog-container {
   box-shadow: none !important;
@@ -1211,3 +1231,10 @@ mat-footer-cell:first-of-type {
 /* app-edit{
   position: relative;
 } */
+
+
+
+ .hid .mat-form-field-underline {
+  display: none !important;
+  height: 0 !important;
+}

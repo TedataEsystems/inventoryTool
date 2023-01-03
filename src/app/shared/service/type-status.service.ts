@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigureService } from './configure.service';
 import { Observable } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -53,5 +54,41 @@ export class TypeStatusService {
 
 
 
+
+
+
+
+
+
+  //////////Type-Category
+  form: FormGroup = new FormGroup({
+    Id: new FormControl(0),
+    Name: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
+    CategoryId: new FormControl(0,[Validators.required]),
+    CreationDate :new FormControl(null),
+    UpdateDate :new FormControl(null),
+    CreatedBy:new FormControl(null),
+    UpdatedBy :new FormControl(null),
+   
+   
+  });
+  initializeFormGroup(){
+    this.form.setValue({
+      Id:0,
+      Name: '',
+      CategoryId:0,
+      CreationDate:null,
+      CreatedBy:null,
+      UpdateDate:null,
+      UpdateBy:null,
+
+    })
+  }
+
+
+  GettingLists(): Observable<any> {
+    return this.httpClient.get<any>(`${environment.API_URL}api/TypeStatus/getSettingsList`
+    );
+  }
 
 }

@@ -1,15 +1,20 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialogConfig,MatDialog} from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
+import {  MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Category } from 'src/app/Model/category';
 import { TypeStatus } from 'src/app/Model/type-status';
 import { DeleteService } from 'src/app/shared/service/delete.service';
 import { LoaderService } from 'src/app/shared/service/loader.service';
 import { NotificationService } from 'src/app/shared/service/notification.service';
 import { TypeStatusService } from 'src/app/shared/service/type-status.service';
+import { AddTypeComponent } from '../../add-type/add-type.component';
 
 @Component({
   selector: 'app-type-status',
@@ -28,9 +33,8 @@ export class TypeStatusComponent implements OnInit {
     Name: "",
     CreatedBy: ""
   }
-
-  typeStatusList: TypeStatus[] = [];
-  TypeStatusListTab?: TypeStatus[] = [];
+  TypeList: TypeStatus[] = [] 
+  TypeListTab?: TypeStatus[] = [];
   valdata = ""; valuid = 0;
   searchKey: string = '';
   listName: string = '';
@@ -40,19 +44,19 @@ export class TypeStatusComponent implements OnInit {
   @ViewChild(MatSort) sort?: MatSort;
   displayedColumns: string[] = ['Id', 'Name','CreationDate','CreatedBy','UpdateDate','UpdateBy', 'action'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
-  dataSource = new MatTableDataSource(this.typeStatusList);
+  dataSource = new MatTableDataSource(this.TypeList);
   settingtype = ''
 
   editUsr: any;
   editdisabled: boolean = false;
-  constructor(private titleService: Title
-    , private notser: NotificationService, private router: Router, private loader: LoaderService,private route: ActivatedRoute, private TypeStatusServ: TypeStatusService, private dailogService: DeleteService
+  constructor(private titleService: Title,private dialog: MatDialog
+    , private notser: NotificationService, private router: Router, private loader: LoaderService,private route: ActivatedRoute, private Typeserv:TypeStatusService, private dailogService: DeleteService
   ) {
     this.titleService.setTitle('Type');
 
   }
-  TypeStatusName: string = '';
-  TypeStatusId: number = 0;
+  TypeName: string = '';
+  TypeId: number = 0;
  // show: boolean = false;
   //loader: boolean = false;
   isDisabled = false;
@@ -69,10 +73,10 @@ export class TypeStatusComponent implements OnInit {
       this.router.navigateByUrl('/login');
     }
     else{
-    this.TypeStatusServ.getTypeStatus(this.pageNumber, this.pageSize, '', this.colname, this.coldir).subscribe(response => {
-      this.typeStatusList.push(...response?.data);
-      this.typeStatusList.length = response?.pagination.totalCount;
-      this.dataSource = new MatTableDataSource<any>(this.typeStatusList);
+    this.Typeserv.getTypeStatus(this.pageNumber, this.pageSize, '', this.colname, this.coldir).subscribe(response => {
+      this.TypeList.push(...response?.data);
+      this.TypeList.length = response?.pagination.totalCount;
+      this.dataSource = new MatTableDataSource<any>(this.TypeList);
       this.dataSource.paginator = this.paginator as MatPaginator;
 
     })
@@ -87,10 +91,10 @@ export class TypeStatusComponent implements OnInit {
     }
     else{
     this.loader.busy();;
-    this.TypeStatusServ.getTypeStatus(pageNum, pageSize, search, sortColumn, sortDir).subscribe(response => {
-      this.typeStatusList = response?.data;
-      this.typeStatusList.length = response?.pagination.totalCount;
-      this.dataSource = new MatTableDataSource<any>(this.typeStatusList);
+    this.Typeserv.getTypeStatus(pageNum, pageSize, search, sortColumn, sortDir).subscribe(response => {
+      this.TypeList = response?.data;
+      this.TypeList.length = response?.pagination.totalCount;
+      this.dataSource = new MatTableDataSource<any>(this.TypeList);
       this.dataSource._updateChangeSubscription();
       this.dataSource.paginator = this.paginator as MatPaginator;
     })
@@ -158,7 +162,7 @@ export class TypeStatusComponent implements OnInit {
 
       if (this.form.value.Id == 0 || this.form.value.Id == '' ) {
         this.isDisable = true;
-        this.TypeStatusServ.AddTypeStatus(this.Type).subscribe(res => {
+        this.Typeserv.AddTypeStatus(this.Type).subscribe(res => {
           setTimeout(() => {
             this.loader.idle();
           }, 1500)
@@ -180,7 +184,7 @@ export class TypeStatusComponent implements OnInit {
       }//if
       else {
         //not used
-        this.TypeStatusServ.UpdateTypeStatus(this.Type).subscribe(res => {
+        this.Typeserv.UpdateTypeStatus(this.Type).subscribe(res => {
           setTimeout(() => {
             this.loader.idle();
           }, 1500)
@@ -202,6 +206,13 @@ export class TypeStatusComponent implements OnInit {
   }
     this.isShowDiv = false;
   }//end of
+
+
+
+
+
+
+
 
   editROw(r: any) {
     if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
@@ -232,7 +243,7 @@ export class TypeStatusComponent implements OnInit {
       CreationDate:row.creationDate,
       UpdatedBy: localStorage.getItem('userName') || ''
     }
-    this.TypeStatusServ.UpdateTypeStatus(TypeStatusEdit).subscribe(res => {
+    this.Typeserv.UpdateTypeStatus(TypeStatusEdit).subscribe(res => {
       if (res.status == true) {
         setTimeout(() => {
           this.loader.idle();
@@ -254,8 +265,6 @@ export class TypeStatusComponent implements OnInit {
 
     })
   }
-
-
   pageIn = 0;
   previousSizedef = 100;
   pagesizedef: number = 100;
@@ -287,13 +296,13 @@ export class TypeStatusComponent implements OnInit {
       this.router.navigateByUrl('/login');
     }
     else{
-    this.TypeStatusServ.getTypeStatus(pageNum, pageSize, search, sortColumn, sortDir).subscribe(res => {
+    this.Typeserv.getTypeStatus(pageNum, pageSize, search, sortColumn, sortDir).subscribe(res => {
       if (res.status == true) {
 
-        this.typeStatusList.length = cursize;
-        this.typeStatusList.push(...res?.data);
-        this.typeStatusList.length = res?.pagination.totalCount;
-        this.dataSource = new MatTableDataSource<any>(this.typeStatusList);
+        this.TypeList.length = cursize;
+        this.TypeList.push(...res?.data);
+        this.TypeList.length = res?.pagination.totalCount;
+        this.dataSource = new MatTableDataSource<any>(this.TypeList);
         this.dataSource._updateChangeSubscription();
         this.dataSource.paginator = this.paginator as MatPaginator;
         this.loader.idle();
@@ -334,7 +343,7 @@ export class TypeStatusComponent implements OnInit {
   onChecknameIsalreadysign() {
     this.Type.Name = this.form.value.Name;
     this.Type.Id = this.form.value.Id;
-    this.TypeStatusServ.TypeStatusIsalreadysign(this.Type.Name, this.Type.Id).subscribe(
+    this.Typeserv.TypeStatusIsalreadysign(this.Type.Name, this.Type.Id).subscribe(
       res => {
         if (res.status == true) {
           this.isDisabled = false;
@@ -352,7 +361,7 @@ export class TypeStatusComponent implements OnInit {
   onChecknameIsalreadysignWhenUpdate(row: any) {
     let TypeName = row.name;
     let TypeId = row.id;
-    this.TypeStatusServ.TypeStatusIsalreadysign(TypeName, TypeId).subscribe(
+    this.Typeserv.TypeStatusIsalreadysign(TypeName, TypeId).subscribe(
       res => {
         if (res.status == true) {
           this.isDisabled = false;
@@ -384,7 +393,7 @@ export class TypeStatusComponent implements OnInit {
     else{
     this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
       if (res) {
-        this.TypeStatusServ.DeleteTypeStatus(r.id).subscribe(
+        this.Typeserv.DeleteTypeStatus(r.id).subscribe(
           rs => {
             this.notser.success(':: successfully Deleted');
             this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
@@ -414,5 +423,55 @@ export class TypeStatusComponent implements OnInit {
     }
 
   }
+
+
+
+  onCreate(){
+    if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
+    {
+      this.router.navigateByUrl('/login');
+    }
+    else{
+     const dialogGonfig = new MatDialogConfig();
+    dialogGonfig.data = { dialogTitle: "اضافة جديد" };
+    dialogGonfig.disableClose = true;
+    dialogGonfig.autoFocus = false;
+    dialogGonfig.width = "50%";
+    dialogGonfig.height = "300px";
+    dialogGonfig.panelClass = 'modals-dialog';
+    this.dialog.open(AddTypeComponent, dialogGonfig).afterClosed().subscribe(result => {
+      this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+    });
+   }
+  }
+
+  onEdit(row:any){
+    if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
+    {
+      this.router.navigateByUrl('/login');
+    }
+    else{
+     const dialogGonfig = new MatDialogConfig();
+    dialogGonfig.data= {dialogTitle: " تعديل"};
+    dialogGonfig.disableClose = true;
+    dialogGonfig.autoFocus = false;
+    dialogGonfig.width = "50%";
+    dialogGonfig.height = "300px";
+    dialogGonfig.panelClass ='confirm';
+     this.dialog.open(AddTypeComponent,{panelClass:'confirm',disableClose:true,autoFocus:false, width:"50%",data:row}).afterClosed().subscribe(result => {
+      this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef)});
+
+
+     }
+
+  }
+
+
+
+
+
+
+
+
 
 }

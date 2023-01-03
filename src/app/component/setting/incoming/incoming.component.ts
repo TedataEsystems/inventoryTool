@@ -57,6 +57,7 @@ export class IncomingComponent implements OnInit {
   isDisabled = false;
   pageNumber = 1;
   pageSize = 100;
+  iid:string='';
   sortColumnDef: string = "Id";
   SortDirDef: string = 'asc';
   public colname: string = 'Id';
@@ -91,18 +92,31 @@ export class IncomingComponent implements OnInit {
       this.dataSource = new MatTableDataSource<any>(this.receviedStatusList);
       this.dataSource._updateChangeSubscription();
       this.dataSource.paginator = this.paginator as MatPaginator;
+      debugger;
+      console.log(this.receviedStatusList[0])
+     
+      switch (this.receviedStatusList[0].id||this.receviedStatusList[1].id) {
+        case (1||2):
+          this.iid='n';       
+        break;
+        default:
+          this.iid='d';
+        break;   
+      }
     })
     setTimeout(() => this.loader = false, 2000);
-  }
-  }
+    }
+}
   ngOnInit(): void {
     if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
     {
       this.router.navigateByUrl('/login');
     }
     else{
+     
     this.editUsr = 0;
-    this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);}
+    this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+  }
   }
 
 

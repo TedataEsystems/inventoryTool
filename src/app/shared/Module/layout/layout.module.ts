@@ -25,6 +25,16 @@ import { TypeStatusComponent } from 'src/app/component/setting/type-status/type-
 import { ChartsModule } from 'ng2-charts';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from 'src/app/interceptors/loading.interceptor';
+import { AddTypeComponent } from '../../../component/add-type/add-type.component';
+import { CompanyNameComponent } from 'src/app/component/setting/company-name/company-name.component';
+import { LocationComponent } from 'src/app/component/setting/location/location.component';
+import { AcceptanceComponent } from 'src/app/component/setting/acceptance/acceptance.component';
+import { ReceviedTypeComponent } from 'src/app/component/setting/recevied-type/recevied-type.component';
+import { CategoryComponent } from 'src/app/component/setting/category/category.component';
+import { AddComponent } from 'src/app/component/add/add.component';
+import { NgxMatDatetimePickerModule } from '@angular-material-components/datetime-picker';
+import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
+
 
 
 
@@ -46,7 +56,14 @@ import { LoadingInterceptor } from 'src/app/interceptors/loading.interceptor';
     StoreComponent,
     IncomingComponent,
     OutgoingComponent,
-    TypeStatusComponent
+    TypeStatusComponent,
+    CompanyNameComponent,
+    LocationComponent,
+    AcceptanceComponent,
+    ReceviedTypeComponent,
+    CategoryComponent,
+    AddTypeComponent,
+    AddComponent,
   ],
   imports: [
     CommonModule,
@@ -59,6 +76,8 @@ import { LoadingInterceptor } from 'src/app/interceptors/loading.interceptor';
     BrowserAnimationsModule,
     HttpClientModule,
     NgxSpinnerModule,
+   NgxMatDatetimePickerModule,
+ NgxMatMomentModule,
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-top-right',

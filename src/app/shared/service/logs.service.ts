@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators';
 })
 export class LogsService {
 
+  LogId:any;
   constructor(private httpClient:HttpClient) { }
 
 
@@ -29,4 +30,21 @@ export class LogsService {
       })
     )
   }
+
+
+  GetLogsById():Observable<any>
+  {
+    console.log('pppppppppppp'+this.LogId);
+    return this.httpClient.get(`${environment.API_URL}api/Logs/GetLogsById/`+this.LogId );
+  }
+
+  SendLogId(id:any)
+  {
+    console.log('llllllllllllllllllll'+id);
+ 
+   this.LogId=id;
+   
+   
+  }
+
 }

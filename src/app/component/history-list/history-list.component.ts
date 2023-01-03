@@ -91,8 +91,35 @@ export class HistoryListComponent implements OnInit {
       this.router.navigateByUrl('/login');
     }
     else{
+      if(this.LogsServ.LogId !=0 && this.LogsServ.LogId !=null){
+     
+          
+            if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
+            {
+              this.router.navigateByUrl('/login');
+            }
+            else{ 
+                    this.LogsServ.GetLogsById().subscribe(res => {
+                      
+                      this.logsList = res?.data;
+                   
+                      this.dataSource = new MatTableDataSource<any>(this.logsList);
+                      this.dataSource._updateChangeSubscription();
+                      this.dataSource.paginator = this.paginator as MatPaginator;
+                      this.loader.idle();
+                      this.LogsServ.LogId=0;
+                    }
+                    )          
+              }
+          
+         
+      }
+      else{
+
+      
     this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
     }
+  }
   }
 
   ngAfterViewInit() {
@@ -207,5 +234,32 @@ applyFilter(filterValue: Event) {
     })
   }
 
-
+/////////////////////
+// GetLogBY(row:any){
+//   debugger;
+//     if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
+//     {
+//       this.router.navigateByUrl('/login');
+//     }
+//     else{ 
+//             this.LogsServ.GetLogsById().subscribe(res => {
+//               console.log("ff", res);
+//               this.logsList = res as Logs[];
+              
+             
+//               this.dataSource = new MatTableDataSource<any>(this.logsList);
+//               this.dataSource.paginator = this.paginator as MatPaginator;
+//               this.dataSource.sort = this.sort as MatSort;
+//               ////setTimeout(() => this.loader = false, 3000);
+//               // this.form.reset();
+//               this.loader.idle();
+//             }
+//             )//subsribe
+          
+         
+        
+//       }
+  
+//   //}
+//   }
 }

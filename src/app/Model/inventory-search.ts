@@ -23,7 +23,7 @@ export interface InventorySearch {
      ReceivedDateTo :Date;
      ReceivedDateFrom :Date;
      TypeStatusId? :number;
-     ReceviedStatusId?:number;
+     ReceviedStatusId? :number;
      OutgoingStatusId? :number;
      CategoryId? :number;
      CompanyId? :number;

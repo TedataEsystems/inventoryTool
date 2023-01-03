@@ -18,9 +18,17 @@ import { ChartsModule } from 'ng2-charts';
 
 
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
+  
+   // CategoryComponent,
+    //ReceviedTypeComponent,
+    //CompanyNameComponent,
+   // LocationComponent,
+   // AcceptanceComponent,
    
 
 

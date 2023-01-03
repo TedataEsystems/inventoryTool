@@ -1,0 +1,28 @@
+form{
+    position: absolute !important;
+    left: 12px !important;
+}
+.mat-error {
+    display: block;
+    position: absolute;
+    bottom: 0;
+}
+mat-cell:nth-child(2), mat-header-cell:nth-child(2){
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 17%  !important;
+    width: 17%  !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    
+   }
+   .opt{
+    background-color: var(--body-color);
+    border-radius: none !important;
+    border-radius: 0 !important;
+   }
