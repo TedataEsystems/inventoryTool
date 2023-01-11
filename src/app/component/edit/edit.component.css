@@ -47,3 +47,6 @@ mat-checkbox{
 .mat-toolbar-row, .mat-toolbar-single-row{
     height: 50px;
 }
+.hid{
+    height: 35px;
+}

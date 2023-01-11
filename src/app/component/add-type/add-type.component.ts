@@ -17,15 +17,7 @@ export class AddTypeComponent implements OnInit {
   isNameRepeated: boolean = false;
   dialogTitle:string = "";
   flag:boolean=false;
-  form: FormGroup = new FormGroup({
-    Id: new FormControl(0),
-    Name: new FormControl('', [Validators.required]),
-    CategoryId: new FormControl('', [Validators.required]),
-    CreationDate :new FormControl(null),
-    UpdateDate :new FormControl(null),
-    CreatedBy:new FormControl(null),
-    UpdatedBy :new FormControl(null)
-  });
+ 
   Type = {
     Id: 0,
     Name: "",
@@ -41,8 +33,21 @@ export class AddTypeComponent implements OnInit {
  
   constructor(private loader: LoaderService,public service :TypeStatusService, private router: Router,
     public dialogRef: MatDialogRef<AddTypeComponent>,public notificationService: NotificationService,@Inject(MAT_DIALOG_DATA) public data: any ) { }
+   
+   
+    form3: FormGroup = new FormGroup({
+      Id: new FormControl(0),
+      Name: new FormControl('', [Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
+      CategoryId: new FormControl('', [Validators.required]),
+      CreationDate :new FormControl(null),
+      UpdateDate :new FormControl(null),
+      CreatedBy:new FormControl(null),
+      UpdatedBy :new FormControl(null)
+    });
+
+
     initializeFormGroup(){
-      this.form.setValue({
+      this.form3.setValue({
         Id:0,
         Name: '',
         CategoryId:0,
@@ -51,6 +56,7 @@ export class AddTypeComponent implements OnInit {
         UpdateDate:null,
         UpdatedBy:null,
       })}
+
   ngOnInit(): void {
  
       
@@ -84,13 +90,13 @@ this.initializeFormGroup();
            if(this.data.categoryId==category.id)
            {
              categorycount ++;
-             this.form.controls['CategoryId'].setValue(this.data.categoryId);
+             this.form3.controls['CategoryId'].setValue(this.data.categoryId);
              break;
            }
          }
          if(categorycount==0)
          {
-           this.form.controls['CategoryId'].setValue(null);
+           this.form3.controls['CategoryId'].setValue(null);
          }
    
      
@@ -105,10 +111,10 @@ this.initializeFormGroup();
     if(this.data)
     {
       console.log("data:",this.data)
-      this.form.controls['Id'].setValue(this.data.id);
-      this.form.controls['Name'].setValue(this.data.name);
-       this.form.controls['CreatedBy'].setValue(this.data.createdBy);
-       this.form.controls['CreationDate'].setValue(this.data.creationDate);
+      this.form3.controls['Id'].setValue(this.data.id);
+      this.form3.controls['Name'].setValue(this.data.name);
+       this.form3.controls['CreatedBy'].setValue(this.data.createdBy);
+       this.form3.controls['CreationDate'].setValue(this.data.creationDate);
        //this.form.controls['UpdatedBy'].setValue(this.data.updatedBy);
        //this.form.controls['UpdatedDate'].setValue(this.data.updatedDate);
      
@@ -120,20 +126,26 @@ this.initializeFormGroup();
 
 
   onSubmit(){
-    
+    if (!this.form3.valid ) {
+ 
+      return;
+  } 
   //////////////////////////
     let type=  {
     
-     Name:this.form.value.Name,
-      CategoryId :this.form.value.CategoryId,
-      CategoryName :this.form.value.Category,
-      CreationDate :this.form.value.CreationDate,
-      CreatedBy:this.form.value.CreatedBy,
+     Name:this.form3.controls['Name'].value,
+     
+      CategoryId :this.form3.value.CategoryId,
+      CategoryName :this.form3.value.Category,
+      CreationDate :this.form3.value.CreationDate,
+      CreatedBy:this.form3.value.CreatedBy,
+      
       //UpdatedDate :this.form.value.UpdatedDate,
       //UpdatedBy:this.form.value.UpdatedBy,
     //  UpdatedBy:this.form.value.UpdatedBy
     
     };
+ 
    
  if(this.data.dialogTitle=="اضافة جديد")
  {  
@@ -146,9 +158,10 @@ this.initializeFormGroup();
            if(res.status=true)
            {
          this.notificationService.success(':: Submitted successfully');
-         this.form.reset();
+         
          this.loader.idle();
          this.dialogRef.close('save');
+         this.form3.reset();
            }
            else{
              this.notificationService.warn(':: Failed');
@@ -167,16 +180,16 @@ this.initializeFormGroup();
       
       
           
-           this.form.controls['UpdatedBy'].setValue(localStorage.getItem('userName') || '');
+           this.form3.controls['UpdatedBy'].setValue(localStorage.getItem('userName') || '');
            
-           this.service.UpdateTypeStatus(this.form.value).subscribe(
+           this.service.UpdateTypeStatus(this.form3.value).subscribe(
              res=>{
                // console.log("ResponseInUpdate",this.service.form.value)
                // console.log("Status response",res)
                if(res.status=true)
                {
                this.notificationService.success(':: Updated successfully');
-               this.form.reset();
+               this.form3.reset();
                this.loader.idle();
                this.dialogRef.close('save');
              // this.onClose();
@@ -208,7 +221,7 @@ this.initializeFormGroup();
   
 
    setReactValue(id: number, val: any,cat:any) {
-    this.form.patchValue({
+    this.form3.patchValue({
       Id: id,
       Name: val,
       CategoryId:cat
@@ -225,7 +238,7 @@ this.initializeFormGroup();
 
 onClose(){
  
-   this.form.reset();
+   this.form3.reset();
   //  this.form['controls']['category'].setValue('');
   //  this.form['controls']['Name'].setValue('');
   //  this.form['controls']['Id'].setValue(0);

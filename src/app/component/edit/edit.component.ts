@@ -29,13 +29,23 @@ export class EditComponent implements OnInit{
   outgoingisHidden:boolean=false;
   hidden:boolean=true;
   hidden1:boolean=true;
+  hidden11:number=0;
   CustomerNamehidden:boolean=true;
+  CustomerNamehidden1:number=0;
   RecipientNamehidden:boolean=true;
+  RecipientNamehidden1:number=0;
   OrderNumberhidden:boolean=true;
+  OrderNumberhidden1:number=0;
   Teamhidden:boolean=true;
+  Teamhidden1:number=0;
   TypeStatusIdhidden:boolean=true;
+  TypeStatusIdhidden1:number=0;
   CompanyIdhidden:boolean=true;
+  CompanyIdhidden1:number=0;
   ReceivedDatehidden:boolean=true;
+  ReceivedDatehidden1:number=0;
+  outgoinghidden1:boolean=true;
+  outgoinghidden11:number=0;
   MetterHidden:boolean=false;
   selected=0;
   TypeStatuslist: TypeStatus[] = [];
@@ -87,7 +97,7 @@ iid:number=0;
     this.TypeStatuslist=res.typeStatus;
     this.ReceivedStatuslist=res.receviedStatus;
     this.OutgoingStatuslist=res.outgoingStatus;
-    //this.Category = res.category;
+   // this.Category = res.category;
       this.ReceviedType = res.receviedType;
       this.Location = res.location;
       this.CompanyName = res.companyName;
@@ -99,7 +109,7 @@ iid:number=0;
       var typstatuscount=0;
       var recviedstatuscount=0;
       var outgoingstatuscount=0;
-     // var categorycount=0;
+      var categorycount=0;
       var companynamecount=0;
       var acceptancecount=0;
       var receviedtypecount=0;
@@ -137,7 +147,41 @@ iid:number=0;
 
       }
     //////////////////
+    for(var recviedstat of this.ReceivedStatuslist )
+    {
+      
+      if(this.data.receviedStatusId==recviedstat.id)
+      {
+        recviedstatuscount ++;
+
+        this.service.form.controls['ReceviedStatusId'].setValue(this.data.receviedStatusId);
+       
+        break;
+      }
+    }
+    if(recviedstatuscount==0)
+    {
+      this.service.form.controls['ReceviedStatusId'].setValue(null);
+
+    }
   /////////Category
+  // for(var category of this.Category )
+  // {
+  //   // debugger;
+  //   if(this.data.categoryId==category.id )
+  //   {
+  //     categorycount ++;
+  //     this.service.form.controls['CategoryId'].setValue(this.data.categoryId);
+  //     //this.isHidden=false;
+  //     this.toggle();
+  //     break;
+  //   }
+  // }
+  // if(categorycount==0)
+  // {
+  //   this.service.form.controls['CategoryId'].setValue(null);
+  //   //this.toggle();
+  // }
 
       for(var company of this.CompanyName )
       {
@@ -156,6 +200,19 @@ iid:number=0;
 
    //////////////////////////////
    ///////////location
+   for(var location of this.Location )
+   {
+     if(this.data.locationId==location.id)
+     {
+       locationcount ++;
+       this.service.form.controls['LocationId'].setValue(this.data.locationId);
+       break;
+     }
+   }
+   if(locationcount==0)
+   {
+     this.service.form.controls['LocationId'].setValue(null);
+   }
       for(var acceptance of this.Acceptance )
       {
         if(this.data.acceptanceId==acceptance.id)
@@ -194,6 +251,48 @@ iid:number=0;
 
 
    });
+
+   this.inventoryserv.GetCategoryByTypeId(this.data.typeStatusId).subscribe(res=>{
+     debugger; 
+    if(res.status==true)
+    {
+
+    this.Category = res.data;
+   
+   
+
+      var categorycount=0;
+      for(var category of this.Category )
+      {
+        if(this.data.categoryId==category.id)
+        {
+         categorycount ++;
+          this.service.form.controls['CategoryId'].setValue(category.id);
+          
+          break;
+        }
+      }
+       if(categorycount==0)
+       {
+         this.service.form.controls['CategoryId'].setValue(null);
+      
+      }
+  
+    }
+   
+
+
+
+   });
+
+   
+   if(this.data.typeStatusId>=169 && this.data.typeStatusId <=180)
+   {
+     this.MetterHidden=true;
+   }
+   else{
+     this.MetterHidden=false;
+   }
 //debugger
    if(this.data)
    {
@@ -205,7 +304,7 @@ iid:number=0;
     //this.service.form.controls['DeviceType'].setValue(this.data.deviceType);
     this.service.form.controls['OrderNumber'].setValue(this.data.orderNumber);
     this.service.form.controls['ReorderingPoint'].setValue(this.data.reorderingPoint);
-    this.service.form.controls['BR'].setValue(this.data.bR);
+    this.service.form.controls['BR'].setValue(this.data.br);
     this.service.form.controls['ItemCode'].setValue(this.data.itemCode);
     this.service.form.controls['Meter'].setValue(this.data.meter);
     this.service.form.controls['Number'].setValue(this.data.number);
@@ -318,50 +417,92 @@ iid:number=0;
       if(inventory.Status=="منصرف")
       {
          if(inventory.ExpriyDate==null){
-            
-     
             this.hidden1 = !this.hidden1;
-             this.loader.idle();
-          return;
+             this.hidden11=1
+             //this.loader.idle();
+             //return;
            }
-    
-      else if(inventory.CustomerName==null)
+           else{
+            this.hidden11=0;
+           }
+           if(inventory.OutgoingStatusId==null)
+           {
+            this.outgoinghidden1 = !this.outgoinghidden1;
+            this.outgoinghidden11=1;
+           // this.loader.idle();
+            //return;
+           }
+           else{
+            this.outgoinghidden11=0;
+           }
+       if(inventory.CustomerName==null)
        {
         this.CustomerNamehidden = !this.CustomerNamehidden;
-        this.loader.idle();
-        return;
+        this.CustomerNamehidden1=1;
+        //this.loader.idle();
+        //return;
        }
-       else if(inventory.RecipientName==null)
+
+       else{
+        this.CustomerNamehidden1=0;
+       }
+
+       if(inventory.RecipientName==null)
        {
         this.RecipientNamehidden = !this.RecipientNamehidden;
-        this.loader.idle();
-        return;
+        this.RecipientNamehidden1=1;
+        //this.loader.idle();
+        // return;
        }
-       else if(inventory.OrderNumber==null)
+
+       else{
+        this.RecipientNamehidden1=0;
+       }
+
+        if(inventory.OrderNumber==null)
        {
         this.OrderNumberhidden = !this.OrderNumberhidden;
-        this.loader.idle();
-        return;
+       this.OrderNumberhidden1=1;
        }
-       else if(inventory.Team==null)
+       else{
+        this.OrderNumberhidden1=0;
+       }
+
+        if(inventory.Team==null)
        {
         this.Teamhidden = !this.Teamhidden;
-        this.loader.idle();
-        return;
+       this.Teamhidden1=1;
        }
-      
-       else if(inventory.TypeStatusId==null)
+       else{
+        this.Teamhidden1=0;
+       }
+
+        if(inventory.TypeStatusId==null)
        {
         this.TypeStatusIdhidden = !this.TypeStatusIdhidden;
-        this.loader.idle();
-        return;
+       this.TypeStatusIdhidden1=1;
        }
-       else if(inventory.CompanyId==null)
+       else{
+        this.TypeStatusIdhidden1=0;
+       }
+
+        if(inventory.CompanyId==null)
        {
         this.CompanyIdhidden = !this.CompanyIdhidden;
-        this.loader.idle();
-        return;
+       this.CompanyIdhidden1=1;
        }
+       else{
+        this.CompanyIdhidden1=0;
+       }
+
+       if(this.CustomerNamehidden1==1 ||this.hidden11==1 || this.RecipientNamehidden1==1 ||this.outgoinghidden11==1 || 
+        this.OrderNumberhidden1==1 || this.Teamhidden1==1 || this.TypeStatusIdhidden1==1 ||  this.CompanyIdhidden1==1)
+      {
+      
+       this.loader.idle();
+       return;
+      }
+         
        else{
         this.service.form.controls['UpdatedBy'].setValue(localStorage.getItem('userName') || '');
   

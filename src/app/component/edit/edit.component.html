@@ -26,8 +26,8 @@
               {{TypeStatus.name}}
             </mat-option>
           </mat-select>
-             <!-- <mat-error>مطلوب</mat-error> -->
-             <span class='req' [hidden]="TypeStatusIdhidden">مطلوب</span>
+             <!-- <mat-error>[hidden]="TypeStatusIdhidden"مطلوب</mat-error> -->
+             <span class='req' *ngIf="TypeStatusIdhidden1==1" >مطلوب</span>
           </mat-form-field>
           <mat-form-field *ngIf="MetterHidden">
             <input formControlName="Meter" type="number" min="0" matInput placeholder="Meter*">
@@ -45,13 +45,13 @@
           
         <mat-form-field>
           <input formControlName="CustomerName" matInput placeholder="اسم العميل*">
-          <!-- <mat-error>مطلوب</mat-error> -->
-          <span class='req' [hidden]="CustomerNamehidden">مطلوب</span>
+          <!-- <mat-error>[hidden]="CustomerNamehidden"مطلوب</mat-error> -->
+          <span class='req' *ngIf="CustomerNamehidden1==1" >مطلوب</span>
         </mat-form-field>
         <mat-form-field>
           <input formControlName="SerielNumber"  matInput placeholder="السيريال نامبر *" (keyup)="onCheckSerialIsalreadysign()">
           <mat-error>مطلوب</mat-error>
-          <span class='req' *ngIf="serialflag==1">هذا السيريال موجود ك وارد</span>
+          <span class='req' *ngIf="serialflag==1">هذا السيريال موجود كوارد</span>
         </mat-form-field>
         <mat-form-field *ngIf="statusflag==1">
           <mat-select  formControlName="ReceviedTypeId" placeholder=" *نوع الوارد ">
@@ -87,7 +87,7 @@
                     {{Company.name}}
                   </mat-option>
                 </mat-select>
-                <span class='req' [hidden]="CompanyIdhidden">مطلوب</span>
+                <span class='req' *ngIf="CompanyIdhidden1==1" >مطلوب</span>
                 </mat-form-field>
                 
           <mat-form-field *ngIf="statusflag==1">
@@ -101,9 +101,9 @@
         
         
       
-           <mat-form-field  class="hid"  *ngIf="!MetterHidden">
-            <input   matInput >
-          </mat-form-field>
+           <div  class="hid"  *ngIf="!MetterHidden">
+           
+           </div>
         
        
 
@@ -119,15 +119,15 @@
         </mat-form-field>
         <mat-form-field>
           <input formControlName="OrderNumber" type="number" min="0" matInput placeholder="رقم الاوردر*">
-          <!-- <mat-error>مطلوب</mat-error> -->
-          <span class='req' [hidden]="OrderNumberhidden">مطلوب</span>
+          <!-- <mat-error>[hidden]="OrderNumberhidden"مطلوب</mat-error> -->
+          <span class='req' *ngIf="OrderNumberhidden1==1" >مطلوب</span>
         </mat-form-field>
 
 
         <mat-form-field>
           <input formControlName="RecipientName" matInput placeholder="اسم المستلم *">
-          <!-- <mat-error>مطلوب</mat-error> -->
-          <span class='req' [hidden]="RecipientNamehidden">مطلوب</span>
+          <!-- <mat-error>[hidden]="RecipientNamehidden"مطلوب</mat-error> -->
+          <span class='req' *ngIf="RecipientNamehidden1==1"  >مطلوب</span>
         </mat-form-field>
         <mat-form-field>
           <input formControlName="Comment" matInput placeholder="ملاحظات*">
@@ -135,8 +135,8 @@
         </mat-form-field>
         <mat-form-field>
           <input formControlName="Team" matInput placeholder="Team*">
-          <!-- <mat-error>مطلوب</mat-error> -->
-          <span class='req' [hidden]="Teamhidden">مطلوب</span>
+          <!-- <mat-error>[hidden]="Teamhidden"مطلوب</mat-error> -->
+          <span class='req' *ngIf="Teamhidden1==1" >مطلوب</span>
         </mat-form-field>
 
          <mat-form-field >
@@ -200,7 +200,7 @@
          
                  <mat-error class='req' [hidden]="hidden">مطلوب</mat-error>  
 
-        </mat-form-field> -->
+        </mat-form-field>[hidden]="hidden1" -->
         <mat-form-field *ngIf="statusflag==2">
 
           <input [ngxMatDatetimePicker]="ExpriyDate"  formControlName="ExpriyDate" matInput
@@ -208,7 +208,7 @@
           <mat-datepicker-toggle matSuffix [for]="$any(ExpriyDate)"></mat-datepicker-toggle>
           <ngx-mat-datetime-picker #ExpriyDate >
           </ngx-mat-datetime-picker>
-          <span class='req' [hidden]="hidden1">مطلوب</span>
+          <span class='req' *ngIf="hidden11==1" >مطلوب</span>
         </mat-form-field> 
 
 
@@ -221,7 +221,8 @@
             </mat-option>
           </mat-select>
         
-          <!-- <mat-error class='req' [hidden]="hidden1">مطلوب</mat-error> -->
+          <!-- <mat-error class='req' [hidden]="outgoinghidden1" [hidden]="hidden1">مطلوب</mat-error> -->
+          <span class='req'*ngIf="outgoinghidden11==1" >مطلوب</span>
         </mat-form-field>
 
 

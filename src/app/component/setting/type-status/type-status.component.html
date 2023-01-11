@@ -71,6 +71,12 @@
        </ng-container>
      </mat-cell>
 </ng-container>
+<ng-container matColumnDef="CategoryName">
+  <mat-header-cell *matHeaderCellDef mat-sort-header> CategoryName</mat-header-cell>
+  <mat-cell *matCellDef="let element" data-label="CategoryName">
+     {{element.categoryName}}
+    </mat-cell>
+</ng-container>
 <ng-container matColumnDef="CreationDate">
   <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> تاريخ الانشاء </mat-header-cell>
   <mat-cell *matCellDef="let element" data-label=" تاريخ الانشاء"> {{element.creationDate|date : 'yyyy-MM-dd'}} </mat-cell>

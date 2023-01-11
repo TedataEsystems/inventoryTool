@@ -42,7 +42,7 @@ export class TypeStatusComponent implements OnInit {
   isNameUpdatedRepeated: boolean = false;
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
-  displayedColumns: string[] = ['Id', 'Name','CreationDate','CreatedBy','UpdateDate','UpdateBy', 'action'];
+  displayedColumns: string[] = ['Id', 'Name','CategoryName','CreationDate','CreatedBy','UpdateDate','UpdateBy', 'action'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource = new MatTableDataSource(this.TypeList);
   settingtype = ''

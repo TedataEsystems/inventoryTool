@@ -5,7 +5,7 @@
     </div>
   
   </mat-toolbar>
-  <form [formGroup]="form" class="normal-form" (submit)="onSubmit()" dir="rtl">
+  <form [formGroup]="form3" class="normal-form" (submit)="onSubmit()" dir="rtl">
     <mat-grid-list cols="2" rowHeight="200px">
       <mat-grid-tile>
         <div class="controles-container">
@@ -25,14 +25,14 @@
       <mat-grid-tile>
         <div class="controles-container">
           <mat-form-field>
-            <!-- <input formControlName="category" matInput placeholder="Category*">
-            <mat-error>مطلوب</mat-error> -->
+          
             <mat-select formControlName="CategoryId" placeholder=" Category ">
               <mat-option>-- Please select --</mat-option>
               <mat-option  *ngFor="let Category of Category"   [value]="Category.id">
                 {{Category.name}}
               </mat-option>
             </mat-select>
+            <mat-error>مطلوب</mat-error>
           </mat-form-field> 
         
         </div>

@@ -33,7 +33,7 @@
                 <input formControlName="Meter" type="number" min="0" matInput placeholder="Meter*">
               </mat-form-field>
              
-              <mat-form-field *ngIf="statusflag==1" > 
+              <mat-form-field  > 
                 <mat-select    formControlName="CategoryId" placeholder=" Category ">
                   <mat-option>-- Please select --</mat-option>
                   <mat-option    *ngFor="let Category of Category"   [value]="Category.id">
@@ -52,8 +52,9 @@
               <input formControlName="SerielNumber"  matInput placeholder="السيريال نامبر *" (keyup)="onCheckSerialIsalreadysign()">
               <mat-error>مطلوب</mat-error>
              
-              <span class='req' *ngIf="serialflag==1">هذا السيريال موجود ك وارد</span>
+              <span class='req' *ngIf="serialflag==1">هذا السيريال موجود كوارد</span>
             </mat-form-field>
+
             <mat-form-field *ngIf="statusflag==1">
               <mat-select  formControlName="ReceviedTypeId" placeholder=" *نوع الوارد ">
                 <mat-option>-- Please select --</mat-option>
@@ -105,12 +106,12 @@
              
             
              
-              <mat-form-field  class="hid"  *ngIf="!MetterHidden" >
-                <input   matInput >
-              </mat-form-field>
-              <mat-form-field  class="hid"  *ngIf="statusflag==0" >
-                <input matInput >
-              </mat-form-field>
+              <div  class="hid"  *ngIf="!MetterHidden" >
+                
+              </div>
+              <div  class="hid"  *ngIf="statusflag==0" >
+             
+              </div>
             
              <!-- <mat-form-field>
               <input  formControlName="DeviceType" matInput placeholder="نوع الجهاز*">
