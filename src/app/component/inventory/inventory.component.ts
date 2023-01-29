@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnChanges, OnInit, ViewChild } from '@angular/core';
 import {  ElementRef, Input,  TemplateRef } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -28,15 +28,19 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { AddComponent } from '../add/add.component';
 import { LogsService } from 'src/app/shared/service/logs.service';
-
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {Observable} from 'rxjs';
+import { EditFormService } from 'src/app/shared/service/edit-form.service';
 @Component({
-  selector: 'app-inventory',
+  selector: 'app-inventory' ,
   templateUrl: './inventory.component.html',
   styleUrls: ['./inventory.component.css']
 })
+
 export class InventoryComponent implements OnInit {
 InventoryList:Inventory[]=[];
 TypeStatus: TypeStatus[] = [];
+filteredOptions: any;
 ReceivedStatus: ReceivedStatusList[] = [];
 OutgoingStatus: OutgoingStatusList[] = [];
 Category: Category[] = [];
@@ -46,6 +50,7 @@ Location: LocationName[] = [];
 Acceptance: Acceptance[] = [];
 isNotAdmin= false ;
 //loader: boolean = false;
+@ViewChild('typeStatusSearch') typeStatusSearch!: ElementRef;
 
 valdata="";valuid=0;
 listName:string ='';
@@ -68,8 +73,9 @@ loading: boolean = true;
   columnsToDisplay: string[] = this.displayedColumns.slice();
   team=  localStorage.getItem("userGroup");
 
+  
 
-  constructor(private dailogService:DeleteService,private loader: LoaderService,private titleService:Title, private note:NotificationService,private deleteService:DeleteService,private dialog: MatDialog, private route: ActivatedRoute,
+  constructor(private dailogService:DeleteService,private loader: LoaderService,private titleService:Title, private note:NotificationService,private deleteService:DeleteService,private dialog: MatDialog, private route: ActivatedRoute, public service:EditFormService,
     private router: Router, private InventoryServ: InventoryService, private config: ConfigureService, private _bottomSheet: MatBottomSheet,private logserv:LogsService)
 
   {
@@ -141,7 +147,16 @@ if(this.team=='Inventory_Hady' || this.team=='Inventory_User')
 else{
   this.allow=false;
 }
+
+
+
+
   }
+ 
+
+
+
+  
 
   ngAfterViewInit() {
 
@@ -205,8 +220,8 @@ else{
       dialogGonfig.panelClass = 'modals-dialog';
        this.dialog.open(EditComponent,{panelClass:'modals-dialog',disableClose:true,autoFocus:true, width:"50%",data:row}).afterClosed().subscribe(result => {
         this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef)});
-
-
+        //this.form.reset();
+       
        }
 
     }
@@ -638,82 +653,84 @@ else {
 
 
 ////////advanced search
-form: FormGroup = new FormGroup({
-  CreatedDateFrom: new FormControl(''),
-  CreatedDateTo: new FormControl(''),
-  UpdatedDateFrom: new FormControl(''),
-  UpdatedDateTo: new FormControl(''),
-  ExpriyDateTo: new FormControl(''),
-  ExpriyDateFrom: new FormControl(''),
-  ReceivedDateTo: new FormControl(''),
-  ReceivedDateFrom: new FormControl(''),
-  CreatedBy: new FormControl(''),
-  UpdatedBy: new FormControl(''),
-  Comment: new FormControl(''),
-  Customername: new FormControl(''),
-  DeviceType: new FormControl(''),
-  OrderNumber: new FormControl(''),
-  ReorderingPoint: new FormControl(''),
-  BR: new FormControl(''),
-  ItemCode: new FormControl(''),
-  Meter: new FormControl(''),
-  Number: new FormControl(''),
-  SerielNumber: new FormControl(''),
-  RecipientName: new FormControl(''),
-  Team: new FormControl(''),
-  Status: new FormControl(''),
-  TypeStatusId: new FormControl(''),
-  ReceviedStatusId: new FormControl(''),
-  OutgoingStatusId: new FormControl(''),
-  CategoryId: new FormControl(''),
-  CompanyId: new FormControl(''),
-  ReceviedTypeId: new FormControl(''),
-  AcceptanceId: new FormControl(''),
-  LocationId: new FormControl(''),
-});
+// form: FormGroup = new FormGroup({
+//   CreatedDateFrom: new FormControl(''),
+//   CreatedDateTo: new FormControl(''),
+//   UpdatedDateFrom: new FormControl(''),
+//   UpdatedDateTo: new FormControl(''),
+//   ExpriyDateTo: new FormControl(''),
+//   ExpriyDateFrom: new FormControl(''),
+//   ReceivedDateTo: new FormControl(''),
+//   ReceivedDateFrom: new FormControl(''),
+//   CreatedBy: new FormControl(''),
+//   UpdatedBy: new FormControl(''),
+//   Comment: new FormControl(''),
+//   Customername: new FormControl(''),
+//   DeviceType: new FormControl(''),
+//   OrderNumber: new FormControl(''),
+//   ReorderingPoint: new FormControl(''),
+//   BR: new FormControl(''),
+//   ItemCode: new FormControl(''),
+//   Meter: new FormControl(''),
+//   Number: new FormControl(''),
+//   SerielNumber: new FormControl(''),
+//   RecipientName: new FormControl(''),
+//   Team: new FormControl(''),
+//   Status: new FormControl(''),
+//   TypeStatusId: new FormControl(''),
+//   ReceviedStatusId: new FormControl(''),
+//   OutgoingStatusId: new FormControl(''),
+//   CategoryId: new FormControl(''),
+  
+//   CompanyId: new FormControl(''),
+//   ReceviedTypeId: new FormControl(''),
+//   AcceptanceId: new FormControl(''),
+//   LocationId: new FormControl(''),
+// });
 
 
 AdvancedSearch() {
+  debugger;
   this.isFilterationData = true;
   this.panelOpenState = true;
 this.loader.busy();
-  this.inventorySearch.CreatedDateFrom = this.form.value.CreatedDateFrom == "" ? null : this.form.value.CreatedDateFrom;
-  this.inventorySearch.CreatedDateTo = this.form.value.CreatedDateTo == "" ? null : this.form.value.CreatedDateTo;
+  this.inventorySearch.CreatedDateFrom = this.service.formSearch.value.CreatedDateFrom == "" ? null : this.service.formSearch.value.CreatedDateFrom;
+  this.inventorySearch.CreatedDateTo = this.service.formSearch.value.CreatedDateTo == "" ? null : this.service.formSearch.value.CreatedDateTo;
   //
-  this.inventorySearch.UpdatedDateFrom = this.form.value.UpdatedDateFrom == "" ? null : this.form.value.UpdatedDateFrom;
-  this.inventorySearch.UpdatedDateTo = this.form.value.UpdatedDateTo == "" ? null : this.form.value.UpdatedDateTo;
+  this.inventorySearch.UpdatedDateFrom = this.service.formSearch.value.UpdatedDateFrom == "" ? null : this.service.formSearch.value.UpdatedDateFrom;
+  this.inventorySearch.UpdatedDateTo = this.service.formSearch.value.UpdatedDateTo == "" ? null : this.service.formSearch.value.UpdatedDateTo;
   //
-  this.inventorySearch.ExpriyDateFrom = this.form.value.ExpriyDateFrom == "" ? null : this.form.value.ExpriyDateFrom;
-  this.inventorySearch.ExpriyDateTo = this.form.value.ExpriyDateTo == "" ? null : this.form.value.ExpriyDateTo;
+  this.inventorySearch.ExpriyDateFrom = this.service.formSearch.value.ExpriyDateFrom == "" ? null : this.service.formSearch.value.ExpriyDateFrom;
+  this.inventorySearch.ExpriyDateTo = this.service.formSearch.value.ExpriyDateTo == "" ? null : this.service.formSearch.value.ExpriyDateTo;
   //
-  this.inventorySearch.ReceivedDateFrom = this.form.value.ReceivedDateFrom == "" ? null : this.form.value.ReceivedDateFrom;
-  this.inventorySearch.ReceivedDateTo = this.form.value.ReceivedDateTo == "" ? null : this.form.value.ReceivedDateTo;
+  this.inventorySearch.ReceivedDateFrom = this.service.formSearch.value.ReceivedDateFrom == "" ? null : this.service.formSearch.value.ReceivedDateFrom;
+  this.inventorySearch.ReceivedDateTo = this.service.formSearch.value.ReceivedDateTo == "" ? null : this.service.formSearch.value.ReceivedDateTo;
   //
-  this.inventorySearch.CreatedBy = this.form.value.CreatedBy;
-  this.inventorySearch.UpdatedBy = this.form.value.UpdatedBy;
-  this.inventorySearch.Comment = this.form.value.Comment;
-  this.inventorySearch.Comment = this.form.value.Comment;
-  this.inventorySearch.Customername = this.form.value.Customername;
-  this.inventorySearch.DeviceType = this.form.value.DeviceType;
-  this.inventorySearch.OrderNumber = Number(this.form.value.OrderNumber);
-  this.inventorySearch.ReorderingPoint = Number(this.form.value.ReorderingPoint);
-  this.inventorySearch.BR = Number(this.form.value.BR);
-  this.inventorySearch.ItemCode = Number(this.form.value.ItemCode);
-  this.inventorySearch.Meter = Number(this.form.value.Meter);
-  this.inventorySearch.Number = Number(this.form.value.Number);
-  this.inventorySearch.SerielNumber = this.form.value.SerielNumber;
-  this.inventorySearch.RecipientName = this.form.value.RecipientName;
-  this.inventorySearch.Team = this.form.value.Team;
-  this.inventorySearch.Status = this.form.value.Status;
- 
-  this.inventorySearch.TypeStatusId = Number(this.form.value.TypeStatusId);
-  this.inventorySearch.ReceviedStatusId = Number(this.form.value.ReceviedStatusId);
-  this.inventorySearch.OutgoingStatusId = Number(this.form.value.OutgoingStatusId);
-  this.inventorySearch.CategoryId = Number(this.form.value.CategoryId);
-  this.inventorySearch.CompanyId = Number(this.form.value.CompanyId);
-  this.inventorySearch.ReceviedTypeId = Number(this.form.value.ReceviedTypeId);
-  this.inventorySearch.AcceptanceId = Number(this.form.value.AcceptanceId);
-  this.inventorySearch.LocationId = Number(this.form.value.LocationId);
+  this.inventorySearch.CreatedBy = this.service.formSearch.value.CreatedBy;
+  this.inventorySearch.UpdatedBy = this.service.formSearch.value.UpdatedBy;
+  this.inventorySearch.Comment = this.service.formSearch.value.Comment;
+  this.inventorySearch.Comment = this.service.formSearch.value.Comment;
+  this.inventorySearch.Customername = this.service.formSearch.value.Customername;
+  this.inventorySearch.DeviceType = this.service.formSearch.value.DeviceType;
+  this.inventorySearch.OrderNumber = Number(this.service.formSearch.value.OrderNumber);
+  this.inventorySearch.ReorderingPoint = Number(this.service.formSearch.value.ReorderingPoint);
+  this.inventorySearch.BR = Number(this.service.formSearch.value.BR);
+  this.inventorySearch.ItemCode = Number(this.service.formSearch.value.ItemCode);
+  this.inventorySearch.Meter = Number(this.service.formSearch.value.Meter);
+  this.inventorySearch.Number = Number(this.service.formSearch.value.Number);
+  this.inventorySearch.SerielNumber = this.service.formSearch.value.SerielNumber;
+  this.inventorySearch.RecipientName = this.service.formSearch.value.RecipientName;
+  this.inventorySearch.Team = this.service.formSearch.value.Team;
+  this.inventorySearch.Status = this.service.formSearch.value.Status;
+
+  this.inventorySearch.TypeStatusIDs =(this.service.formSearch.value.TypeStatusId);
+  this.inventorySearch.ReceviedStatusIDs =(this.service.formSearch.value.ReceviedStatusId);
+  this.inventorySearch.OutgoingStatusIDs =(this.service.formSearch.value.OutgoingStatusId);
+  this.inventorySearch.CategoryIDs =(this.service.formSearch.value.CategoryId);
+  this.inventorySearch.CompanyIDs =(this.service.formSearch.value.CompanyId);
+  this.inventorySearch.ReceviedTypeIDs =(this.service.formSearch.value.ReceviedTypeId);
+  this.inventorySearch.AcceptanceIDs =(this.service.formSearch.value.AcceptanceId);
+  this.inventorySearch.LocationIDs =(this.service.formSearch.value.LocationId);
  
   console.log("ad", this.inventorySearch);
   this.InventoryServ.AdvancedSearch(this.inventorySearch).subscribe(res => {
@@ -735,7 +752,7 @@ IntialValCreateBy: string = "";
   clearAdvancedSearch() {
 this.appear=false
     this.isFilterationData = false;
-    this.form.reset();
+    this.service.formSearch.reset();
     this.IntialValCreateBy = "--اختار تعديل او اضافة--";
     this.IntialValDate="--  اختار التاريخ--";
     this.getRequestdata(1, 25, '', this.sortColumnDef, this.SortDirDef);
@@ -749,6 +766,7 @@ this.appear=false
   public AcceptanceList: Acceptance[] = [];
   public ReceviedTypeList: ReceviedType[] = [];
   public TypeStatusList: TypeStatus[] = [];
+  public _TypeStatusList: any[] = [];
   openAdvancedSearch() {
     this.panelOpenState = false;
     this.InventoryServ.GettingLists().subscribe(res => {
@@ -764,23 +782,25 @@ this.appear=false
         this.AcceptanceList = res.acceptance;
         this.ReceviedTypeList = res.receviedType;
         this.TypeStatusList = res.typeStatus;
+       this._TypeStatusList=res.typeStatus;
+      
       }
     })
   }
-
+  
   by: boolean = true;
 
   selectedValue(event: MatSelectChange) {
     
     if (event.value == "CreatedBy") {
       this.by = true;
-      this.form['controls']['UpdatedBy'].setValue('');
+      this.service.formSearch['controls']['UpdatedBy'].setValue('');
 
     }
     else if (event.value == "UpdatedBy") {
       this.by = false;
       
-      this.form['controls']['CreatedBy'].setValue('');
+      this.service.formSearch['controls']['CreatedBy'].setValue('');
 
     }
   }
@@ -791,53 +811,68 @@ this.appear=false
     
     this.appear=true
     if (event.value == "ExpriyDate") {
-      this.form['controls']['CreatedDateFrom'].setValue('');
-      this.form['controls']['CreatedDateTo'].setValue('');
-      this.form['controls']['UpdatedDateFrom'].setValue('');
-      this.form['controls']['UpdatedDateTo'].setValue('');
-      this.form['controls']['ReceivedDateFrom'].setValue('');
-      this.form['controls']['ReceivedDateTo'].setValue('');
+      this.service.formSearch['controls']['CreatedDateFrom'].setValue('');
+      this.service.formSearch['controls']['CreatedDateTo'].setValue('');
+      this.service.formSearch['controls']['UpdatedDateFrom'].setValue('');
+      this.service.formSearch['controls']['UpdatedDateTo'].setValue('');
+      this.service.formSearch['controls']['ReceivedDateFrom'].setValue('');
+      this.service.formSearch['controls']['ReceivedDateTo'].setValue('');
       this.dateType = 2;
       
     }
     else if
       (event.value == "UpdatedDate") {
-        this.form['controls']['CreatedDateFrom'].setValue('');
-        this.form['controls']['CreatedDateTo'].setValue('');
-        this.form['controls']['ExpriyDateFrom'].setValue('');
-        this.form['controls']['ExpriyDateTo'].setValue('');
-        this.form['controls']['ReceivedDateFrom'].setValue('');
-        this.form['controls']['ReceivedDateTo'].setValue('');
+        this.service.formSearch['controls']['CreatedDateFrom'].setValue('');
+        this.service.formSearch['controls']['CreatedDateTo'].setValue('');
+        this.service.formSearch['controls']['ExpriyDateFrom'].setValue('');
+        this.service.formSearch['controls']['ExpriyDateTo'].setValue('');
+        this.service.formSearch['controls']['ReceivedDateFrom'].setValue('');
+        this.service.formSearch['controls']['ReceivedDateTo'].setValue('');
       this.dateType = 4;
 
     }
     else if (event.value == "CreatedDate") {
-      this.form['controls']['UpdatedDateFrom'].setValue('');
-        this.form['controls']['UpdatedDateTo'].setValue('');
-        this.form['controls']['ExpriyDateFrom'].setValue('');
-        this.form['controls']['ExpriyDateTo'].setValue('');
-        this.form['controls']['ReceivedDateFrom'].setValue('');
-        this.form['controls']['ReceivedDateTo'].setValue('');
+      this.service.formSearch['controls']['UpdatedDateFrom'].setValue('');
+        this.service.formSearch['controls']['UpdatedDateTo'].setValue('');
+        this.service.formSearch['controls']['ExpriyDateFrom'].setValue('');
+        this.service.formSearch['controls']['ExpriyDateTo'].setValue('');
+        this.service.formSearch['controls']['ReceivedDateFrom'].setValue('');
+        this.service.formSearch['controls']['ReceivedDateTo'].setValue('');
       this.dateType = 3;
    
     }
     else if (event.value == "ReceivedDate") {
-      this.form['controls']['UpdatedDateFrom'].setValue('');
-        this.form['controls']['UpdatedDateTo'].setValue('');
-        this.form['controls']['ExpriyDateFrom'].setValue('');
-        this.form['controls']['ExpriyDateTo'].setValue('');
-        this.form['controls']['CreatedDateFrom'].setValue('');
-        this.form['controls']['CreatedDateTo'].setValue('');
+      this.service.formSearch['controls']['UpdatedDateFrom'].setValue('');
+        this.service.formSearch['controls']['UpdatedDateTo'].setValue('');
+        this.service.formSearch['controls']['ExpriyDateFrom'].setValue('');
+        this.service.formSearch['controls']['ExpriyDateTo'].setValue('');
+        this.service.formSearch['controls']['CreatedDateFrom'].setValue('');
+        this.service.formSearch['controls']['CreatedDateTo'].setValue('');
       this.dateType = 1;
    
     }
   }
 
+
+
 ///////////////////////////////////////////
+ontypeNameInputChange(){
+  
+  const searchInput = this.typeStatusSearch.nativeElement.value ?
+  this.typeStatusSearch.nativeElement.value.toLowerCase() : '' ;
+  console.log("///////"+searchInput);
+  console.log(this._TypeStatusList,"tttttttttttttttttttt")
+  this.TypeStatusList = this._TypeStatusList.filter(u=> {
+    console.log("UUUU"+u.name);
+    const name : string= u.name.toLowerCase();
+    console.log(name);
+    return name.indexOf(searchInput) > -1 ;
+    
+}
+  );
 
 
 
-
-
+}
 
 }

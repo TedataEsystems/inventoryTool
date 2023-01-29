@@ -273,7 +273,7 @@ if (this.serialflag==1 ) {
 } 
  if(this.data.dialogTitle=="اضافة جديد")
  {
- 
+ debugger;
  
  inventory.CreatedBy=localStorage.getItem('userName') || '';
      this.inventoryserv.AddInventory(inventory).subscribe(

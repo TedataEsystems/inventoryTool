@@ -1,7 +1,7 @@
 <mat-card class="example-card">
   <mat-card-header>
       <mat-card-title>
-        نوع 
+        نوع الجهاز 
       </mat-card-title>
       <!-- <button mat-button class="opt"  (click)=ToggleDisplay()> -->
         <button mat-button class="opt"  (click)=onCreate()>
@@ -57,8 +57,8 @@
 
 
   <ng-container matColumnDef="Name">
-    <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> نوع   </mat-header-cell>
-    <mat-cell *matCellDef="let element" data-label=" نوع ">
+    <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> نوع الجهاز   </mat-header-cell>
+    <mat-cell *matCellDef="let element" data-label=" نوع الجهاز ">
       <!-- {{element.name}} -->
       <ng-container *ngIf="!editdisabled || element.id!=editUsr">
         {{element.name}}

@@ -1,4 +1,4 @@
-import { Component, Inject, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Inject, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { OutgoingStatusList } from 'src/app/Model/outgoing-status-list';
@@ -14,6 +14,8 @@ import { ReceviedType } from 'src/app/Model/recevied-type';
 import { CompanyName } from 'src/app/Model/company-name';
 import { Acceptance } from 'src/app/Model/acceptance';
 import { LocationName } from 'src/app/Model/location';
+
+;
 
 
 @Component({
@@ -63,6 +65,7 @@ serialflag:number=0;
 iid:number=0;
  SerialNumber:string='';
  flagh:boolean=false;
+ SearchForm:boolean=false;
   constructor(public inventoryserv:InventoryService,private loader: LoaderService,public service :EditFormService,
      public dialogRef: MatDialogRef<EditComponent>,public notificationService: NotificationService,@Inject(MAT_DIALOG_DATA) public data: any ) {
 
@@ -515,8 +518,12 @@ iid:number=0;
            {
            this.notificationService.success(':: Updated successfully');
            this.service.form.reset();
+           
            this.loader.idle();
            this.dialogRef.close('save');
+           this.service.formSearch.reset();
+            // this.SearchForm.emit(true);
+          
          // this.onClose();
 
 

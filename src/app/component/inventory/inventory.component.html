@@ -10,7 +10,7 @@
 
       </mat-expansion-panel-header>
       <mat-divider></mat-divider>
-      <form [formGroup]="form" class="form-normal" (submit)="AdvancedSearch()">
+      <form [formGroup]="service.formSearch" class="form-normal" (submit)="AdvancedSearch()">
       <mat-grid-list cols="4" rowHeight="360px">
         <mat-grid-tile>
 
@@ -67,7 +67,7 @@
        
           <mat-form-field appearance="fill" class="serch">
             <mat-select formControlName="Status" placeholder=" *  (--اختر--) الحالة"  >
-              <mat-option>-- Please select --</mat-option>
+              <!-- <mat-option>-- Please select --</mat-option> -->
               <mat-option    [value]=R>
                 وارد
               </mat-option>
@@ -85,8 +85,8 @@
         <div class="controles-container">
        
           <mat-form-field appearance="fill" class="serch">
-            <mat-select formControlName="ReceviedStatusId" placeholder=" *حالة الوارد  (--اختر--) "  >
-              <mat-option>-- Please select --</mat-option>
+            <mat-select [multiple]="true"  appendTo="body" formControlName="ReceviedStatusId" placeholder=" *حالة الوارد  (--اختر--) "  >
+              <!-- <mat-option>-- Please select --</mat-option> -->
               <mat-option  *ngFor="let ReceviedStatus of ReceviedStatusList"   [value]="ReceviedStatus.id">
                 {{ReceviedStatus.name}}
               </mat-option>
@@ -96,16 +96,16 @@
        
 
           <mat-form-field appearance="fill" class="serch">
-            <mat-select formControlName="OutgoingStatusId" placeholder=" *حالة المنصرف  (--اختر--) "  >
-              <mat-option>-- Please select --</mat-option>
+            <mat-select [multiple]="true"  appendTo="body" formControlName="OutgoingStatusId" placeholder=" *حالة المنصرف  (--اختر--) "  >
+              <!-- <mat-option>-- Please select --</mat-option> -->
               <mat-option  *ngFor="let OutgoingStatus of OutgoingStatusList"   [value]="OutgoingStatus.id">
                 {{OutgoingStatus.name}}
               </mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field appearance="fill" class="serch">
-            <mat-select formControlName="ReceviedTypeId" placeholder=" *نوع الوارد  (--اختر--) "  >
-              <mat-option>-- Please select --</mat-option>
+            <mat-select [multiple]="true"  appendTo="body" formControlName="ReceviedTypeId" placeholder=" *نوع الوارد  (--اختر--) "  >
+              <!-- <mat-option>-- Please select --</mat-option> -->
               <mat-option  *ngFor="let ReceviedType of ReceviedTypeList"   [value]="ReceviedType.id">
                 {{ReceviedType.name}}
               </mat-option>
@@ -113,17 +113,27 @@
           </mat-form-field>
         
           <mat-form-field appearance="fill" class="serch">
-            <mat-select formControlName="TypeStatusId" placeholder=" *Type  (--اختر--) "  >
-              <mat-option>-- Please select --</mat-option>
+            <mat-select [multiple]="true"  appendTo="body"   formControlName="TypeStatusId" placeholder=" *نوع الجهاز  (--اختر--) "  > 
+              <!-- <mat-option>-- Please select --</mat-option> -->
+              <input type="text" autocomplete="off" matInput class="p-2 inputFilter"
+             
+              placeholder="Search by name..." #typeStatusSearch (input)="ontypeNameInputChange()" >
+              
               <mat-option  *ngFor="let typeStatus of TypeStatusList"   [value]="typeStatus.id">
                 {{typeStatus.name}}
-              </mat-option>
-            </mat-select>
+              </mat-option> 
+          
+            
+           </mat-select> 
           </mat-form-field>
         
+        
+
+
+
           <mat-form-field appearance="fill" class="serch">
-            <mat-select formControlName="CategoryId" placeholder=" *Category  (--اختر--) "  >
-              <mat-option>-- Please select --</mat-option>
+            <mat-select [multiple]="true"  appendTo="body" formControlName="CategoryId" placeholder=" *Category  (--اختر--) "  >
+              <!-- <mat-option>-- Please select --</mat-option> -->
               <mat-option  *ngFor="let Category of CategoryList"   [value]="Category.id">
                 {{Category.name}}
               </mat-option>
@@ -137,18 +147,28 @@
     <div class="controles-container">
     
       <mat-form-field appearance="fill" class="serch">
-        <mat-select formControlName="CompanyId" placeholder=" *  (--اختر--) اسم الشركة"  >
-          <mat-option>-- Please select --</mat-option>
+        <mat-select [multiple]="true"  appendTo="body" formControlName="CompanyId" placeholder=" *  (--اختر--) اسم الشركة"  >
+          <!-- <mat-option>-- Please select --</mat-option> -->
           <mat-option  *ngFor="let CompanyName of CompanyNameList"   [value]="CompanyName.id">
             {{CompanyName.name}}
           </mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field appearance="fill" class="serch">
-        <mat-select formControlName="LocationId" placeholder=" *Location  (--اختر--) "  >
-          <mat-option>-- Please select --</mat-option>
+        <mat-select [multiple]="true"  appendTo="body" formControlName="LocationId" placeholder=" *Location  (--اختر--) "  >
+          <!-- <mat-option>-- Please select --</mat-option> -->
           <mat-option  *ngFor="let Location of LocationList"   [value]="Location.id">
             {{Location.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <mat-form-field appearance="fill" class="serch">
+        <mat-select [multiple]="true"  appendTo="body" formControlName="AcceptanceId" placeholder=" *Acceptance  (--اختر--) "  >
+          <!-- <mat-option>-- Please select --</mat-option> -->
+          <mat-option  *ngFor="let Acceptance of AcceptanceList"   [value]="Acceptance.id">
+            {{Acceptance.name}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -208,7 +228,7 @@
           <mat-form-field appearance="fill" class="w-50  serch" style="border-right:5px solid #fff">
              
               <input [ngxMatDatetimePicker]="CreatedDateTo"  formControlName="CreatedDateTo" matInput
-              placeholder="الي" [min]="form.controls.CreatedDateFrom?.value" readonly>
+              placeholder="الي" [min]="service.formSearch.controls.CreatedDateFrom?.value" readonly>
             <mat-datepicker-toggle matSuffix [for]="$any(CreatedDateTo)"></mat-datepicker-toggle>
             <ngx-mat-datetime-picker #CreatedDateTo >
             </ngx-mat-datetime-picker>
@@ -229,7 +249,7 @@
         <mat-form-field appearance="fill" class="w-50  serch" style="border-right:5px solid #fff">
 
             <input [ngxMatDatetimePicker]="ReceivedDateTo"  formControlName="ReceivedDateTo" matInput
-            placeholder="الي"            [min]="form.controls.ReceivedDateFrom?.value" readonly>
+            placeholder="الي"            [min]="service.formSearch.controls.ReceivedDateFrom?.value" readonly>
           <mat-datepicker-toggle matSuffix [for]="$any(ReceivedDateTo)"></mat-datepicker-toggle>
           <ngx-mat-datetime-picker #ReceivedDateTo >
           </ngx-mat-datetime-picker>
@@ -249,7 +269,7 @@
       <mat-form-field appearance="fill" class="w-50 serch"  style="border-right:5px solid #fff">
       
           <input [ngxMatDatetimePicker]="UpdatedDateTo"  formControlName="UpdatedDateTo" matInput
-          placeholder="الي" [min]="form.controls.UpdatedDateFrom?.value" readonly>
+          placeholder="الي" [min]="service.formSearch.controls.UpdatedDateFrom?.value" readonly>
         <mat-datepicker-toggle matSuffix [for]="$any(UpdatedDateTo)"></mat-datepicker-toggle>
         <ngx-mat-datetime-picker #UpdatedDateTo >
         </ngx-mat-datetime-picker>
@@ -270,7 +290,7 @@
         <mat-form-field appearance="fill" class="w-50  serch" style="border-right:5px solid #fff">
            
             <input [ngxMatDatetimePicker]="ExpriyDateTo"  formControlName="ExpriyDateTo" matInput
-            placeholder="الى" [min]="form.controls.ExpriyDateFrom?.value" readonly>
+            placeholder="الى" [min]="service.formSearch.controls.ExpriyDateFrom?.value" readonly>
           <mat-datepicker-toggle matSuffix [for]="$any(ExpriyDateTo)"></mat-datepicker-toggle>
           <ngx-mat-datetime-picker #ExpriyDateTo >
           </ngx-mat-datetime-picker>
@@ -278,9 +298,9 @@
 
         </div>
       </div>
-      <mat-form-field  class="hid mt-3"  [hidden]="appear" >
+      <!-- <mat-form-field  class="hid mt-3"  [hidden]="appear" >
         <input   matInput >
-      </mat-form-field>
+      </mat-form-field> -->
 
    
 <!--    
@@ -463,8 +483,8 @@
    
     
   <ng-container matColumnDef="TypeStatusName">
-    <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>   Type      </mat-header-cell>
-    <mat-cell *matCellDef="let element" data-label="  Type "> {{element.typeStatusName}} </mat-cell>
+    <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>   نوع الجهاز      </mat-header-cell>
+    <mat-cell *matCellDef="let element" data-label="  نوع الجهاز "> {{element.typeStatusName}} </mat-cell>
   </ng-container>
     <ng-container matColumnDef="Comment">
       <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> كومنت </mat-header-cell>

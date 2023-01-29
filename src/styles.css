@@ -1238,3 +1238,9 @@ mat-footer-cell:first-of-type {
   display: none !important;
   height: 0 !important;
 }
+.mat-option-text{
+  color: var(--cr2-color) !important;
+}
+.mat-option:hover{
+  background-color: transparent !important;
+}

@@ -23,11 +23,19 @@ export interface InventorySearch {
      ReceivedDateTo :Date;
      ReceivedDateFrom :Date;
      TypeStatusId? :number;
+     TypeStatusIDs? :Array<number>;
      ReceviedStatusId? :number;
+     ReceviedStatusIDs? :Array<number>;
      OutgoingStatusId? :number;
+     OutgoingStatusIDs? :Array<number>;
      CategoryId? :number;
+     CategoryIDs? :Array<number>;
      CompanyId? :number;
+     CompanyIDs? :Array<number>;
      ReceviedTypeId? :number;
+     ReceviedTypeIDs? :Array<number>;
+     AcceptanceIDs? :Array<number>;
      AcceptanceId? :number;
      LocationId? :number;
+     LocationIDs? :Array<number>;
 }

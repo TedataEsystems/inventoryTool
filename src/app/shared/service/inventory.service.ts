@@ -10,6 +10,7 @@ import { Inventory } from 'src/app/Model/inventory';
   providedIn: 'root'
 })
 export class InventoryService {
+ 
   private headers = new HttpHeaders({  'Accept': 'application/json',
   'zumo-api-version': '2.0.0',});
   constructor(
@@ -29,6 +30,7 @@ export class InventoryService {
     
     return this.httpClient.delete(`${environment.API_URL}api/Inventory/DeleteInventory/`+id );
   }
+
 
 
 

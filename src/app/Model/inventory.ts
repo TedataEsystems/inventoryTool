@@ -37,4 +37,12 @@ export interface Inventory {
     CreationDate?:Date;
    UpdatedBy?:string;
    UpdateDate?:Date;
+   TypeStatusIDs? :Array<number>;
+   ReceviedStatusIDs? :Array<number>;
+   OutgoingStatusIDs? :Array<number>;
+   CategoryIDs? :Array<number>;
+   CompanyIDs? :Array<number>;
+   ReceviedTypeIDs? :Array<number>;
+   AcceptanceIDs? :Array<number>;
+   LocationIDs? :Array<number>;
 }

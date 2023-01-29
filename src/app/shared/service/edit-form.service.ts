@@ -10,6 +10,41 @@ export class EditFormService {
   
   constructor() { }
 
+  formSearch: FormGroup = new FormGroup({
+    CreatedDateFrom: new FormControl(''),
+    CreatedDateTo: new FormControl(''),
+    UpdatedDateFrom: new FormControl(''),
+    UpdatedDateTo: new FormControl(''),
+    ExpriyDateTo: new FormControl(''),
+    ExpriyDateFrom: new FormControl(''),
+    ReceivedDateTo: new FormControl(''),
+    ReceivedDateFrom: new FormControl(''),
+    CreatedBy: new FormControl(''),
+    UpdatedBy: new FormControl(''),
+    Comment: new FormControl(''),
+    Customername: new FormControl(''),
+    DeviceType: new FormControl(''),
+    OrderNumber: new FormControl(''),
+    ReorderingPoint: new FormControl(''),
+    BR: new FormControl(''),
+    ItemCode: new FormControl(''),
+    Meter: new FormControl(''),
+    Number: new FormControl(''),
+    SerielNumber: new FormControl(''),
+    RecipientName: new FormControl(''),
+    Team: new FormControl(''),
+    Status: new FormControl(''),
+    TypeStatusId: new FormControl(''),
+    ReceviedStatusId: new FormControl(''),
+    OutgoingStatusId: new FormControl(''),
+    CategoryId: new FormControl(''),
+    
+    CompanyId: new FormControl(''),
+    ReceviedTypeId: new FormControl(''),
+    AcceptanceId: new FormControl(''),
+    LocationId: new FormControl(''),
+  });
+
   form: FormGroup = new FormGroup({
     Id: new FormControl(0),
     //M: new FormControl(0,[Validators.min(0),Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),

@@ -32,7 +32,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import { MatBadgeModule}from '@angular/material/badge';
 import {MatChipsModule} from '@angular/material/chips'
-
+import { MatSelectFilterModule } from 'mat-select-filter';
 
 
 @NgModule({
@@ -71,7 +71,8 @@ import {MatChipsModule} from '@angular/material/chips'
    MatBottomSheetModule,
    MatBadgeModule,
    MatListModule,
-   MatChipsModule
+   MatChipsModule,
+   MatSelectFilterModule 
   ],
   exports: [
     MatSidenavModule,
@@ -106,7 +107,8 @@ import {MatChipsModule} from '@angular/material/chips'
    MatBottomSheetModule,
    MatBadgeModule,
    MatListModule,
-   MatChipsModule
+   MatChipsModule,
+   MatSelectFilterModule 
 
   ]
 })
