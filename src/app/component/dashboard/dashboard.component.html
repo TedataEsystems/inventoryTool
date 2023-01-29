@@ -40,14 +40,19 @@
                 [data]="doughnutChartDatap"
                 [labels]="doughnutChartLabelsp"
                 [colors]="colors"
+                [options]="doughnutChartOptions"
                 [plugins]="doughnutChartPlugins"
                 [chartType]="doughnutChartType">
               </canvas>
             </div>
-            <span class="total" matBadgeColor="warn" matBadge="{{TotalNumorderStat}}" matBadgeOverlap="false"> TOTAL </span>
-          <span>الوارد </span>
+
+          <hr class="breakline">
+
+                <span class="total" matBadgeColor="warn" matBadge="{{TotalNumorderStat}}" matBadgeOverlap="false"> TOTAL </span>
+                <span>الوارد </span>
+
           </div>
-          <div class="col-sm-4 col-xl-4  text-center shadow box" style="height:500px">
+          <div class="col-sm-4 col-xl-4  text-center shadow box" style="height:550px">
 
             <div class="chart-wrapper rounded mb-4">
               <canvas baseChart
@@ -55,7 +60,8 @@
               [labels]="doughnutChartLabelsps"
               [colors]="colors"
               [plugins]="doughnutChartPlugins"
-              [chartType]="doughnutChartType">
+              [chartType]="doughnutChartType"
+              [options]="doughnutChartOptions">
             </canvas>
           </div>
           <span class="total"  matBadgeColor="warn" matBadge="{{TotalinvenStat}}" matBadgeOverlap="false">TOTAL</span>
@@ -85,10 +91,12 @@
               [data]="doughnutChartData"
               [labels]="doughnutChartLabels"
               [colors]="colors"
+              [options]="doughnutChartOptions"
               [plugins]="doughnutChartPlugins"
               [chartType]="doughnutChartType">
             </canvas>
           </div>
+          <hr class="breakline">
           <span class="total"  matBadgeColor="warn" matBadge="{{TotalNumReceiptStat}}" matBadgeOverlap="false">TOTAL</span>
            <span>المنصرف  </span>
 

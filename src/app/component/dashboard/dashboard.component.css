@@ -16,7 +16,7 @@ span{
       font-size: 20px;
       font-weight: bold;
       color: gray;
-
+      margin-top: 50px
   }
   span.tot{
     position: absolute;

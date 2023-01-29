@@ -51,6 +51,13 @@ export class DashboardComponent implements OnInit ,AfterViewInit {
 
 
   /////////////////donut chart//////////////////
+  doughnutChartOptions:ChartOptions = {
+    responsive: true,
+    legend: {
+      position: 'left'
+   }
+
+  };
 
   doughnutChartLabels: Label[] = [];
   doughnutChartData: MultiDataSet = [
@@ -82,6 +89,7 @@ export class DashboardComponent implements OnInit ,AfterViewInit {
   ];
 
   doughnutChartPlugins = [{
+
     afterLayout: function (chart:any) {
       chart.legend.legendItems.forEach(
         (label:any) => {
@@ -141,7 +149,7 @@ this. doughnutChartDataps=res.val;
 
 this.TotalNumR = res.val[0];
 this.TotalinvenStat =(res.val[0])-(res.val[1] );
- 
+
   })
 
 
