@@ -487,7 +487,13 @@ upLoadF() {
     }
     else {
       this.openBottomSheetMsg();
-      this.getRequestdata(1, 25, '', this.sortColumnDef, this.SortDirDef);
+       if(this.service.formSearch.value==''){
+        this.getRequestdata(1, 25, '', this.sortColumnDef, this.SortDirDef);
+      }else
+      {
+        this.AdvancedSearch();
+      }
+     // this.getRequestdata(1, 25, '', this.sortColumnDef, this.SortDirDef);
       this.fileAttr = 'Choose File';
       this.resetfile();
       this.htmlToAdd = res.error;
