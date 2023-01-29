@@ -521,7 +521,7 @@ iid:number=0;
            
            this.loader.idle();
            this.dialogRef.close('save');
-           this.service.formSearch.reset();
+          // this.service.formSearch.reset();
             // this.SearchForm.emit(true);
           
          // this.onClose();

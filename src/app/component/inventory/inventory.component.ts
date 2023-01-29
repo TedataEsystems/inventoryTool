@@ -201,7 +201,13 @@ else{
       dialogGonfig.width = "50%";
       dialogGonfig.panelClass = 'modals-dialog';
       this.dialog.open(AddComponent, dialogGonfig).afterClosed().subscribe(result => {
-        this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+        if(this.service.formSearch.value==''){
+          this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef)
+        }else
+        {
+          this.AdvancedSearch();
+        }
+       // this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
       });
      }
     }
@@ -218,8 +224,18 @@ else{
       dialogGonfig.autoFocus = true;
       dialogGonfig.width = "50%";
       dialogGonfig.panelClass = 'modals-dialog';
-       this.dialog.open(EditComponent,{panelClass:'modals-dialog',disableClose:true,autoFocus:true, width:"50%",data:row}).afterClosed().subscribe(result => {
-        this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef)});
+       this.dialog.open(EditComponent,{panelClass:'modals-dialog',disableClose:true,autoFocus:true, width:"50%",data:row}).afterClosed()
+       .subscribe(result => {
+        if(this.service.formSearch.value==''){
+          this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef)
+        }else
+        {
+          this.AdvancedSearch();
+        }
+     
+       
+      
+      });
         //this.form.reset();
        
        }
@@ -242,7 +258,13 @@ else{
               this.InventoryServ.DeleteInventory(row.id).subscribe(
                 rs => {
                   this.note.success(':: successfully Deleted');
-                  this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+                  if(this.service.formSearch.value==''){
+                    this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef)
+                  }else
+                  {
+                    this.AdvancedSearch();
+                  }
+                 // this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
                   //  this.getRequestdata(1, 100, searchData, this.sortColumnDef, "asc");
                 },
                 error => { this.note.warn(':: An Error Occured') }
@@ -269,7 +291,7 @@ GetLog(row:any){
              this.logserv.SendLogId(row.id);
               this.router.navigateByUrl('/history');
           
-        
+             
       
   
   //}
