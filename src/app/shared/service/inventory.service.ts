@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { Inventory } from 'src/app/Model/inventory';
+import { Options } from 'selenium-webdriver';
 
 @Injectable({
   providedIn: 'root'
@@ -99,7 +100,6 @@ UpdateInventoryStatusToOutgoing(ids:number[]):Observable<any>
 }
 
   AdvancedSearch(data:any): Observable<any> {
-    console.log("ff",data);
     return this.httpClient.post<any>(`${environment.API_URL}api/Inventory/AdvancedSearch`, data);
   }
 
@@ -116,5 +116,19 @@ SerielNumberIsAlreadySignedInEdit(SerielNumber:string,id:number ):Observable<any
   {
     
     return this.httpClient.get(`${environment.API_URL}api/Inventory/GetLocationByReceivedId/`+id );
+  }
+
+
+  ExportExitPermitExcel(data:any): Observable<any> {
+    debugger;
+    
+   
+   // return this.httpClient.post<any>(`${environment.API_URL}api/Inventory/ExportExitPermitExcel`, data);
+   // return this.httpClient.get(`${environment.API_URL}api/Inventory/ExportExitPermitExcel`,data); 
+   return this.httpClient.get(
+    `${environment.API_URL}api/Inventory/ExportExitPermitExcel`
+   ,Options?{observe?: data,headers?: this.headers,responseType?:'blob'}
+   ); 
+  
   }
 }

@@ -507,6 +507,7 @@ upLoadF() {
 
 
 }
+
 ExportTOEmptyExcel()
 {
   //debugger
@@ -724,7 +725,7 @@ else {
 
 
 AdvancedSearch() {
-  debugger;
+ 
   this.isFilterationData = true;
   this.panelOpenState = true;
 this.loader.busy();
@@ -766,16 +767,16 @@ this.loader.busy();
   this.inventorySearch.AcceptanceIDs =(this.service.formSearch.value.AcceptanceId);
   this.inventorySearch.LocationIDs =(this.service.formSearch.value.LocationId);
  
-  console.log("ad", this.inventorySearch);
+
   this.InventoryServ.AdvancedSearch(this.inventorySearch).subscribe(res => {
-    console.log("ff", res);
+    
     this.InventoryList = res as Inventory[];
-    // this.dataSource = new MatTableDataSource(this.hwList);
+    
     this.dataSource = new MatTableDataSource<any>(this.InventoryList);
     this.dataSource.paginator = this.paginator as MatPaginator;
     this.dataSource.sort = this.sort as MatSort;
-    ////setTimeout(() => this.loader = false, 3000);
-    // this.form.reset();
+   
+   
     this.loader.idle();
   }
   )//subsribe
@@ -907,6 +908,69 @@ ontypeNameInputChange(){
 
 
 
+}
+
+
+
+ExportExitPermitExcel() {
+  
+  if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
+  {
+    this.router.navigateByUrl('/login');
+  }
+  else{
+debugger;
+    this.inventorySearch.CreatedDateFrom = this.service.formSearch.value.CreatedDateFrom == "" ? null : this.service.formSearch.value.CreatedDateFrom;
+  this.inventorySearch.CreatedDateTo = this.service.formSearch.value.CreatedDateTo == "" ? null : this.service.formSearch.value.CreatedDateTo;
+  //
+  this.inventorySearch.UpdatedDateFrom = this.service.formSearch.value.UpdatedDateFrom == "" ? null : this.service.formSearch.value.UpdatedDateFrom;
+  this.inventorySearch.UpdatedDateTo = this.service.formSearch.value.UpdatedDateTo == "" ? null : this.service.formSearch.value.UpdatedDateTo;
+  //
+  this.inventorySearch.ExpriyDateFrom = this.service.formSearch.value.ExpriyDateFrom == "" ? null : this.service.formSearch.value.ExpriyDateFrom;
+  this.inventorySearch.ExpriyDateTo = this.service.formSearch.value.ExpriyDateTo == "" ? null : this.service.formSearch.value.ExpriyDateTo;
+  //
+  this.inventorySearch.ReceivedDateFrom = this.service.formSearch.value.ReceivedDateFrom == "" ? null : this.service.formSearch.value.ReceivedDateFrom;
+  this.inventorySearch.ReceivedDateTo = this.service.formSearch.value.ReceivedDateTo == "" ? null : this.service.formSearch.value.ReceivedDateTo;
+  //
+  this.inventorySearch.CreatedBy = this.service.formSearch.value.CreatedBy;
+  this.inventorySearch.UpdatedBy = this.service.formSearch.value.UpdatedBy;
+  this.inventorySearch.Comment = this.service.formSearch.value.Comment;
+  this.inventorySearch.Comment = this.service.formSearch.value.Comment;
+  this.inventorySearch.Customername = this.service.formSearch.value.Customername;
+  this.inventorySearch.DeviceType = this.service.formSearch.value.DeviceType;
+  this.inventorySearch.OrderNumber = Number(this.service.formSearch.value.OrderNumber);
+  this.inventorySearch.ReorderingPoint = Number(this.service.formSearch.value.ReorderingPoint);
+  this.inventorySearch.BR = Number(this.service.formSearch.value.BR);
+  this.inventorySearch.ItemCode = Number(this.service.formSearch.value.ItemCode);
+  this.inventorySearch.Meter = Number(this.service.formSearch.value.Meter);
+  this.inventorySearch.Number = Number(this.service.formSearch.value.Number);
+  this.inventorySearch.SerielNumber = this.service.formSearch.value.SerielNumber;
+  this.inventorySearch.RecipientName = this.service.formSearch.value.RecipientName;
+  this.inventorySearch.Team = this.service.formSearch.value.Team;
+  this.inventorySearch.Status = this.service.formSearch.value.Status;
+
+  this.inventorySearch.TypeStatusIDs =(this.service.formSearch.value.TypeStatusId);
+  this.inventorySearch.ReceviedStatusIDs =(this.service.formSearch.value.ReceviedStatusId);
+  this.inventorySearch.OutgoingStatusIDs =(this.service.formSearch.value.OutgoingStatusId);
+  this.inventorySearch.CategoryIDs =(this.service.formSearch.value.CategoryId);
+  this.inventorySearch.CompanyIDs =(this.service.formSearch.value.CompanyId);
+  this.inventorySearch.ReceviedTypeIDs =(this.service.formSearch.value.ReceviedTypeId);
+  this.inventorySearch.AcceptanceIDs =(this.service.formSearch.value.AcceptanceId);
+  this.inventorySearch.LocationIDs =(this.service.formSearch.value.LocationId);
+ 
+  this.InventoryServ.ExportExitPermitExcel(this.inventorySearch).subscribe(res => {
+
+    const blob = new Blob([res], { type: 'application/vnd.ms.excel' });
+    const file = new File([blob], 'InventoryData' + Date.now() + '.xlsx', { type: 'application/vnd.ms.excel' });
+   // const file = new File([res], 'InventoryData' + Date.now() + '.xlsx', { type: 'application/vnd.ms.excel' });
+    saveAs(file, 'InventoryData' + Date.now() + '.xlsx')
+
+  }, err => {
+
+    this.note.warn("! Fail")
+
+  });
+  }
 }
 
 }
