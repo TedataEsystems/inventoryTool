@@ -32,8 +32,10 @@ export class EditFormService {
     Number: new FormControl(''),
     SerielNumber: new FormControl(''),
     RecipientName: new FormControl(''),
-    Team: new FormControl(''),
+    TeamId: new FormControl(''),
     Status: new FormControl(''),
+    ActionType: new FormControl(''),
+    DateType: new FormControl(''),
     TypeStatusId: new FormControl(''),
     ReceviedStatusId: new FormControl(''),
     OutgoingStatusId: new FormControl(''),
@@ -56,7 +58,7 @@ export class EditFormService {
     ItemCode: new FormControl(null),
     Meter: new FormControl(null),
     Number: new FormControl(null),
-    Team: new FormControl(''),//////11111
+    TeamId: new FormControl(null),/////11111
     Status: new FormControl(''),
     
     SerielNumber: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),////6666
@@ -91,7 +93,7 @@ export class EditFormService {
   ItemCode: new FormControl(null),
   Meter: new FormControl(null),
   Number: new FormControl(null),
-  Team: new FormControl(''),
+  TeamId: new FormControl(null),
   Status: new FormControl(''),
 
   SerielNumber: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
@@ -119,7 +121,7 @@ export class EditFormService {
     this.form.setValue({
       Id:0,
       CustomerName: '',
-      Team: '',
+      TeamId:0,
       OrderNumber: null,
       RecipientName: '',
      
@@ -151,7 +153,7 @@ export class EditFormService {
     this.form1.setValue({
       Id:0,
       CustomerName: '',
-      Team: '',
+      TeamId:0,
       OrderNumber: null,
       RecipientName: '',
      

@@ -34,7 +34,7 @@ import { CategoryComponent } from 'src/app/component/setting/category/category.c
 import { AddComponent } from 'src/app/component/add/add.component';
 import { NgxMatDatetimePickerModule } from '@angular-material-components/datetime-picker';
 import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
-
+import { TeamComponent } from 'src/app/component/setting/team/team.component';
 
 
 
@@ -64,6 +64,7 @@ import { NgxMatMomentModule } from '@angular-material-components/moment-adapter'
     CategoryComponent,
     AddTypeComponent,
     AddComponent,
+    TeamComponent,
   ],
   imports: [
     CommonModule,

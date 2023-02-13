@@ -50,4 +50,6 @@ mat-checkbox{
 .hid{
     height: 35px;
 }
-
+.inputFilter{
+    background-color: white !important;
+  }

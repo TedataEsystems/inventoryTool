@@ -59,11 +59,18 @@
             <mat-label>اسم المستلم</mat-label>
             <input matInput  formControlName="RecipientName">
           </mat-form-field>
-          <mat-form-field appearance="fill"  class="serch">
+          <!-- <mat-form-field appearance="fill"  class="serch">
             <mat-label> Team</mat-label>
             <input matInput  formControlName="Team">
+          </mat-form-field> -->
+          <mat-form-field appearance="fill" class="serch">
+            <mat-select [multiple]="true"  appendTo="body" formControlName="TeamId" placeholder=" * Team  (--اختر--) "  >
+              <!-- <mat-option>-- Please select --</mat-option> -->
+              <mat-option  *ngFor="let Team of TeamList"   [value]="Team.id">
+                {{Team.name}}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
-        
        
           <mat-form-field appearance="fill" class="serch">
             <mat-select formControlName="Status" placeholder=" *  (--اختر--) الحالة"  >
@@ -175,8 +182,8 @@
 
 
       <mat-form-field appearance="fill" class="w-50 serch" >  
-         
-        <mat-select  placeholder="--اختر --"   (selectionChange)="selectedValue($event)" [(ngModel)]="IntialValCreateBy"   [ngModelOptions]="{standalone: true}">
+        <!-- [(ngModel)]="IntialValCreateBy"   [ngModelOptions]="{standalone: true}" -->
+        <mat-select  formControlName="ActionType" placeholder="--اختر --"   (selectionChange)="selectedValue($event)" >
           <mat-option value="CreatedBy" >اضافة </mat-option>
           <mat-option value="UpdatedBy">
           تعديل
@@ -198,7 +205,8 @@
       <mat-form-field appearance="fill" class="serch">
         <!-- <mat-label>تم التعديل بواسطه</mat-label>
         <input matInput formControlName="updatedBy"> -->
-        <mat-select  placeholder="-- اختر التاريخ --" (selectionChange)="selectedValueOfDate($event)" [(ngModel)]="IntialValDate"   [ngModelOptions]="{standalone: true}">
+        <!-- [ngModelOptions]="{standalone: true}"  [(ngModel)]="IntialValDate"-->
+        <mat-select formControlName="DateType"  placeholder="-- اختر التاريخ --" (selectionChange)="selectedValueOfDate($event)"    >
           <mat-option value="CreatedDate" >تاريخ الاضافة</mat-option>
           <mat-option value="UpdatedDate">
           تاريخ التعديل
@@ -339,7 +347,9 @@
     <input mat-raised-button value="مسح " class="btn-danger text-center mx-1 ser " (click)="clearAdvancedSearch()" readonly >
 
     <button mat-raised-button class="ser " color="warn" >بحث</button>
-    <!-- <button mat-raised-button class="ser " (click)="ExportExitPermitExcel()" color="primary" >طباعه</button> -->
+     <button mat-raised-button class="ser " (click)="ExportExitPermitExcel()" color="primary" >طباعه</button>
+     <button mat-raised-button class="ser " (click)="SaveFavoriteSearch()" color="primary" >حفظ</button> 
+     <button mat-raised-button class="ser " (click)="GetFavoriteSearch()" color="primary" >استرجاع</button>  
   </div>
   
    
@@ -516,11 +526,14 @@
     </ng-container>
 
 
-    <ng-container matColumnDef="Team">
+    <!-- <ng-container matColumnDef="Team">
         <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Team</mat-header-cell>
         <mat-cell *matCellDef="let element" data-label=" Team"> {{element.team}} </mat-cell>
+    </ng-container> -->
+    <ng-container matColumnDef="TeamName">
+      <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>    Team      </mat-header-cell>
+      <mat-cell *matCellDef="let element" data-label="   Team "> {{element.teamName}} </mat-cell>
     </ng-container>
-
     <ng-container matColumnDef="Status">
       <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>الحالة</mat-header-cell>
       <mat-cell *matCellDef="let element" data-label=" الحالة"> {{element.status}} </mat-cell>

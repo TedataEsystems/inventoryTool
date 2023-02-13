@@ -14,6 +14,7 @@ import { ReceviedType } from 'src/app/Model/recevied-type';
 import { CompanyName } from 'src/app/Model/company-name';
 import { Acceptance } from 'src/app/Model/acceptance';
 import { LocationName } from 'src/app/Model/location';
+import { Team } from 'src/app/Model/team';
 
 ;
 
@@ -38,8 +39,8 @@ export class EditComponent implements OnInit{
   RecipientNamehidden1:number=0;
   OrderNumberhidden:boolean=true;
   OrderNumberhidden1:number=0;
-  Teamhidden:boolean=true;
-  Teamhidden1:number=0;
+  TeamIdhidden:boolean=true;
+  TeamIdhidden1:number=0;
   TypeStatusIdhidden:boolean=true;
   TypeStatusIdhidden1:number=0;
   CompanyIdhidden:boolean=true;
@@ -51,6 +52,7 @@ export class EditComponent implements OnInit{
   MetterHidden:boolean=false;
   selected=0;
   TypeStatuslist: TypeStatus[] = [];
+  Teamlist: Team[] = [];
    ReceivedStatuslist: ReceivedStatusList[] = [];
   OutgoingStatuslist: OutgoingStatusList[] = [];
   Category: Category[] = [];
@@ -98,6 +100,7 @@ iid:number=0;
     if(res.status==true)
     {
     this.TypeStatuslist=res.typeStatus;
+    this.Teamlist=res.team;
     this.ReceivedStatuslist=res.receviedStatus;
     this.OutgoingStatuslist=res.outgoingStatus;
    // this.Category = res.category;
@@ -110,6 +113,7 @@ iid:number=0;
     {
       //set list in update
       var typstatuscount=0;
+      var teamcount=0;
       var recviedstatuscount=0;
       var outgoingstatuscount=0;
       var categorycount=0;
@@ -130,7 +134,19 @@ iid:number=0;
       {
         this.service.form.controls['TypeStatusId'].setValue(null);
       }
-
+      for(var team of this.Teamlist )
+      {
+        if(this.data.teamId==team.id)
+        {
+          teamcount ++;
+          this.service.form.controls['TeamId'].setValue(this.data.teamId);
+          break;
+        }
+      }
+      if(teamcount==0)
+      {
+        this.service.form.controls['TeamId'].setValue(null);
+      }
    
       for(var outgoing of this.OutgoingStatuslist )
       {
@@ -313,7 +329,7 @@ iid:number=0;
     this.service.form.controls['Number'].setValue(this.data.number);
     this.service.form.controls['SerielNumber'].setValue(this.data.serielNumber);
     this.service.form.controls['RecipientName'].setValue(this.data.recipientName);
-    this.service.form.controls['Team'].setValue(this.data.team);
+   // this.service.form.controls['Team'].setValue(this.data.team);
     this.service.form.controls['Status'].setValue(this.data.status);
     this.service.form.controls['Comment'].setValue(this.data.comment);
     this.service.form.controls['ReceivedDate'].setValue(this.data.receivedDate);
@@ -386,7 +402,8 @@ iid:number=0;
       Number :this.service.form.value.Number,
       SerielNumber :this.service.form.value.SerielNumber,
       RecipientName :this.service.form.value.RecipientName,
-      Team:this.service.form.value.Team,
+      TeamId :this.service.form.value.TeamId,
+      Team :this.service.form.value.Team,
       Status:this.service.form.value.Status,
       ReceivedDate:this.service.form.value.ReceivedDate,
       ExpriyDate:this.service.form.value.ExpriyDate,
@@ -471,13 +488,13 @@ iid:number=0;
         this.OrderNumberhidden1=0;
        }
 
-        if(inventory.Team==null)
+       if(inventory.TeamId==null)
        {
-        this.Teamhidden = !this.Teamhidden;
-       this.Teamhidden1=1;
+        this.TeamIdhidden = !this.TeamIdhidden;
+       this.TeamIdhidden1=1;
        }
        else{
-        this.Teamhidden1=0;
+        this.TeamIdhidden1=0;
        }
 
         if(inventory.TypeStatusId==null)
@@ -499,7 +516,7 @@ iid:number=0;
        }
 
        if(this.CustomerNamehidden1==1 ||this.hidden11==1 || this.RecipientNamehidden1==1 ||this.outgoinghidden11==1 || 
-        this.OrderNumberhidden1==1 || this.Teamhidden1==1 || this.TypeStatusIdhidden1==1 ||  this.CompanyIdhidden1==1)
+        this.OrderNumberhidden1==1 || this.TeamIdhidden1==1 || this.TypeStatusIdhidden1==1 ||  this.CompanyIdhidden1==1)
       {
       
        this.loader.idle();

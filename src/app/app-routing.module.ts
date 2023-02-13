@@ -16,6 +16,7 @@ import { ReceviedTypeComponent } from './component/setting/recevied-type/recevie
 import { CompanyNameComponent } from './component/setting/company-name/company-name.component';
 import { LocationComponent } from './component/setting/location/location.component';
 import { AcceptanceComponent } from './component/setting/acceptance/acceptance.component';
+import { TeamComponent } from './component/setting/team/team.component';
 
 const routes: Routes = [
   {
@@ -75,6 +76,10 @@ const routes: Routes = [
     {
       path:'Acceptance',
       component:AcceptanceComponent
+    },
+    {
+      path:'Team',
+      component:TeamComponent
     },
     {
       path:'**',

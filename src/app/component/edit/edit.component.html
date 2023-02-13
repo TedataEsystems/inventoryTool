@@ -134,10 +134,15 @@
           <mat-error>مطلوب</mat-error>
         </mat-form-field>
         <mat-form-field>
-          <input formControlName="Team" matInput placeholder="Team*">
-          <!-- <mat-error>[hidden]="Teamhidden"مطلوب</mat-error> -->
-          <span class='req' *ngIf="Teamhidden1==1" >مطلوب</span>
-        </mat-form-field>
+          <mat-select   formControlName="TeamId" placeholder=" * Team ">
+            <mat-option>-- Please select --</mat-option>
+            <mat-option   *ngFor="let Team of Teamlist"   [value]="Team.id">
+              {{Team.name}}
+            </mat-option>
+          </mat-select>
+            
+             <span class='req' *ngIf="TeamIdhidden1==1" >مطلوب</span>
+          </mat-form-field>
 
          <mat-form-field >
 

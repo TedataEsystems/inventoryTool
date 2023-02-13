@@ -12,6 +12,7 @@ import { EditComponent } from '../edit/edit.component';
 import { NotificationService } from 'src/app/shared/service/notification.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InventoryService } from 'src/app/shared/service/inventory.service';
+import { FavoriteSearchService } from 'src/app/shared/service/favorite-search.service';
 import { ConfigureService } from 'src/app/shared/service/configure.service';
 import {saveAs} from 'file-saver';
 import { TypeStatus } from 'src/app/Model/type-status';
@@ -31,6 +32,9 @@ import { LogsService } from 'src/app/shared/service/logs.service';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {Observable} from 'rxjs';
 import { EditFormService } from 'src/app/shared/service/edit-form.service';
+import { Team } from 'src/app/Model/team';
+
+
 @Component({
   selector: 'app-inventory' ,
   templateUrl: './inventory.component.html',
@@ -40,6 +44,7 @@ import { EditFormService } from 'src/app/shared/service/edit-form.service';
 export class InventoryComponent implements OnInit {
 InventoryList:Inventory[]=[];
 TypeStatus: TypeStatus[] = [];
+Team: Team[] = [];
 filteredOptions: any;
 ReceivedStatus: ReceivedStatusList[] = [];
 OutgoingStatus: OutgoingStatusList[] = [];
@@ -68,7 +73,7 @@ loading: boolean = true;
   @ViewChild(MatSort) sort?:MatSort ;
   @ViewChild(MatPaginator) paginator?:MatPaginator ;
   displayedColumns: string[] = ['all','Id', 'TypeStatusName', 'Comment','CustomerName','SerielNumber','OrderNumber','RecipientName',
-  'Team','Status','ReceivedDate','ReceviedStatusName','ExpriyDate','OutgoingStatusName','CategoryName','CompanyName','ReceviedTypeName','AcceptanceName','LocationName','BR','ReorderingPoint','ItemCode','Meter','Number','CreationDate','CreatedBy','UpdateDate','UpdatedBy','action'];
+  'TeamName','Status','ReceivedDate','ReceviedStatusName','ExpriyDate','OutgoingStatusName','CategoryName','CompanyName','ReceviedTypeName','AcceptanceName','LocationName','BR','ReorderingPoint','ItemCode','Meter','Number','CreationDate','CreatedBy','UpdateDate','UpdatedBy','action'];
   dataSource =new MatTableDataSource();
   columnsToDisplay: string[] = this.displayedColumns.slice();
   team=  localStorage.getItem("userGroup");
@@ -76,7 +81,8 @@ loading: boolean = true;
   
 
   constructor(private dailogService:DeleteService,private loader: LoaderService,private titleService:Title, private note:NotificationService,private deleteService:DeleteService,private dialog: MatDialog, private route: ActivatedRoute, public service:EditFormService,
-    private router: Router, private InventoryServ: InventoryService, private config: ConfigureService, private _bottomSheet: MatBottomSheet,private logserv:LogsService)
+    private router: Router, private InventoryServ: InventoryService,
+    private FavoriteSearchServ: FavoriteSearchService, private config: ConfigureService, private _bottomSheet: MatBottomSheet,private logserv:LogsService)
 
   {
 
@@ -113,6 +119,7 @@ loading: boolean = true;
 
     this.InventoryServ.GettingLists().subscribe(res => {
       this.TypeStatus = res.typestatus as TypeStatus[];
+      this.Team = res.team as Team[];
       this.ReceivedStatus = res.recivedstatus as ReceivedStatusList[];
       this.OutgoingStatus = res.outgoingstatus as OutgoingStatusList[];
       this.Category = res.category as Category[];
@@ -124,8 +131,6 @@ loading: boolean = true;
 
     setTimeout(()=> this.loader.idle(),2000) ;
   }
-
-
 
   ngOnInit(){
     if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
@@ -153,11 +158,6 @@ else{
 
   }
  
-
-
-
-  
-
   ngAfterViewInit() {
 
     this.dataSource.sort = this.sort as MatSort;
@@ -370,13 +370,6 @@ sortData(sort: any) {
 }
 }
 
-
-
-
-
-
-
-
 @Input() param = 'file';
 @ViewChild('LIST') template!: TemplateRef<any>;
 @ViewChild('LISTF') templateF!: TemplateRef<any>;
@@ -526,8 +519,6 @@ ExportTOEmptyExcel()
   });
 }
 }
-
-
 Ids: number[] = [];
 // select all
 isall: boolean = false;
@@ -685,8 +676,6 @@ else {
   //
 }
 
-
-
 ////////advanced search
 // form: FormGroup = new FormGroup({
 //   CreatedDateFrom: new FormControl(''),
@@ -755,7 +744,7 @@ this.loader.busy();
   this.inventorySearch.Number = Number(this.service.formSearch.value.Number);
   this.inventorySearch.SerielNumber = this.service.formSearch.value.SerielNumber;
   this.inventorySearch.RecipientName = this.service.formSearch.value.RecipientName;
-  this.inventorySearch.Team = this.service.formSearch.value.Team;
+  this.inventorySearch.TeamIDs =(this.service.formSearch.value.TeamId);
   this.inventorySearch.Status = this.service.formSearch.value.Status;
 
   this.inventorySearch.TypeStatusIDs =(this.service.formSearch.value.TypeStatusId);
@@ -781,7 +770,64 @@ this.loader.busy();
   }
   )//subsribe
 }//advanced
-
+SaveFavoriteSearch() {
+ debugger;
+  this.isFilterationData = true;
+  this.panelOpenState = true;
+this.loader.busy();
+  this.inventorySearch.CreatedDateFrom = this.service.formSearch.value.CreatedDateFrom == "" ? null : this.service.formSearch.value.CreatedDateFrom;
+  this.inventorySearch.CreatedDateTo = this.service.formSearch.value.CreatedDateTo == "" ? null : this.service.formSearch.value.CreatedDateTo;
+  //
+  this.inventorySearch.UpdatedDateFrom = this.service.formSearch.value.UpdatedDateFrom == "" ? null : this.service.formSearch.value.UpdatedDateFrom;
+  this.inventorySearch.UpdatedDateTo = this.service.formSearch.value.UpdatedDateTo == "" ? null : this.service.formSearch.value.UpdatedDateTo;
+  //
+  this.inventorySearch.ExpriyDateFrom = this.service.formSearch.value.ExpriyDateFrom == "" ? null : this.service.formSearch.value.ExpriyDateFrom;
+  this.inventorySearch.ExpriyDateTo = this.service.formSearch.value.ExpriyDateTo == "" ? null : this.service.formSearch.value.ExpriyDateTo;
+  //
+  this.inventorySearch.ReceivedDateFrom = this.service.formSearch.value.ReceivedDateFrom == "" ? null : this.service.formSearch.value.ReceivedDateFrom;
+  this.inventorySearch.ReceivedDateTo = this.service.formSearch.value.ReceivedDateTo == "" ? null : this.service.formSearch.value.ReceivedDateTo;
+  //
+  this.inventorySearch.CreatedBy = this.service.formSearch.value.CreatedBy;
+  this.inventorySearch.UpdatedBy = this.service.formSearch.value.UpdatedBy;
+  this.inventorySearch.Comment = this.service.formSearch.value.Comment;
+  this.inventorySearch.Comment = this.service.formSearch.value.Comment;
+  this.inventorySearch.Customername = this.service.formSearch.value.Customername;
+  this.inventorySearch.DeviceType = this.service.formSearch.value.DeviceType;
+  this.inventorySearch.OrderNumber = Number(this.service.formSearch.value.OrderNumber);
+  this.inventorySearch.ReorderingPoint = Number(this.service.formSearch.value.ReorderingPoint);
+  this.inventorySearch.BR = Number(this.service.formSearch.value.BR);
+  this.inventorySearch.ItemCode = Number(this.service.formSearch.value.ItemCode);
+  this.inventorySearch.Meter = Number(this.service.formSearch.value.Meter);
+  this.inventorySearch.Number = Number(this.service.formSearch.value.Number);
+  this.inventorySearch.SerielNumber = this.service.formSearch.value.SerielNumber;
+  this.inventorySearch.RecipientName = this.service.formSearch.value.RecipientName;
+  this.inventorySearch.TeamIDs =(this.service.formSearch.value.TeamId);
+  this.inventorySearch.Status = this.service.formSearch.value.Status;
+  this.inventorySearch.ActionType = this.service.formSearch.value.ActionType;
+  this.inventorySearch.DateType = this.service.formSearch.value.DateType;
+  this.inventorySearch.TypeStatusIDs =(this.service.formSearch.value.TypeStatusId);
+  this.inventorySearch.ReceviedStatusIDs =(this.service.formSearch.value.ReceviedStatusId);
+  this.inventorySearch.OutgoingStatusIDs =(this.service.formSearch.value.OutgoingStatusId);
+  this.inventorySearch.CategoryIDs =(this.service.formSearch.value.CategoryId);
+  this.inventorySearch.CompanyIDs =(this.service.formSearch.value.CompanyId);
+  this.inventorySearch.ReceviedTypeIDs =(this.service.formSearch.value.ReceviedTypeId);
+  this.inventorySearch.AcceptanceIDs =(this.service.formSearch.value.AcceptanceId);
+  this.inventorySearch.LocationIDs =(this.service.formSearch.value.LocationId);
+ 
+  debugger;
+  this.FavoriteSearchServ.AddEditFavoriteSearch(this.inventorySearch).subscribe(res => {
+    
+   // this.InventoryList = res as Inventory[];
+    
+   // this.dataSource = new MatTableDataSource<any>(this.InventoryList);
+   // this.dataSource.paginator = this.paginator as MatPaginator;
+   // this.dataSource.sort = this.sort as MatSort;
+   this.note.success(':: Submitted successfully');
+   
+    this.loader.idle();
+  }
+  )//subsribe
+}
 IntialValCreateBy: string = "";
   IntialValDate: string = "";
   clearAdvancedSearch() {
@@ -801,6 +847,7 @@ this.appear=false
   public AcceptanceList: Acceptance[] = [];
   public ReceviedTypeList: ReceviedType[] = [];
   public TypeStatusList: TypeStatus[] = [];
+  public TeamList: Team[] = [];
   public _TypeStatusList: any[] = [];
   openAdvancedSearch() {
     this.panelOpenState = false;
@@ -817,6 +864,7 @@ this.appear=false
         this.AcceptanceList = res.acceptance;
         this.ReceviedTypeList = res.receviedType;
         this.TypeStatusList = res.typeStatus;
+        this.TeamList = res.team;
        this._TypeStatusList=res.typeStatus;
       
       }
@@ -912,65 +960,224 @@ ontypeNameInputChange(){
 
 
 
-// ExportExitPermitExcel() {
+ExportExitPermitExcel() {
   
-//   if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-//   {
-//     this.router.navigateByUrl('/login');
-//   }
-//   else{
-// debugger;
-//     this.inventorySearch.CreatedDateFrom = this.service.formSearch.value.CreatedDateFrom == "" ? null : this.service.formSearch.value.CreatedDateFrom;
-//   this.inventorySearch.CreatedDateTo = this.service.formSearch.value.CreatedDateTo == "" ? null : this.service.formSearch.value.CreatedDateTo;
-//   //
-//   this.inventorySearch.UpdatedDateFrom = this.service.formSearch.value.UpdatedDateFrom == "" ? null : this.service.formSearch.value.UpdatedDateFrom;
-//   this.inventorySearch.UpdatedDateTo = this.service.formSearch.value.UpdatedDateTo == "" ? null : this.service.formSearch.value.UpdatedDateTo;
-//   //
-//   this.inventorySearch.ExpriyDateFrom = this.service.formSearch.value.ExpriyDateFrom == "" ? null : this.service.formSearch.value.ExpriyDateFrom;
-//   this.inventorySearch.ExpriyDateTo = this.service.formSearch.value.ExpriyDateTo == "" ? null : this.service.formSearch.value.ExpriyDateTo;
-//   //
-//   this.inventorySearch.ReceivedDateFrom = this.service.formSearch.value.ReceivedDateFrom == "" ? null : this.service.formSearch.value.ReceivedDateFrom;
-//   this.inventorySearch.ReceivedDateTo = this.service.formSearch.value.ReceivedDateTo == "" ? null : this.service.formSearch.value.ReceivedDateTo;
-//   //
-//   this.inventorySearch.CreatedBy = this.service.formSearch.value.CreatedBy;
-//   this.inventorySearch.UpdatedBy = this.service.formSearch.value.UpdatedBy;
-//   this.inventorySearch.Comment = this.service.formSearch.value.Comment;
-//   this.inventorySearch.Comment = this.service.formSearch.value.Comment;
-//   this.inventorySearch.Customername = this.service.formSearch.value.Customername;
-//   this.inventorySearch.DeviceType = this.service.formSearch.value.DeviceType;
-//   this.inventorySearch.OrderNumber = Number(this.service.formSearch.value.OrderNumber);
-//   this.inventorySearch.ReorderingPoint = Number(this.service.formSearch.value.ReorderingPoint);
-//   this.inventorySearch.BR = Number(this.service.formSearch.value.BR);
-//   this.inventorySearch.ItemCode = Number(this.service.formSearch.value.ItemCode);
-//   this.inventorySearch.Meter = Number(this.service.formSearch.value.Meter);
-//   this.inventorySearch.Number = Number(this.service.formSearch.value.Number);
-//   this.inventorySearch.SerielNumber = this.service.formSearch.value.SerielNumber;
-//   this.inventorySearch.RecipientName = this.service.formSearch.value.RecipientName;
-//   this.inventorySearch.Team = this.service.formSearch.value.Team;
-//   this.inventorySearch.Status = this.service.formSearch.value.Status;
+  if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
+  {
+    this.router.navigateByUrl('/login');
+  }
+  else{
 
-//   this.inventorySearch.TypeStatusIDs =(this.service.formSearch.value.TypeStatusId);
-//   this.inventorySearch.ReceviedStatusIDs =(this.service.formSearch.value.ReceviedStatusId);
-//   this.inventorySearch.OutgoingStatusIDs =(this.service.formSearch.value.OutgoingStatusId);
-//   this.inventorySearch.CategoryIDs =(this.service.formSearch.value.CategoryId);
-//   this.inventorySearch.CompanyIDs =(this.service.formSearch.value.CompanyId);
-//   this.inventorySearch.ReceviedTypeIDs =(this.service.formSearch.value.ReceviedTypeId);
-//   this.inventorySearch.AcceptanceIDs =(this.service.formSearch.value.AcceptanceId);
-//   this.inventorySearch.LocationIDs =(this.service.formSearch.value.LocationId);
+    this.inventorySearch.CreatedDateFrom = this.service.formSearch.value.CreatedDateFrom == "" ? null : this.service.formSearch.value.CreatedDateFrom;
+  this.inventorySearch.CreatedDateTo = this.service.formSearch.value.CreatedDateTo == "" ? null : this.service.formSearch.value.CreatedDateTo;
+  //
+  this.inventorySearch.UpdatedDateFrom = this.service.formSearch.value.UpdatedDateFrom == "" ? null : this.service.formSearch.value.UpdatedDateFrom;
+  this.inventorySearch.UpdatedDateTo = this.service.formSearch.value.UpdatedDateTo == "" ? null : this.service.formSearch.value.UpdatedDateTo;
+  //
+  this.inventorySearch.ExpriyDateFrom = this.service.formSearch.value.ExpriyDateFrom == "" ? null : this.service.formSearch.value.ExpriyDateFrom;
+  this.inventorySearch.ExpriyDateTo = this.service.formSearch.value.ExpriyDateTo == "" ? null : this.service.formSearch.value.ExpriyDateTo;
+  //
+  this.inventorySearch.ReceivedDateFrom = this.service.formSearch.value.ReceivedDateFrom == "" ? null : this.service.formSearch.value.ReceivedDateFrom;
+  this.inventorySearch.ReceivedDateTo = this.service.formSearch.value.ReceivedDateTo == "" ? null : this.service.formSearch.value.ReceivedDateTo;
+  //
+  this.inventorySearch.CreatedBy = this.service.formSearch.value.CreatedBy;
+  this.inventorySearch.UpdatedBy = this.service.formSearch.value.UpdatedBy;
+  this.inventorySearch.Comment = this.service.formSearch.value.Comment;
+  this.inventorySearch.Comment = this.service.formSearch.value.Comment;
+  this.inventorySearch.Customername = this.service.formSearch.value.Customername;
+  this.inventorySearch.DeviceType = this.service.formSearch.value.DeviceType;
+  this.inventorySearch.OrderNumber = Number(this.service.formSearch.value.OrderNumber);
+  this.inventorySearch.ReorderingPoint = Number(this.service.formSearch.value.ReorderingPoint);
+  this.inventorySearch.BR = Number(this.service.formSearch.value.BR);
+  this.inventorySearch.ItemCode = Number(this.service.formSearch.value.ItemCode);
+  this.inventorySearch.Meter = Number(this.service.formSearch.value.Meter);
+  this.inventorySearch.Number = Number(this.service.formSearch.value.Number);
+  this.inventorySearch.SerielNumber = this.service.formSearch.value.SerielNumber;
+  this.inventorySearch.RecipientName = this.service.formSearch.value.RecipientName;
+  this.inventorySearch.TeamIDs =(this.service.formSearch.value.TeamId);
+  this.inventorySearch.Status = this.service.formSearch.value.Status;
+
+  this.inventorySearch.TypeStatusIDs =(this.service.formSearch.value.TypeStatusId);
+  this.inventorySearch.ReceviedStatusIDs =(this.service.formSearch.value.ReceviedStatusId);
+  this.inventorySearch.OutgoingStatusIDs =(this.service.formSearch.value.OutgoingStatusId);
+  this.inventorySearch.CategoryIDs =(this.service.formSearch.value.CategoryId);
+  this.inventorySearch.CompanyIDs =(this.service.formSearch.value.CompanyId);
+  this.inventorySearch.ReceviedTypeIDs =(this.service.formSearch.value.ReceviedTypeId);
+  this.inventorySearch.AcceptanceIDs =(this.service.formSearch.value.AcceptanceId);
+  this.inventorySearch.LocationIDs =(this.service.formSearch.value.LocationId);
  
-//   this.InventoryServ.ExportExitPermitExcel(this.inventorySearch).subscribe(res => {
+  this.InventoryServ.ExportExitPermitExcel(this.inventorySearch).subscribe(res => {
 
-//     const blob = new Blob([res], { type: 'application/vnd.ms.excel' });
-//     const file = new File([blob], 'InventoryData' + Date.now() + '.xlsx', { type: 'application/vnd.ms.excel' });
-//    // const file = new File([res], 'InventoryData' + Date.now() + '.xlsx', { type: 'application/vnd.ms.excel' });
-//     saveAs(file, 'InventoryData' + Date.now() + '.xlsx')
+    const blob = new Blob([res], { type: 'application/vnd.ms.excel' });
+    const file = new File([blob], 'تصريح _الخروج' + Date.now() + '.xlsx', { type: 'application/vnd.ms.excel' });
+  
+    saveAs(file, 'تصريح _الخروج' + Date.now() + '.xlsx')
 
-//   }, err => {
+  }, err => {
 
-//     this.note.warn("! Fail")
+    this.note.warn("! Fail")
 
-//   });
-//   }
-// }
+  });
+  }
+}
 
+
+
+GetFavoriteSearch(){
+  
+  if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
+  {
+    this.router.navigateByUrl('/login');
+  }
+  else{
+  this.FavoriteSearchServ.GetFavoriteSearch().subscribe(res => {
+    if(res.status)
+    {
+      console.log(res.data)
+      
+ 
+ if(res.data.customerName !=null){
+  this.service.formSearch.controls['Customername'].setValue(res.data.customerName);
+ }
+    
+     
+     if(res.data.orderNumber !=null){
+     this.service.formSearch.controls['OrderNumber'].setValue(res.data.orderNumber);
+     }
+     if(res.data.reorderingPoint !=null){
+     this.service.formSearch.controls['ReorderingPoint'].setValue(res.data.reorderingPoint);
+     }
+     if(res.data.br !=null){
+     this.service.formSearch.controls['BR'].setValue(res.data.br);
+     }
+     if(res.data.itemCode !=null){
+     this.service.formSearch.controls['ItemCode'].setValue(res.data.itemCode);
+     }
+    //  if(res.data.meter !=null){
+    //  this.service.formSearch.controls['Meter'].setValue(res.data.meter);
+    //  }
+    //  if(res.data.number !=null){
+    //  this.service.formSearch.controls['Number'].setValue(res.data.number);
+    //  }
+     if(res.data.serielNumber !=null){
+     this.service.formSearch.controls['SerielNumber'].setValue(res.data.serielNumber);
+     }
+     if(res.data.recipientName !=null){
+     this.service.formSearch.controls['RecipientName'].setValue(res.data.recipientName);
+     }
+     
+      if(res.data.teamIDs !=null){
+      
+    
+        this.service.formSearch.controls['TeamId'].setValue(res.data.teamIDs);
+      
+        
+         }
+     
+    
+    if(res.data.receviedStatusIDs !=null){
+      
+    
+      this.service.formSearch.controls['ReceviedStatusId'].setValue(res.data.receviedStatusIDs);
+    
+      
+       }
+     
+    
+
+     if(res.data.outgoingStatusIDs !=null){
+      
+      console.log("test22"+res.data.outgoingStatusIDs);
+      
+    
+      this.service.formSearch.controls['OutgoingStatusId'].setValue(res.data.outgoingStatusIDs);
+    
+      
+       }
+       if(res.data.receviedTypeIDs !=null){
+      
+    
+        this.service.formSearch.controls['ReceviedTypeId'].setValue(res.data.receviedTypeIDs);
+      
+        
+         }
+
+         if(res.data.typeStatusIDs !=null){
+      
+    
+          this.service.formSearch.controls['TypeStatusId'].setValue(res.data.typeStatusIDs);
+        
+          
+           }
+
+           if(res.data.categoryIDs !=null){
+      
+    
+            this.service.formSearch.controls['CategoryId'].setValue(res.data.categoryIDs);
+          
+            
+             }
+
+             if(res.data.companyIDs !=null){
+      
+    
+              this.service.formSearch.controls['CompanyId'].setValue(res.data.companyIDs);
+            
+              
+               }
+               if(res.data.locationIDs !=null){
+      
+    
+                this.service.formSearch.controls['LocationId'].setValue(res.data.locationIDs);
+              
+                
+                 }
+                 if(res.data.acceptanceIDs !=null){
+      
+    
+                  this.service.formSearch.controls['AcceptanceId'].setValue(res.data.acceptanceIDs);
+                
+                  
+                   }  
+     if(res.data.status !=null){
+     this.service.formSearch.controls['Status'].setValue(res.data.status);
+     }
+     if(res.data.comment !=null){
+     this.service.formSearch.controls['Comment'].setValue(res.data.comment);
+     }
+     if(res.data.receivedDateFrom !=null){
+     this.service.formSearch.controls['ReceivedDateFrom'].setValue(res.data.receivedDateFrom);
+     }
+     if(res.data.receivedDateTo !=null){
+     this.service.formSearch.controls['ReceivedDateTo'].setValue(res.data.receivedDateTo);
+     }
+     if(res.data.expriyDateFrom !=null){
+     this.service.formSearch.controls['ExpriyDateFrom'].setValue(res.data.expriyDateFrom);
+     }
+     if(res.data.expriyDateTo !=null){
+     this.service.formSearch.controls['ExpriyDateTo'].setValue(res.data.expriyDateTo);
+     }
+     if(res.data.creationDateFrom !=null){
+     this.service.formSearch.controls['CreatedDateFrom'].setValue(res.data.creationDateFrom);
+     }
+     if(res.data.creationDateTo !=null){
+     this.service.formSearch.controls['CreatedDateTo'].setValue(res.data.creationDateTo);
+     }
+     if(res.data.updatedDateFrom !=null){
+     this.service.formSearch.controls['UpdatedDateFrom'].setValue(res.data.updatedDateFrom);
+     }
+     if(res.data.updatedDateTo !=null){
+     this.service.formSearch.controls['UpdatedDateTo'].setValue(res.data.updatedDateTo);
+     }
+ 
+    }
+    
+
+  }, err => {
+
+   this.note.warn("!fail");
+
+  });
+}
+}
 }

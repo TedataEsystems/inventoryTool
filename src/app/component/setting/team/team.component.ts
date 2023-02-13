@@ -1,4 +1,7 @@
 
+
+
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
@@ -6,33 +9,32 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ReceviedType } from 'src/app/Model/recevied-type';
-import { TypeStatus } from 'src/app/Model/type-status';
-import { DeleteService } from 'src/app/shared/service/delete.service';
-import { LoaderService } from 'src/app/shared/service/loader.service';
+import { Team } from 'src/app/Model/team';
 import { NotificationService } from 'src/app/shared/service/notification.service';
-import { ReceviedTypeService } from 'src/app/shared/service/recevied-type.service';
-
+import { LoaderService } from 'src/app/shared/service/loader.service';
+import { TeamService } from 'src/app/shared/service/team.service';
+import { DeleteService } from 'src/app/shared/service/delete.service';
 
 @Component({
-  selector: 'app-recevied-type',
-  templateUrl: './recevied-type.component.html',
-  styleUrls: ['./recevied-type.component.css']
+  selector: 'app-team',
+  templateUrl: './team.component.html',
+  styleUrls: ['./team.component.css']
 })
-export class ReceviedTypeComponent implements OnInit {
+export class TeamComponent implements OnInit {
   isShowDiv = false;
   isNameRepeated: boolean = false;
   form: FormGroup = new FormGroup({
     Id: new FormControl(0),
     Name: new FormControl('', [Validators.required]),
   });
-  ReceviedType = {
+  Team = {
     Id: 0,
     Name: "",
     CreatedBy: ""
   }
-  receviedTypeList: ReceviedType[] = [];
-  ReceviedTypeListTab?: ReceviedType[] = [];
+
+  teamList: Team[] = [];
+  TeamListTab?: Team[] = [];
   valdata = ""; valuid = 0;
   searchKey: string = '';
   listName: string = '';
@@ -42,21 +44,20 @@ export class ReceviedTypeComponent implements OnInit {
   @ViewChild(MatSort) sort?: MatSort;
   displayedColumns: string[] = ['Id', 'Name','CreationDate','CreatedBy','UpdateDate','UpdateBy', 'action'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
-  dataSource = new MatTableDataSource(this.receviedTypeList);
+  dataSource = new MatTableDataSource(this.teamList);
   settingtype = ''
-
   editUsr: any;
   editdisabled: boolean = false;
   constructor(private titleService: Title
-    , private notser: NotificationService, private router: Router, private loader: LoaderService,private route: ActivatedRoute, private ReceviedTypeserv: ReceviedTypeService, private dailogService: DeleteService
+    , private notser: NotificationService, private router: Router, private loader: LoaderService,private route: ActivatedRoute, private TeamServ: TeamService, private dailogService: DeleteService
   ) {
-    this.titleService.setTitle('ReceviedType');
+    this.titleService.setTitle('Team');
 
   }
-  ReceviedTypeName: string = '';
-  ReceviedTypeId: number = 0;
- // show: boolean = false;
-  //loader: boolean = false;
+
+
+  TeamName: string = '';
+  TeamId: number = 0;
   isDisabled = false;
   pageNumber = 1;
   pageSize = 100;
@@ -65,16 +66,16 @@ export class ReceviedTypeComponent implements OnInit {
   public colname: string = 'Id';
   public coldir: string = 'asc';
 
-  LoadCompanyName() {
+ LoadCompanyName() {
     if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
     {
       this.router.navigateByUrl('/login');
     }
     else{
-    this.ReceviedTypeserv.getReceviedType(this.pageNumber, this.pageSize, '', this.colname, this.coldir).subscribe(response => {
-      this.receviedTypeList.push(...response?.data);
-      this.receviedTypeList.length = response?.pagination.totalCount;
-      this.dataSource = new MatTableDataSource<any>(this.receviedTypeList);
+    this.TeamServ.getTeam(this.pageNumber, this.pageSize, '', this.colname, this.coldir).subscribe(response => {
+      this.teamList.push(...response?.data);
+      this.teamList.length = response?.pagination.totalCount;
+      this.dataSource = new MatTableDataSource<any>(this.teamList);
       this.dataSource.paginator = this.paginator as MatPaginator;
 
     })
@@ -89,18 +90,16 @@ export class ReceviedTypeComponent implements OnInit {
     }
     else{
     this.loader.busy();;
-    this.ReceviedTypeserv.getReceviedType(pageNum, pageSize, search, sortColumn, sortDir).subscribe(response => {
-      this.receviedTypeList = response?.data;
-      this.receviedTypeList.length = response?.pagination.totalCount;
-      this.dataSource = new MatTableDataSource<any>(this.receviedTypeList);
+    this.TeamServ.getTeam(pageNum, pageSize, search, sortColumn, sortDir).subscribe(response => {
+      this.teamList = response?.data;
+      this.teamList.length = response?.pagination.totalCount;
+      this.dataSource = new MatTableDataSource<any>(this.teamList);
       this.dataSource._updateChangeSubscription();
       this.dataSource.paginator = this.paginator as MatPaginator;
     })
     setTimeout(() => this.loader.idle(), 2000);
   }
   }
-
-
 
 
   ngOnInit(): void {
@@ -113,11 +112,11 @@ export class ReceviedTypeComponent implements OnInit {
     this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);}
   }
 
-
   ngAfterViewInit() {
     this.dataSource.sort = this.sort as MatSort;
     this.dataSource.paginator = this.paginator as MatPaginator;
   }
+
 
   onSearchClear() {
     if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
@@ -141,14 +140,12 @@ export class ReceviedTypeComponent implements OnInit {
   }
   isDisable = false;
 
-
-
   onCreateUpdate() {
 
     this.isDisable = true;
-    this.ReceviedType.Name = this.form.value.Name;
-    this.ReceviedType.Id = this.form.value.Id;
-    this.ReceviedType.CreatedBy =  localStorage.getItem('userName') || '';
+    this.Team.Name = this.form.value.Name;
+    this.Team.Id = this.form.value.Id;
+    this.Team.CreatedBy =  localStorage.getItem('userName') || '';
     if (this.form.invalid || this.form.value.name == ' ') {
       if (this.form.value.name == ' ')
         this.setReactValue(Number(0), "");
@@ -160,7 +157,7 @@ export class ReceviedTypeComponent implements OnInit {
 
       if (this.form.value.Id == 0 || this.form.value.Id == '' ) {
         this.isDisable = true;
-        this.ReceviedTypeserv.AddReceviedType(this.ReceviedType).subscribe(res => {
+        this.TeamServ.addTeam(this.Team).subscribe(res => {
           setTimeout(() => {
             this.loader.idle();
           }, 1500)
@@ -182,7 +179,7 @@ export class ReceviedTypeComponent implements OnInit {
       }//if
       else {
         //not used
-        this.ReceviedTypeserv.UpdateReceviedType(this.ReceviedType).subscribe(res => {
+        this.TeamServ.updateTeam(this.Team).subscribe(res => {
           setTimeout(() => {
             this.loader.idle();
           }, 1500)
@@ -205,6 +202,7 @@ export class ReceviedTypeComponent implements OnInit {
     this.isShowDiv = false;
   }//end of
 
+
   editROw(r: any) {
     if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
     {
@@ -215,7 +213,6 @@ export class ReceviedTypeComponent implements OnInit {
     this.editdisabled = true;}
 
   }
-
   cancelEdit() {
 
     this.editdisabled = false;
@@ -226,7 +223,7 @@ export class ReceviedTypeComponent implements OnInit {
   updateEdit(row: any) {
 
     this.loader.busy();;
-    let TypeStatusEdit: ReceviedType =
+    let TeamEdit: Team =
     {
       id: row.id,
       name: row.name,
@@ -234,7 +231,7 @@ export class ReceviedTypeComponent implements OnInit {
       CreationDate:row.creationDate,
       UpdatedBy: localStorage.getItem('userName') || ''
     }
-    this.ReceviedTypeserv.UpdateReceviedType(TypeStatusEdit).subscribe(res => {
+    this.TeamServ.updateTeam(TeamEdit).subscribe(res => {
       if (res.status == true) {
         setTimeout(() => {
           this.loader.idle();
@@ -256,6 +253,7 @@ export class ReceviedTypeComponent implements OnInit {
 
     })
   }
+
   pageIn = 0;
   previousSizedef = 100;
   pagesizedef: number = 100;
@@ -278,7 +276,6 @@ export class ReceviedTypeComponent implements OnInit {
     this.getRequestdataNext(previousSize, pageIndex + 1, pageSize, '', this.sortColumnDef, this.SortDirDef);}
   }
 
-
   getRequestdataNext(cursize: number, pageNum: number, pageSize: number, search: string, sortColumn: string, sortDir: string) {
 
 
@@ -287,13 +284,13 @@ export class ReceviedTypeComponent implements OnInit {
       this.router.navigateByUrl('/login');
     }
     else{
-    this.ReceviedTypeserv.getReceviedType(pageNum, pageSize, search, sortColumn, sortDir).subscribe(res => {
+    this.TeamServ.getTeam(pageNum, pageSize, search, sortColumn, sortDir).subscribe(res => {
       if (res.status == true) {
 
-        this.receviedTypeList.length = cursize;
-        this.receviedTypeList.push(...res?.data);
-        this.receviedTypeList.length = res?.pagination.totalCount;
-        this.dataSource = new MatTableDataSource<any>(this.receviedTypeList);
+        this.teamList.length = cursize;
+        this.teamList.push(...res?.data);
+        this.teamList.length = res?.pagination.totalCount;
+        this.dataSource = new MatTableDataSource<any>(this.teamList);
         this.dataSource._updateChangeSubscription();
         this.dataSource.paginator = this.paginator as MatPaginator;
         this.loader.idle();
@@ -307,8 +304,6 @@ export class ReceviedTypeComponent implements OnInit {
 
   }
   }
-
-
 
   lastcol: string = 'Id';
   lastdir: string = 'asc';
@@ -331,10 +326,11 @@ export class ReceviedTypeComponent implements OnInit {
     this.getRequestdata(1, 100, '', sort.active, this.lastdir);
   }
   }
+
   onChecknameIsalreadysign() {
-    this.ReceviedType.Name = this.form.value.Name;
-    this.ReceviedType.Id = this.form.value.Id;
-    this.ReceviedTypeserv.ReceviedTypeIsAlreadySigned(this.ReceviedType.Name, this.ReceviedType.Id).subscribe(
+    this.Team.Name = this.form.value.Name;
+    this.Team.Id = this.form.value.Id;
+    this.TeamServ.teamIsAlreadySigned(this.Team.Name, this.Team.Id).subscribe(
       res => {
         if (res.status == true) {
           this.isDisabled = false;
@@ -350,9 +346,9 @@ export class ReceviedTypeComponent implements OnInit {
   }
 
   onChecknameIsalreadysignWhenUpdate(row: any) {
-    let ReceviedTypeName = row.name;
-    let ReceviedTypeId = row.id;
-    this.ReceviedTypeserv.ReceviedTypeIsAlreadySigned(ReceviedTypeName, ReceviedTypeId).subscribe(
+    let TeamName = row.name;
+    let TeamId = row.id;
+    this.TeamServ.teamIsAlreadySigned(TeamName, TeamId).subscribe(
       res => {
         if (res.status == true) {
           this.isDisabled = false;
@@ -375,7 +371,7 @@ export class ReceviedTypeComponent implements OnInit {
   }
 
 
-  onDelete(r: any) {
+ onDelete(r: any) {
     //debugger
     if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
     {
@@ -384,7 +380,7 @@ export class ReceviedTypeComponent implements OnInit {
     else{
     this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
       if (res) {
-        this.ReceviedTypeserv.DeleteReceviedType(r.id).subscribe(
+        this.TeamServ.deleteTeam(r.id).subscribe(
           rs => {
             this.notser.success(':: successfully Deleted');
             this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
@@ -400,7 +396,6 @@ export class ReceviedTypeComponent implements OnInit {
   }
   }
 
-
   toggleDisplay() {
     if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
     {
@@ -414,5 +409,4 @@ export class ReceviedTypeComponent implements OnInit {
     }
 
   }
-
 }

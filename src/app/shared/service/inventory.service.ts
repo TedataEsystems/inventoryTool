@@ -119,16 +119,10 @@ SerielNumberIsAlreadySignedInEdit(SerielNumber:string,id:number ):Observable<any
   }
 
 
-  // ExportExitPermitExcel(data:any): Observable<any> {
-  //   debugger;
-    
-   
-  //  // return this.httpClient.post<any>(`${environment.API_URL}api/Inventory/ExportExitPermitExcel`, data);
-  //  // return this.httpClient.get(`${environment.API_URL}api/Inventory/ExportExitPermitExcel`,data); 
-  //  return this.httpClient.get(
-  //   `${environment.API_URL}api/Inventory/ExportExitPermitExcel`
-  //  ,Options?{observe?: data,headers?: this.headers,responseType?:'blob'}
-  //  ); 
+   ExportExitPermitExcel(data:any): Observable<Blob> {
   
-  // }
+   
+      return this.httpClient.post(`${environment.API_URL}api/Inventory/ExportExitPermitExcel`,data,{responseType: 'blob',headers: this.headers}); 
+      
+   }
 }

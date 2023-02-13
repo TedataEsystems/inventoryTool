@@ -13,12 +13,14 @@ export interface Inventory {
 
     SerielNumber:string;
     RecipientName :string;
-    Team :string;
+   
     Status:string;
     ReceivedDate :Date;
     ExpriyDate :Date;
     TypeStatusId? :number;
+    TeamId? :number;
     TypeStatusName? :string;
+    TeamName? :string;
     ReceviedStatusId?:number;
     ReceviedStatusName? :string;
     OutgoingStatusId? :number;
@@ -38,6 +40,7 @@ export interface Inventory {
    UpdatedBy?:string;
    UpdateDate?:Date;
    TypeStatusIDs? :Array<number>;
+   TeamIDs? :Array<number>;
    ReceviedStatusIDs? :Array<number>;
    OutgoingStatusIDs? :Array<number>;
    CategoryIDs? :Array<number>;

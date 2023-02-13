@@ -1,4 +1,4 @@
-import { Component, Inject, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Inject, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { OutgoingStatusList } from 'src/app/Model/outgoing-status-list';
@@ -16,6 +16,7 @@ import { Acceptance } from 'src/app/Model/acceptance';
 import { LocationName } from 'src/app/Model/location';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { __values } from 'tslib';
+import { Team } from 'src/app/Model/team';
 
 @Component({
   selector: 'app-add',
@@ -32,6 +33,8 @@ export class AddComponent implements OnInit {
   hidden1:boolean=true;
   MetterHidden:boolean=false;
   TypeStatuslist: TypeStatus[] = [];
+  Teamlist: Team[] = [];
+  public _TypeStatuslist: any[] = [];
    ReceivedStatuslist: ReceivedStatusList[] = [];
   OutgoingStatuslist: OutgoingStatusList[] = [];
   Category: Category[] = [];
@@ -48,7 +51,7 @@ Acceptance: Acceptance[] = [];
 serialnew:number=0;
 serialflag:number=0;
 selected=0;
-
+@ViewChild('typeStatusSearch') typeStatusSearch!: ElementRef;
   constructor(public inventoryserv:InventoryService,private loader: LoaderService,public service :EditFormService,
      public dialogRef: MatDialogRef<AddComponent>,public notificationService: NotificationService,@Inject(MAT_DIALOG_DATA) public data: any ) {
 
@@ -87,6 +90,8 @@ selected=0;
     if(res.status==true)
     {
     this.TypeStatuslist=res.typeStatus;
+    this.Teamlist=res.team;
+    this._TypeStatuslist=res.typeStatus;
     this.ReceivedStatuslist=res.receviedStatus;
     this.OutgoingStatuslist=res.outgoingStatus;
     //this.Category = res.category;
@@ -99,6 +104,7 @@ selected=0;
     {
       //set list in update
       var typstatuscount=0;
+      var teamcount=0;
       var recviedstatuscount=0;
       var outgoingstatuscount=0;
      // var categorycount=0;
@@ -154,7 +160,19 @@ selected=0;
       {
         this.service.form1.controls['CompanyId'].setValue(null);
       }
-
+      for(var team of this.Teamlist )
+      {
+        if(this.data.teamId==team.id)
+        {
+          teamcount ++;
+          this.service.form1.controls['TeamId'].setValue(this.data.teamId);
+          break;
+        }
+      }
+      if(teamcount==0)
+      {
+        this.service.form1.controls['TeamId'].setValue(null);
+      }
 
    //////////////////////////////
    ///////////location
@@ -235,7 +253,8 @@ selected=0;
    Number :this.service.form1.value.Number,
    SerielNumber :this.service.form1.value.SerielNumber,
    RecipientName :this.service.form1.value.RecipientName,
-   Team:this.service.form1.value.Team,
+   TeamId :this.service.form1.value.TeamId,
+   Team :this.service.form1.value.Team,
    Status:this.service.form1.value.Status,
    ReceivedDate:this.service.form1.value.ReceivedDate,
    ExpriyDate:this.service.form1.value.ExpriyDate,
@@ -555,5 +574,22 @@ if (this.serialflag==1 ) {
              
            }
 
-
+           ontypeNameInputChange(){
+  
+            const searchInput = this.typeStatusSearch.nativeElement.value ?
+            this.typeStatusSearch.nativeElement.value.toLowerCase() : '' ;
+            
+            
+            this.TypeStatuslist = this._TypeStatuslist.filter(u=> {
+            
+              const name : string= u.name.toLowerCase();
+             
+              return name.indexOf(searchInput) > -1 ;
+              
+          }
+            );
+          
+          
+          
+          }
 }

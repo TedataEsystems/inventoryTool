@@ -17,18 +17,30 @@
             <input type="hidden" formControlName="CreatedBy">
             <input type="hidden" formControlName="UpdateDate">
             <input type="hidden" formControlName="UpdatedBy">
+
+            <mat-form-field appearance="fill" class="serch">
+              <mat-select #mySelect (selectionChange)="OnChangePopName($event)"  formControlName="TypeStatusId" placeholder=" *نوع الجهاز "   appendTo="body"     > 
+                <!-- <mat-option>-- Please select --</mat-option> -->
+                <input type="text" autocomplete="off" matInput class="p-2 inputFilter"
+               
+                placeholder="Search by name..." #typeStatusSearch (input)="ontypeNameInputChange()" >
+                
+                <mat-option   *ngFor="let TypeStatus of TypeStatuslist"   [value]="TypeStatus.id">
+                  {{TypeStatus.name}}
+                </mat-option> 
+            
+              
+             </mat-select> 
+            </mat-form-field>
             <!-- <mat-form-field>
-              <input formControlName="M" type="number" min="0" matInput placeholder="M*">
-            </mat-form-field> -->
-            <mat-form-field>
               <mat-select #mySelect (selectionChange)="OnChangePopName($event)"  formControlName="TypeStatusId" placeholder=" *نوع الجهاز ">
                 <mat-option>-- Please select --</mat-option>
                 <mat-option   *ngFor="let TypeStatus of TypeStatuslist"   [value]="TypeStatus.id">
                   {{TypeStatus.name}}
                 </mat-option>
-              </mat-select>
+              </mat-select> -->
                 
-              </mat-form-field>
+              <!-- </mat-form-field> -->
               <mat-form-field *ngIf="MetterHidden">
                 <input formControlName="Meter" type="number" min="0" matInput placeholder="Meter*">
               </mat-form-field>
@@ -148,10 +160,15 @@
               <input formControlName="Comment" matInput placeholder="ملاحظات*">
              
             </mat-form-field>
-            <mat-form-field>
-              <input formControlName="Team" matInput placeholder="Team*">
-            
-            </mat-form-field>
+           <mat-form-field>
+              <mat-select   formControlName="TeamId" placeholder=" * Team ">
+                <mat-option>-- Please select --</mat-option>
+                <mat-option   *ngFor="let Team of Teamlist"   [value]="Team.id">
+                  {{Team.name}}
+                </mat-option>
+              </mat-select> 
+                
+               </mat-form-field> 
     
              <mat-form-field >
     

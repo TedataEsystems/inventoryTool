@@ -16,7 +16,8 @@ export interface InventorySearch {
     Number :number;
     SerielNumber:string;
     RecipientName :string;
-    Team :string;
+    ActionType:string;
+    DateType:string;
     Status:string;
      ExpriyDateTo :Date;
      ExpriyDateFrom :Date;
@@ -24,6 +25,8 @@ export interface InventorySearch {
      ReceivedDateFrom :Date;
      TypeStatusId? :number;
      TypeStatusIDs? :Array<number>;
+     TeamId? :number;
+     TeamIDs? :Array<number>;
      ReceviedStatusId? :number;
      ReceviedStatusIDs? :Array<number>;
      OutgoingStatusId? :number;
