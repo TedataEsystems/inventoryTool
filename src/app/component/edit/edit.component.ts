@@ -50,6 +50,7 @@ export class EditComponent implements OnInit{
   outgoinghidden1:boolean=true;
   outgoinghidden11:number=0;
   MetterHidden:boolean=false;
+  numberHidden:boolean=false;
   selected=0;
   TypeStatuslist: TypeStatus[] = [];
   Teamlist: Team[] = [];
@@ -60,7 +61,7 @@ ReceviedType: ReceviedType[] = [];
 CompanyName: CompanyName[] = [];
 Location: LocationName[] = [];
 Acceptance: Acceptance[] = [];
-
+serialreq:number=0;
  flag:boolean=false;
 statusflag:number=0;
 serialflag:number=0;
@@ -283,6 +284,20 @@ iid:number=0;
       var categorycount=0;
       for(var category of this.Category )
       {
+        if(category.id==44)
+        {
+          this.MetterHidden=true;
+        }
+        else{
+          this.MetterHidden=false;
+        }
+        if(category.id==45)
+        {
+          this.numberHidden=true;
+        }
+        else{
+          this.numberHidden=false;
+        }
         if(this.data.categoryId==category.id)
         {
          categorycount ++;
@@ -305,13 +320,7 @@ iid:number=0;
    });
 
    
-   if(this.data.typeStatusId>=169 && this.data.typeStatusId <=180)
-   {
-     this.MetterHidden=true;
-   }
-   else{
-     this.MetterHidden=false;
-   }
+  
 //debugger
    if(this.data)
    {
@@ -381,15 +390,7 @@ iid:number=0;
     this.outgoingisHidden=!this.outgoingisHidden;
   }
   onSubmit(){
-    
-    if (!this.service.form.valid) {
-    
-       return;
-   } 
-   if (this.serialflag==1 ) {
- 
-    return;
-  } 
+
     let inventory=  {
       //M:this.service.form.value.M ,
       CustomerName:this.service.form.value.CustomerName,
@@ -428,6 +429,23 @@ iid:number=0;
       CreatedBy:this.service.form.value.CreatedBy,
     
     };
+debugger;
+    if (inventory.CategoryId!=44&&inventory.CategoryId!=45) {
+      if(inventory.SerielNumber==null || inventory.SerielNumber==''){
+        this.serialreq=1;
+       return;
+      }
+      
+     } 
+    if (!this.service.form.valid) {
+    
+       return;
+   } 
+   if (this.serialflag==1 ) {
+ 
+    return;
+  } 
+  
 
   
   //else
@@ -600,7 +618,7 @@ iid:number=0;
 
 
 
-  }//submit
+  }
   onClose(){
     this.service.form.reset();
   
@@ -630,6 +648,20 @@ iid:number=0;
          var categorycount=0;
          for(var category of this.Category )
          {
+          if(category.id==44)
+          {
+            this.MetterHidden=true;
+          }
+          else{
+            this.MetterHidden=false;
+          }
+          if(category.id==45)
+          {
+            this.numberHidden=true;
+          }
+          else{
+            this.numberHidden=false;
+          }
            if(this.data.categoryId==category.id)
            {
             categorycount ++;
@@ -652,13 +684,13 @@ iid:number=0;
       });
 
       
-      if(event.value>=169 && event.value <=180)
-      {
-        this.MetterHidden=true;
-      }
-      else{
-        this.MetterHidden=false;
-      }
+      // if(event.value>=169 && event.value <=180)
+      // {
+      //   this.MetterHidden=true;
+      // }
+      // else{
+      //   this.MetterHidden=false;
+      // }
   }
 
   ////change-status

@@ -32,6 +32,8 @@ export class AddComponent implements OnInit {
   hidden:boolean=true;
   hidden1:boolean=true;
   MetterHidden:boolean=false;
+  numberHidden:boolean=false;
+  serialreq:number=0;
   TypeStatuslist: TypeStatus[] = [];
   Teamlist: Team[] = [];
   public _TypeStatuslist: any[] = [];
@@ -280,11 +282,19 @@ selected=0;
  
  };
  
-
+debugger;
+if (inventory.CategoryId!=44&&inventory.CategoryId!=45) {
+  if(inventory.SerielNumber==null || inventory.SerielNumber==''){
+    this.serialreq=1;
+   return;
+  }
+  
+ } 
  if (!this.service.form1.valid ) {
  
     return;
 } 
+
 
 if (this.serialflag==1 ) {
  
@@ -343,7 +353,7 @@ if (this.serialflag==1 ) {
 
 
   OnChangePopName(event:any){
-    //   debugger;
+     
        console.log("the selected value is " + event.value);
        this.inventoryserv.GetCategoryByTypeId(event.value).subscribe(res=>{
          
@@ -351,17 +361,36 @@ if (this.serialflag==1 ) {
           {
      
           this.Category = res.data;
+        
+        
          
          
-   
             var categorycount=0;
             for(var category of this.Category )
             {
+              
+              if(category.id==44)
+              {
+                this.MetterHidden=true;
+              }
+              else{
+                this.MetterHidden=false;
+              }
+              if(category.id==45)
+              {
+                this.numberHidden=true;
+              }
+              else{
+                this.numberHidden=false;
+              }
               if(this.data.categoryId==category.id)
               {
+                console.log(category.id);
+             
                categorycount ++;
              
-                this.service.form1.controls['CategoryId'].setValue(res.data.categoryId);
+                this.service.form1.controls['CategoryId'].setValue(category.id);
+            
                 break;
               }
             }
@@ -379,13 +408,14 @@ if (this.serialflag==1 ) {
          });
    
       
-         if(event.value>=169 && event.value <=180)
-         {
-           this.MetterHidden=true;
-         }
-         else{
-           this.MetterHidden=false;
-         }
+        //  if(event.value>=169 && event.value <=180)
+        //  {
+        //    this.MetterHidden=true;
+        //  }
+        //  else{
+        //    this.MetterHidden=false;
+        //  }
+       
      }
    
    

@@ -62,8 +62,8 @@
             </mat-form-field>
             <mat-form-field>
               <input formControlName="SerielNumber"  matInput placeholder="السيريال نامبر *" (keyup)="onCheckSerialIsalreadysign()">
-              <mat-error>مطلوب</mat-error>
-             
+              <!-- <mat-error>مطلوب</mat-error> -->
+              <span class='req' *ngIf="serialreq==1" >مطلوب</span>
               <span class='req' *ngIf="serialflag==1">هذا السيريال موجود كوارد</span>
             </mat-form-field>
 
@@ -128,7 +128,7 @@
              <!-- <mat-form-field>
               <input  formControlName="DeviceType" matInput placeholder="نوع الجهاز*">
               <mat-error>مطلوب</mat-error>
-            </mat-form-field>  -->
+            </mat-form-field> *ngIf="statusflag==1" -->
     
     
     
@@ -138,7 +138,7 @@
         </mat-grid-tile>
         <mat-grid-tile>
           <div class="controles-container">
-            <mat-form-field *ngIf="statusflag==1">
+            <mat-form-field  *ngIf="numberHidden">
               <input formControlName="Number" type="number" min="0" matInput placeholder="Number*">
             </mat-form-field>
             

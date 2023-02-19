@@ -61,7 +61,7 @@ export class EditFormService {
     TeamId: new FormControl(null),/////11111
     Status: new FormControl(''),
     
-    SerielNumber: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),////6666
+    SerielNumber: new FormControl('',[Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),////6666
     Comment: new FormControl(''),
     ReceivedDate: new FormControl(''),
     ExpriyDate: new FormControl(''),
@@ -96,7 +96,7 @@ export class EditFormService {
   TeamId: new FormControl(null),
   Status: new FormControl(''),
 
-  SerielNumber: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
+  SerielNumber: new FormControl('',[Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
   Comment: new FormControl(''),
   ReceivedDate: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
   ExpriyDate: new FormControl(''),
@@ -148,7 +148,36 @@ export class EditFormService {
       UpdateDate:null,
       UpdateBy:null,
     })
-
+    this.formSearch.setValue({
+      Id:0,
+      CustomerName: '',
+      TeamId:0,
+      OrderNumber: null,
+      RecipientName: '',
+     
+      Status: '',
+      ReorderingPoint :null,
+    BR :null,
+    ItemCode :null,
+    Meter :null,
+    Number :null,
+      SerielNumber:'',
+      Comment: '',
+      ReceivedDate: '',
+      ExpriyDate: null,
+      ReceviedStatusId: 0,
+      OutgoingStatusId: 0,
+      TypeStatusId:0,
+      CategoryId:0,
+      CompanyId:0,
+      ReceviedTypeId: 0,
+      AcceptanceId: 0,
+      LocationId: 0,
+      CreationDate:null,
+      CreatedBy:null,
+      UpdateDate:null,
+      UpdateBy:null,
+    })
 
     this.form1.setValue({
       Id:0,

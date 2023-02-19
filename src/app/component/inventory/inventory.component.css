@@ -275,7 +275,13 @@ mat-cell:nth-child(4), mat-header-cell:nth-child(4){
     text-align: right !important;
   
     }
-
+    .size{
+      font-size: 30px;
+    }
+.hid{
+  height: 70px;
+  visibility: hidden;
+}
   .ser{
     width: 170px !important;
     outline: none;
