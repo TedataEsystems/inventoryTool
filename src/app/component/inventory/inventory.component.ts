@@ -940,9 +940,10 @@ this.appear=false
 
 ///////////////////////////////////////////
 ontypeNameInputChange(){
-
+  
   const searchInput = this.typeStatusSearch.nativeElement.value ?
   this.typeStatusSearch.nativeElement.value.toLowerCase() : '' ;
+  
 
   this.TypeStatusList = this._TypeStatusList.filter(u=> {
    

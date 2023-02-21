@@ -131,9 +131,9 @@
           <mat-form-field appearance="fill" class="serch">
             <mat-select [multiple]="true"  appendTo="body"   formControlName="TypeStatusId" placeholder=" *نوع الجهاز  (--اختر--) "  > 
               <!-- <mat-option>-- Please select --</mat-option> -->
-              <input type="text" autocomplete="off" matInput class="p-2 inputFilter"
+              <input type="text" matInput class="p-2 inputFilter"
              
-              placeholder="Search by name..." #typeStatusSearch (keyup)="ontypeNameInputChange()" >
+              placeholder="Search by name..." #typeStatusSearch (keyup)="ontypeNameInputChange()" (keydown)="$event.stopPropagation()" >
               
               <mat-option  *ngFor="let typeStatus of TypeStatusList"   [value]="typeStatus.id">
                 {{typeStatus.name}}
