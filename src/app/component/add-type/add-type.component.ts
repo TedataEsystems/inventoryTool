@@ -110,7 +110,7 @@ this.initializeFormGroup();
 
     if(this.data)
     {
-      console.log("data:",this.data)
+    
       this.form3.controls['Id'].setValue(this.data.id);
       this.form3.controls['Name'].setValue(this.data.name);
        this.form3.controls['CreatedBy'].setValue(this.data.createdBy);

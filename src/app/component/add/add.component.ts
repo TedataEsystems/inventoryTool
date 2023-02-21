@@ -96,7 +96,7 @@ selected=0;
     this._TypeStatuslist=res.typeStatus;
     this.ReceivedStatuslist=res.receviedStatus;
     this.OutgoingStatuslist=res.outgoingStatus;
-    //this.Category = res.category;
+    this.Category = res.category;
       this.ReceviedType = res.receviedType;
       this.Location = res.location;
       this.CompanyName = res.companyName;
@@ -109,7 +109,7 @@ selected=0;
       var teamcount=0;
       var recviedstatuscount=0;
       var outgoingstatuscount=0;
-     // var categorycount=0;
+      var categorycount=0;
       var companynamecount=0;
       var acceptancecount=0;
       var receviedtypecount=0;
@@ -148,7 +148,27 @@ selected=0;
       }
     //////////////////
   /////////Category
-
+  for(var category of this.Category )
+            {
+              
+             
+           
+              if(this.data.categoryId==category.id)
+              {
+               
+             
+               categorycount ++;
+             
+                this.service.form1.controls['CategoryId'].setValue(this.data.categoryId);
+            
+                break;
+              }
+            }
+            if(categorycount==0)
+            {
+           
+              this.service.form1.controls['CategoryId'].setValue(null);
+            }
       for(var company of this.CompanyName )
       {
         if(this.data.companyId==company.id)
@@ -193,12 +213,12 @@ selected=0;
       }
       for(var received of this.ReceviedType )
       {
-        // debugger;
+       
         if(this.data.receviedTypeId==received.id )
         {
           receviedtypecount ++;
           this.service.form1.controls['ReceviedTypeId'].setValue(this.data.receviedTypeId);
-          //this.isHidden=false;
+          
           this.toggle();
           break;
         }
@@ -206,7 +226,7 @@ selected=0;
       if(receviedtypecount==0)
       {
         this.service.form1.controls['ReceviedTypeId'].setValue(null);
-        //this.toggle();
+        
       }
   
     }
@@ -282,8 +302,8 @@ selected=0;
  
  };
  
-debugger;
-if (inventory.CategoryId!=44&&inventory.CategoryId!=45) {
+
+if (inventory.CategoryId!=46&&inventory.CategoryId!=47&&inventory.CategoryId!=48&&inventory.CategoryId!=49) {
   if(inventory.SerielNumber==null || inventory.SerielNumber==''){
     this.serialreq=1;
    return;
@@ -302,14 +322,14 @@ if (this.serialflag==1 ) {
 } 
  if(this.data.dialogTitle=="اضافة جديد")
  {
- debugger;
+
  
  inventory.CreatedBy=localStorage.getItem('userName') || '';
      this.inventoryserv.AddInventory(inventory).subscribe(
        res=>{
-         // console.log("model",this.service.form.value)
-         // console.log("Status response",res)
-         if(res.status=true)
+     
+       
+         if(res.status=='true')
          {
        this.notificationService.success(':: Submitted successfully');
        this.service.form1.reset();
@@ -317,8 +337,15 @@ if (this.serialflag==1 ) {
        this.dialogRef.close('save');
          }
          else{
-           this.notificationService.warn(':: Failed');
-           this.loader.idle();
+          if(res.status=='type')
+          {
+              this.serialflag=3;
+          }
+          else{
+            this.notificationService.warn(':: Failed');
+            this.loader.idle();
+          }
+          
          }
  
      },
@@ -354,42 +381,43 @@ if (this.serialflag==1 ) {
 
   OnChangePopName(event:any){
      
-       console.log("the selected value is " + event.value);
+      
        this.inventoryserv.GetCategoryByTypeId(event.value).subscribe(res=>{
-         
+         debugger;
           if(res.status==true)
           {
-     
-          this.Category = res.data;
+            console.log(res.data);
+            console.log(res.data.id);
+       //   this.Category = res.data;
         
-        
+          
          
          
             var categorycount=0;
             for(var category of this.Category )
             {
               
-              if(category.id==44)
+              if(category.id==47 || category.id==48 || category.id==49)
               {
                 this.MetterHidden=true;
               }
               else{
                 this.MetterHidden=false;
               }
-              if(category.id==45)
+              if(category.id==46)
               {
                 this.numberHidden=true;
               }
               else{
                 this.numberHidden=false;
               }
-              if(this.data.categoryId==category.id)
+              if(res.data.id==category.id)
               {
-                console.log(category.id);
+               
              
                categorycount ++;
-             
-                this.service.form1.controls['CategoryId'].setValue(category.id);
+           
+                this.service.form1.controls['CategoryId'].setValue(res.data.id);
             
                 break;
               }
@@ -426,7 +454,7 @@ if (this.serialflag==1 ) {
       
        this.inventoryserv.SerielNumberIsAlreadySigned(this.SerialNumber).subscribe(
          res => {
-        console.log(res.status)
+    
           if (res.status =='New')
          {
           this.serialnew==1;

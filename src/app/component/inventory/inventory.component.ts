@@ -603,7 +603,7 @@ UpdateGroupToRecevied() {
 
           this.InventoryServ.UpdateInventoryStatusToRecevied(this.Ids).subscribe(res => {
             if (res.status == true) {
-              console.log(this.Ids);
+            
               this.note.success(' تم النعديل بنجاح');
               this.selectedRows = false;
               this.Ids = [];
@@ -647,7 +647,7 @@ UpdateGroupToOutgoing() {
 
       this.InventoryServ.UpdateInventoryStatusToOutgoing(this.Ids).subscribe(res => {
         if (res.status == true) {
-          console.log(this.Ids);
+      
           this.note.success(' تم النعديل بنجاح');
           this.selectedRows = false;
           this.Ids = [];
@@ -771,7 +771,7 @@ this.loader.busy();
   )//subsribe
 }//advanced
 SaveFavoriteSearch() {
- debugger;
+
   this.isFilterationData = true;
   this.panelOpenState = true;
 this.loader.busy();
@@ -814,7 +814,7 @@ this.loader.busy();
   this.inventorySearch.AcceptanceIDs =(this.service.formSearch.value.AcceptanceId);
   this.inventorySearch.LocationIDs =(this.service.formSearch.value.LocationId);
  
-  debugger;
+
   this.FavoriteSearchServ.AddEditFavoriteSearch(this.inventorySearch).subscribe(res => {
     
    // this.InventoryList = res as Inventory[];
@@ -940,15 +940,14 @@ this.appear=false
 
 ///////////////////////////////////////////
 ontypeNameInputChange(){
-  
+
   const searchInput = this.typeStatusSearch.nativeElement.value ?
   this.typeStatusSearch.nativeElement.value.toLowerCase() : '' ;
-  console.log("///////"+searchInput);
-  console.log(this._TypeStatusList,"tttttttttttttttttttt")
+
   this.TypeStatusList = this._TypeStatusList.filter(u=> {
-    console.log("UUUU"+u.name);
+   
     const name : string= u.name.toLowerCase();
-    console.log(name);
+   
     return name.indexOf(searchInput) > -1 ;
     
 }
@@ -1034,7 +1033,7 @@ GetFavoriteSearch(){
   this.FavoriteSearchServ.GetFavoriteSearch().subscribe(res => {
     if(res.status)
     {
-      console.log(res.data)
+   
       
  
  if(res.data.customerName !=null){
@@ -1059,7 +1058,7 @@ GetFavoriteSearch(){
         this.service.formSearch.controls['ActionType'].setValue(res.data.actionType);     
      }
       if(res.data.userAction !=null){
-        debugger;
+   
        // if(res.data.actionType =='CreatedBy')
       //  {
           this.service.formSearch.controls['CreatedBy'].setValue(res.data.userAction);
@@ -1089,7 +1088,7 @@ GetFavoriteSearch(){
        }
      if(res.data.outgoingStatusIDs !=null){
       
-      console.log("test22"+res.data.outgoingStatusIDs);
+
       
     
       this.service.formSearch.controls['OutgoingStatusId'].setValue(res.data.outgoingStatusIDs);

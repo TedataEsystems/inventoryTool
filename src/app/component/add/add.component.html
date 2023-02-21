@@ -65,6 +65,7 @@
               <!-- <mat-error>مطلوب</mat-error> -->
               <span class='req' *ngIf="serialreq==1" >مطلوب</span>
               <span class='req' *ngIf="serialflag==1">هذا السيريال موجود كوارد</span>
+              <span class='req' *ngIf="serialflag==3">هذا السيريال موجود مع نوع جهاز مختلف</span>
             </mat-form-field>
 
             <mat-form-field *ngIf="statusflag==1">

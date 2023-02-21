@@ -31,6 +31,7 @@
           </mat-form-field>
           <mat-form-field *ngIf="MetterHidden">
             <input formControlName="Meter" type="number" min="0" matInput placeholder="Meter*">
+            <span class='req' *ngIf="serialflag==4">Meter is Greater than Old Meter      </span>
           </mat-form-field>
           <mat-form-field > 
             <mat-select    formControlName="CategoryId" placeholder=" Category ">
@@ -53,6 +54,8 @@
           <!-- <mat-error>مطلوب</mat-error> -->
           <span class='req' *ngIf="serialreq==1" >مطلوب</span>
           <span class='req' *ngIf="serialflag==1">هذا السيريال موجود كوارد</span>
+          <span class='req' *ngIf="serialflag==3">هذا السيريال موجود مع نوع جهاز مختلف</span>
+         
         </mat-form-field>
         <mat-form-field *ngIf="statusflag==1">
           <mat-select  formControlName="ReceviedTypeId" placeholder=" *نوع الوارد ">
@@ -114,6 +117,7 @@
       <div class="controles-container">
         <mat-form-field  *ngIf="numberHidden">
           <input formControlName="Number" type="number" min="0" matInput placeholder="Number*">
+          <span class='req' *ngIf="serialflag==5">Number is Greater than Old Number      </span>
         </mat-form-field>
         <mat-form-field *ngIf="statusflag==1">
           <input formControlName="ItemCode" type="number" min="0" matInput placeholder="ItemCode*">

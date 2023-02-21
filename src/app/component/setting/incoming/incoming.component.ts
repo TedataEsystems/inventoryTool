@@ -92,8 +92,8 @@ export class IncomingComponent implements OnInit {
       this.dataSource = new MatTableDataSource<any>(this.receviedStatusList);
       this.dataSource._updateChangeSubscription();
       this.dataSource.paginator = this.paginator as MatPaginator;
-      debugger;
-      console.log(this.receviedStatusList[0])
+    
+     
      
       switch (this.receviedStatusList[0].id||this.receviedStatusList[1].id) {
         case (1||2):

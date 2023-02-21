@@ -52,14 +52,14 @@ export class LoginComponent implements OnInit {
       return;
     }
     setInterval(()=>{     
-      console.log("timer")                     
+                      
       this.config.Logout();
   }, 3600000);
     this.loginmodel.userName = this.form.value.username.trim();
     this.loginmodel.password = this.form.value.password;
     
     this.login.getLogin(this.loginmodel).subscribe(res => {
-    console.log("subscribe"+res.status);
+   
       if (res.status == true) {
         localStorage.setItem("tokNum", res.token);
         

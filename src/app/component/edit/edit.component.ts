@@ -104,7 +104,7 @@ iid:number=0;
     this.Teamlist=res.team;
     this.ReceivedStatuslist=res.receviedStatus;
     this.OutgoingStatuslist=res.outgoingStatus;
-   // this.Category = res.category;
+   this.Category = res.category;
       this.ReceviedType = res.receviedType;
       this.Location = res.location;
       this.CompanyName = res.companyName;
@@ -185,23 +185,27 @@ iid:number=0;
 
     }
   /////////Category
-  // for(var category of this.Category )
-  // {
-  //   // debugger;
-  //   if(this.data.categoryId==category.id )
-  //   {
-  //     categorycount ++;
-  //     this.service.form.controls['CategoryId'].setValue(this.data.categoryId);
-  //     //this.isHidden=false;
-  //     this.toggle();
-  //     break;
-  //   }
-  // }
-  // if(categorycount==0)
-  // {
-  //   this.service.form.controls['CategoryId'].setValue(null);
-  //   //this.toggle();
-  // }
+  for(var category of this.Category )
+            {
+              debugger;
+             console.log(this.data.categoryId);
+           
+              if(this.data.categoryId==category.id)
+              {
+               
+             
+               categorycount ++;
+             
+                this.service.form.controls['CategoryId'].setValue(this.data.categoryId);
+            
+                break;
+              }
+            }
+            if(categorycount==0)
+            {
+           
+              this.service.form.controls['CategoryId'].setValue(null);
+            }
 
       for(var company of this.CompanyName )
       {
@@ -273,25 +277,25 @@ iid:number=0;
    });
 
    this.inventoryserv.GetCategoryByTypeId(this.data.typeStatusId).subscribe(res=>{
-     debugger; 
+   
     if(res.status==true)
     {
 
-    this.Category = res.data;
+   // this.Category = res.data;
    
    
 
       var categorycount=0;
       for(var category of this.Category )
       {
-        if(category.id==44)
+        if(category.id==47 || category.id==48 || category.id==49)
         {
           this.MetterHidden=true;
         }
         else{
           this.MetterHidden=false;
         }
-        if(category.id==45)
+        if(category.id==46)
         {
           this.numberHidden=true;
         }
@@ -429,8 +433,8 @@ iid:number=0;
       CreatedBy:this.service.form.value.CreatedBy,
     
     };
-debugger;
-    if (inventory.CategoryId!=44&&inventory.CategoryId!=45) {
+
+    if (inventory.CategoryId!=46&&inventory.CategoryId!=47&&inventory.CategoryId!=48&&inventory.CategoryId!=49) {
       if(inventory.SerielNumber==null || inventory.SerielNumber==''){
         this.serialreq=1;
        return;
@@ -549,7 +553,7 @@ debugger;
        this.inventoryserv.UpdateInventory(this.service.form.value).subscribe(
          res=>{
          
-           if(res.status=true)
+           if(res.status=='true')
            {
            this.notificationService.success(':: Updated successfully');
            this.service.form.reset();
@@ -564,8 +568,22 @@ debugger;
 
            }
            else{
+            if(res.status=='type')
+          {
+              this.serialflag=3;
+          }
+          else if(res.status=='metergreat')
+              {
+                this.serialflag=4;
+              }
+              else if(res.status=='numbergreat')
+              {
+                this.serialflag=5;
+              }
+          else{
              this.notificationService.warn(':: Failed');
              this.loader.idle();
+          }
 
            }
 
@@ -587,8 +605,8 @@ debugger;
           
          this.inventoryserv.UpdateInventory(this.service.form.value).subscribe(
            res=>{
-            
-             if(res.status=true)
+          
+             if(res.status=='true')
              {
              this.notificationService.success(':: Updated successfully');
              this.service.form.reset();
@@ -599,8 +617,22 @@ debugger;
 
              }
              else{
-               this.notificationService.warn(':: Failed');
-               this.loader.idle();
+              if(res.status=='type')
+              {
+                  this.serialflag=3;
+              }else if(res.status=='metergreat')
+              {
+                this.serialflag=4;
+              }
+              else if(res.status=='numbergreat')
+              {
+                this.serialflag=5;
+              }
+              else{
+                 this.notificationService.warn(':: Failed');
+                 this.loader.idle();
+              }
+             
 
              }
 
@@ -634,38 +666,37 @@ debugger;
   }
 
   OnChangePopName(event:any){
- //   debugger;
-    console.log("the selected value is " + event.value);
+
     this.inventoryserv.GetCategoryByTypeId(event.value).subscribe(res=>{
       
        if(res.status==true)
        {
-  
-       this.Category = res.data;
+  debugger;
+       //this.Category = res.data;
       
       
-
+      this.service.form.controls['CategoryId'].setValue(res.data.id);
          var categorycount=0;
          for(var category of this.Category )
          {
-          if(category.id==44)
+          if(category.id==47 || category.id==48 || category.id==49)
           {
             this.MetterHidden=true;
           }
           else{
             this.MetterHidden=false;
           }
-          if(category.id==45)
+          if(category.id==46)
           {
             this.numberHidden=true;
           }
           else{
             this.numberHidden=false;
           }
-           if(this.data.categoryId==category.id)
+          if(res.data.id==category.id)
            {
             categorycount ++;
-             this.service.form.controls['CategoryId'].setValue(res.data.categoryId);
+           // this.service.form.controls['CategoryId'].setValue(res.data.id);
              
              break;
            }
@@ -695,8 +726,7 @@ debugger;
 
   ////change-status
   OnChangeStatus(event:any){
-    //   debugger;
-       console.log("the selected value is " + event.value);
+ 
        if (event.value=='وارد')
        {
            this.statusflag=1;
@@ -914,7 +944,7 @@ debugger;
   
   OnChangeReceivedName(event:any){
      
-       console.log("the selected value is " + event.value);
+      
        this.inventoryserv.GetLocationByReceivedId(event.value).subscribe(res=>{
          
           if(res.status==true)

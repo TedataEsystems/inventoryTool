@@ -76,7 +76,7 @@ export class InventoryService {
 
   public importExcelFile(file : any)
   {
-    console.log("importservice",file)
+   
     return this.httpClient.post<any>(`${environment.API_URL}api/Inventory/ImportExcelFile` , file, {headers : this.headers});
 
   }
