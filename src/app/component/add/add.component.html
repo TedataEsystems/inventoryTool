@@ -23,7 +23,7 @@
                 <!-- <mat-option>-- Please select --</mat-option> -->
                 <input type="text" autocomplete="off" matInput class="p-2 inputFilter"
                
-                placeholder="Search by name..." #typeStatusSearch (input)="ontypeNameInputChange()" >
+                placeholder="Search by name..." #typeStatusSearch (input)="ontypeNameInputChange()" (keydown)="$event.stopPropagation()" >
                 
                 <mat-option   *ngFor="let TypeStatus of TypeStatuslist"   [value]="TypeStatus.id">
                   {{TypeStatus.name}}

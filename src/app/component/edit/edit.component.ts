@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Inject, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { OutgoingStatusList } from 'src/app/Model/outgoing-status-list';
@@ -53,6 +53,7 @@ export class EditComponent implements OnInit{
   numberHidden:boolean=false;
   selected=0;
   TypeStatuslist: TypeStatus[] = [];
+  public _TypeStatuslist: any[] = [];
   Teamlist: Team[] = [];
    ReceivedStatuslist: ReceivedStatusList[] = [];
   OutgoingStatuslist: OutgoingStatusList[] = [];
@@ -69,6 +70,7 @@ iid:number=0;
  SerialNumber:string='';
  flagh:boolean=false;
  SearchForm:boolean=false;
+ @ViewChild('typeStatusSearch') typeStatusSearch!: ElementRef;
   constructor(public inventoryserv:InventoryService,private loader: LoaderService,public service :EditFormService,
      public dialogRef: MatDialogRef<EditComponent>,public notificationService: NotificationService,@Inject(MAT_DIALOG_DATA) public data: any ) {
 
@@ -101,6 +103,7 @@ iid:number=0;
     if(res.status==true)
     {
     this.TypeStatuslist=res.typeStatus;
+    this._TypeStatuslist=res.typeStatus;
     this.Teamlist=res.team;
     this.ReceivedStatuslist=res.receviedStatus;
     this.OutgoingStatuslist=res.outgoingStatus;
@@ -976,6 +979,23 @@ iid:number=0;
       
          });
      }
-
+     ontypeNameInputChange(){
+  
+      const searchInput = this.typeStatusSearch.nativeElement.value ?
+      this.typeStatusSearch.nativeElement.value.toLowerCase() : '' ;
+      
+    
+      this.TypeStatuslist = this._TypeStatuslist.filter(u=> {
+       
+        const name : string= u.name.toLowerCase();
+       
+        return name.indexOf(searchInput) > -1 ;
+        
+    }
+      );
+    
+    
+    
+    }
 
 }
