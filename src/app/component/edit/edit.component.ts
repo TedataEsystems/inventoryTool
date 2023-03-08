@@ -30,6 +30,8 @@ export class EditComponent implements OnInit{
   appear:boolean=false;
   isHidden:boolean=false;
   outgoingisHidden:boolean=false;
+  subitem:boolean=false;
+  subitem1:boolean=false;
   hidden:boolean=true;
   hidden1:boolean=true;
   hidden11:number=0;
@@ -58,6 +60,7 @@ export class EditComponent implements OnInit{
    ReceivedStatuslist: ReceivedStatusList[] = [];
   OutgoingStatuslist: OutgoingStatusList[] = [];
   Category: Category[] = [];
+  Category1: Category[] = [];
 ReceviedType: ReceviedType[] = [];
 CompanyName: CompanyName[] = [];
 Location: LocationName[] = [];
@@ -108,6 +111,7 @@ iid:number=0;
     this.ReceivedStatuslist=res.receviedStatus;
     this.OutgoingStatuslist=res.outgoingStatus;
    this.Category = res.category;
+   //this.Category1 = res.category;
       this.ReceviedType = res.receviedType;
       this.Location = res.location;
       this.CompanyName = res.companyName;
@@ -190,13 +194,12 @@ iid:number=0;
   /////////Category
   for(var category of this.Category )
             {
-              debugger;
-             console.log(this.data.categoryId);
+             
            
               if(this.data.categoryId==category.id)
               {
                
-             
+             this.Category1.push(category);
                categorycount ++;
              
                 this.service.form.controls['CategoryId'].setValue(this.data.categoryId);
@@ -289,7 +292,7 @@ iid:number=0;
    
 
       var categorycount=0;
-      for(var category of this.Category )
+      for(var category of this.Category1 )
       {
         if(category.id==47 || category.id==48 || category.id==49)
         {
@@ -331,8 +334,10 @@ iid:number=0;
 //debugger
    if(this.data)
    {
-
-    //console.log("condition entered")
+    if(this.data.subItem){
+       this.subitem=this.data.subItem;
+       this.subitem1=this.data.subItem;
+    }
     this.service.form.controls['Id'].setValue(this.data.id);
    // this.service.form.controls['M'].setValue(this.data.m);
     this.service.form.controls['CustomerName'].setValue(this.data.customerName);
@@ -461,6 +466,8 @@ iid:number=0;
     
       if(inventory.Status=="منصرف")
       {
+       
+
          if(inventory.ExpriyDate==null){
             this.hidden1 = !this.hidden1;
              this.hidden11=1
@@ -480,7 +487,7 @@ iid:number=0;
            else{
             this.outgoinghidden11=0;
            }
-       if(inventory.CustomerName==null)
+       if(inventory.CustomerName==null || inventory.CustomerName=='')
        {
         this.CustomerNamehidden = !this.CustomerNamehidden;
         this.CustomerNamehidden1=1;
@@ -492,7 +499,7 @@ iid:number=0;
         this.CustomerNamehidden1=0;
        }
 
-       if(inventory.RecipientName==null)
+       if(inventory.RecipientName==null || inventory.RecipientName=="")
        {
         this.RecipientNamehidden = !this.RecipientNamehidden;
         this.RecipientNamehidden1=1;
@@ -674,11 +681,11 @@ iid:number=0;
       
        if(res.status==true)
        {
-  debugger;
+ 
        //this.Category = res.data;
       
       
-      this.service.form.controls['CategoryId'].setValue(res.data.id);
+     // this.service.form.controls['CategoryId'].setValue(res.data.id);
          var categorycount=0;
          for(var category of this.Category )
          {
@@ -698,8 +705,10 @@ iid:number=0;
           }
           if(res.data.id==category.id)
            {
+            this.Category1.pop();
+            this.Category1.push(category);
             categorycount ++;
-           // this.service.form.controls['CategoryId'].setValue(res.data.id);
+            this.service.form.controls['CategoryId'].setValue(res.data.id);
              
              break;
            }

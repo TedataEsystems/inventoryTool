@@ -10,7 +10,7 @@ export interface Inventory {
     ItemCode :number;
     Meter :number;
     Number :number;
-
+    SubItem:boolean;
     SerielNumber:string;
     RecipientName :string;
    

@@ -8,7 +8,6 @@ import { LoaderService } from 'src/app/shared/service/loader.service';
 import { NotificationService } from 'src/app/shared/service/notification.service';
 
 
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',

@@ -1,4 +1,5 @@
 export interface InventorySearch {
+    IDs? :Array<number>;
     CreatedDateFrom:Date;
     CreatedDateTo:Date;
     UpdatedDateFrom :Date;

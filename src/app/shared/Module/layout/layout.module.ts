@@ -36,10 +36,6 @@ import { NgxMatDatetimePickerModule } from '@angular-material-components/datetim
 import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
 import { TeamComponent } from 'src/app/component/setting/team/team.component';
 
-
-
-
-
 @NgModule({
   declarations: [
     HeaderComponent,

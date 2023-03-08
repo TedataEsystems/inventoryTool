@@ -40,6 +40,7 @@ export class AddComponent implements OnInit {
    ReceivedStatuslist: ReceivedStatusList[] = [];
   OutgoingStatuslist: OutgoingStatusList[] = [];
   Category: Category[] = [];
+  Category1: Category[] = [];
 ReceviedType: ReceviedType[] = [];
 CompanyName: CompanyName[] = [];
 Location: LocationName[] = [];
@@ -383,12 +384,11 @@ if (this.serialflag==1 ) {
      
       
        this.inventoryserv.GetCategoryByTypeId(event.value).subscribe(res=>{
-         debugger;
+      
           if(res.status==true)
           {
-            console.log(res.data);
-            console.log(res.data.id);
-       //   this.Category = res.data;
+         
+         // this.Category1 = res.data;
         
           
          
@@ -413,7 +413,8 @@ if (this.serialflag==1 ) {
               }
               if(res.data.id==category.id)
               {
-               
+              this.Category1.pop();
+               this.Category1.push(category);
              
                categorycount ++;
            
