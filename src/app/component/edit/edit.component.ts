@@ -334,6 +334,7 @@ iid:number=0;
 //debugger
    if(this.data)
    {
+    console.log("subItem"+this.data.subItem)
     if(this.data.subItem){
        this.subitem=this.data.subItem;
        this.subitem1=this.data.subItem;
@@ -347,6 +348,7 @@ iid:number=0;
     this.service.form.controls['BR'].setValue(this.data.br);
     this.service.form.controls['ItemCode'].setValue(this.data.itemCode);
     this.service.form.controls['Meter'].setValue(this.data.meter);
+    console.log("number++"+this.data.number);
     this.service.form.controls['Number'].setValue(this.data.number);
     this.service.form.controls['SerielNumber'].setValue(this.data.serielNumber);
     this.service.form.controls['RecipientName'].setValue(this.data.recipientName);

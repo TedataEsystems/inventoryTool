@@ -210,13 +210,13 @@ else{
       dialogGonfig.width = "50%";
       dialogGonfig.panelClass = 'modals-dialog';
       this.dialog.open(AddComponent, dialogGonfig).afterClosed().subscribe(result => {
-        // if(this.service.formSearch.value==''){
-        //   this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef)
-        // }else
-        // {
-        //   this.AdvancedSearch();
-        // }
-        this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+        if(this.service.formSearch.value==''){
+          this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef)
+        }else
+        {
+          this.AdvancedSearch();
+        }
+       // this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
       });
      }
     }
@@ -237,18 +237,18 @@ else{
        .subscribe(result => {
        // debugger;
        
-        // if(this.service.formSearch.value!=''){
-        //   //this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef)
-        //  // console.log("iffff");
-        //   this.AdvancedSearch();
+        if(this.service.formSearch.value!=''){
+          //this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef)
+         // console.log("iffff");
+          this.AdvancedSearch();
           
-        // }else
-        // {
-        //  // console.log("elllllsssss");
-        //   this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
-        // }
+        }else
+        {
+         // console.log("elllllsssss");
+          this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+        }
      
-        this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+        //this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
       
       });
         //this.form.reset();
@@ -273,13 +273,13 @@ else{
               this.InventoryServ.DeleteInventory(row.id).subscribe(
                 rs => {
                   this.note.success(':: successfully Deleted');
-                  // if(this.service.formSearch.value==''){
-                  //   this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef)
-                  // }else
-                  // {
-                  //   this.AdvancedSearch();
-                  // }
-                  this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+                  if(this.service.formSearch.value==''){
+                    this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef)
+                  }else
+                  {
+                    this.AdvancedSearch();
+                  }
+                 // this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
                  // this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
                   //  this.getRequestdata(1, 100, searchData, this.sortColumnDef, "asc");
                 },
@@ -487,7 +487,7 @@ upLoadF() {
   this.InventoryServ.importExcelFile(fd).subscribe(res => {
     if (res.status == true) {
       if(this.service.formSearch.value==''){
-        this.getRequestdata(1, 25, '', this.sortColumnDef, this.SortDirDef);
+        this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
       }else
       {
         this.AdvancedSearch();
@@ -502,7 +502,7 @@ upLoadF() {
     else {
       this.openBottomSheetMsg();
        if(this.service.formSearch.value==''){
-        this.getRequestdata(1, 25, '', this.sortColumnDef, this.SortDirDef);
+        this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
       }else
       {
         this.AdvancedSearch();
@@ -855,14 +855,15 @@ this.loader.busy();
 IntialValCreateBy: string = "";
   IntialValDate: string = "";
   clearAdvancedSearch() {
+    debugger;
+    
     this.Ids2=[];
-   
-this.appear=false
+    this.appear=false
     this.isFilterationData = false;
     this.service.formSearch.reset();
     this.IntialValCreateBy = "--اختار تعديل او اضافة--";
     this.IntialValDate="--  اختار التاريخ--";
-    this.getRequestdata(1, 25, '', this.sortColumnDef, this.SortDirDef);
+    this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
   }
   //get lists
   public LocationList: LocationName[] = [];
