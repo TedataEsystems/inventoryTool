@@ -345,13 +345,12 @@ getRequestdataNext(cursize: number, pageNum: number, pageSize: number, search: s
     this.InventoryServ.getInventory(pageNum, pageSize, search, sortColumn, sortDir).subscribe(res => {
       if (res.status == true) {
 
-//this.Ids2=[];
+
         this.InventoryList.length = cursize;
         this.InventoryList.push(...res?.data);
+
         this.InventoryList.length = res?.pagination.totalCount;
-        // for (var iny of res?.data) {
-        //   this.Ids2.push(iny.id);
-        //  }
+       
        
         this.dataSource = new MatTableDataSource<any>(this.InventoryList);
         this.dataSource._updateChangeSubscription();

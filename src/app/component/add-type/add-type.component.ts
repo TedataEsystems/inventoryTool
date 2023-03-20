@@ -126,6 +126,7 @@ this.initializeFormGroup();
 
 
   onSubmit(){
+    debugger;
     if (!this.form3.valid ) {
  
       return;
@@ -181,7 +182,7 @@ this.initializeFormGroup();
       
           
            this.form3.controls['UpdatedBy'].setValue(localStorage.getItem('userName') || '');
-           
+           console.log(this.form3.value,"test11");
            this.service.UpdateTypeStatus(this.form3.value).subscribe(
              res=>{
                // console.log("ResponseInUpdate",this.service.form.value)
@@ -190,8 +191,10 @@ this.initializeFormGroup();
                {
                this.notificationService.success(':: Updated successfully');
                this.form3.reset();
-               this.loader.idle();
+              // this.loader.idle();
                this.dialogRef.close('save');
+              
+               this.router.navigate(['/Type']);
              // this.onClose();
   
   
