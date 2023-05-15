@@ -7,7 +7,7 @@ export interface Inventory {
     OrderNumber :number;
     ReorderingPoint :number;
     BR :number;
-    ItemCode :number;
+    ItemCode :string;
     Meter :number;
     Number :number;
     SubItem:boolean;

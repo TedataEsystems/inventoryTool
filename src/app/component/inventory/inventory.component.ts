@@ -106,7 +106,7 @@ loading: boolean = true;
 
   getRequestdata(pageNum: number, pageSize: number, search: string, sortColumn: string, sortDir: string) {
  console.log("+++++++++++"); 
- 
+ debugger;
     this.loader.busy();
     this.InventoryServ.getInventory(pageNum, pageSize, search, sortColumn, sortDir).subscribe(response => {
      // console.log(response?.data)
@@ -1022,7 +1022,7 @@ ExportExitPermitExcel(e:Event) {
  // invSearch.OrderNumber = Number(this.service.formSearch.value.OrderNumber);
  invSearch.ReorderingPoint = this.service.formSearch.value.ReorderingPoint== 0 ? null : this.service.formSearch.value.ReorderingPoint;
  invSearch.BR = this.service.formSearch.value.BR== 0 ? null : this.service.formSearch.value.BR;
- invSearch.ItemCode = this.service.formSearch.value.ItemCode == 0 ? null : this.service.formSearch.value.ItemCode;
+ invSearch.ItemCode = this.service.formSearch.value.ItemCode == "" ? null : this.service.formSearch.value.ItemCode;
  invSearch.Meter = this.service.formSearch.value.Meter == 0 ? null : this.service.formSearch.value.Meter;
  invSearch.Number = this.service.formSearch.value.Number == 0 ? null : this.service.formSearch.value.Number;
  invSearch.SerielNumber = this.service.formSearch.value.SerielNumber == "" ? null : this.service.formSearch.value.SerielNumber;
