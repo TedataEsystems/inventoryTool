@@ -1,5 +1,5 @@
 export interface Inventory {
-    Id:number;
+    id:number;
     //M:number;
     Comment :string;
     Customername :string;

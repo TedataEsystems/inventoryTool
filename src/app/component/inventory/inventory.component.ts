@@ -109,13 +109,17 @@ loading: boolean = true;
  debugger;
     this.loader.busy();
     this.InventoryServ.getInventory(pageNum, pageSize, search, sortColumn, sortDir).subscribe(response => {
-     // console.log(response?.data)
+      console.log(response?.data);
       this.InventoryList = response?.data as Inventory[];
+      console.log(this.InventoryList+"//////////////////////////////");
       this.InventoryList.length = response?.pagination.totalCount;
-      
+     
       this.Ids2=[];
-       for (var iny of response?.data) {
-        this.Ids2.push(iny.id);
+
+       for (var iny of this.InventoryList) {
+        debugger;
+        console.log(iny);
+        this.Ids2.push(iny?.id);
        }
        
        this.Ids=[];
