@@ -35,6 +35,8 @@ import { AddComponent } from 'src/app/component/add/add.component';
 import { NgxMatDatetimePickerModule } from '@angular-material-components/datetime-picker';
 import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
 import { TeamComponent } from 'src/app/component/setting/team/team.component';
+import { InventoryCapacityComponent } from 'src/app/component/setting/inventory-capacity/inventory-capacity.component';
+import { AddInventoyCapacityComponent } from 'src/app/component/add-inventoy-capacity/add-inventoy-capacity.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +63,8 @@ import { TeamComponent } from 'src/app/component/setting/team/team.component';
     AddTypeComponent,
     AddComponent,
     TeamComponent,
+    InventoryCapacityComponent,
+    AddInventoyCapacityComponent
   ],
   imports: [
     CommonModule,

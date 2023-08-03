@@ -17,6 +17,7 @@ import { CompanyNameComponent } from './component/setting/company-name/company-n
 import { LocationComponent } from './component/setting/location/location.component';
 import { AcceptanceComponent } from './component/setting/acceptance/acceptance.component';
 import { TeamComponent } from './component/setting/team/team.component';
+import { InventoryCapacityComponent } from './component/setting/inventory-capacity/inventory-capacity.component';
 
 const routes: Routes = [
   {
@@ -68,6 +69,10 @@ const routes: Routes = [
     {
       path:'CompanyName',
       component:CompanyNameComponent
+    },
+    {
+      path:'InventoryCapacity',
+      component:InventoryCapacityComponent
     },
     {
       path:'Location',
