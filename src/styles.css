@@ -262,6 +262,12 @@ mat-card-title {
   overflow-y: auto;
   max-width: 50%;
 }
+.cdk-global-overlay-wrapper .cdk-overlay-pane.modal2-dialog {
+  position: absolute !important;
+  height: 300px;
+  overflow-y: auto;
+  max-width: 50%;
+}
 .cdk-global-overlay-wrapper .cdk-overlay-pane.modals-dialog:nth-child(2){
   position: absolute !important;
   height: 300px !important;

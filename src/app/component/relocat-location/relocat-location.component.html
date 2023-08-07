@@ -1,0 +1,44 @@
+<mat-toolbar class="top" dir="rtl">
+    <span class="fill-remaining-space">تعديل مكان المخزن</span>
+    <div class="w-100">
+      <button  class="btn-dialog-close" mat-button  tabIndex="-1" (click)="onClose()"><mat-icon>clear</mat-icon></button>
+    </div>
+  
+  </mat-toolbar>
+
+  <form [formGroup]="form" class="normal-form" (submit)="onSubmit()" dir="rtl">
+    <mat-grid-list cols="1" rowHeight="200px">
+1
+      <mat-grid-tile>
+        <div class="controles-container">
+          <mat-form-field>
+          
+            <mat-select formControlName="locationTo" placeholder=" وارد الى .. ">
+              <mat-option>-- Please select --</mat-option>
+              <mat-option  *ngFor="let location of locations"   [value]="location.id">
+                {{location.inventoryName}}
+              </mat-option>
+            </mat-select>
+            <mat-error>مطلوب</mat-error>
+          </mat-form-field> 
+        
+        </div>
+      </mat-grid-tile>
+   
+  
+    </mat-grid-list>
+   
+      <mat-toolbar class="bottom">
+       
+        <div class="button-row w-100 text-center">
+          <button mat-raised-button class="btn-success w-50" type="submit" >ارسال</button>
+    
+        </div>
+      
+      </mat-toolbar>
+  </form>
+  
+  <ngx-spinner type="timer">
+    <h5>Loading</h5>
+  </ngx-spinner>
+  

@@ -33,6 +33,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {Observable} from 'rxjs';
 import { EditFormService } from 'src/app/shared/service/edit-form.service';
 import { Team } from 'src/app/Model/team';
+import { RelocatLocationComponent } from '../relocat-location/relocat-location.component';
 declare var require: any;
 const swal = require('sweetalert2')
 
@@ -109,16 +110,16 @@ loading: boolean = true;
  debugger;
     this.loader.busy();
     this.InventoryServ.getInventory(pageNum, pageSize, search, sortColumn, sortDir).subscribe(response => {
-      console.log(response?.data);
+      //console.log(response?.data);
       this.InventoryList = response?.data as Inventory[];
-      console.log(this.InventoryList+"//////////////////////////////");
+    //  console.log(this.InventoryList+"//////////////////////////////");
       this.InventoryList.length = response?.pagination.totalCount;
      
       this.Ids2=[];
 
        for (var iny of this.InventoryList) {
         debugger;
-        console.log(iny);
+       // console.log(iny);
         this.Ids2.push(iny?.id);
        }
        
@@ -1319,5 +1320,21 @@ GetFavoriteSearch(){
 
   });
 }
+}
+updateLocations()
+{
+  const dialogGonfig = new MatDialogConfig();
+  dialogGonfig.data = this.Ids;
+  dialogGonfig.disableClose = true;
+  dialogGonfig.autoFocus = true;
+  dialogGonfig.width = '30%';
+  // dialogGonfig.height='50%';
+  dialogGonfig.panelClass = 'modal2-dialog';
+  this.dialog
+    .open(RelocatLocationComponent,dialogGonfig)
+    .afterClosed()
+    .subscribe((result) => {
+      this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+    });
 }
 }

@@ -37,6 +37,7 @@ import { NgxMatMomentModule } from '@angular-material-components/moment-adapter'
 import { TeamComponent } from 'src/app/component/setting/team/team.component';
 import { InventoryCapacityComponent } from 'src/app/component/setting/inventory-capacity/inventory-capacity.component';
 import { AddInventoyCapacityComponent } from 'src/app/component/add-inventoy-capacity/add-inventoy-capacity.component';
+import { RelocatLocationComponent } from 'src/app/component/relocat-location/relocat-location.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { AddInventoyCapacityComponent } from 'src/app/component/add-inventoy-cap
     AddComponent,
     TeamComponent,
     InventoryCapacityComponent,
-    AddInventoyCapacityComponent
+    AddInventoyCapacityComponent,
+    RelocatLocationComponent
   ],
   imports: [
     CommonModule,

@@ -13,6 +13,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BasicAuthInterceptorService } from './basic-auth-interceptor.service';
 import { ChartsModule } from 'ng2-charts';
+import { RelocatLocationComponent } from './component/relocat-location/relocat-location.component';
 
 
 
@@ -24,6 +25,7 @@ import { ChartsModule } from 'ng2-charts';
 @NgModule({
   declarations: [
     AppComponent,
+    //RelocatLocationComponent,
     //TeamComponent,
   
    // CategoryComponent,

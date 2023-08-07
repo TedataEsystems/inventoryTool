@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { Inventory } from 'src/app/Model/inventory';
 import { Options } from 'selenium-webdriver';
+import { UpdatedLocation } from 'src/app/Model/updated-location';
 
 @Injectable({
   providedIn: 'root'
@@ -125,4 +126,11 @@ SerielNumberIsAlreadySignedInEdit(SerielNumber:string,id:number ):Observable<any
       return this.httpClient.post(`${environment.API_URL}api/Inventory/ExportExitPermitExcel`,data,{responseType: 'blob',headers: this.headers}); 
       
    }
+
+   UpdateInventoyLocations(locations:UpdatedLocation):Observable<any>
+   {
+     
+     return this.httpClient.post(`${environment.API_URL}api/Inventory/UpdateInventoryLocation`,locations );
+   }
+
 }
