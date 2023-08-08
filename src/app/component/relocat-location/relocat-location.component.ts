@@ -22,7 +22,7 @@ export class RelocatLocationComponent implements OnInit {
     ids: [],
     locationTo: ''
   };
-  locations: InventoryLocations[] = []
+  locations: LocationName[] = []
   constructor(public dialogRef: MatDialogRef<RelocatLocationComponent>, private toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: any, private InventoryCapacity: InventoryCapacityService, private inventoryService: InventoryService) { }
 
