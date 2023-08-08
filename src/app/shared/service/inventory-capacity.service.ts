@@ -21,7 +21,7 @@ export class InventoryCapacityService {
       params = params.append('sortcolumn', sortcolumn.toString());
       params = params.append('sortcolumndir', sortcolumndir.toString());
     }
-    return this.httpClient.get<any>(`${environment.API_URL}api/InventoryCapacity/GetInventoryCapacity`, { observe: 'response', params }).pipe(
+    return this.httpClient.get<any>(`${environment.API_URL}api/Location/GetLocation`, { observe: 'response', params }).pipe(
       map(response => {
         return response.body;
       })
@@ -29,18 +29,18 @@ export class InventoryCapacityService {
   }
 
   AddInventoryCapacity(model: any): Observable<any> {
-    return this.httpClient.post<any>(`${environment.API_URL}api/InventoryCapacity/AddInventoryCapacity`, model);
+    return this.httpClient.post<any>(`${environment.API_URL}api/Location/AddLocation`, model);
   }
   UpdateInventoryCapacity(model: any): Observable<any> {
-    return this.httpClient.post<any>(`${environment.API_URL}api/InventoryCapacity/UpdateInventoryCapacity`, model);
+    return this.httpClient.post<any>(`${environment.API_URL}api/Location/UpdateLocation`, model);
   }
   DeleteInventoryCapacity(id: any): Observable<any> {
 
-    return this.httpClient.delete(`${environment.API_URL}api/InventoryCapacity/DeleteInventoryCapacity/` + id);
+    return this.httpClient.delete(`${environment.API_URL}api/Location/DeleteLocation/` + id);
   }
 
   InventoryCapacityIsAlreadySigned(name: string, id: number): Observable<any> {
-    return this.httpClient.get<any>(`${environment.API_URL}api/InventoryCapacity/InventoryCapacityIsAlreadySigned/` + name + `/` + id);
+    return this.httpClient.get<any>(`${environment.API_URL}api/Location/LocationIsAlreadySigned/` + name + `/` + id);
   }
 GetLocationsLists(): Observable<any> {
   return this.httpClient.get<any>(`${environment.API_URL}api/InventoryCapacity/GetLists`);

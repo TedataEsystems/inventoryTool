@@ -89,7 +89,6 @@ selected=0;
 
 
    this.inventoryserv.GettingLists().subscribe(res=>{
-   
     if(res.status==true)
     {
     this.TypeStatuslist=res.typeStatus;
@@ -262,8 +261,6 @@ selected=0;
   }
 
   onSubmit(){
-   
-   
    let inventory=  {
    //M:this.service.form.value.M ,
    CustomerName:this.service.form1.value.CustomerName,

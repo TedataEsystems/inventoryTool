@@ -5,4 +5,5 @@ export interface LocationName {
     CreationDate?:Date;
    UpdatedBy?:string;
    UpdateDate?:Date;
+   DevicesNumber?:number;
 }

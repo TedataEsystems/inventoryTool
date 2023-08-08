@@ -39,7 +39,7 @@
         <mat-cell *matCellDef="let element" data-label=" InventoryCapacity">
           <!-- {{element.name}} -->
           <ng-container *ngIf="!editdisabled || element.id!=editUsr">
-            {{element.inventoryName}}
+            {{element.name}}
           </ng-container>
           <ng-container *ngIf="editdisabled  && element.id==editUsr">
             <mat-form-field hideRequiredMarker="false" appearance="legacy">

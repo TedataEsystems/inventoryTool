@@ -18,49 +18,50 @@ export class RelocatLocationComponent implements OnInit {
   form: FormGroup = new FormGroup({
     locationTo: new FormControl('')
   });
-  updatedLocations: UpdatedLocation={
-    ids:[],
+  updatedLocations: UpdatedLocation = {
+    ids: [],
     locationTo: ''
   };
-locations:InventoryLocations[]=[]
+  locations: InventoryLocations[] = []
   constructor(public dialogRef: MatDialogRef<RelocatLocationComponent>, private toastr: ToastrService,
-    @Inject(MAT_DIALOG_DATA) public data: any,private InventoryCapacity:InventoryCapacityService,private inventoryService:InventoryService) { }
+    @Inject(MAT_DIALOG_DATA) public data: any, private InventoryCapacity: InventoryCapacityService, private inventoryService: InventoryService) { }
 
   ngOnInit(): void {
     this.ids = this.data;
-    console.log(this.ids,"selected ids")
+    console.log(this.ids, "selected ids")
     this.InventoryCapacity.GetLocationsLists().subscribe((res) => {
       if (res.status == true) {
-        console.log(res,"result of locations")
-        console.log(res.inventoryLocations,"inv location")
+        console.log(res, "result of locations")
+        console.log(res.inventoryLocations, "inv location")
         this.locations = res.inventoryLocations;
       } else {
         this.toastr.warning('Failed');
       }
-      console.log(this.locations,"locations") 
+      console.log(this.locations, "locations")
     });
-   
+
   }
   onSubmit() {
-    console.log(this.ids,"in submit");
-    console.log(this.locations,"lo in submit")
-    console.log(this.form.value.locationTo,"loc To in submit")
-    
+    console.log(this.ids, "in submit");
+    console.log(this.locations, "lo in submit")
+    console.log(this.form.value.locationTo, "loc To in submit")
+
     if (this.form.valid) {
-      this.updatedLocations.ids=this.ids;
-      this.updatedLocations.locationTo=this.form.value.locationTo;
-      console.log(this.updatedLocations,"updatedLoc in submit")
-this.inventoryService.UpdateInventoyLocations(this.updatedLocations).subscribe(res=>{
-  if(res.status==true)
-  {
-    this.toastr.success(':added successfully');
-            this.onClose();
-  }
-  else{
-    this.toastr.warning(':failed to upload file');}
-  }
-);
-}  
+      this.updatedLocations.ids = this.ids;
+      this.updatedLocations.locationTo = this.form.value.locationTo;
+      console.log(this.updatedLocations, "updatedLoc in submit")
+      this.inventoryService.UpdateInventoyLocations(this.updatedLocations).subscribe(res => {
+        console.log(res)
+        if (res.status == true) {
+          this.toastr.success(':added successfully');
+          this.onClose();
+        }
+        else {
+          this.toastr.error(res.error);
+        }
+      }
+      );
+    }
   }
   onClose() {
     this.form.reset();

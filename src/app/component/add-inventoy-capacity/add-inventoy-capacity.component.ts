@@ -19,7 +19,7 @@ export class AddInventoyCapacityComponent implements OnInit {
 
   inventoryCapacity = {
     Id: 0,
-    inventoryName: "",
+    name: "",
     devicesNumber: "",
     CreatedBy: ""
   }
@@ -33,7 +33,7 @@ export class AddInventoyCapacityComponent implements OnInit {
 
   form3: FormGroup = new FormGroup({
     Id: new FormControl(0),
-    inventoryName: new FormControl('', [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
+    name: new FormControl('', [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     devicesNumber: new FormControl('', [Validators.required]),
     CreationDate: new FormControl(null),
     UpdateDate: new FormControl(null),
@@ -45,7 +45,7 @@ export class AddInventoyCapacityComponent implements OnInit {
   initializeFormGroup() {
     this.form3.setValue({
       Id: 0,
-      inventoryName: '',
+      name: '',
       devicesNumber: 0,
       CreationDate: null,
       CreatedBy: null,
@@ -67,7 +67,7 @@ export class AddInventoyCapacityComponent implements OnInit {
 
     if (this.data) {
       this.form3.controls['Id'].setValue(this.data.id);
-      this.form3.controls['inventoryName'].setValue(this.data.inventoryName);
+      this.form3.controls['name'].setValue(this.data.name);
       this.form3.controls['devicesNumber'].setValue(this.data.devicesNumber);
       this.form3.controls['CreatedBy'].setValue(this.data.createdBy);
       this.form3.controls['CreationDate'].setValue(this.data.creationDate);
@@ -80,7 +80,7 @@ export class AddInventoyCapacityComponent implements OnInit {
       return;
     }
     let inventoryCapacity = {
-      inventoryName: this.form3.controls['inventoryName'].value,
+      name: this.form3.controls['name'].value,
       devicesNumber: this.form3.controls['devicesNumber'].value,
       CreationDate: this.form3.value.CreationDate,
       CreatedBy: this.form3.value.CreatedBy
