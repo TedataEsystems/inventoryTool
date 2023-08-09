@@ -775,7 +775,9 @@ this.loader.busy();
   this.inventorySearch.RecipientName = this.service.formSearch.value.RecipientName;
   this.inventorySearch.TeamIDs =(this.service.formSearch.value.TeamId);
   this.inventorySearch.Status = this.service.formSearch.value.Status;
+////////////////////////////////
 
+ this.inventorySearch.RemoveDuplicate= this.service.formSearch.get('RemoveDuplicate')?.value;
   this.inventorySearch.TypeStatusIDs =(this.service.formSearch.value.TypeStatusId);
   this.inventorySearch.ReceviedStatusIDs =(this.service.formSearch.value.ReceviedStatusId);
   this.inventorySearch.OutgoingStatusIDs =(this.service.formSearch.value.OutgoingStatusId);
@@ -835,6 +837,8 @@ this.loader.busy();
   this.inventorySearch.RecipientName = this.service.formSearch.value.RecipientName;
   this.inventorySearch.TeamIDs =(this.service.formSearch.value.TeamId);
   this.inventorySearch.Status = this.service.formSearch.value.Status;
+ 
+  //this.inventorySearch.RemoveDuplicate= this.service.formSearch.get('RemoveDuplicate')?.value;
   this.inventorySearch.ActionType = this.service.formSearch.value.ActionType;
   this.inventorySearch.DateType = this.service.formSearch.value.DateType;
   this.inventorySearch.TypeStatusIDs =(this.service.formSearch.value.TypeStatusId);
@@ -1219,7 +1223,8 @@ GetFavoriteSearch(){
      if(res.data.status !=null){
      this.service.formSearch.controls['Status'].setValue(res.data.status);
      }
-     if(res.data.comment !=null){
+     
+     if(res.data.comment !=null  ){
      this.service.formSearch.controls['Comment'].setValue(res.data.comment);
      }
      if(res.data.receivedDateFrom !=null){
