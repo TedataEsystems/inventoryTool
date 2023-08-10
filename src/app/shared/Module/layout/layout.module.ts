@@ -83,7 +83,7 @@ import { RelocatLocationComponent } from 'src/app/component/relocat-location/rel
  NgxMatMomentModule,
     ToastrModule.forRoot({
       timeOut: 3000,
-      positionClass: 'toast-top-right',
+      positionClass: 'toast-bottom-right',
       preventDuplicates: true,
     }),
 
