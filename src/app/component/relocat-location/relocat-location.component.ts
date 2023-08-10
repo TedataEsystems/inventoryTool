@@ -22,18 +22,16 @@ export class RelocatLocationComponent implements OnInit {
     ids: [],
     locationTo: ''
   };
-  locations: InventoryLocations[] = []
+  locations: any[] = []
   constructor(public dialogRef: MatDialogRef<RelocatLocationComponent>, private toastr: ToastrService,
-    @Inject(MAT_DIALOG_DATA) public data: any, private InventoryCapacity: InventoryCapacityService, private inventoryService: InventoryService) { }
+    @Inject(MAT_DIALOG_DATA) public data: any, private inventoryService: InventoryService) { }
 
   ngOnInit(): void {
     this.ids = this.data;
     console.log(this.ids, "selected ids")
-    this.InventoryCapacity.GetLocationsLists().subscribe((res) => {
+    this.inventoryService.GetLocationsLists().subscribe((res) => {
       if (res.status == true) {
-        console.log(res, "result of locations")
-        console.log(res.inventoryLocations, "inv location")
-        this.locations = res.inventoryLocations;
+        this.locations = res.locations;
       } else {
         this.toastr.warning('Failed');
       }

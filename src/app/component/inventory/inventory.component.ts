@@ -76,7 +76,7 @@ loading: boolean = true;
   @ViewChild(MatSort) sort?:MatSort ;
   @ViewChild(MatPaginator) paginator?:MatPaginator ;
   displayedColumns: string[] = ['all','Id', 'TypeStatusName', 'Comment','CustomerName','SerielNumber','OrderNumber','RecipientName',
-  'TeamName','Status','ReceivedDate','ReceviedStatusName','ExpriyDate','OutgoingStatusName','CategoryName','CompanyName','ReceviedTypeName','AcceptanceName','LocationName','BR','ReorderingPoint','ItemCode','Meter','Number','CreationDate','CreatedBy','UpdateDate','UpdatedBy','action'];
+  'TeamName','Status','ReceivedDate','ReceviedStatusName','ExpriyDate','OutgoingStatusName','CategoryName','CompanyName','ReceviedTypeName','AcceptanceName','LocationName','comeFrom','BR','ReorderingPoint','ItemCode','Meter','Number','CreationDate','CreatedBy','UpdateDate','UpdatedBy','action'];
   dataSource =new MatTableDataSource();
   columnsToDisplay: string[] = this.displayedColumns.slice();
   team=  localStorage.getItem("userGroup");
@@ -110,7 +110,7 @@ loading: boolean = true;
  debugger;
     this.loader.busy();
     this.InventoryServ.getInventory(pageNum, pageSize, search, sortColumn, sortDir).subscribe(response => {
-      //console.log(response?.data);
+       console.log(response?.data);
       this.InventoryList = response?.data as Inventory[];
     //  console.log(this.InventoryList+"//////////////////////////////");
       this.InventoryList.length = response?.pagination.totalCount;

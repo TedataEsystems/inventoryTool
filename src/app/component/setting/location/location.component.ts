@@ -38,7 +38,7 @@ export class LocationComponent implements OnInit {
   isNameUpdatedRepeated: boolean = false;
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
-  displayedColumns: string[] = ['Id', 'Name','CreationDate','CreatedBy','UpdateDate','UpdateBy', 'action'];
+  displayedColumns: string[] = ['Id', 'Name','devicesNumber','CreationDate','CreatedBy','UpdateDate','UpdateBy', 'action'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource = new MatTableDataSource(this.locationList);
   settingtype = ''
@@ -382,9 +382,16 @@ export class LocationComponent implements OnInit {
       if (res) {
         this.LocationServ.DeleteLocation(r.id).subscribe(
           rs => {
-            this.notser.success(':: successfully Deleted');
-            this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
-            //  this.getRequestdata(1, 100, searchData, this.sortColumnDef, "asc");
+            if(rs.status==true){
+              this.notser.success(':: successfully Deleted');
+              this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+              //  this.getRequestdata(1, 100, searchData, this.sortColumnDef, "asc");
+            }
+            else{
+              this.notser.warn(rs.data);
+              this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+            }
+         
           },
           error => { this.notser.warn(':: An Error Occured') }
         );

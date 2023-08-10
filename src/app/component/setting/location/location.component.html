@@ -56,7 +56,7 @@
 
 
     <ng-container matColumnDef="Name">
-      <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Location  </mat-header-cell>
+      <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> المخزن  </mat-header-cell>
       <mat-cell *matCellDef="let element" data-label=" Location">
         <!-- {{element.name}} -->
         <ng-container *ngIf="!editdisabled || element.id!=editUsr">
@@ -69,6 +69,10 @@
            </mat-form-field>
          </ng-container>
        </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="devicesNumber">
+    <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>عدد الاجهزه</mat-header-cell>
+    <mat-cell *matCellDef="let element" data-label="devicesNumber"> {{element.devicesNumber}} </mat-cell>
   </ng-container>
   <ng-container matColumnDef="CreationDate">
     <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> تاريخ الانشاء </mat-header-cell>

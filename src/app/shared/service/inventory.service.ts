@@ -132,5 +132,7 @@ SerielNumberIsAlreadySignedInEdit(SerielNumber:string,id:number ):Observable<any
      
      return this.httpClient.post(`${environment.API_URL}api/Inventory/UpdateInventoryLocation`,locations );
    }
-
+   GetLocationsLists(): Observable<any> {
+    return this.httpClient.get<any>(`${environment.API_URL}api/Inventory/GetLists`);
+  }
 }

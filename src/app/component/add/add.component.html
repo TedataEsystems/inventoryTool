@@ -88,14 +88,24 @@
               </mat-form-field>
 
               <mat-form-field *ngIf="statusflag==1">
-                <mat-select formControlName="LocationId" placeholder="Location">
+                <mat-select formControlName="LocationId" placeholder="المخزن">
                   <mat-option>-- Please select --</mat-option>
                   <mat-option  *ngFor="let Location of Location"   [value]="Location.id">
                     {{Location.name}}
                   </mat-option>
                 </mat-select>
-                  
+                <mat-error>مطلوب</mat-error>
                 </mat-form-field>
+
+
+                <mat-form-field *ngIf="statusflag==1">
+                  <mat-select formControlName="comeFrom" placeholder="وارد من">
+                    <mat-option>-- Please select --</mat-option>
+                    <mat-option  *ngFor="let Location of Location"   [value]="Location.id">
+                      {{Location.name}}
+                    </mat-option>
+                  </mat-select>
+                  </mat-form-field>
                 <!-- <mat-form-field *ngIf="outgoingisHidden">
                   <mat-select formControlName="AcceptanceId" placeholder=" Acceptance">
                     <mat-option>-- Please select --</mat-option>
