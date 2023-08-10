@@ -45,6 +45,7 @@ export class EditFormService {
     ReceviedTypeId: new FormControl(''),
     AcceptanceId: new FormControl(''),
     LocationId: new FormControl(''),
+    RemoveDuplicate: new FormControl(false)
   });
 
   form: FormGroup = new FormGroup({

@@ -42,4 +42,5 @@ export interface InventorySearch {
      AcceptanceId? :number;
      LocationId? :number;
      LocationIDs? :Array<number>;
+     RemoveDuplicate?:boolean;
 }

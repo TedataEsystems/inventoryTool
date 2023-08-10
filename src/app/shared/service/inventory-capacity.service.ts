@@ -43,7 +43,7 @@ export class InventoryCapacityService {
     return this.httpClient.get<any>(`${environment.API_URL}api/Location/LocationIsAlreadySigned/` + name + `/` + id);
   }
 GetLocationsLists(): Observable<any> {
-  return this.httpClient.get<any>(`${environment.API_URL}api/InventoryCapacity/GetLists`);
+  return this.httpClient.get<any>(`${environment.API_URL}api/Location/GetLists`);
 }
 
 }
