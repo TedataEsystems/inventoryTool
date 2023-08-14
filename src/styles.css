@@ -1204,11 +1204,11 @@ mat-header-cell:first-of-type,
 mat-footer-cell:first-of-type {
   padding-right: 24px;
 }
-mat-cell:last-of-type,
+/* mat-cell:last-of-type,
 mat-header-cell:last-of-type,
 mat-footer-cell:last-of-type {
-  /* padding-left: 24px !important; */
-}
+  padding-left: 24px !important;
+} */
 mat-cell:last-of-type,
 mat-header-cell:last-of-type,
 mat-footer-cell:last-of-type {
