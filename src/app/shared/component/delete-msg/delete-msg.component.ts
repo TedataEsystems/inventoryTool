@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { NotificationService } from '../../service/notification.service';
+
 
 @Component({
   selector: 'app-delete-msg',
@@ -10,7 +10,7 @@ import { NotificationService } from '../../service/notification.service';
 })
 export class DeleteMsgComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<DeleteMsgComponent>,public notificationService: NotificationService
+  constructor(public dialogRef: MatDialogRef<DeleteMsgComponent>,private toastr: ToastrService
 
     ) { }
 

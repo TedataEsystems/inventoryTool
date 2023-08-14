@@ -6,7 +6,7 @@ import { ReceivedStatusList } from 'src/app/Model/received-status-list';
 import { TypeStatus } from 'src/app/Model/type-status';
 import { EditFormService } from 'src/app/shared/service/edit-form.service';
 import { InventoryService } from 'src/app/shared/service/inventory.service';
-import { NotificationService } from 'src/app/shared/service/notification.service';
+
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LoaderService } from 'src/app/shared/service/loader.service';
 import { Category } from 'src/app/Model/category';
@@ -56,7 +56,7 @@ export class AddComponent implements OnInit {
   selected = 0;
   @ViewChild('typeStatusSearch') typeStatusSearch!: ElementRef;
   constructor(public inventoryserv: InventoryService, private loader: LoaderService, public service: EditFormService,
-    public dialogRef: MatDialogRef<AddComponent>, public notificationService: NotificationService, @Inject(MAT_DIALOG_DATA) public data: any) {
+    public dialogRef: MatDialogRef<AddComponent>,  private toastr: ToastrService, @Inject(MAT_DIALOG_DATA) public data: any) {
 
   }
 
@@ -205,7 +205,7 @@ export class AddComponent implements OnInit {
 
         }
       }
-      else { this.notificationService.warn(':: error') }
+      else { this.toastr.warning(':: error') }
 
 
 
@@ -302,7 +302,7 @@ export class AddComponent implements OnInit {
 
 
           if (res.status == 'true') {
-            this.notificationService.success(':: Submitted successfully');
+            this.toastr.success(':: Submitted successfully');
             this.service.form1.reset();
             this.loader.idle();
             this.dialogRef.close('save');
@@ -312,7 +312,7 @@ export class AddComponent implements OnInit {
               this.serialflag = 3;
             }
             else {
-              this.notificationService.warn(':: Failed');
+              this.toastr.warning(':: Failed');
               this.loader.idle();
             }
 

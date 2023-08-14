@@ -6,7 +6,7 @@ import { ReceivedStatusList } from 'src/app/Model/received-status-list';
 import { TypeStatus } from 'src/app/Model/type-status';
 import { EditFormService } from 'src/app/shared/service/edit-form.service';
 import { InventoryService } from 'src/app/shared/service/inventory.service';
-import { NotificationService } from 'src/app/shared/service/notification.service';
+
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LoaderService } from 'src/app/shared/service/loader.service';
 import { Category } from 'src/app/Model/category';
@@ -75,7 +75,7 @@ export class EditComponent implements OnInit {
   SearchForm: boolean = false;
   @ViewChild('typeStatusSearch') typeStatusSearch!: ElementRef;
   constructor(public inventoryserv: InventoryService, private loader: LoaderService, public service: EditFormService,
-    public dialogRef: MatDialogRef<EditComponent>, public notificationService: NotificationService, @Inject(MAT_DIALOG_DATA) public data: any) {
+    public dialogRef: MatDialogRef<EditComponent>, private toastr: ToastrService, @Inject(MAT_DIALOG_DATA) public data: any) {
 
   }
 
@@ -246,7 +246,7 @@ export class EditComponent implements OnInit {
 
         }
       }
-      else { this.notificationService.warn(':: error') }
+      else { this.toastr.warning(':: error') }
 
 
 
@@ -519,7 +519,7 @@ export class EditComponent implements OnInit {
           res => {
 
             if (res.status == 'true') {
-              this.notificationService.success(':: Updated successfully');
+              this.toastr.success(':: Updated successfully');
               this.service.form.reset();
 
               this.loader.idle();
@@ -542,7 +542,7 @@ export class EditComponent implements OnInit {
                 this.serialflag = 5;
               }
               else {
-                this.notificationService.warn(':: Failed');
+                this.toastr.warning(':: Failed');
                 this.loader.idle();
               }
 
@@ -568,7 +568,7 @@ export class EditComponent implements OnInit {
         res => {
 
           if (res.status == 'true') {
-            this.notificationService.success(':: Updated successfully');
+            this.toastr.success(':: Updated successfully');
             this.service.form.reset();
             this.loader.idle();
             this.dialogRef.close('save');
@@ -586,7 +586,7 @@ export class EditComponent implements OnInit {
               this.serialflag = 5;
             }
             else {
-              this.notificationService.warn(':: Failed');
+              this.toastr.warning(':: Failed');
               this.loader.idle();
             }
 

@@ -34,6 +34,7 @@ import { Observable } from 'rxjs';
 import { EditFormService } from 'src/app/shared/service/edit-form.service';
 import { Team } from 'src/app/Model/team';
 import { RelocatLocationComponent } from '../relocat-location/relocat-location.component';
+import { ToastrService } from 'ngx-toastr';
 declare var require: any;
 const swal = require('sweetalert2')
 
@@ -83,7 +84,8 @@ export class InventoryComponent implements OnInit {
 
 
 
-  constructor(private dailogService: DeleteService, private loader: LoaderService, private titleService: Title, private note: NotificationService, private deleteService: DeleteService, private dialog: MatDialog, private route: ActivatedRoute, public service: EditFormService,
+  constructor(private dailogService: DeleteService, private loader: LoaderService, private titleService: Title,
+    private toastr: ToastrService, private deleteService: DeleteService, private dialog: MatDialog, private route: ActivatedRoute, public service: EditFormService,
     private router: Router, private InventoryServ: InventoryService,
     private FavoriteSearchServ: FavoriteSearchService, private config: ConfigureService, private _bottomSheet: MatBottomSheet, private logserv: LogsService) {
 
@@ -270,7 +272,7 @@ export class InventoryComponent implements OnInit {
           //console.log("row"+row.id);
           this.InventoryServ.DeleteInventory(row.id).subscribe(
             rs => {
-              this.note.success(':: successfully Deleted');
+              this.toastr.success(':: successfully Deleted');
               if (this.service.formSearch.value == '') {
                 this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef)
               } else {
@@ -280,11 +282,11 @@ export class InventoryComponent implements OnInit {
               // this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
               //  this.getRequestdata(1, 100, searchData, this.sortColumnDef, "asc");
             },
-            error => { this.note.warn(':: An Error Occured') }
+            error => { this.toastr.warning(':: An Error Occured') }
           );
         }
         else {
-          // this.note.warn(':: An Error Occured')
+          // this.toastr.warning(':: An Error Occured')
         }
       });
     }
@@ -351,9 +353,9 @@ export class InventoryComponent implements OnInit {
           this.dataSource.paginator = this.paginator as MatPaginator;
 
         }
-        else this.note.success(":: add successfully");
+        else this.toastr.success(":: add successfully");
       }, err => {
-        this.note.warn(":: failed");
+        this.toastr.warning(":: failed");
 
 
       })
@@ -408,7 +410,7 @@ export class InventoryComponent implements OnInit {
 
       }, err => {
 
-        this.note.warn("! Fail")
+        this.toastr.warning("! Fail")
 
       });
     }
@@ -503,7 +505,7 @@ export class InventoryComponent implements OnInit {
       }
     }
       , error => {
-        this.note.warn("!! Fail")
+        this.toastr.warning("!! Fail")
         this.resetfile();
       }
     );
@@ -523,7 +525,7 @@ export class InventoryComponent implements OnInit {
         saveAs(file, 'Inventory' + Date.now() + '.xlsx')
 
       }, err => {
-        this.note.warn("! Fail")
+        this.toastr.warning("! Fail")
       });
     }
   }
@@ -614,18 +616,18 @@ export class InventoryComponent implements OnInit {
         this.InventoryServ.UpdateInventoryStatusToRecevied(this.Ids).subscribe(res => {
           if (res.status == true) {
 
-            this.note.success(' تم النعديل بنجاح');
+            this.toastr.success(' تم النعديل بنجاح');
             this.selectedRows = false;
             this.Ids = [];
             this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
             this.onSearchClear();
           }
           else {
-            this.note.warn(':: An Error Occured')
+            this.toastr.warning(':: An Error Occured')
           }
 
           // },
-          // error => { this.note.warn(':: An Error Occured')
+          // error => { this.toastr.warning(':: An Error Occured')
         }
         );
 
@@ -635,7 +637,7 @@ export class InventoryComponent implements OnInit {
 
 
       else {
-        this.note.warn(" يجب ان تختار صفوف اولا");
+        this.toastr.warning(" يجب ان تختار صفوف اولا");
       }
 
 
@@ -658,25 +660,25 @@ export class InventoryComponent implements OnInit {
         this.InventoryServ.UpdateInventoryStatusToOutgoing(this.Ids).subscribe(res => {
           if (res.status == true) {
 
-            this.note.success(' تم النعديل بنجاح');
+            this.toastr.success(' تم النعديل بنجاح');
             this.selectedRows = false;
             this.Ids = [];
             this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
             this.onSearchClear();
           }
           else {
-            this.note.warn(':: An Error Occured')
+            this.toastr.warning(':: An Error Occured')
           }
 
           // },
-          // error => { this.note.warn(':: An Error Occured')
+          // error => { this.toastr.warning(':: An Error Occured')
         }
         );
 
       }
 
       else {
-        this.note.warn(" يجب ان تختار صفوف اولا");
+        this.toastr.warning(" يجب ان تختار صفوف اولا");
       }
     }
 
@@ -794,7 +796,7 @@ export class InventoryComponent implements OnInit {
     this.FavoriteSearchServ.AddEditFavoriteSearch(this.inventorySearch).subscribe(res => {
 
 
-      this.note.success(':: Submitted successfully');
+      this.toastr.success(':: Submitted successfully');
 
       this.loader.idle();
     }
@@ -1022,7 +1024,7 @@ export class InventoryComponent implements OnInit {
           this.Ids2 = [];
         }, err => {
 
-          this.note.warn("! Fail")
+          this.toastr.warning("! Fail")
 
         });
       }
@@ -1244,7 +1246,7 @@ export class InventoryComponent implements OnInit {
 
       }, err => {
 
-        this.note.warn("!fail");
+        this.toastr.warning("!fail");
 
       });
     }
