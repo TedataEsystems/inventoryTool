@@ -12,10 +12,11 @@ import { Category } from 'src/app/Model/category';
 import { TypeStatus } from 'src/app/Model/type-status';
 import { DeleteService } from 'src/app/shared/service/delete.service';
 import { LoaderService } from 'src/app/shared/service/loader.service';
-import { NotificationService } from 'src/app/shared/service/notification.service';
+
 import { TypeStatusService } from 'src/app/shared/service/type-status.service';
 import { AddTypeComponent } from '../../add-type/add-type.component';
 import { EditComponent } from '../../edit/edit.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-type-status',
@@ -34,7 +35,7 @@ export class TypeStatusComponent implements OnInit {
     Name: "",
     CreatedBy: ""
   }
-  TypeList: TypeStatus[] = [] 
+  TypeList: TypeStatus[] = []
   TypeListTab?: TypeStatus[] = [];
   valdata = ""; valuid = 0;
   searchKey: string = '';
@@ -51,7 +52,7 @@ export class TypeStatusComponent implements OnInit {
   editUsr: any;
   editdisabled: boolean = false;
   constructor(private titleService: Title,private dialog: MatDialog,
-    private notser: NotificationService, private router: Router, private loader: LoaderService,private route: ActivatedRoute, private Typeserv:TypeStatusService, private dailogService: DeleteService
+    private toastr: ToastrService, private router: Router, private loader: LoaderService,private route: ActivatedRoute, private Typeserv:TypeStatusService, private dailogService: DeleteService
   ) {
     this.titleService.setTitle('Type');
 
@@ -94,7 +95,7 @@ export class TypeStatusComponent implements OnInit {
     this.loader.busy();;
     this.Typeserv.getTypeStatus(pageNum, pageSize, search, sortColumn, sortDir).subscribe(response => {
       this.TypeList = response?.data;
-      
+
       this.TypeList.length = response?.pagination.totalCount;
       this.dataSource = new MatTableDataSource<any>(this.TypeList);
       this.dataSource._updateChangeSubscription();
@@ -168,7 +169,7 @@ export class TypeStatusComponent implements OnInit {
           setTimeout(() => {
             this.loader.idle();
           }, 1500)
-          this.notser.success(":: add successfully");
+          this.toastr.success(":: add successfully");
           //this.LoadCompanyName();
           this.form['controls']['Name'].setValue('');
           this.form['controls']['Id'].setValue(0);
@@ -181,7 +182,7 @@ console.log("Hello1 ")
             setTimeout(() => {
               this.loader.idle();
             }, 0)
-            this.notser.warn(":: failed");
+            this.toastr.warning(":: failed");
           }
         );
       }//if
@@ -191,20 +192,20 @@ console.log("Hello1 ")
           setTimeout(() => {
             this.loader.idle();
           }, 1500)
-          this.notser.success(":: update successfully");
+          this.toastr.success(":: update successfully");
         this.LoadCompanyName();
           this.form['controls']['Name'].setValue('');
           this.form['controls']['Id'].setValue(0);
-          
-         
-        
+
+
+
 
         },
           error => {
             setTimeout(() => {
               this.loader.idle();
             }, 0)
-            this.notser.warn(":: failed");
+            this.toastr.warning(":: failed");
           }
         )
       }//else
@@ -254,21 +255,21 @@ console.log("Hello1 ")
         setTimeout(() => {
           this.loader.idle();
         }, 1500);
-       
-        this.notser.success(":: update successfully");
+
+        this.toastr.success(":: update successfully");
       this.LoadCompanyName();
             this.form['controls']['Name'].setValue('');
          this.form['controls']['Id'].setValue(0);
-     
+
      this.cancelEdit();
-       
-      
+
+
       }//if
       else {
         setTimeout(() => {
           this.loader.idle();
         }, 0)
-        this.notser.warn(":: failed");
+        this.toastr.warning(":: failed");
       }
 
     })
@@ -311,16 +312,16 @@ console.log("Hello1 ")
        console.log(this.TypeList.length);
         this.TypeList.push(...res?.data);
         console.log(this.TypeList.length);
-      
+
         this.TypeList.length = res?.pagination.totalCount;
         this.dataSource = new MatTableDataSource<any>(this.TypeList);
         this.dataSource._updateChangeSubscription();
         this.dataSource.paginator = this.paginator as MatPaginator;
         this.loader.idle();
       }
-      else this.notser.success(":: add successfully");
+      else this.toastr.success(":: add successfully");
     }, err => {
-      this.notser.warn(":: failed");
+      this.toastr.warning(":: failed");
       this.loader.idle();
 
     })
@@ -406,16 +407,16 @@ console.log("Hello1 ")
       if (res) {
         this.Typeserv.DeleteTypeStatus(r.id).subscribe(
           rs => {
-            this.notser.success(':: successfully Deleted');
+            this.toastr.success(':: successfully Deleted');
            // this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
             //  this.getRequestdata(1, 100, searchData, this.sortColumnDef, "asc");
             window.location.reload();
           },
-          error => { this.notser.warn(':: An Error Occured') }
+          error => { this.toastr.warning(':: An Error Occured') }
         );
       }
       else {
-       // this.notser.warn(':: An Error Occured')
+       // this.toastr.warning(':: An Error Occured')
       }
     });
   }
@@ -475,13 +476,13 @@ console.log("Hello1 ")
      .afterClosed().subscribe(result => {
       //this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef)
       //console.log(":::::::::::::::::::");
-      
+
       //this.ngOnInit();
       window.location.reload();
       // console.log(":::::::::::::::::::");
       // this.router.navigate(['/Type']);
     });
-      
+
 
 
      }
