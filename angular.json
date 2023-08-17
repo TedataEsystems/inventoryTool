@@ -16,12 +16,12 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
-         
           "options": {
             "outputPath": "dist/PscSystem",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
+            "allowedCommonJsDependencies": ["chart.js"],
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": [
@@ -45,12 +45,13 @@
                 }
               ],
               "optimization": true,
+             
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
-              "buildOptimizer": true,
+              "buildOptimizer": false,
               "budgets": [
                 {
                   "type": "initial",
@@ -76,6 +77,7 @@
             "production": {
               "browserTarget": "PscSystem:build:production"
             }
+           
           }
         },
         "extract-i18n": {
