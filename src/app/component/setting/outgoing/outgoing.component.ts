@@ -5,9 +5,9 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { OutgoingStatusList } from 'src/app/Model/outgoing-status-list';
 import { DeleteService } from 'src/app/shared/service/delete.service';
-import { NotificationService } from 'src/app/shared/service/notification.service';
 import { OutgoingStatusService } from 'src/app/shared/service/outgoing-status.service';
 
 @Component({
@@ -45,7 +45,7 @@ export class OutgoingComponent implements OnInit {
   editUsr: any;
   editdisabled: boolean = false;
   constructor(private titleService: Title
-    , private notser: NotificationService, private router: Router, private route: ActivatedRoute, private OutgoingStatusServ: OutgoingStatusService, private dailogService: DeleteService
+    , private toastr: ToastrService, private router: Router, private route: ActivatedRoute, private OutgoingStatusServ: OutgoingStatusService, private dailogService: DeleteService
   ) {
     this.titleService.setTitle('Outgoing');
 
@@ -79,7 +79,7 @@ export class OutgoingComponent implements OnInit {
   }
 
   getRequestdata(pageNum: number, pageSize: number, search: string, sortColumn: string, sortDir: string) {
-    
+
     if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
     {
       this.router.navigateByUrl('/login');
@@ -134,7 +134,7 @@ export class OutgoingComponent implements OnInit {
   }
   isDisable = false;
   onCreateUpdate() {
-    
+
     this.isDisable = true;
     this.Outgoing.Name = this.form.value.Name;
     this.Outgoing.Id = this.form.value.Id;
@@ -147,14 +147,14 @@ export class OutgoingComponent implements OnInit {
     }
 
     else {
-      
+
       if (this.form.value.Id == 0 || this.form.value.Id == '' ) {
         this.isDisable = true;
         this.OutgoingStatusServ.AddOutgoingStatus(this.Outgoing).subscribe(res => {
           setTimeout(() => {
             this.loader = false;
           }, 1500)
-          this.notser.success(":: add successfully");
+          this.toastr.success(":: add successfully");
           this.LoadCompanyName();
           this.form['controls']['Name'].setValue('');
           this.form['controls']['Id'].setValue(0);
@@ -166,7 +166,7 @@ export class OutgoingComponent implements OnInit {
             setTimeout(() => {
               this.loader = false;
             }, 0)
-            this.notser.warn(":: failed");
+            this.toastr.warning(":: failed");
           }
         );
       }//if
@@ -176,7 +176,7 @@ export class OutgoingComponent implements OnInit {
           setTimeout(() => {
             this.loader = false;
           }, 1500)
-          this.notser.success(":: update successfully");
+          this.toastr.success(":: update successfully");
           this.LoadCompanyName();
           this.form['controls']['Name'].setValue('');
           this.form['controls']['Id'].setValue(0);
@@ -186,15 +186,15 @@ export class OutgoingComponent implements OnInit {
             setTimeout(() => {
               this.loader = false;
             }, 0)
-            this.notser.warn(":: failed");
+            this.toastr.warning(":: failed");
           }
         )
       }//else
-  
+
   }
     this.isShowDiv = false;
-  }//end of 
-  
+  }//end of
+
   editROw(r: any) {
     if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
     {
@@ -207,14 +207,14 @@ export class OutgoingComponent implements OnInit {
   }
 
   cancelEdit() {
-    
+
     this.editdisabled = false;
     this.isNameUpdatedRepeated = false;
     this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
   }
 
   updateEdit(row: any) {
-  
+
     this.loader = true;
     let OutgoingStatusEdit: OutgoingStatusList =
     {
@@ -229,7 +229,7 @@ export class OutgoingComponent implements OnInit {
         setTimeout(() => {
           this.loader = false;
         }, 1500)
-        this.notser.success(":: update successfully");
+        this.toastr.success(":: update successfully");
         this.LoadCompanyName();
         this.form['controls']['Name'].setValue('');
         this.form['controls']['Id'].setValue(0);
@@ -241,7 +241,7 @@ export class OutgoingComponent implements OnInit {
         setTimeout(() => {
           this.loader = false;
         }, 0)
-        this.notser.warn(":: failed");
+        this.toastr.warning(":: failed");
       }
 
     })
@@ -288,9 +288,9 @@ export class OutgoingComponent implements OnInit {
         this.dataSource.paginator = this.paginator as MatPaginator;
         this.loader = false;
       }
-      else this.notser.success(":: add successfully");
+      else this.toastr.success(":: add successfully");
     }, err => {
-      this.notser.warn(":: failed");
+      this.toastr.warning(":: failed");
       this.loader = false;
 
     })
@@ -375,15 +375,15 @@ export class OutgoingComponent implements OnInit {
       if (res) {
         this.OutgoingStatusServ.DeleteOutgoingStatus(r.id).subscribe(
           rs => {
-            this.notser.success(':: successfully Deleted');
+            this.toastr.success(':: successfully Deleted');
             this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
             //  this.getRequestdata(1, 100, searchData, this.sortColumnDef, "asc");
           },
-          error => { this.notser.warn(':: An Error Occured') }
+          error => { this.toastr.warning(':: An Error Occured') }
         );
       }
       else {
-       // this.notser.warn(':: An Error Occured')
+       // this.toastr.warning(':: An Error Occured')
       }
     });
   }
@@ -401,7 +401,7 @@ export class OutgoingComponent implements OnInit {
       // this.form['controls']['id'].setValue(0);
 
     }
-   
+
   }
 
 

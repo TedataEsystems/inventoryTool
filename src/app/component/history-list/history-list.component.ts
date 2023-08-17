@@ -8,8 +8,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Logs } from 'src/app/Model/logs';
 import { LoaderService } from 'src/app/shared/service/loader.service';
 import { LogsService } from 'src/app/shared/service/logs.service';
-import { NotificationService } from 'src/app/shared/service/notification.service';
 import { EditComponent } from '../edit/edit.component';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-history-list',
   templateUrl: './history-list.component.html',
@@ -43,7 +43,7 @@ export class HistoryListComponent implements OnInit {
 
 
     constructor(private titleService:Title, private loader: LoaderService
-      ,private notser:NotificationService,private router: Router,private route: ActivatedRoute, private LogsServ:LogsService
+      ,private toastr:ToastrService,private router: Router,private route: ActivatedRoute, private LogsServ:LogsService
       ) {
         this.titleService.setTitle('logs');
 
@@ -92,31 +92,31 @@ export class HistoryListComponent implements OnInit {
     }
     else{
       if(this.LogsServ.LogId !=0 && this.LogsServ.LogId !=null){
-     
-          
+
+
             if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
             {
               this.router.navigateByUrl('/login');
             }
-            else{ 
+            else{
                     this.LogsServ.GetLogsById().subscribe(res => {
-                      
+
                       this.logsList = res?.data;
-                   
+
                       this.dataSource = new MatTableDataSource<any>(this.logsList);
                       this.dataSource._updateChangeSubscription();
                       this.dataSource.paginator = this.paginator as MatPaginator;
                       this.loader.idle();
                       this.LogsServ.LogId=0;
                     }
-                    )          
+                    )
               }
-          
-         
+
+
       }
       else{
 
-      
+
     this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
     }
   }
@@ -188,9 +188,9 @@ applyFilter(filterValue: Event) {
           this.dataSource.paginator = this.paginator as MatPaginator;
           this.loader.idle();
         }
-        else  this.notser.success(":: add successfully");
+        else  this.toastr.success(":: add successfully");
       }, err => {
-        this.notser.warn(":: failed");
+        this.toastr.warning(":: failed");
         this.loader.idle();
 
       })
@@ -241,12 +241,12 @@ applyFilter(filterValue: Event) {
 //     {
 //       this.router.navigateByUrl('/login');
 //     }
-//     else{ 
+//     else{
 //             this.LogsServ.GetLogsById().subscribe(res => {
 //               console.log("ff", res);
 //               this.logsList = res as Logs[];
-              
-             
+
+
 //               this.dataSource = new MatTableDataSource<any>(this.logsList);
 //               this.dataSource.paginator = this.paginator as MatPaginator;
 //               this.dataSource.sort = this.sort as MatSort;
@@ -255,11 +255,11 @@ applyFilter(filterValue: Event) {
 //               this.loader.idle();
 //             }
 //             )//subsribe
-          
-         
-        
+
+
+
 //       }
-  
+
 //   //}
 //   }
 }

@@ -70,8 +70,8 @@ export class InventoryService {
     return this.httpClient.get(`${environment.API_URL}api/Inventory/GetCategoryByTypeId/`+id );
   }
 
-  DownloadAllDisplayDataOfExcel():Observable<Blob>{
-    return this.httpClient.get(`${environment.API_URL}api/Inventory/ExportExcel`,{responseType: 'blob',headers: this.headers}); 
+  DownloadAllDisplayDataOfExcel(ids:number[]):Observable<Blob>{
+    return this.httpClient.post(`${environment.API_URL}api/Inventory/ExportExcel`,ids,{responseType: 'blob',headers: this.headers}); 
   }
 
 
@@ -132,5 +132,7 @@ SerielNumberIsAlreadySignedInEdit(SerielNumber:string,id:number ):Observable<any
      
      return this.httpClient.post(`${environment.API_URL}api/Inventory/UpdateInventoryLocation`,locations );
    }
-
+   GetLocationsLists(): Observable<any> {
+    return this.httpClient.get<any>(`${environment.API_URL}api/Inventory/GetLists`);
+  }
 }

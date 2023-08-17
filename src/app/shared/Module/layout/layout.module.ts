@@ -82,13 +82,13 @@ import { RelocatLocationComponent } from 'src/app/component/relocat-location/rel
    NgxMatDatetimePickerModule,
  NgxMatMomentModule,
     ToastrModule.forRoot({
-      timeOut: 3000,
-      positionClass: 'toast-top-right',
+      timeOut: 5000,
+      positionClass:'toast-bottom-right',
       preventDuplicates: true,
     }),
 
 
   ],
-  providers:[{provide:HTTP_INTERCEPTORS , useClass:LoadingInterceptor , multi:true}]
+  //providers:[{provide:HTTP_INTERCEPTORS , useClass:LoadingInterceptor , multi:true}]
 })
 export class LayoutModule { }

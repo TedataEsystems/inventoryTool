@@ -79,6 +79,7 @@ export class EditFormService {
     CreatedBy:new FormControl(null),
     UpdatedBy :new FormControl(null),
    
+  comeFrom:new FormControl(null)
    
   });
 
@@ -108,11 +109,12 @@ export class EditFormService {
   CompanyId: new FormControl(null),
   ReceviedTypeId: new FormControl(null),
   AcceptanceId: new FormControl(null),
-  LocationId: new FormControl(null),
+  LocationId: new FormControl(null,[Validators.required]),
   CreationDate :new FormControl(null),
   UpdateDate :new FormControl(null),
   CreatedBy:new FormControl(null),
   UpdatedBy :new FormControl(null),
+  comeFrom:new FormControl(null)
  
  
 });

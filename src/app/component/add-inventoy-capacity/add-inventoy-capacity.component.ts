@@ -2,9 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { InventoryCapacityService } from 'src/app/shared/service/inventory-capacity.service';
 import { LoaderService } from 'src/app/shared/service/loader.service';
-import { NotificationService } from 'src/app/shared/service/notification.service';
+
 
 @Component({
   selector: 'app-add-inventoy-capacity',
@@ -28,7 +29,7 @@ export class AddInventoyCapacityComponent implements OnInit {
   valdata = ""; valuid = 0;
 
   constructor(private loader: LoaderService, public service: InventoryCapacityService, private router: Router,
-    public dialogRef: MatDialogRef<AddInventoyCapacityComponent>, public notificationService: NotificationService, @Inject(MAT_DIALOG_DATA) public data: any) { }
+    public dialogRef: MatDialogRef<AddInventoyCapacityComponent>, private toastr: ToastrService, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
 
   form3: FormGroup = new FormGroup({
@@ -92,14 +93,14 @@ export class AddInventoyCapacityComponent implements OnInit {
       this.service.AddInventoryCapacity(inventoryCapacity).subscribe(
         res => {
           if (res.status = true) {
-            this.notificationService.success(':: Submitted successfully');
+            this.toastr.success(':: Submitted successfully');
 
             this.loader.idle();
             this.dialogRef.close('save');
             this.form3.reset();
           }
           else {
-            this.notificationService.warn(':: Failed');
+            this.toastr.warning(':: Failed');
             this.loader.idle();
           }
 
@@ -118,13 +119,13 @@ export class AddInventoyCapacityComponent implements OnInit {
       this.service.UpdateInventoryCapacity(this.form3.value).subscribe(
         res => {
           if (res.status = true) {
-            this.notificationService.success(':: Updated successfully');
+            this.toastr.success(':: Updated successfully');
             this.form3.reset();
             this.dialogRef.close('save');
             this.router.navigate(['/InventoryCapacity']);
           }
           else {
-            this.notificationService.warn(':: Failed');
+            this.toastr.warning(':: Failed');
             this.loader.idle();
 
           }

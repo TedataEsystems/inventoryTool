@@ -17,21 +17,23 @@ export class LoadingInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
-
-
     if (request.method === 'GET' ) {
       return next.handle(request);
-     
+
     }
     // if (request.method === 'POST' ) {
     //   return next.handle(request);
     // }
 
-    this.loader.busy();
+   this.loader.busy();
     return next.handle(request).pipe(
       finalize(() => {
-        this.loader.idle();
+        setTimeout(()=>{
+          this.loader.idle();
+        },2000)
       })
     );
+
+
 }
 }

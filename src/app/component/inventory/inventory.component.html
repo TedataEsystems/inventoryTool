@@ -619,8 +619,12 @@
   <mat-cell *matCellDef="let element" data-label=" Acceptance"> {{element.acceptanceName}} </mat-cell>
 </ng-container>
 <ng-container matColumnDef="LocationName">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>   Location </mat-header-cell>
+  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> المخزن </mat-header-cell>
   <mat-cell *matCellDef="let element" data-label="Location"> {{element.locationName}} </mat-cell>
+</ng-container>
+<ng-container matColumnDef="comeFrom">
+  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> وارد من </mat-header-cell>
+  <mat-cell *matCellDef="let element" data-label="comeFrom"> {{element.locationComeFrom}} </mat-cell>
 </ng-container>
 
     <ng-container matColumnDef="CreationDate">

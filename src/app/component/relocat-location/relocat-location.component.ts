@@ -22,18 +22,16 @@ export class RelocatLocationComponent implements OnInit {
     ids: [],
     locationTo: ''
   };
-  locations: LocationName[] = []
+  locations: any[] = []
   constructor(public dialogRef: MatDialogRef<RelocatLocationComponent>, private toastr: ToastrService,
-    @Inject(MAT_DIALOG_DATA) public data: any, private InventoryCapacity: InventoryCapacityService, private inventoryService: InventoryService) { }
+    @Inject(MAT_DIALOG_DATA) public data: any, private inventoryService: InventoryService) { }
 
   ngOnInit(): void {
     this.ids = this.data;
     console.log(this.ids, "selected ids")
-    this.InventoryCapacity.GetLocationsLists().subscribe((res) => {
+    this.inventoryService.GetLocationsLists().subscribe((res) => {
       if (res.status == true) {
-        console.log(res, "result of locations")
-        console.log(res.inventoryLocations, "inv location")
-        this.locations = res.inventoryLocations;
+        this.locations = res.locations;
       } else {
         this.toastr.warning('Failed');
       }
@@ -51,13 +49,30 @@ export class RelocatLocationComponent implements OnInit {
       this.updatedLocations.locationTo = this.form.value.locationTo;
       console.log(this.updatedLocations, "updatedLoc in submit")
       this.inventoryService.UpdateInventoyLocations(this.updatedLocations).subscribe(res => {
-        console.log(res)
+        console.log(res,"................................")
         if (res.status == true) {
-          this.toastr.success(':added successfully');
-          this.onClose();
+         // this.toastr.success(':added successfully');
+         if(res.data !="")
+         {
+          console.log("tests", res.data);
+          this.toastr.success(res.data);
+          
+         }
+         if(res.error !="")
+         {
+          console.log("testtttt", res.error);
+          this.toastr.error(res.error)
+         }
+         this.onClose()
+        
         }
         else {
+         console.log("tests", res);
           this.toastr.error(res.error);
+          
+         
+            
+         
         }
       }
       );

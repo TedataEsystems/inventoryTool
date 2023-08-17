@@ -6,11 +6,12 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { ReceviedType } from 'src/app/Model/recevied-type';
 import { TypeStatus } from 'src/app/Model/type-status';
 import { DeleteService } from 'src/app/shared/service/delete.service';
 import { LoaderService } from 'src/app/shared/service/loader.service';
-import { NotificationService } from 'src/app/shared/service/notification.service';
+
 import { ReceviedTypeService } from 'src/app/shared/service/recevied-type.service';
 
 
@@ -48,7 +49,7 @@ export class ReceviedTypeComponent implements OnInit {
   editUsr: any;
   editdisabled: boolean = false;
   constructor(private titleService: Title
-    , private notser: NotificationService, private router: Router, private loader: LoaderService,private route: ActivatedRoute, private ReceviedTypeserv: ReceviedTypeService, private dailogService: DeleteService
+    , private toastr: ToastrService, private router: Router, private loader: LoaderService,private route: ActivatedRoute, private ReceviedTypeserv: ReceviedTypeService, private dailogService: DeleteService
   ) {
     this.titleService.setTitle('ReceviedType');
 
@@ -164,7 +165,7 @@ export class ReceviedTypeComponent implements OnInit {
           setTimeout(() => {
             this.loader.idle();
           }, 1500)
-          this.notser.success(":: add successfully");
+          this.toastr.success(":: add successfully");
           this.LoadCompanyName();
           this.form['controls']['Name'].setValue('');
           this.form['controls']['Id'].setValue(0);
@@ -176,7 +177,7 @@ export class ReceviedTypeComponent implements OnInit {
             setTimeout(() => {
               this.loader.idle();
             }, 0)
-            this.notser.warn(":: failed");
+            this.toastr.warning(":: failed");
           }
         );
       }//if
@@ -186,7 +187,7 @@ export class ReceviedTypeComponent implements OnInit {
           setTimeout(() => {
             this.loader.idle();
           }, 1500)
-          this.notser.success(":: update successfully");
+          this.toastr.success(":: update successfully");
           this.LoadCompanyName();
           this.form['controls']['Name'].setValue('');
           this.form['controls']['Id'].setValue(0);
@@ -196,7 +197,7 @@ export class ReceviedTypeComponent implements OnInit {
             setTimeout(() => {
               this.loader.idle();
             }, 0)
-            this.notser.warn(":: failed");
+            this.toastr.warning(":: failed");
           }
         )
       }//else
@@ -239,7 +240,7 @@ export class ReceviedTypeComponent implements OnInit {
         setTimeout(() => {
           this.loader.idle();
         }, 1500)
-        this.notser.success(":: update successfully");
+        this.toastr.success(":: update successfully");
         this.LoadCompanyName();
         this.form['controls']['Name'].setValue('');
         this.form['controls']['Id'].setValue(0);
@@ -251,7 +252,7 @@ export class ReceviedTypeComponent implements OnInit {
         setTimeout(() => {
           this.loader.idle();
         }, 0)
-        this.notser.warn(":: failed");
+        this.toastr.warning(":: failed");
       }
 
     })
@@ -298,9 +299,9 @@ export class ReceviedTypeComponent implements OnInit {
         this.dataSource.paginator = this.paginator as MatPaginator;
         this.loader.idle();
       }
-      else this.notser.success(":: add successfully");
+      else this.toastr.success(":: add successfully");
     }, err => {
-      this.notser.warn(":: failed");
+      this.toastr.warning(":: failed");
       this.loader.idle();
 
     })
@@ -386,15 +387,15 @@ export class ReceviedTypeComponent implements OnInit {
       if (res) {
         this.ReceviedTypeserv.DeleteReceviedType(r.id).subscribe(
           rs => {
-            this.notser.success(':: successfully Deleted');
+            this.toastr.success(':: successfully Deleted');
             this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
             //  this.getRequestdata(1, 100, searchData, this.sortColumnDef, "asc");
           },
-          error => { this.notser.warn(':: An Error Occured') }
+          error => { this.toastr.warning(':: An Error Occured') }
         );
       }
       else {
-       // this.notser.warn(':: An Error Occured')
+       // this.toastr.warning(':: An Error Occured')
       }
     });
   }

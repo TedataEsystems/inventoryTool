@@ -5,9 +5,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { ReceivedStatusList } from 'src/app/Model/received-status-list';
 import { DeleteService } from 'src/app/shared/service/delete.service';
-import { NotificationService } from 'src/app/shared/service/notification.service';
+
 import { ReceviedStatusService } from 'src/app/shared/service/recevied-status.service';
 
 @Component({
@@ -45,7 +46,7 @@ export class IncomingComponent implements OnInit {
   editUsr: any;
   editdisabled: boolean = false;
   constructor(private titleService: Title
-    , private notser: NotificationService, private router: Router, private route: ActivatedRoute, private RecievedStatusServ: ReceviedStatusService, private dailogService: DeleteService
+    , private toastr: ToastrService, private router: Router, private route: ActivatedRoute, private RecievedStatusServ: ReceviedStatusService, private dailogService: DeleteService
   ) {
     this.titleService.setTitle('Recieved');
 
@@ -79,7 +80,7 @@ export class IncomingComponent implements OnInit {
   }
 
   getRequestdata(pageNum: number, pageSize: number, search: string, sortColumn: string, sortDir: string) {
-    
+
     if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
     {
       this.router.navigateByUrl('/login');
@@ -92,16 +93,16 @@ export class IncomingComponent implements OnInit {
       this.dataSource = new MatTableDataSource<any>(this.receviedStatusList);
       this.dataSource._updateChangeSubscription();
       this.dataSource.paginator = this.paginator as MatPaginator;
-    
-     
-     
+
+
+
       switch (this.receviedStatusList[0].id||this.receviedStatusList[1].id) {
         case (1||2):
-          this.iid='n';       
+          this.iid='n';
         break;
         default:
           this.iid='d';
-        break;   
+        break;
       }
     })
     setTimeout(() => this.loader = false, 2000);
@@ -113,7 +114,7 @@ export class IncomingComponent implements OnInit {
       this.router.navigateByUrl('/login');
     }
     else{
-     
+
     this.editUsr = 0;
     this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
   }
@@ -147,7 +148,7 @@ export class IncomingComponent implements OnInit {
   }
   isDisable = false;
   onCreateUpdate() {
-    
+
     this.isDisable = true;
     this.Recevied.Name = this.form.value.Name;
     this.Recevied.Id = this.form.value.Id;
@@ -160,14 +161,14 @@ export class IncomingComponent implements OnInit {
     }
 
     else {
-      
+
       if (this.form.value.Id == 0 || this.form.value.Id == '' ) {
         this.isDisable = true;
         this.RecievedStatusServ.AddReceviedStatus(this.Recevied).subscribe(res => {
           setTimeout(() => {
             this.loader = false;
           }, 1500)
-          this.notser.success(":: add successfully");
+          this.toastr.success(":: add successfully");
           this.LoadCompanyName();
           this.form['controls']['Name'].setValue('');
           this.form['controls']['Id'].setValue(0);
@@ -179,7 +180,7 @@ export class IncomingComponent implements OnInit {
             setTimeout(() => {
               this.loader = false;
             }, 0)
-            this.notser.warn(":: failed");
+            this.toastr.warning(":: failed");
           }
         );
       }//if
@@ -189,7 +190,7 @@ export class IncomingComponent implements OnInit {
           setTimeout(() => {
             this.loader = false;
           }, 1500)
-          this.notser.success(":: update successfully");
+          this.toastr.success(":: update successfully");
           this.LoadCompanyName();
           this.form['controls']['Name'].setValue('');
           this.form['controls']['Id'].setValue(0);
@@ -199,15 +200,15 @@ export class IncomingComponent implements OnInit {
             setTimeout(() => {
               this.loader = false;
             }, 0)
-            this.notser.warn(":: failed");
+            this.toastr.warning(":: failed");
           }
         )
       }//else
-  
+
   }
     this.isShowDiv = false;
-  }//end of 
-  
+  }//end of
+
   editROw(r: any) {
     if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
     {
@@ -220,14 +221,14 @@ export class IncomingComponent implements OnInit {
   }
 
   cancelEdit() {
-    
+
     this.editdisabled = false;
     this.isNameUpdatedRepeated = false;
     this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
   }
 
   updateEdit(row: any) {
-  
+
     this.loader = true;
     let RecievedStatusEdit: ReceivedStatusList =
     {
@@ -242,7 +243,7 @@ export class IncomingComponent implements OnInit {
         setTimeout(() => {
           this.loader = false;
         }, 1500)
-        this.notser.success(":: update successfully");
+        this.toastr.success(":: update successfully");
         this.LoadCompanyName();
         this.form['controls']['Name'].setValue('');
         this.form['controls']['Id'].setValue(0);
@@ -254,7 +255,7 @@ export class IncomingComponent implements OnInit {
         setTimeout(() => {
           this.loader = false;
         }, 0)
-        this.notser.warn(":: failed");
+        this.toastr.warning(":: failed");
       }
 
     })
@@ -301,9 +302,9 @@ export class IncomingComponent implements OnInit {
         this.dataSource.paginator = this.paginator as MatPaginator;
         this.loader = false;
       }
-      else this.notser.success(":: add successfully");
+      else this.toastr.success(":: add successfully");
     }, err => {
-      this.notser.warn(":: failed");
+      this.toastr.warning(":: failed");
       this.loader = false;
 
     })
@@ -386,15 +387,15 @@ export class IncomingComponent implements OnInit {
       if (res) {
         this.RecievedStatusServ.DeleteReceviedStatus(r.id).subscribe(
           rs => {
-            this.notser.success(':: successfully Deleted');
+            this.toastr.success(':: successfully Deleted');
             this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
             //  this.getRequestdata(1, 100, searchData, this.sortColumnDef, "asc");
           },
-          error => { this.notser.warn(':: An Error Occured') }
+          error => { this.toastr.warning(':: An Error Occured') }
         );
       }
       else {
-       // this.notser.warn(':: An Error Occured')
+       // this.toastr.warning(':: An Error Occured')
       }
     });
   }
@@ -412,7 +413,7 @@ export class IncomingComponent implements OnInit {
       // this.form['controls']['id'].setValue(0);
 
     }
-   
+
   }
 
 }

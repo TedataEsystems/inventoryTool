@@ -27,13 +27,13 @@ import { RelocatLocationComponent } from './component/relocat-location/relocat-l
     AppComponent,
     //RelocatLocationComponent,
     //TeamComponent,
-  
+
    // CategoryComponent,
     //ReceviedTypeComponent,
     //CompanyNameComponent,
    // LocationComponent,
    // AcceptanceComponent,
-   
+
 
 
 
@@ -53,7 +53,7 @@ import { RelocatLocationComponent } from './component/relocat-location/relocat-l
     NgxSpinnerModule,
     ToastrModule.forRoot({
       timeOut: 3000,
-      positionClass: 'toast-top-right',
+      positionClass: 'toast-bottom-right',
       preventDuplicates: true,
     }),
   ],
