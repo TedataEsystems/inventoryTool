@@ -16,13 +16,18 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
-         
+<<<<<<< HEAD
+=======
+
+>>>>>>> f9f5444ca725d9b502becacd84f92c9dd3e21b6c
           "options": {
             "outputPath": "dist/PscSystem",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
+            "allowedCommonJsDependencies": ["chart.js"],
             "tsConfig": "tsconfig.app.json",
+            "allowedCommonJsDependencies": ["chart.js"],
             "aot": true,
             "assets": [
               "src/favicon.ico",
@@ -45,12 +50,13 @@
                 }
               ],
               "optimization": true,
+             
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
-              "buildOptimizer": true,
+              "buildOptimizer": false,
               "budgets": [
                 {
                   "type": "initial",
@@ -66,16 +72,18 @@
             }
           }
         },
-       
+
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "PscSystem:build"
+
           },
           "configurations": {
             "production": {
               "browserTarget": "PscSystem:build:production"
             }
+           
           }
         },
         "extract-i18n": {
