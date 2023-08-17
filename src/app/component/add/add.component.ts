@@ -73,7 +73,7 @@ export class AddComponent implements OnInit {
 
 
     // this.dialogTitle = this.data.dialogTitle;
-    //console.log("rowOnInt",this.data);
+    console.log("rowOnInt",this.data);
 
     if (this.data.dialogTitle !== "اضافة جديد") {
       this.dialogTitle = 'تعديل';
