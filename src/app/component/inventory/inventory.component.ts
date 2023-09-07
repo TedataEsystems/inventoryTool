@@ -387,6 +387,7 @@ export class InventoryComponent implements OnInit {
 
   @Input() param = 'file';
   @ViewChild('LIST') template!: TemplateRef<any>;
+  @ViewChild('LISTWithLocation') templateWithLocation!: TemplateRef<any>;
   @ViewChild('LISTF') templateF!: TemplateRef<any>;
   @ViewChild('fileInput') fileInput?: ElementRef;
   @ViewChild('Msg') Msg!: TemplateRef<any>;
@@ -464,6 +465,18 @@ export class InventoryComponent implements OnInit {
       });
     }
   }
+  openBottomSheetWithLocation() {
+
+    if (localStorage.getItem("userName") == "" || localStorage.getItem("userName") == undefined || localStorage.getItem("userName") == null) {
+      this.router.navigateByUrl('/login');
+    }
+    else {
+      this._bottomSheet.open(this.templateWithLocation, {
+        panelClass: 'botttom-dialog-container',
+        disableClose: true
+      });
+    }
+  }
 
   openBottomSheetMsg() {
     this._bottomSheet.open(this.Msg, {
@@ -512,7 +525,45 @@ export class InventoryComponent implements OnInit {
 
 
   }
+  upLoadFWithLocation()
+  {
+debugger;
+     const fd = new FormData();
+     fd.append(this.param, this.fileuploaded);
 
+     this.InventoryServ.importExcelFileWithLocation(fd).subscribe(res => {
+       if (res.status == true) {
+         if (this.service.formSearch.value == '') {
+           this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+         } else {
+           this.AdvancedSearch();
+         }
+
+         this.fileAttr = 'Choose File';
+         this.resetfile();
+         this._bottomSheet.dismiss();
+         this.openBottomSheetMsg();
+         this.htmlToAdd = res.data+res.success
+       }
+       else {
+         this.openBottomSheetMsg();
+         if (this.service.formSearch.value == '') {
+           this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+         } else {
+           this.AdvancedSearch();
+         }
+
+         this.fileAttr = 'Choose File';
+         this.resetfile();
+         this.htmlToAdd = res.error;
+       }
+     }
+       , error => {
+         this.toastr.warning("!! Fail")
+         this.resetfile();
+       }
+     );
+  }
   ExportTOEmptyExcel() {
     //debugger
     if (localStorage.getItem("userName") == "" || localStorage.getItem("userName") == undefined || localStorage.getItem("userName") == null) {
@@ -1265,5 +1316,23 @@ export class InventoryComponent implements OnInit {
       .subscribe((result) => {
         this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
       });
+  }
+
+  ExportTOEmptyExcelWithLocation()
+  {
+    debugger;
+    if (localStorage.getItem("userName") == "" || localStorage.getItem("userName") == undefined || localStorage.getItem("userName") == null) {
+      this.router.navigateByUrl('/login');
+    }
+    else {
+      this.InventoryServ.ExportEmptyExcelWithLocation().subscribe(res => {
+        const blob = new Blob([res], { type: 'application/vnd.ms.excel' });
+        const file = new File([blob], 'Inventory' + Date.now() + '.xlsx', { type: 'application/vnd.ms.excel' });
+        saveAs(file, 'Inventory' + Date.now() + '.xlsx')
+
+      }, err => {
+        this.toastr.warning("! Fail")
+      });
+    }
   }
 }

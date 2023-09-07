@@ -8,19 +8,19 @@
 
         </mat-panel-title>
         <img src="../../../assets/image/ex.png" class="ml-3" (click)="ExportExitPermitExcel($event)" height="40px" width="40px">
-      
+
       </mat-expansion-panel-header>
       <mat-divider></mat-divider>
       <div class="text-right w-100 pr-3 mt-2">
-      <button mat-icon-button  class="text-success mx-1 " (click)="SaveFavoriteSearch()"  type="button" matTooltip="حفظ نتيجة البحث"><mat-icon class="size">save</mat-icon></button> 
-      <button mat-icon-button class="text-warning " (click)="GetFavoriteSearch()"  type="button" matTooltip="استرجاع نتيجة البحث" ><mat-icon class="size">refresh</mat-icon></button> 
+      <button mat-icon-button  class="text-success mx-1 " (click)="SaveFavoriteSearch()"  type="button" matTooltip="حفظ نتيجة البحث"><mat-icon class="size">save</mat-icon></button>
+      <button mat-icon-button class="text-warning " (click)="GetFavoriteSearch()"  type="button" matTooltip="استرجاع نتيجة البحث" ><mat-icon class="size">refresh</mat-icon></button>
     </div>
       <form [formGroup]="service.formSearch" class="form-normal" (submit)="AdvancedSearch()">
       <mat-grid-list cols="4" rowHeight="400px">
         <mat-grid-tile>
 
       <div class="controles-container">
-       
+
         <mat-form-field appearance="fill" class="serch">
           <mat-label> التعليق</mat-label>
           <input matInput formControlName="Comment" >
@@ -37,7 +37,7 @@
         <mat-label>رقم الاوردر</mat-label>
         <input matInput formControlName="OrderNumber" type="number">
       </mat-form-field>
-      
+
       <mat-form-field appearance="fill" class="serch">
         <mat-label> ReorderingPoint</mat-label>
         <input matInput formControlName="ReorderingPoint" type="number">
@@ -51,16 +51,16 @@
       <mat-grid-tile>
 
         <div class="controles-container">
-       
-         
-    
+
+
+
           <mat-form-field appearance="fill" class="serch">
             <mat-label> PR</mat-label>
             <input matInput formControlName="BR" type="number">
           </mat-form-field>
           <mat-form-field appearance="fill" class="serch">
             <mat-label> ItemCode</mat-label>
-            
+
             <input matInput formControlName="ItemCode" >
           </mat-form-field>
           <mat-form-field appearance="fill"  class="serch">
@@ -79,7 +79,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-       
+
           <mat-form-field appearance="fill" class="serch">
             <mat-select formControlName="Status" placeholder=" *  (--اختر--) الحالة"  >
               <!-- <mat-option>-- Please select --</mat-option> -->
@@ -94,13 +94,13 @@
 
           <div  class="hid " >
             <input   matInput >
-          </div> 
+          </div>
           </div>
           </mat-grid-tile>
       <mat-grid-tile>
 
         <div class="controles-container">
-       
+
           <mat-form-field appearance="fill" class="serch">
             <mat-select [multiple]="true"  appendTo="body" formControlName="ReceviedStatusId" placeholder=" *حالة الوارد  (--اختر--) "  >
               <!-- <mat-option>-- Please select --</mat-option> -->
@@ -110,7 +110,7 @@
             </mat-select>
           </mat-form-field>
 
-       
+
 
           <mat-form-field appearance="fill" class="serch">
             <mat-select [multiple]="true"  appendTo="body" formControlName="OutgoingStatusId" placeholder=" *حالة المنصرف  (--اختر--) "  >
@@ -128,23 +128,23 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-        
+
           <mat-form-field appearance="fill" class="serch">
-            <mat-select [multiple]="true"  appendTo="body"   formControlName="TypeStatusId" placeholder=" *نوع الجهاز  (--اختر--) "  > 
+            <mat-select [multiple]="true"  appendTo="body"   formControlName="TypeStatusId" placeholder=" *نوع الجهاز  (--اختر--) "  >
               <!-- <mat-option>-- Please select --</mat-option> -->
               <input type="text" matInput class="p-2 inputFilter"
-             
+
               placeholder="Search by name..." #typeStatusSearch (keyup)="ontypeNameInputChange()" (keydown)="$event.stopPropagation()" >
-              
+
               <mat-option  *ngFor="let typeStatus of TypeStatusList"   [value]="typeStatus.id">
                 {{typeStatus.name}}
-              </mat-option> 
-          
-            
-           </mat-select> 
+              </mat-option>
+
+
+           </mat-select>
           </mat-form-field>
-        
-        
+
+
 
 
 
@@ -159,14 +159,14 @@
           <div class="hid">
             <input   matInput >
           </div>
-         
+
 
   </div>
   </mat-grid-tile>
   <mat-grid-tile>
 
     <div class="controles-container">
-    
+
       <mat-form-field appearance="fill" class="serch">
         <mat-select [multiple]="true"  appendTo="body" formControlName="CompanyId" placeholder=" *  (--اختر--) اسم الشركة"  >
           <!-- <mat-option>-- Please select --</mat-option> -->
@@ -195,7 +195,7 @@
       </mat-form-field>
 
 
-      <mat-form-field appearance="fill" class="w-50 serch" >  
+      <mat-form-field appearance="fill" class="w-50 serch" >
         <!-- [(ngModel)]="IntialValCreateBy"   [ngModelOptions]="{standalone: true}" -->
         <mat-select  formControlName="ActionType" placeholder="--اختر --"   (selectionChange)="selectedValue($event)" >
           <mat-option value="CreatedBy" >اضافة </mat-option>
@@ -234,12 +234,12 @@
 
         </mat-select>
        </mat-form-field>
-      
+
       <div [hidden]="!appear" class="apear">
         <div class="w-100 d-flex" *ngIf="dateType==3">
 
           <mat-form-field appearance="fill" class="w-50 serch">
-            
+
               <input [ngxMatDatetimePicker]="CreatedDateFrom"  formControlName="CreatedDateFrom" matInput
               placeholder="من" readonly>
             <mat-datepicker-toggle matSuffix [for]="$any(CreatedDateFrom)"></mat-datepicker-toggle>
@@ -248,7 +248,7 @@
             </mat-form-field>
 
           <mat-form-field appearance="fill" class="w-50  serch" style="border-right:5px solid #fff">
-             
+
               <input [ngxMatDatetimePicker]="CreatedDateTo"  formControlName="CreatedDateTo" matInput
               placeholder="الي" [min]="service.formSearch.controls.CreatedDateFrom?.value" readonly>
             <mat-datepicker-toggle matSuffix [for]="$any(CreatedDateTo)"></mat-datepicker-toggle>
@@ -260,7 +260,7 @@
       <div class="w-100 d-flex" *ngIf="dateType==1">
 
         <mat-form-field appearance="fill" class="w-50 serch">
-          
+
             <input [ngxMatDatetimePicker]="ReceivedDateFrom"  formControlName="ReceivedDateFrom" matInput
               placeholder="من" readonly>
             <mat-datepicker-toggle matSuffix [for]="$any(ReceivedDateFrom)"></mat-datepicker-toggle>
@@ -281,7 +281,7 @@
 
       <div class="w-100 d-flex" *ngIf="dateType==4">
       <mat-form-field appearance="fill" class="w-50 serch">
-         
+
           <input [ngxMatDatetimePicker]="UpdatedDateFrom"  formControlName="UpdatedDateFrom" matInput
           placeholder="من" readonly>
         <mat-datepicker-toggle matSuffix [for]="$any(UpdatedDateFrom)"></mat-datepicker-toggle>
@@ -289,7 +289,7 @@
         </ngx-mat-datetime-picker>
         </mat-form-field>
       <mat-form-field appearance="fill" class="w-50 serch"  style="border-right:5px solid #fff">
-      
+
           <input [ngxMatDatetimePicker]="UpdatedDateTo"  formControlName="UpdatedDateTo" matInput
           placeholder="الي" [min]="service.formSearch.controls.UpdatedDateFrom?.value" readonly>
         <mat-datepicker-toggle matSuffix [for]="$any(UpdatedDateTo)"></mat-datepicker-toggle>
@@ -302,7 +302,7 @@
 
       <div class="w-100 d-flex" *ngIf="dateType==2">
         <mat-form-field appearance="fill" class="w-50 serch">
-           
+
             <input [ngxMatDatetimePicker]="ExpriyDateFrom"  formControlName="ExpriyDateFrom" matInput
               placeholder="من" readonly>
             <mat-datepicker-toggle matSuffix [for]="$any(ExpriyDateFrom)"></mat-datepicker-toggle>
@@ -310,7 +310,7 @@
             </ngx-mat-datetime-picker>
           </mat-form-field>
         <mat-form-field appearance="fill" class="w-50  serch" style="border-right:5px solid #fff">
-           
+
             <input [ngxMatDatetimePicker]="ExpriyDateTo"  formControlName="ExpriyDateTo" matInput
             placeholder="الى" [min]="service.formSearch.controls.ExpriyDateFrom?.value" readonly>
           <mat-datepicker-toggle matSuffix [for]="$any(ExpriyDateTo)"></mat-datepicker-toggle>
@@ -324,11 +324,11 @@
         <input   matInput >
       </div>
 
-   
-<!--    
+
+<!--
       <div class="d-flex w-100 mb-2">
         <mat-form-field appearance="fill" class="serch w-50">
-           
+
             <mat-select  placeholder="--اختر --" (selectionChange)="selectedValue($event)" [(ngModel)]="IntialValCreateBy"   [ngModelOptions]="{standalone: true}">
               <mat-option value="CreatedBy" >اضافة </mat-option>
               <mat-option value="UpdatedBy">
@@ -346,21 +346,21 @@
             <input matInput formControlName="UpdatedBy" >
           </mat-form-field>
           </div> -->
-       
+
 
 
       </div>
       </mat-grid-tile>
 
   </mat-grid-list>
-  
 
-    
+
+
   <div class="w-100 justify-content-end btn-group   pl-3" style="margin-top:20px;" >
 
-    <!-- <div class="w-50 text-right">  
-      <button mat-icon-button  class="btn-success  mx-1  " (click)="SaveFavoriteSearch()"  type="button" matTooltip="حفظ نتيجة البحث"><mat-icon>save</mat-icon></button> 
-      <button mat-icon-button class="btn-warning" (click)="GetFavoriteSearch()"  type="button" matTooltip="استرجاع نتيجة البحث" ><mat-icon>refresh</mat-icon></button> 
+    <!-- <div class="w-50 text-right">
+      <button mat-icon-button  class="btn-success  mx-1  " (click)="SaveFavoriteSearch()"  type="button" matTooltip="حفظ نتيجة البحث"><mat-icon>save</mat-icon></button>
+      <button mat-icon-button class="btn-warning" (click)="GetFavoriteSearch()"  type="button" matTooltip="استرجاع نتيجة البحث" ><mat-icon>refresh</mat-icon></button>
      </div>
       <div class="w-50">  -->
     <input mat-raised-button value="مسح " class="btn-danger text-center mx-1 ser " (click)="clearAdvancedSearch()" readonly >
@@ -369,8 +369,8 @@
      <!-- <button mat-raised-button class="ser " (click)="ExportExitPermitExcel()" color="primary" >طباعه</button> -->
    <!-- </div> -->
   </div>
-  
-   
+
+
 </form>
     </mat-expansion-panel>
 
@@ -404,13 +404,15 @@
       حالة المخزن
       </mat-card-title>
       <!-- <button mat-button class="opt" (click)="UpdateGroupToRecevied()">
-       
+
         <span class="text-primary mr-1"> تعديل الي وارد </span>
            </button>
            <button mat-button class="opt" (click)="UpdateGroupToOutgoing()">
-            
+
             <span class="text-primary mr-1"> تعديل الي منصرف </span>
                </button> -->
+
+
                <button mat-button class="opt mx-1" (click)="updateLocations()">
                 <mat-icon class="add-new ico" >swap_vertical_circle</mat-icon>
              <span class="txt mr-1"> تحويل الى</span>
@@ -441,7 +443,7 @@
       <mat-icon class="txt">arrow_upward</mat-icon>
 
   </button>
- 
+
 
 </mat-menu>
 
@@ -475,6 +477,18 @@
 
           </button>
 
+          <button mat-menu-item class="text-right"   (click)="openBottomSheetWithLocation()">
+
+            <span class=" mr-1">اضافه من اكسل الي مخزن اخر</span>
+            <mat-icon class="txt" >add</mat-icon>
+
+        </button>
+          <button mat-menu-item class="text-right"  (click)="ExportTOEmptyExcelWithLocation()">
+
+            <span class=" mr-1">تحميل ملف اكسل فارغ الي مخزن اخر</span>
+            <mat-icon class="txt">file_download</mat-icon>
+
+        </button>
         </mat-menu>
 
 
@@ -513,8 +527,8 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header> ID</mat-header-cell>
         <mat-cell *matCellDef="let element" data-label="رقم"> {{element.id}} </mat-cell>
     </ng-container>
-   
-    
+
+
   <ng-container matColumnDef="TypeStatusName">
     <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>   نوع الجهاز      </mat-header-cell>
     <mat-cell *matCellDef="let element" data-label="  نوع الجهاز "> {{element.typeStatusName}} </mat-cell>
@@ -560,7 +574,7 @@
       <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>الحالة</mat-header-cell>
       <mat-cell *matCellDef="let element" data-label=" الحالة"> {{element.status}} </mat-cell>
   </ng-container>
-    
+
 
     <ng-container matColumnDef="ReceivedDate">
         <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> تاريخ الوارد </mat-header-cell>
@@ -652,7 +666,7 @@
                 <mat-icon>edit</mat-icon>
             </button>
 
-           
+
         <button mat-button   class="btn btn-warning text-white mx-1"  matTooltip="Log Details" (click)="GetLog(row)">
           <mat-icon>history</mat-icon>
       </button>
@@ -661,7 +675,7 @@
         <mat-icon>delete_forever</mat-icon>
     </button>
         </mat-cell>
-   
+
 
     </ng-container>
 
@@ -674,13 +688,13 @@
         <button mat-button   class="btn btn-warning"  matTooltip="Log_Details" (click)="GetLog(row)">
           <mat-icon>history</mat-icon>
       </button>
-     
-         
+
+
       </mat-cell>
- 
+
 
   </ng-container> -->
-  
+
     <ng-container matColumnDef="noData">
         <mat-footer-cell *matFooterCellDef colspan="19">
           .... لا يوجد بيانات
@@ -755,6 +769,56 @@
   </div>
 
 
+
+
+
+
+
+  <div class="search-div" fxLayout="row">
+
+    <ng-template #LISTWithLocation>
+      <mat-toolbar>
+        <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="close()">
+          <mat-icon class="x">close</mat-icon>
+        </button>
+      </mat-toolbar>
+      <mat-form-field class="sheet">
+        <div class="field">
+          <mat-toolbar>
+
+            <input matInput [(ngModel)]="fileAttr" readonly name="name" />
+
+
+            <button mat-flat-button class="btn-color">
+              Browse file
+            </button>
+          </mat-toolbar>
+
+          <input type="file" #fileInput id="uploadFile" (change)="uploadFileEvtF($event)" name="uploadFile"
+            multiple="multiple" />
+        </div>
+      </mat-form-field>
+
+      <button mat-flat-button (click)="upLoadFWithLocation()" id="upload" class="d-block">
+        <mat-icon>cloud_upload</mat-icon> Upload
+      </button>
+    </ng-template>
+
+    <ng-template #Msg>
+      <mat-toolbar>
+        <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="closeMsg()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-toolbar>
+      <div  class="sheet">
+        <div class="data" [innerHtml]="htmlToAdd">
+
+        </div>
+      </div>
+    </ng-template>
+
+
+  </div>
 
 <ngx-spinner type="timer">
   <h5>Loading</h5>
