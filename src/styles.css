@@ -1250,3 +1250,7 @@ mat-footer-cell:first-of-type {
 .mat-option:hover{
   background-color: transparent !important;
 }
+.mat-menu-content:not(:empty) {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}

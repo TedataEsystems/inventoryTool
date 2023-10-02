@@ -22,9 +22,13 @@ import { RelocatLocationComponent } from './component/relocat-location/relocat-l
 
 
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
+
+
     //RelocatLocationComponent,
     //TeamComponent,
 

@@ -1,0 +1,208 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title> سعة المخزن </mat-card-title>
+
+    <button
+      mat-icon-button
+      class="opt text-success"
+      (click)="SaveFavoriteSearch()"
+      matTooltip="حفظ نتيجة البحث"
+    >
+      <!-- <mat-icon class="add-new ico" >add</mat-icon> -->
+      <mat-icon class="size">save</mat-icon>
+      <!-- <span class="txt mr-1">اضافة جديد</span> -->
+    </button>
+    <button
+      mat-icon-button
+      class="opt text-warning"
+      (click)="GetFavoriteSearch()"
+      matTooltip="استرجاع نتيجة البحث"
+    >
+      <!-- <mat-icon class="add-new ico" >add</mat-icon>
+     <span class="txt mr-1">اضافة جديد</span> -->
+      <mat-icon class="size">refresh</mat-icon>
+    </button>
+    <img
+      src="../../../assets/image/ex.png"
+      class="ml-3"
+      (click)="ExportExitPermitExcel($event)"
+      height="40px"
+      width="40px"
+    />
+
+    <!-- edit group -->
+
+    <!-- /end edit group -->
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <form [formGroup]="formSearch" class="form-normal" (submit)="Search()" dir="rtl">
+    <mat-grid-list cols="3" rowHeight="150px">
+      <mat-grid-tile>
+        <div class="controles-container">
+          <mat-form-field appearance="fill" class="serch">
+            <mat-select
+              [multiple]="true"
+              appendTo="body"
+              formControlName="LocationId"
+              placeholder=" *Location  (--اختر--) "
+            >
+              <!-- <mat-option>-- Please select --</mat-option> -->
+              <mat-option
+                *ngFor="let Location of LocationList"
+                [value]="Location.id"
+              >
+                {{ Location.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div class="controles-container">
+          <mat-form-field appearance="fill" class="serch">
+            <mat-select
+              [multiple]="true"
+              appendTo="body"
+              formControlName="TypeStatusId"
+              placeholder=" *نوع الجهاز  (--اختر--) "
+            >
+              <!-- <mat-option>-- Please select --</mat-option> -->
+              <input
+                type="text"
+                matInput
+                class="p-2 inputFilter"
+                placeholder="Search by name..."
+                #typeStatusSearch
+                (keyup)="ontypeNameInputChange()"
+                (keydown)="$event.stopPropagation()"
+              />
+
+              <mat-option
+                *ngFor="let typeStatus of TypeStatusList"
+                [value]="typeStatus.id"
+              >
+                {{ typeStatus.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div class="controles-container">
+          <button mat-raised-button class="ser" color="warn">بحث</button>
+          <input
+            mat-raised-button
+            value="مسح "
+            class="btn-danger text-center mx-1 ser"
+            (click)="clearAdvancedSearch()"
+            readonly
+          />
+
+
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+  <ng-template *ngIf="dataSource != null" #table>
+    <mat-divider></mat-divider>
+    <div class="search-div" fxLayout="row">
+      <mat-form-field class="search-form-field" floatLabel="never">
+        <input
+          matInput
+          [(ngModel)]="searchKey"
+          placeholder="بحث"
+          autocomplete="off"
+          (keyup)="applyFilter()"
+        />
+        <button
+          mat-button
+          matSuffix
+          mat-icon-button
+          aria-label="Clear"
+          *ngIf="searchKey"
+          (click)="onSearchClear()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+
+    <!-- <div *ngIf="dataSource==null;else table">
+
+<ngx-spinner type="timer">
+  <h5>Loading</h5>
+</ngx-spinner>
+</div> -->
+
+    <div class="example-container mat-elevation-z8">
+      <mat-table
+        [dataSource]="dataSource"
+        matSort
+        (matSortChange)="sortData($event)"
+        matSortActive="name"
+        matSortDirection="desc"
+        matSortDisableClear
+      >
+        <ng-container matColumnDef="Id">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            ID</mat-header-cell
+          >
+          <mat-cell *matCellDef="let element" data-label="رقم">
+            {{ element.id }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="DeviceType">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+            نوع الجهاز
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element" data-label="نوع الجهاز">
+            {{ element.deviceType }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Quantity">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+            Quantity</mat-header-cell
+          >
+          <mat-cell *matCellDef="let element" data-label=" Category ">
+            {{ element.quantity }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="LocationName">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+            المخزن
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element" data-label="Location">
+            {{ element.locationName }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="noData">
+          <mat-footer-cell *matFooterCellDef colspan="4">
+            .... لا يوجد بيانات
+          </mat-footer-cell>
+        </ng-container>
+
+        <mat-footer-row
+          *matFooterRowDef="['noData']"
+          [ngClass]="{
+            hide: !(dataSource.data.length == 0 && dataSource != null)
+          }"
+        ></mat-footer-row>
+        <mat-header-row
+          *matHeaderRowDef="displayedColumns; sticky: true"
+        ></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+      <!-- end test -->
+    </div>
+
+    <mat-paginator
+      [pageSizeOptions]="[10, 25, 50, 100]"
+      [pageSize]="10"
+      showFirstLastButtons
+    ></mat-paginator>
+  </ng-template>
+</mat-card>

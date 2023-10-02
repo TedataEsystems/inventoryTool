@@ -18,6 +18,7 @@ import { LocationComponent } from './component/setting/location/location.compone
 import { AcceptanceComponent } from './component/setting/acceptance/acceptance.component';
 import { TeamComponent } from './component/setting/team/team.component';
 import { InventoryCapacityComponent } from './component/setting/inventory-capacity/inventory-capacity.component';
+import { InventoryQuantityComponent } from './component/inventory-quantity/inventory-quantity.component';
 
 const routes: Routes = [
   {
@@ -45,46 +46,62 @@ const routes: Routes = [
       component:InventoryComponent,
       canActivate: [AuthGuardService]
     },
+
+    {
+      path:'inventoryQnt',
+      component:InventoryQuantityComponent,
+      canActivate: [AuthGuardService]
+    },
     {path:'Type',
-    component:TypeStatusComponent
+    component:TypeStatusComponent,
+    canActivate: [AuthGuardService]
 
     },
     {
       path:'incoming',
-      component:IncomingComponent
+      component:IncomingComponent,
+      canActivate: [AuthGuardService]
     },
     {
       path:'outgoing',
-      component:OutgoingComponent
+      component:OutgoingComponent,
+      canActivate: [AuthGuardService]
     },
-    
+
     {path:'Category',
-    component:CategoryComponent
+    component:CategoryComponent,
+    canActivate: [AuthGuardService]
 
     },
     {
       path:'ReceviedType',
-      component:ReceviedTypeComponent
+      component:ReceviedTypeComponent,
+      canActivate: [AuthGuardService]
     },
     {
       path:'CompanyName',
-      component:CompanyNameComponent
+      component:CompanyNameComponent,
+      canActivate: [AuthGuardService]
     },
     {
       path:'InventoryCapacity',
-      component:InventoryCapacityComponent
+      component:InventoryCapacityComponent,
+      canActivate: [AuthGuardService]
     },
     {
       path:'Location',
-      component:LocationComponent
+      component:LocationComponent,
+      canActivate: [AuthGuardService]
     },
     {
       path:'Acceptance',
-      component:AcceptanceComponent
+      component:AcceptanceComponent,
+      canActivate: [AuthGuardService]
     },
     {
       path:'Team',
-      component:TeamComponent
+      component:TeamComponent,
+      canActivate: [AuthGuardService]
     },
     {
       path:'**',

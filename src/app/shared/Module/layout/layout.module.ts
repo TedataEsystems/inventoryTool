@@ -38,6 +38,7 @@ import { TeamComponent } from 'src/app/component/setting/team/team.component';
 import { InventoryCapacityComponent } from 'src/app/component/setting/inventory-capacity/inventory-capacity.component';
 import { AddInventoyCapacityComponent } from 'src/app/component/add-inventoy-capacity/add-inventoy-capacity.component';
 import { RelocatLocationComponent } from 'src/app/component/relocat-location/relocat-location.component';
+import { InventoryQuantityComponent } from 'src/app/component/inventory-quantity/inventory-quantity.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { RelocatLocationComponent } from 'src/app/component/relocat-location/rel
     TeamComponent,
     InventoryCapacityComponent,
     AddInventoyCapacityComponent,
-    RelocatLocationComponent
+    RelocatLocationComponent,
+    InventoryQuantityComponent,
   ],
   imports: [
     CommonModule,
