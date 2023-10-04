@@ -88,36 +88,38 @@ export class InventoryQuantityComponent implements OnInit, AfterViewInit {
 
 
   }
+
   SaveFavoriteSearch() {
     this.loader.busy();
-   // this.inventorySearch.DeviceType = this.formSearch.value.DeviceType;
+  
+   this.inventorySearch.StoreId = this.formSearch.value.LocationId;
+   this.inventorySearch.DevicesIds=this.formSearch.value.DeviceIds;
 
-   // this.inventorySearch.LocationIDs = this.formSearch.value.LocationId;
+     this.InventoryQuantityServ.AddEditFavoriteSearchDevice(this.inventorySearch).subscribe(res => {
 
-    // this.FavoriteSearchServ.AddEditFavoriteSearch(this.inventorySearch).subscribe(res => {
+       this.toastr.success(':: Saved successfully');
 
-    //   this.toastr.success(':: Submitted successfully');
+      this.loader.idle();
+   }
 
-    //   this.loader.idle();
-    // }
-
-    // )
+    )
   }
   GetFavoriteSearch() {
-    // this.FavoriteSearchServ.GetFavoriteSearch().subscribe(
-    //   (res) => {
-    //     if (res.status) {
-    //       if (res.data.locationIDs != null) {
-    //         this.formSearch.controls['LocationId'].setValue(
-    //           res.data.locationIDs
-    //         );
-    //       }
-    //     }
-    //   },
-    //   (err) => {
-    //     this.toastr.warning('!fail');
-    //   }
-    // );
+
+    this.InventoryQuantityServ.GetFavoriteDeviceSearch().subscribe(
+      (res) => {
+        if (res.status) {       
+          this.formSearch.controls['LocationId'].setValue(
+            res.data.storeId
+          );                  
+            this.formSearch.controls['DeviceIds'].setValue( res.data.devicesIds);
+        
+        }
+      },
+      (err) => {
+        this.toastr.warning('!fail');
+      }
+    );
   }
 
 
@@ -202,52 +204,18 @@ console.log(this.formSearch.value.DeviceIds,"Ids");
     e.stopPropagation();
 
       let invSearch: InventoryQnt = <InventoryQnt>{};
+      this.inventorySearch.StoreId = this.formSearch.value.LocationId;
+      this.inventorySearch.DevicesIds=this.formSearch.value.DeviceIds;
+       this.InventoryQuantityServ.DownloadDataToExcel(this.inventorySearch).subscribe(res => {
+          const blob = new Blob([res], { type: 'application/vnd.ms.excel' });
+          const file = new File([blob], 'عدد_الاجهزة' + Date.now() + '.xlsx', { type: 'application/vnd.ms.excel' });
+          saveAs(file, 'عدد_الاجهزة' + Date.now() + '.xlsx');
+        }, err => {
 
-      //invSearch.DeviceType = this.formSearch.value.DeviceType == "" ? null : this.formSearch.value.DeviceType;
+          this.toastr.warning("! Fail")
 
-
-
-
-      // if (this.Ids.length == 0) {
-
-      //   invSearch.IDs == null;
-      // } else {
-
-      //   //console.log(this.Ids);
-      //   invSearch.IDs = this.Ids;
-      // }
-
-     // invSearch.LocationIDs = this.formSearch.value.LocationId == "" ? null : this.formSearch.value.LocationId;
-
-
-      // if (invSearch.LocationIDs == null &&invSearch.IDs == null &&  invSearch.DeviceType
-      // ) {
-      //   this.toastr.info('من فضلك اختار بعض العناصر ');
-      // }
-      // else {
-
-      //   // this.InventoryServ.ExportExitPermitExcel(invSearch).subscribe(res => {
-
-      //   //   const blob = new Blob([res], { type: 'application/vnd.ms.excel' });
-      //   //   const file = new File([blob], 'تصريح _الخروج' + Date.now() + '.xlsx', { type: 'application/vnd.ms.excel' });
-
-      //   //   saveAs(file, 'تصريح _الخروج' + Date.now() + '.xlsx');
-
-      //   //   this.selectedRows = false;
-
-      //   //   invSearch.IDs = [];
-      //   //   /////////////////////
-
-      //   //   this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
-      //   //   this.onSearchClear();
-      //   //   this.Ids = [];
-      //   //   this.Ids2 = [];
-      //   // }, err => {
-
-      //   //   this.toastr.warning("! Fail")
-
-      //   // });
-      // }
+        });
+      
     }
 
 

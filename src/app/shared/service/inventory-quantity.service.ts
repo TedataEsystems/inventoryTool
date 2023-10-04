@@ -35,5 +35,16 @@ export class InventoryQuantityService {
     return this.httpClient.post(`${environment.API_URL}api/DeviceCapacity/ExportExcel`,model,{responseType: 'blob',headers: this.headers});
   }
   
+  AddEditFavoriteSearchDevice(model: any): Observable<any> {
+    
+    return this.httpClient.post<any>(`${environment.API_URL}api/DeviceCapacity/AddEditFavoriteSearch`, model);
+  }
 
+  GetFavoriteDeviceSearch(): Observable<any>{
+   
+
+    return this.httpClient.get<any>(`${environment.API_URL}api/DeviceCapacity/GetFavoriteDeviceSearch`);
+      
+    
+  }
 }
