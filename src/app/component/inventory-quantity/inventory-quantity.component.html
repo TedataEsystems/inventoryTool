@@ -41,7 +41,7 @@
         <div class="controles-container">
           <mat-form-field appearance="fill" class="serch">
             <mat-select
-              [multiple]="true"
+             
               appendTo="body"
               formControlName="LocationId"
               placeholder=" *Location  (--اختر--) "
@@ -63,7 +63,7 @@
             <mat-select
               [multiple]="true"
               appendTo="body"
-              formControlName="TypeStatusId"
+              formControlName="DeviceIds"
               placeholder=" *نوع الجهاز  (--اختر--) "
             >
               <!-- <mat-option>-- Please select --</mat-option> -->
@@ -103,9 +103,9 @@
       </mat-grid-tile>
     </mat-grid-list>
   </form>
-  <ng-template *ngIf="dataSource != null" #table>
+  <div *ngIf="dataSource != null" #table>
     <mat-divider></mat-divider>
-    <div class="search-div" fxLayout="row">
+    <!-- <div class="search-div" fxLayout="row">
       <mat-form-field class="search-form-field" floatLabel="never">
         <input
           matInput
@@ -125,7 +125,7 @@
           <mat-icon>close</mat-icon>
         </button>
       </mat-form-field>
-    </div>
+    </div> -->
 
     <!-- <div *ngIf="dataSource==null;else table">
 
@@ -143,39 +143,40 @@
         matSortDirection="desc"
         matSortDisableClear
       >
-        <ng-container matColumnDef="Id">
+        <!-- <ng-container matColumnDef="Id">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
             ID</mat-header-cell
           >
           <mat-cell *matCellDef="let element" data-label="رقم">
             {{ element.id }}
           </mat-cell>
-        </ng-container>
+        </ng-container> -->
 
-        <ng-container matColumnDef="DeviceType">
+
+        <ng-container matColumnDef="DeviseName">
           <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
             نوع الجهاز
           </mat-header-cell>
           <mat-cell *matCellDef="let element" data-label="نوع الجهاز">
-            {{ element.deviceType }}
+            {{ element.deviseName }}
           </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="Quantity">
+        <ng-container matColumnDef="DeviceCount">
           <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
             العدد</mat-header-cell
           >
           <mat-cell *matCellDef="let element" data-label=" Category ">
-            {{ element.quantity }}
+            {{ element.deviceCount }}
           </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="LocationName">
+        <ng-container matColumnDef="Location">
           <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
             المخزن
           </mat-header-cell>
           <mat-cell *matCellDef="let element" data-label="Location">
-            {{ element.locationName }}
+            {{ element.location }}
           </mat-cell>
         </ng-container>
 
@@ -204,5 +205,5 @@
       [pageSize]="10"
       showFirstLastButtons
     ></mat-paginator>
-  </ng-template>
+  </div>
 </mat-card>

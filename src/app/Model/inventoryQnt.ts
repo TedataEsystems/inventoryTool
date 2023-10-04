@@ -1,7 +1,7 @@
 export interface InventoryQnt {
-  IDs? :Array<number>;
-  DeviceType :string;
-   LocationId? :number;
-   LocationIDs? :Array<number>;
+  DevicesIds? :Array<number>;
+ // DeviceType :string;
+ StoreId? :number;
+  // LocationIDs? :Array<number>;
 
 }

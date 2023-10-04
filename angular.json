@@ -66,7 +66,17 @@
                   "maximumError": "4kb"
                 }
               ]
+            },
+            
+            "development": { 
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
+            
           }
         },
 
@@ -79,7 +89,11 @@
           "configurations": {
             "production": {
               "browserTarget": "PscSystem:build:production"
-            }
+            },
+            "development": { 
+            "browserTarget": "PscSystem:build:development"
+          },
+          "defaultConfiguration": "development"
            
           }
         },
