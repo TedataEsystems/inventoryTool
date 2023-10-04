@@ -67,15 +67,8 @@
                 }
               ]
             },
-            
-            "development": { 
-              "buildOptimizer": false,
-              "optimization": false,
-              "vendorChunk": true,
-              "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true
-            }
+            "defaultConfiguration": ""
+        
             
           }
         },
@@ -89,11 +82,7 @@
           "configurations": {
             "production": {
               "browserTarget": "PscSystem:build:production"
-            },
-            "development": { 
-            "browserTarget": "PscSystem:build:development"
-          },
-          "defaultConfiguration": "development"
+            }
            
           }
         },
