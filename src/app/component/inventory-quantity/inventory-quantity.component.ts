@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { InventoryQnt } from 'src/app/Model/inventoryQnt';
 import { LoaderService } from 'src/app/shared/service/loader.service';
@@ -53,7 +53,7 @@ export class InventoryQuantityComponent implements OnInit, AfterViewInit {
 
   formSearch = this.fb.group({
     DeviceIds: [''],
-    LocationId: [''],
+    LocationId: ['', Validators.required]
   });
   ngOnInit(): void {
     this.InventoryServ.GettingLists().subscribe(res => {
@@ -113,7 +113,8 @@ export class InventoryQuantityComponent implements OnInit, AfterViewInit {
             res.data.storeId
           );                  
             this.formSearch.controls['DeviceIds'].setValue( res.data.devicesIds);
-        
+            
+          this.Search();
         }
       },
       (err) => {
@@ -125,18 +126,13 @@ export class InventoryQuantityComponent implements OnInit, AfterViewInit {
 
 
   Search() {
-
+if(this.formSearch.invalid) return;
    this.inventorySearch.StoreId = this.formSearch.value.LocationId;
 this.inventorySearch.DevicesIds=this.formSearch.value.DeviceIds;
-console.log(this.formSearch.value.LocationId,"location");
-console.log(this.formSearch.value.DeviceIds,"Ids");
    this.InventoryQuantityServ.GetInventoryQuantity(this.inventorySearch,1, 100, '', this.sortColumnDef, this.SortDirDef).subscribe(res=>{
-    console.log(res,"result");
   if(res.status==true){
   this.deviceList=res.data;
-  console.log(this.deviceList,"deviselist")
   this.dataSource = new MatTableDataSource<any>(this.deviceList);
-  console.log(this.dataSource,"Datasource");
   this.dataSource.paginator = this.paginator as MatPaginator;
      this.dataSource.sort = this.sort as MatSort;
      this.loader.idle();
