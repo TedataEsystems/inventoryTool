@@ -162,6 +162,12 @@ this.inventorySearch.DevicesIds=this.formSearch.value.DeviceIds;
     // this.Ids2 = [];
 
     this.formSearch.reset();
+  this.deviceList=[];
+  this.dataSource = new MatTableDataSource<any>(this.deviceList);
+  this.dataSource.paginator = this.paginator as MatPaginator;
+     this.dataSource.sort = this.sort as MatSort;
+     this.loader.idle();
+
     // this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
   }
 
