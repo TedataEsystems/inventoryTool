@@ -10,6 +10,8 @@ import { LoaderService } from 'src/app/shared/service/loader.service';
 import { LogsService } from 'src/app/shared/service/logs.service';
 import { EditComponent } from '../edit/edit.component';
 import { ToastrService } from 'ngx-toastr';
+import { LogsDetailsComponent } from '../logs-details/logs-details.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 @Component({
   selector: 'app-history-list',
   templateUrl: './history-list.component.html',
@@ -36,14 +38,14 @@ export class HistoryListComponent implements OnInit {
 
     @ViewChild(MatPaginator) paginator?: MatPaginator;
     @ViewChild(MatSort) sort?: MatSort;
-    displayedColumns: string[] = ['Id' ,'ElementId','Descirption',  'ActionType', 'UserName','CreationDate'];
+    displayedColumns: string[] = ['Id' ,'ElementId',  'ActionType', 'UserName','CreationDate','Descirption'];
     columnsToDisplay: string[] = this.displayedColumns.slice();
     dataSource = new MatTableDataSource(this.logsList);
     settingtype=''
 
 
-    constructor(private titleService:Title, private loader: LoaderService
-      ,private toastr:ToastrService,private router: Router,private route: ActivatedRoute, private LogsServ:LogsService
+    constructor(private titleService:Title, private loader: LoaderService,private dialog: MatDialog,
+      private toastr:ToastrService,private router: Router,private route: ActivatedRoute, private LogsServ:LogsService
       ) {
         this.titleService.setTitle('logs');
 
@@ -232,6 +234,20 @@ applyFilter(filterValue: Event) {
     this.dataSource.data.forEach((row: any) => {
       row.isExpanded = this.isTableExpanded;
     })
+  }
+
+
+  Details(row:any){
+    const dialogGonfig = new MatDialogConfig();
+    dialogGonfig.data = { data:row };
+    dialogGonfig.disableClose = true;
+    dialogGonfig.autoFocus = false;
+    dialogGonfig.width = "50%";
+    dialogGonfig.panelClass = 'modals-dialog';
+    this.dialog.open(LogsDetailsComponent, dialogGonfig).afterClosed().subscribe(() => {
+     this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+    });
+
   }
 
 /////////////////////

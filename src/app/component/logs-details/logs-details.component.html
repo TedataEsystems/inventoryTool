@@ -1,0 +1,29 @@
+<mat-toolbar  class="top" dir="rtl">
+  <span class="fill-remaining-space">التفاصيل</span>
+  <div class="w-100">
+    <button  class="btn-dialog-close" mat-button  tabIndex="-1" (click)="onClose()"><mat-icon>clear</mat-icon></button>
+  </div>
+
+</mat-toolbar>
+<div class="container">
+  <div class="row">
+
+    <mat-list role="list" class="col-md-12 row mt-5 pt-5" >
+      <mat-list-item  class="col-6 col-md-3" *ngFor="let item of items"role="listitem">{{item}}</mat-list-item>
+
+    </mat-list>
+
+
+
+  </div>
+
+</div>
+
+<mat-toolbar class="bottom">
+
+  <div class="button-row w-100 text-center">
+    <button mat-raised-button class="btn-success w-50" (click)="onClose()">اغلاق</button>
+
+  </div>
+
+</mat-toolbar>

@@ -385,7 +385,7 @@ export class InventoryComponent implements OnInit {
       this.getRequestdata(1, 100, '', sort.active, this.lastdir);
     }
   }
-
+ 
   @Input() param = 'file';
   @ViewChild('LIST') template!: TemplateRef<any>;
   @ViewChild('LISTWithLocation') templateWithLocation!: TemplateRef<any>;
