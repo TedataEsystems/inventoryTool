@@ -54,6 +54,9 @@
                 {{ Location.name }}
               </mat-option>
             </mat-select>
+            <mat-error *ngIf="formSearch.get('LocationId')?.errors?.required || formSearch.get('LocationId')?.touched">
+              LocationId is required.
+            </mat-error>
           </mat-form-field>
         </div>
       </mat-grid-tile>
