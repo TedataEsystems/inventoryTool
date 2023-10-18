@@ -19,6 +19,7 @@ import { AcceptanceComponent } from './component/setting/acceptance/acceptance.c
 import { TeamComponent } from './component/setting/team/team.component';
 import { InventoryCapacityComponent } from './component/setting/inventory-capacity/inventory-capacity.component';
 import { InventoryQuantityComponent } from './component/inventory-quantity/inventory-quantity.component';
+import { InvetoryLogsComponent } from './component/invetory-logs/invetory-logs.component';
 
 const routes: Routes = [
   {
@@ -44,6 +45,12 @@ const routes: Routes = [
     {
       path:'inventory',
       component:InventoryComponent,
+      canActivate: [AuthGuardService]
+    }
+    ,
+    {
+      path:'inventorylogs',
+      component:InvetoryLogsComponent,
       canActivate: [AuthGuardService]
     },
 

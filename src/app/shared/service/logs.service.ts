@@ -30,6 +30,21 @@ export class LogsService {
       })
     )
   }
+  getInventoryLogs(PageNumber :number , PageSize :number , searchValue:string ,sortcolumn:string,sortcolumndir:string){
+    let params = new HttpParams();
+    if(PageNumber !== null && PageSize !== null){
+      params = params.append('pageNumber' , PageNumber.toString());
+      params = params.append('pageSize' , PageSize.toString());
+      params = params.append('searchValue' , searchValue.toString());
+      params = params.append('sortcolumn' , sortcolumn.toString());
+      params = params.append('sortcolumndir' , sortcolumndir.toString());
+    }
+    return this.httpClient.get<any>(`${environment.API_URL}api/Logs/GetInventoryLogs`  , {observe:'response' , params}).pipe(
+      map(response => {
+         return response.body ;
+      })
+    )
+  }
 
 
   GetLogsById():Observable<any>
