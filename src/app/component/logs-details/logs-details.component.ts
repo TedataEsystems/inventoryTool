@@ -28,9 +28,9 @@ this.splitData();
   splitData(){
     var data=this.data.data
     console.log('data',data);
-    data=data.replace('تفاصيل..','');
-    data=data.replace('تفاصيل','');
-    this.items=data.split("-");
+    // data=data.replace('تفاصيل..','');
+    // data=data.replace('تفاصيل','');
+    this.items=data.split(" , ");
     // this.items=data;
     console.log('data after split',data);
 

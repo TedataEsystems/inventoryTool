@@ -5,10 +5,12 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Title } from '@angular/platform-browser';
 import { LoaderService } from '../../shared/service/loader.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { LogsService } from 'src/app/shared/service/logs.service';
+import { LogsDetailsComponent } from '../logs-details/logs-details.component';
 
 @Component({
   selector: 'app-invetory-logs',
@@ -43,15 +45,60 @@ export class InvetoryLogsComponent implements OnInit {
     public colname: string = 'Id';
     public coldir: string = 'desc';
     constructor(private titleService:Title, private loader: LoaderService,private dialog: MatDialog,
-      private toastr:ToastrService,private router: Router,private route: ActivatedRoute
+      private toastr:ToastrService,private router: Router,private route: ActivatedRoute, private LogsServ:LogsService
       ) {
         this.titleService.setTitle('سجلات المخزن');
 
     }
 
-  ngOnInit(): void {
+    ngOnInit(): void {
+      if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
+      {
+        this.router.navigateByUrl('/login');
+      }
+      else{
+        if(this.LogsServ.LogId !=0 && this.LogsServ.LogId !=null){
+  
+  
+              if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
+              {
+                this.router.navigateByUrl('/login');
+              }
+              else{
+                      this.LogsServ.GetLogsById().subscribe(res => {
+  
+                        this.logsList = res?.data;
+  
+                        this.dataSource = new MatTableDataSource<any>(this.logsList);
+                        this.dataSource._updateChangeSubscription();
+                        this.dataSource.paginator = this.paginator as MatPaginator;
+                        this.loader.idle();
+                        this.LogsServ.LogId=0;
+                      }
+                      )
+                }
+  
+  
+        }
+        else{
+  
+  
+      this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+      }
+    }
+    }
+  getRequestdata(pageNum: number, pageSize: number, search: string, sortColumn: string, sortDir: string) {
+    //debugger
+    this.loader.busy();
+    this.LogsServ.getInventoryLogs(pageNum, pageSize, search, sortColumn, sortDir).subscribe(response => {
+      this.logsList = response?.data;
+      this.logsList.length = response?.pagination.totalCount;
+      this.dataSource = new MatTableDataSource<any>(this.logsList);
+      this.dataSource._updateChangeSubscription();
+      this.dataSource.paginator = this.paginator as MatPaginator;
+    })
+    setTimeout(()=> this.loader.idle(),2000) ;
   }
-
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort as MatSort;
@@ -59,7 +106,7 @@ export class InvetoryLogsComponent implements OnInit {
   }
   onSearchClear() {
     this.searchKey = '';
-   /// this.getRequestdata(1, 10, this.searchKey, this.sortColumnDef, "desc");
+    this.getRequestdata(1, 10, this.searchKey, this.sortColumnDef, "desc");
 
   }
 
@@ -108,23 +155,23 @@ applyFilter(filterValue: Event) {
       this.router.navigateByUrl('/login');
     }
     else{
-      // this.LogsServ.getLogs(pageNum, pageSize, search, sortColumn, sortDir).subscribe(res => {
-      //   if (res.status == true) {
+      this.LogsServ.getInventoryLogs(pageNum, pageSize, search, sortColumn, sortDir).subscribe(res => {
+        if (res.status == true) {
 
-      //     this.logsList.length = cursize;
-      //     this.logsList.push(...res?.data);
-      //     this.logsList.length = res?.pagination.totalCount;
-      //     this.dataSource = new MatTableDataSource<any>(this.logsList);
-      //     this.dataSource._updateChangeSubscription();
-      //     this.dataSource.paginator = this.paginator as MatPaginator;
-      //     this.loader.idle();
-      //   }
-      //   else  this.toastr.success(":: add successfully");
-      // }, err => {
-      //   this.toastr.warning(":: failed");
-      //   this.loader.idle();
+          this.logsList.length = cursize;
+          this.logsList.push(...res?.data);
+          this.logsList.length = res?.pagination.totalCount;
+          this.dataSource = new MatTableDataSource<any>(this.logsList);
+          this.dataSource._updateChangeSubscription();
+          this.dataSource.paginator = this.paginator as MatPaginator;
+          this.loader.idle();
+        }
+        else  this.toastr.success(":: add successfully");
+      }, err => {
+        this.toastr.warning(":: failed");
+        this.loader.idle();
 
-      // })
+      })
 
 
     }
@@ -152,6 +199,18 @@ applyFilter(filterValue: Event) {
     var c = this.pageIn;
    // this.getRequestdata(1, 100, '', sort.active, this.lastdir);
   }
+
+  }
+  Details(row:any){
+    const dialogGonfig = new MatDialogConfig();
+    dialogGonfig.data = { data:row };
+    dialogGonfig.disableClose = true;
+    dialogGonfig.autoFocus = false;
+    dialogGonfig.width = "50%";
+    dialogGonfig.panelClass = 'modals-dialog';
+    this.dialog.open(LogsDetailsComponent, dialogGonfig).afterClosed().subscribe(() => {
+     this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+    });
 
   }
 
