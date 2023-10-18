@@ -30,7 +30,7 @@ this.splitData();
     console.log('data',data);
     data=data.replace('تفاصيل..','');
     data=data.replace('تفاصيل','');
-    this.items=data.split(",");
+    this.items=data.split("-");
     // this.items=data;
     console.log('data after split',data);
 
