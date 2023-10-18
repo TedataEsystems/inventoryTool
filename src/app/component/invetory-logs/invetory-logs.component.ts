@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { Logs } from '../Model/logs';
+import { Logs } from '../../Model/logs';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Title } from '@angular/platform-browser';
-import { LoaderService } from '../shared/service/loader.service';
+import { LoaderService } from '../../shared/service/loader.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -45,7 +45,7 @@ export class InvetoryLogsComponent implements OnInit {
     constructor(private titleService:Title, private loader: LoaderService,private dialog: MatDialog,
       private toastr:ToastrService,private router: Router,private route: ActivatedRoute
       ) {
-        this.titleService.setTitle('logs');
+        this.titleService.setTitle('سجلات المخزن');
 
     }
 
