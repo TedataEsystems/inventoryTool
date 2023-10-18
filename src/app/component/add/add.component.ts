@@ -56,7 +56,7 @@ export class AddComponent implements OnInit {
   selected = 0;
   @ViewChild('typeStatusSearch') typeStatusSearch!: ElementRef;
   constructor(public inventoryserv: InventoryService, private loader: LoaderService, public service: EditFormService,
-    public dialogRef: MatDialogRef<AddComponent>,  private toastr: ToastrService, @Inject(MAT_DIALOG_DATA) public data: any) {
+    public dialogRef: MatDialogRef<AddComponent>, private toastr: ToastrService, @Inject(MAT_DIALOG_DATA) public data: any) {
 
   }
 
@@ -73,7 +73,7 @@ export class AddComponent implements OnInit {
 
 
     // this.dialogTitle = this.data.dialogTitle;
-    console.log("rowOnInt",this.data);
+    console.log("rowOnInt", this.data);
 
     if (this.data.dialogTitle !== "اضافة جديد") {
       this.dialogTitle = 'تعديل';
@@ -237,8 +237,8 @@ export class AddComponent implements OnInit {
   onSubmit() {
     let inventory = {
       //M:this.service.form.value.M ,
+      id: this.service.form1.value.Id,
       CustomerName: this.service.form1.value.CustomerName,
-
       OrderNumber: this.service.form1.value.OrderNumber,
       ReorderingPoint: this.service.form1.value.ReorderingPoint,
       BR: this.service.form1.value.BR,
@@ -275,7 +275,6 @@ export class AddComponent implements OnInit {
 
     };
 
-
     if (inventory.CategoryId != 46 && inventory.CategoryId != 47 && inventory.CategoryId != 48 && inventory.CategoryId != 49) {
       if (inventory.SerielNumber == null || inventory.SerielNumber == '') {
         this.serialreq = 1;
@@ -296,31 +295,65 @@ export class AddComponent implements OnInit {
     if (this.data.dialogTitle == "اضافة جديد") {
 
 
-      inventory.CreatedBy = localStorage.getItem('userName') || '';
-      this.inventoryserv.AddInventory(inventory).subscribe(
-        res => {
+      if (inventory.id == null || inventory.id == 0) {
+        inventory.CreatedBy = localStorage.getItem('userName') || '';
+        this.inventoryserv.AddInventory(inventory).subscribe(
+          res => {
 
 
-          if (res.status == 'true') {
-            this.toastr.success(':: Submitted successfully');
-            this.service.form1.reset();
-            this.loader.idle();
-            this.dialogRef.close('save');
-          }
-          else {
-            if (res.status == 'type') {
-              this.serialflag = 3;
+            if (res.status == 'true') {
+              this.toastr.success(':: Submitted successfully');
+              this.service.form1.reset();
+              this.loader.idle();
+              this.dialogRef.close('save');
             }
             else {
-              this.toastr.warning(':: Failed');
-              this.loader.idle();
+              if (res.status == 'type') {
+                this.serialflag = 3;
+              }
+              else {
+                this.toastr.warning(':: Failed');
+                this.loader.idle();
+              }
+
             }
 
-          }
+          },
 
-        },
+        )
+      } else {
+        this.service.form.controls['UpdatedBy'].setValue(localStorage.getItem('userName') || '');
+        this.inventoryserv.UpdateInventory(inventory).subscribe(
+          res => {
+            if (res.status == 'true') {
+              this.toastr.success(':: Updated successfully');
+              this.service.form.reset();
 
-      )
+              this.loader.idle();
+              this.dialogRef.close('save');
+            }
+            else {
+              if (res.status == 'type') {
+                this.serialflag = 3;
+              }
+              else if (res.status == 'metergreat') {
+                this.serialflag = 4;
+              }
+              else if (res.status == 'numbergreat') {
+                this.serialflag = 5;
+              }
+              else {
+                this.toastr.warning(':: Failed');
+                this.loader.idle();
+              }
+
+            }
+
+          },
+
+        )
+      }
+
     }
 
 
@@ -332,7 +365,7 @@ export class AddComponent implements OnInit {
 
 
 
-  }//submit
+  }
 
 
   onClose() {
@@ -399,19 +432,62 @@ export class AddComponent implements OnInit {
 
     });
 
-
-    //  if(event.value>=169 && event.value <=180)
-    //  {
-    //    this.MetterHidden=true;
-    //  }
-    //  else{
-    //    this.MetterHidden=false;
-    //  }
-
   }
 
 
-
+  FillFiledsForUsedSerial(inventory: any) {
+      this.service.form1.patchValue({
+        Id: inventory.id,
+        CustomerName: inventory.customerName,
+        RecipientName: inventory.recipientName,
+        OrderNumber: inventory.orderNumber,
+        ReorderingPoint: inventory.reorderingPoint,
+        BR: inventory.br,
+        ItemCode: inventory.itemCode,
+        Meter: inventory.meter,
+        Number: inventory.number,
+        TeamId: inventory.teamId,
+        Comment: inventory.comment,
+        ReceivedDate: inventory.receivedDate,
+        ExpriyDate: inventory.expriyDate,
+        OutgoingStatusId: inventory.outgoingStatusId,
+        TypeStatusId: inventory.typeStatusId,
+        CategoryId: inventory.categoryId,
+        CompanyId: inventory.companyId,
+        ReceviedTypeId: inventory.receviedTypeId,
+        AcceptanceId: inventory.acceptanceId,
+        LocationId: inventory.locationId,
+        comeFrom: inventory.comeFrom
+      })
+    
+  }
+  initializeForm() {
+    this.service.form1.patchValue({
+      Id: 0,
+      CustomerName: '',
+      TeamId: 0,
+      OrderNumber: null,
+      RecipientName: '',
+      Status: '',
+      ReorderingPoint: null,
+      BR: null,
+      ItemCode: '',
+      Meter: null,
+      Number: null,
+      Comment: '',
+      ReceivedDate: '',
+      ExpriyDate: null,
+      ReceviedStatusId: 0,
+      OutgoingStatusId: 0,
+      TypeStatusId: 0,
+      CategoryId: 0,
+      CompanyId: 0,
+      ReceviedTypeId: 0,
+      AcceptanceId: 0,
+      LocationId: 0,
+      comeFrom: 0
+    })
+  }
   onCheckSerialIsalreadysign() {
 
     this.SerialNumber = this.service.form1.value.SerielNumber;
@@ -420,6 +496,7 @@ export class AddComponent implements OnInit {
       res => {
 
         if (res.status == 'New') {
+          this.initializeForm();
           this.serialnew == 1;
           this.ReceivedStatuslist = res.data;
           var recviedstatuscount = 0;
@@ -493,24 +570,44 @@ export class AddComponent implements OnInit {
             this.OnChangeStatus('وارد');
             this.statusflag = 1;
             /////
-            this.inventoryserv.GetLocationByReceivedId(this.selected).subscribe(res => {
+            this.inventoryserv.GetLocations().subscribe(res => {
+              if (res.status == true) {
+                this.Location = res.data;
+              }
+            });
+            this.inventoryserv.GetCategoryByTypeId(res.inventory.typeStatusId).subscribe(res => {
 
               if (res.status == true) {
 
-                this.Location = res.data;
+                var categorycount = 0;
+                for (var category of this.Category) {
 
+                  if (category.id == 47 || category.id == 48 || category.id == 49) {
+                    this.MetterHidden = true;
+                  }
+                  else {
+                    this.MetterHidden = false;
+                  }
+                  if (category.id == 46) {
+                    this.numberHidden = true;
+                  }
+                  else {
+                    this.numberHidden = false;
+                  }
+                  if (res.data.id == category.id) {
+                    this.Category1.pop();
+                    this.Category1.push(category);
 
+                    categorycount++;
 
-                var locationcount = 0;
-                for (var location of this.Location) {
-                  if (this.data.locationId == location.id) {
-                    locationcount++;
-                    this.service.form1.controls['LocationId'].setValue(this.data.locationId);
+                    this.service.form1.controls['CategoryId'].setValue(res.data.id);
+
                     break;
                   }
                 }
-                if (locationcount == 0) {
-                  this.service.form1.controls['LocationId'].setValue(null);
+                if (categorycount == 0) {
+
+                  this.service.form1.controls['CategoryId'].setValue(null);
                 }
 
               }
@@ -522,6 +619,7 @@ export class AddComponent implements OnInit {
             this.serialflag = 0;
           }
           this.serialnew == 1;
+          this.FillFiledsForUsedSerial(res.inventory);
         }
         else {
           this.serialflag = 1;

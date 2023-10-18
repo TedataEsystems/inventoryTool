@@ -55,7 +55,7 @@ export class InventoryService {
   }
 
 
-  UpdateInventory(model: Inventory): Observable<any> {
+  UpdateInventory(model: any): Observable<any> {
     return this.httpClient.post<Inventory>(`${environment.API_URL}api/Inventory/UpdateInventory`, model
     );
   }
@@ -129,6 +129,11 @@ SerielNumberIsAlreadySignedInEdit(SerielNumber:string,id:number ):Observable<any
     return this.httpClient.get(`${environment.API_URL}api/Inventory/GetLocationByReceivedId/`+id );
   }
 
+  GetLocations():Observable<any>
+  {
+
+    return this.httpClient.get(`${environment.API_URL}api/Inventory/GetLocations/`);
+  }
 
    ExportExitPermitExcel(data:any): Observable<Blob> {
 
