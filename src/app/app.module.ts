@@ -15,9 +15,11 @@ import { BasicAuthInterceptorService } from './basic-auth-interceptor.service';
 import { ChartsModule } from 'ng2-charts';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
+
 
 
     //RelocatLocationComponent,

@@ -40,6 +40,7 @@ import { AddInventoyCapacityComponent } from 'src/app/component/add-inventoy-cap
 import { RelocatLocationComponent } from 'src/app/component/relocat-location/relocat-location.component';
 import { InventoryQuantityComponent } from 'src/app/component/inventory-quantity/inventory-quantity.component';
 import { LogsDetailsComponent } from 'src/app/component/logs-details/logs-details.component';
+import { InvetoryLogsComponent } from 'src/app/invetory-logs/invetory-logs.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { LogsDetailsComponent } from 'src/app/component/logs-details/logs-detail
     AddInventoyCapacityComponent,
     RelocatLocationComponent,
     InventoryQuantityComponent,
-    LogsDetailsComponent
+    LogsDetailsComponent,
+    InvetoryLogsComponent
   ],
   imports: [
     CommonModule,

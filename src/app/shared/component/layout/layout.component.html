@@ -13,6 +13,8 @@
 
          <div fxShow="true" fxHide.lt-md="true" fxFlex fxLayout fxLayoutAlign="center" role="menu">
            <!-- The following menu items will be hidden on both SM and XS screen sizes -->
+
+           <a  mat-button routerLink="/inventorylogs" routerLinkActive="active">سجل المخزن </a>
            <a  mat-button routerLink="/inventoryQnt" routerLinkActive="active">سعة المخزن</a>
            <a  mat-button routerLink="/inventory" routerLinkActive="active">حالة المخزن</a>
 
@@ -109,18 +111,10 @@
                 <!-- <button (click)="sidenav.toggle()" href="#" mat-button class="arrow"><mat-icon>arrow_back_ios</mat-icon></button> -->
                 <a  mat-button  routerLink="./" routerLinkActive="active1" [routerLinkActiveOptions]="{exact:true}">الصفحة الرئيسية</a>
                 <!-- <a  mat-button  routerLink="./inventory" routerLinkActive="active1" >حالة المخزن</a> -->
+                <a  mat-button  routerLink="./inventory" routerLinkActive="active1" > حالة المخزن</a>
+                <a  mat-button  routerLink="./inventoryQnt" routerLinkActive="active1" > سعة المخزن</a>
+                <a  mat-button  routerLink="./inventorylogs" routerLinkActive="active1" > سجل المخزن</a>
 
-                <a  mat-button [matMenuTriggerFor]="menu">المخزن</a>
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item routerLink="./inventory" routerLinkActive="active1">
-
-                      <span>>حالة المخزن</span>
-                    </button>
-                    <button mat-menu-item routerLink="./inventoryQnt" routerLinkActive="active1">
-
-                      <span>سعة المخزن</span>
-                    </button>
-                    </mat-menu>
                 <!-- <a  mat-button  [matMenuTriggerFor]='microwave'>Microwave</a>
                 <a mat-button  [matMenuTriggerFor]='fiber'>Fiber</a>
                 <a  mat-button  [matMenuTriggerFor]='copper'>Copper</a>
