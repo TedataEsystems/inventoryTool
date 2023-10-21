@@ -8,7 +8,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class LogsDetailsComponent implements OnInit {
 
-
+x=[]
 items=[];
 
   constructor( public dialogRef: MatDialogRef<LogsDetailsComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
@@ -28,11 +28,10 @@ this.splitData();
   splitData(){
     var data=this.data.data
     console.log('data',data);
-    // data=data.replace('تفاصيل..','');
-    // data=data.replace('تفاصيل','');
-    this.items=data.split(" , ");
-    // this.items=data;
-    console.log('data after split',data);
+    this.items=data.split(',');
+    // this.items=data.split(/[,:]+/);
+    // (/[!\s_]+/)
+    console.log('itemsouter', this.items);
 
 
 

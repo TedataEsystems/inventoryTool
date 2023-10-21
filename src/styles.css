@@ -382,6 +382,9 @@ mat-spinner {
   mat-footer-row {
     width: inherit;
   }
+  mat-row, mat-header-row, mat-footer-row{
+    width: 100%;
+  }
   mat-sidenav-content {
     padding: 30px 10px !important;
   }

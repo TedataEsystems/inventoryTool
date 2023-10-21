@@ -5,13 +5,20 @@
   </div>
 
 </mat-toolbar>
-<div class="container">
+<div class="container px-0">
   <div class="row">
 
-    <mat-list role="list" class="col-md-12 row mt-5 pt-2 text-right" dir="rtl" >
-      <mat-list-item  class="col-6 col-md-3" *ngFor="let item of items"role="listitem">{{item}}</mat-list-item>
+    <div role="list" class="col-md-12 row mt-5 pt-3 text-right px-0" dir="rtl" >
+<ng-container *ngFor="let item of items">
+      <div  class="box col-6 col-md-4">
 
-    </mat-list>
+     <span >{{item}}</span>
+
+       </div>
+
+
+      </ng-container>
+    </div>
 
 
 
