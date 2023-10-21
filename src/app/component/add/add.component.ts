@@ -272,30 +272,24 @@ export class AddComponent implements OnInit {
       CreationDate: this.service.form1.value.CreationDate,
       CreatedBy: this.service.form1.value.CreatedBy,
       comeFrom: this.service.form1.value.comeFrom
-
     };
-
-    if (inventory.CategoryId != 46 && inventory.CategoryId != 47 && inventory.CategoryId != 48 && inventory.CategoryId != 49) {
-      if (inventory.SerielNumber == null || inventory.SerielNumber == '') {
+    if (inventory.CategoryId != 46 || inventory.CategoryId != 47 || inventory.CategoryId != 48 || inventory.CategoryId != 49)
+    {
+      if (inventory.SerielNumber == null || inventory.SerielNumber == '')
+      {
         this.serialreq = 1;
         return;
       }
-
     }
-    if (!this.service.form1.valid) {
-
-      return;
-    }
-
-
-    if (this.serialflag == 1) {
-
+    if (!this.service.form1.valid||this.serialflag==1) 
+    {
       return;
     }
     if (this.data.dialogTitle == "اضافة جديد") {
 
 
-      if (inventory.id == null || inventory.id == 0) {
+      if (inventory.id == null || inventory.id == 0)
+      {
         inventory.CreatedBy = localStorage.getItem('userName') || '';
         this.inventoryserv.AddInventory(inventory).subscribe(
           res => {
@@ -321,7 +315,9 @@ export class AddComponent implements OnInit {
           },
 
         )
-      } else {
+      }
+       else 
+      {
         this.service.form.controls['UpdatedBy'].setValue(localStorage.getItem('userName') || '');
         this.inventoryserv.UpdateInventory(inventory).subscribe(
           res => {
@@ -355,23 +351,11 @@ export class AddComponent implements OnInit {
       }
 
     }
-
-
-
-
-
-
     this.loader.idle();
-
-
-
   }
-
-
   onClose() {
     this.service.form1.reset();
     this.dialogRef.close();
-
   }
   change() {
     this.hidden1 = true;
@@ -379,9 +363,6 @@ export class AddComponent implements OnInit {
   changhide() {
     this.hidden = true;
   }
-
-
-
   OnChangePopName(event: any) {
 
 
@@ -433,8 +414,6 @@ export class AddComponent implements OnInit {
     });
 
   }
-
-
   FillFiledsForUsedSerial(inventory: any) {
       this.service.form1.patchValue({
         Id: inventory.id,
@@ -448,7 +427,7 @@ export class AddComponent implements OnInit {
         Number: inventory.number,
         TeamId: inventory.teamId,
         Comment: inventory.comment,
-        ReceivedDate: inventory.receivedDate,
+        //ReceivedDate: inventory.receivedDate,
         ExpriyDate: inventory.expriyDate,
         OutgoingStatusId: inventory.outgoingStatusId,
         TypeStatusId: inventory.typeStatusId,
@@ -459,13 +438,11 @@ export class AddComponent implements OnInit {
         LocationId: inventory.locationId,
         comeFrom: inventory.comeFrom
       })
-    
   }
   initializeForm() {
     this.service.form1.patchValue({
       Id: 0,
       CustomerName: '',
-      TeamId: 0,
       OrderNumber: null,
       RecipientName: '',
       Status: '',
@@ -477,15 +454,12 @@ export class AddComponent implements OnInit {
       Comment: '',
       ReceivedDate: '',
       ExpriyDate: null,
-      ReceviedStatusId: 0,
-      OutgoingStatusId: 0,
-      TypeStatusId: 0,
-      CategoryId: 0,
-      CompanyId: 0,
-      ReceviedTypeId: 0,
-      AcceptanceId: 0,
-      LocationId: 0,
-      comeFrom: 0
+      ReceviedStatusId: null,
+      TypeStatusId: null,
+      CategoryId: null,
+      ReceviedTypeId: null,
+      LocationId: null,
+      comeFrom: null
     })
   }
   onCheckSerialIsalreadysign() {

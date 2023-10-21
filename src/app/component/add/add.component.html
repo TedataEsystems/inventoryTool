@@ -17,6 +17,14 @@
             <input type="hidden" formControlName="CreatedBy">
             <input type="hidden" formControlName="UpdateDate">
             <input type="hidden" formControlName="UpdatedBy">
+            
+            <mat-form-field>
+              <input formControlName="SerielNumber"  matInput placeholder="السيريال نامبر *" (keyup)="onCheckSerialIsalreadysign()">
+              <!-- <mat-error>مطلوب</mat-error> -->
+              <span class='req' *ngIf="serialreq==1" >مطلوب</span>
+              <span class='req' *ngIf="serialflag==1">هذا السيريال موجود كوارد</span>
+              <span class='req' *ngIf="serialflag==3">هذا السيريال موجود مع نوع جهاز مختلف</span>
+            </mat-form-field>
 
             <mat-form-field>
               <mat-select #mySelect (selectionChange)="OnChangePopName($event)"  formControlName="TypeStatusId" placeholder=" نوع الجهاز "   appendTo="body"     >
@@ -69,13 +77,7 @@
               <input formControlName="CustomerName" matInput placeholder="اسم العميل">
 
             </mat-form-field>
-            <mat-form-field>
-              <input formControlName="SerielNumber"  matInput placeholder="السيريال نامبر *" (keyup)="onCheckSerialIsalreadysign()">
-              <!-- <mat-error>مطلوب</mat-error> -->
-              <span class='req' *ngIf="serialreq==1" >مطلوب</span>
-              <span class='req' *ngIf="serialflag==1">هذا السيريال موجود كوارد</span>
-              <span class='req' *ngIf="serialflag==3">هذا السيريال موجود مع نوع جهاز مختلف</span>
-            </mat-form-field>
+           
 
             <mat-form-field *ngIf="statusflag==1">
               <mat-select  formControlName="ReceviedTypeId" placeholder=" نوع الوارد ">
@@ -88,7 +90,7 @@
               </mat-form-field>
 
               <mat-form-field *ngIf="statusflag==1">
-                <mat-select formControlName="LocationId" placeholder="المخزن">
+                <mat-select formControlName="LocationId" placeholder="وارد الى">
                   <mat-option>-- Please select --</mat-option>
                   <mat-option  *ngFor="let Location of Location"   [value]="Location.id">
                     {{Location.name}}

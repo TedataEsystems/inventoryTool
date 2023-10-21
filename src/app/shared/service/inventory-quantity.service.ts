@@ -31,6 +31,25 @@ export class InventoryQuantityService {
       })
     )
   }
+  GetAllInventoryQuantity(PageNumber :number , PageSize :number , searchValue:string ,sortcolumn:string,sortcolumndir:string): Observable<any> {
+    
+    let params = new HttpParams();
+    if(PageNumber !== null && PageSize !== null){
+      params = params.append('pageNumber' , PageNumber.toString());
+      params = params.append('pageSize' , PageSize.toString());
+      params = params.append('searchValue' , searchValue.toString());
+      params = params.append('sortcolumn' , sortcolumn.toString());
+      params = params.append('sortcolumndir' , sortcolumndir.toString());
+    }
+    return this.httpClient.post<any>(`${environment.API_URL}api/DeviceCapacity/AllDevicesSummary`, {observe:'response' , params}).pipe(
+      map(response => {
+console.log(response,"response")
+console.log(response.body,"response")
+
+return response ;
+      })
+    )
+  }
   DownloadDataToExcel(model:any):Observable<Blob>{
     return this.httpClient.post(`${environment.API_URL}api/DeviceCapacity/ExportExcel`,model,{responseType: 'blob',headers: this.headers});
   }
