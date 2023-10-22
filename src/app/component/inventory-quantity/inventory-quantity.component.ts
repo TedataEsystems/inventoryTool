@@ -22,7 +22,7 @@ export class InventoryQuantityComponent implements OnInit, AfterViewInit {
   inventorySearch: InventoryQnt = <InventoryQnt>{};
   public LocationList: LocationName[] = [];
   public TypeStatusList: TypeStatus[] = [];
-  deviceList: DeviceQuantity[]=[];
+  deviceList: DeviceQuantity[] = [];
   searchKey: string = '';
   lastcol: string = 'Id';
   lastdir: string = 'desc';
@@ -37,19 +37,19 @@ export class InventoryQuantityComponent implements OnInit, AfterViewInit {
   previousSizedef = 100;
   pagesizedef: number = 100;
   public pIn: number = 0;
-  @ViewChild(MatSort) sort?:MatSort ;
-  @ViewChild(MatPaginator) paginator?:MatPaginator ;
-  displayedColumns: string[] = ['DeviseName','DeviceCount','Location'];
-  dataSource =new MatTableDataSource();
+  @ViewChild(MatSort) sort?: MatSort;
+  @ViewChild(MatPaginator) paginator?: MatPaginator;
+  displayedColumns: string[] = ['DeviseName', 'DeviceCount', 'Location'];
+  dataSource = new MatTableDataSource();
   columnsToDisplay: string[] = this.displayedColumns.slice();
   public _TypeStatusList: any[] = [];
   constructor(
     private loader: LoaderService,
     private InventoryServ: InventoryService,
-    private InventoryQuantityServ:InventoryQuantityService,
+    private InventoryQuantityServ: InventoryQuantityService,
     private toastr: ToastrService,
     private fb: FormBuilder
-  ) {}
+  ) { }
   formSearch = this.fb.group({
     DeviceIds: [''],
     LocationId: ['', Validators.required]
@@ -58,20 +58,20 @@ export class InventoryQuantityComponent implements OnInit, AfterViewInit {
     this.InventoryServ.GettingLists().subscribe(res => {
       if (res.status == true) {
         this.LocationList = res.location;
-     this.TypeStatusList = res.typeStatus;
-     this._TypeStatusList = res.typeStatus;
+        this.TypeStatusList = res.typeStatus;
+        this._TypeStatusList = res.typeStatus;
 
       }
     })
-    this.InventoryQuantityServ.GetAllInventoryQuantity(1, 100, '', this.sortColumnDef, this.SortDirDef).subscribe(res=>{
-      if(res.status==true){
-      this.deviceList=res.data;
-      this.dataSource = new MatTableDataSource<any>(this.deviceList);
-      this.dataSource.paginator = this.paginator as MatPaginator;
-         this.dataSource.sort = this.sort as MatSort;
-         this.loader.idle();
+    this.InventoryQuantityServ.GetAllInventoryQuantity(1, 100, '', this.sortColumnDef, this.SortDirDef).subscribe(res => {
+      if (res.status == true) {
+        this.deviceList = res.data;
+        this.dataSource = new MatTableDataSource<any>(this.deviceList);
+        this.dataSource.paginator = this.paginator as MatPaginator;
+        this.dataSource.sort = this.sort as MatSort;
+        this.loader.idle();
       }
-       });
+    });
   }
   ngAfterViewInit() {
     this.dataSource.sort = this.sort as MatSort;
@@ -96,30 +96,25 @@ export class InventoryQuantityComponent implements OnInit, AfterViewInit {
 
   }
   SaveFavoriteSearch() {
-    this.loader.busy();
-  
-   this.inventorySearch.StoreId = this.formSearch.value.LocationId;
-   this.inventorySearch.DevicesIds=this.formSearch.value.DeviceIds;
-
-     this.InventoryQuantityServ.AddEditFavoriteSearchDevice(this.inventorySearch).subscribe(res => {
-
-       this.toastr.success(':: Saved successfully');
-
-      this.loader.idle();
-   }
-
-    )
+    this.inventorySearch.StoreId = this.formSearch.value.LocationId;
+    this.inventorySearch.DevicesIds = this.formSearch.value.DeviceIds;
+    if (this.formSearch.value.LocationId != "") {
+      this.InventoryQuantityServ.AddEditFavoriteSearchDevice(this.inventorySearch).subscribe(res => {
+        this.toastr.success(':: Saved successfully');
+        this.loader.idle();
+      })
+    }
   }
   GetFavoriteSearch() {
 
     this.InventoryQuantityServ.GetFavoriteDeviceSearch().subscribe(
       (res) => {
-        if (res.status) {       
+        if (res.status) {
           this.formSearch.controls['LocationId'].setValue(
             res.data.storeId
-          );                  
-            this.formSearch.controls['DeviceIds'].setValue( res.data.devicesIds);
-            
+          );
+          this.formSearch.controls['DeviceIds'].setValue(res.data.devicesIds);
+
           this.Search();
         }
       },
@@ -129,59 +124,59 @@ export class InventoryQuantityComponent implements OnInit, AfterViewInit {
     );
   }
   Search() {
-    if(this.formSearch.invalid) return;
+    if (this.formSearch.invalid) return;
     this.inventorySearch.StoreId = this.formSearch.value.LocationId;
-    this.inventorySearch.DevicesIds=this.formSearch.value.DeviceIds;
-    this.InventoryQuantityServ.GetInventoryQuantity(this.inventorySearch,1, 100, '', this.sortColumnDef, this.SortDirDef).subscribe(res=>{
-    if(res.status==true){
-      this.deviceList=res.data;
-      this.dataSource = new MatTableDataSource<any>(this.deviceList);
-      this.dataSource.paginator = this.paginator as MatPaginator;
-      this.dataSource.sort = this.sort as MatSort;
-      this.loader.idle();
-  }
-   });
+    this.inventorySearch.DevicesIds = this.formSearch.value.DeviceIds;
+    this.InventoryQuantityServ.GetInventoryQuantity(this.inventorySearch, 1, 100, '', this.sortColumnDef, this.SortDirDef).subscribe(res => {
+      if (res.status == true) {
+        this.deviceList = res.data;
+        this.dataSource = new MatTableDataSource<any>(this.deviceList);
+        this.dataSource.paginator = this.paginator as MatPaginator;
+        this.dataSource.sort = this.sort as MatSort;
+        this.loader.idle();
+      }
+    });
   }//advanced
   clearAdvancedSearch() {
     this.formSearch.reset();
-    this.InventoryQuantityServ.GetAllInventoryQuantity(1, 100, '', this.sortColumnDef, this.SortDirDef).subscribe(res=>{
-      if(res.status==true){
-      this.deviceList=res.data;
-      this.dataSource = new MatTableDataSource<any>(this.deviceList);
-      this.dataSource.paginator = this.paginator as MatPaginator;
-         this.dataSource.sort = this.sort as MatSort;
-         this.loader.idle();
+    this.InventoryQuantityServ.GetAllInventoryQuantity(1, 100, '', this.sortColumnDef, this.SortDirDef).subscribe(res => {
+      if (res.status == true) {
+        this.deviceList = res.data;
+        this.dataSource = new MatTableDataSource<any>(this.deviceList);
+        this.dataSource.paginator = this.paginator as MatPaginator;
+        this.dataSource.sort = this.sort as MatSort;
+        this.loader.idle();
       }
-       });
+    });
   }
   applyFilter() {
-      let searchData = this.searchKey.trim().toLowerCase();
+    let searchData = this.searchKey.trim().toLowerCase();
   }
   onSearchClear() {
     this.searchKey = '';
     this.applyFilter();
   }
   sortData(sort: any) {
-      if (this.lastcol == sort.active && this.lastdir == sort.direction) {
-        if (this.lastdir == 'asc')
-          sort.direction = 'desc';
-        else
-          sort.direction = 'asc';
-      }
-      this.lastcol = sort.active; this.lastdir = sort.direction;
-      var c = this.pageIn;
+    if (this.lastcol == sort.active && this.lastdir == sort.direction) {
+      if (this.lastdir == 'asc')
+        sort.direction = 'desc';
+      else
+        sort.direction = 'asc';
+    }
+    this.lastcol = sort.active; this.lastdir = sort.direction;
+    var c = this.pageIn;
   }
   ExportExitPermitExcel(e: Event) {
     e.stopPropagation();
-      let invSearch: InventoryQnt = <InventoryQnt>{};
-      this.inventorySearch.StoreId = this.formSearch.value.LocationId;
-      this.inventorySearch.DevicesIds=this.formSearch.value.DeviceIds;
-       this.InventoryQuantityServ.DownloadDataToExcel(this.inventorySearch).subscribe(res => {
-          const blob = new Blob([res], { type: 'application/vnd.ms.excel' });
-          const file = new File([blob], 'عدد_الاجهزة' + Date.now() + '.xlsx', { type: 'application/vnd.ms.excel' });
-          saveAs(file, 'عدد_الاجهزة' + Date.now() + '.xlsx');
-        }, err => {
-          this.toastr.warning("! Fail")
-        });
-    }
+    let invSearch: InventoryQnt = <InventoryQnt>{};
+    this.inventorySearch.StoreId = this.formSearch.value.LocationId;
+    this.inventorySearch.DevicesIds = this.formSearch.value.DeviceIds;
+    this.InventoryQuantityServ.DownloadDataToExcel(this.inventorySearch).subscribe(res => {
+      const blob = new Blob([res], { type: 'application/vnd.ms.excel' });
+      const file = new File([blob], 'عدد_الاجهزة' + Date.now() + '.xlsx', { type: 'application/vnd.ms.excel' });
+      saveAs(file, 'عدد_الاجهزة' + Date.now() + '.xlsx');
+    }, err => {
+      this.toastr.warning("! Fail")
+    });
+  }
 }
