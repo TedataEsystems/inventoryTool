@@ -31,7 +31,7 @@
   <ng-template #table> -->
     <div class="example-container mat-elevation-z8" >
 
-    <mat-table [dataSource]="dataSource"  #table   matSort (matSortChange)="sortData($event)" matSortActive="name" matSortDirection="asc" matSortDisableClear >
+    <mat-table [dataSource]="dataSource"  #table  multiTemplateDataRows matSort (matSortChange)="sortData($event)" matSortActive="name" matSortDirection="asc" matSortDisableClear >
 
       <ng-container matColumnDef="Id">
           <mat-header-cell *matHeaderCellDef mat-sort-header> رقم</mat-header-cell>
@@ -65,16 +65,16 @@
        </button>
     </mat-cell>
     </ng-container>
-      <!-- <ng-container matColumnDef="Descirption">
+      <ng-container matColumnDef="Descirption">
         <mat-header-cell mat-header-cell *matHeaderCellDef> التفاصيل</mat-header-cell>
         <mat-cell *matCellDef="let row" data-label="descirption">
-    <button mat-button class="text-success"    matTooltip="View Details" (click)="row.isExpanded = !row.isExpanded">
-        <mat-icon>content_paste_search</mat-icon>
+    <button mat-button class="text-info"    matTooltip="View Details" (click)="row.isExpanded = !row.isExpanded">
+        <mat-icon>visibility</mat-icon>
     </button>
     </mat-cell>
-    </ng-container> -->
+    </ng-container>
 
-    <!-- <ng-container matColumnDef="expandedDetail">
+    <ng-container matColumnDef="expandedDetail">
       <mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
 
         <div class="row student-element-detail" [@detailExpand]="element.isExpanded ? 'expanded' : 'collapsed'">
@@ -88,7 +88,7 @@
       </div>
 
       </mat-cell>
-    </ng-container> -->
+    </ng-container>
 
 
 
@@ -115,11 +115,11 @@
 
   <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource.data.length==0 && dataSource !=null)}"></mat-footer-row>
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  <!-- <mat-row *matRowDef="let row; columns: displayedColumns;" class="student-element-row"
-  [class.student-expanded-row]="row.isExpanded"></mat-row> -->
+  <!-- <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row> -->
+  <mat-row *matRowDef="let row; columns: displayedColumns;" class="student-element-row"
+  [class.student-expanded-row]="row.isExpanded"></mat-row>
    <!-- Extra row to show detail content column -->
-  <!-- <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="student-detail-row"></mat-row> -->
+ <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="student-detail-row"></mat-row>
 
 </mat-table>
 <!-- end test -->
