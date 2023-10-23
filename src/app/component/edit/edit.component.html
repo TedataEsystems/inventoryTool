@@ -79,7 +79,7 @@
             
           </mat-form-field>
           <mat-form-field *ngIf="statusflag==1">
-            <mat-select formControlName="LocationId" placeholder="المخزن" onchange="onLocationChange($event)">
+            <mat-select formControlName="LocationId" placeholder="وارد الي " onchange="onLocationChange($event)">
               <mat-option>-- Please select --</mat-option>
               <mat-option  *ngFor="let Location of Location"   [value]="Location.id">
                 {{Location.name}}
@@ -88,7 +88,7 @@
               
             </mat-form-field>
 
-            <mat-form-field>
+            <mat-form-field *ngIf="statusflag==1">
               <mat-select formControlName="comeFrom" placeholder="وارد من" >
                 <mat-option>-- Please select --</mat-option>
                 <mat-option  *ngFor="let Location of Location"   [value]="Location.id">
