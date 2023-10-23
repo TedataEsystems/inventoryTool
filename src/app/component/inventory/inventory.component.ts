@@ -304,7 +304,7 @@ export class InventoryComponent implements OnInit {
 
 
       this.logserv.SendLogId(row.id);
-      this.router.navigateByUrl('/history');
+      this.router.navigateByUrl('/inventorylogs');
 
 
 
