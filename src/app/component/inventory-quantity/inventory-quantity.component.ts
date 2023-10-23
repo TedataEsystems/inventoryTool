@@ -168,9 +168,15 @@ export class InventoryQuantityComponent implements OnInit, AfterViewInit {
   }
   ExportExitPermitExcel(e: Event) {
     e.stopPropagation();
-    let invSearch: InventoryQnt = <InventoryQnt>{};
-    this.inventorySearch.StoreId = this.formSearch.value.LocationId;
-    this.inventorySearch.DevicesIds = this.formSearch.value.DeviceIds;
+    this.inventorySearch
+    if (this.formSearch.value.LocationId == null || this.formSearch.value.LocationId == "") {
+      this.inventorySearch.StoreId = 0;
+      this.inventorySearch.DevicesIds = [];
+    }
+    else {
+      this.inventorySearch.StoreId = this.formSearch.value.LocationId;
+      this.inventorySearch.DevicesIds = this.formSearch.value.DeviceIds;
+    }
     this.InventoryQuantityServ.DownloadDataToExcel(this.inventorySearch).subscribe(res => {
       const blob = new Blob([res], { type: 'application/vnd.ms.excel' });
       const file = new File([blob], 'عدد_الاجهزة' + Date.now() + '.xlsx', { type: 'application/vnd.ms.excel' });
