@@ -198,6 +198,7 @@ export class InventoryComponent implements OnInit {
       dialogGonfig.width = "50%";
       dialogGonfig.panelClass = 'modals-dialog';
       this.dialog.open(AddComponent, dialogGonfig).afterClosed().subscribe(result => {
+        this.service.initializeForm();
         if (this.service.formSearch.value == '') {
           this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef)
         } else {

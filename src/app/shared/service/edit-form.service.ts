@@ -7,7 +7,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class EditFormService {
 
-  
+
   constructor() { }
 
   formSearch: FormGroup = new FormGroup({
@@ -40,7 +40,6 @@ export class EditFormService {
     ReceviedStatusId: new FormControl(''),
     OutgoingStatusId: new FormControl(''),
     CategoryId: new FormControl(''),
-    
     CompanyId: new FormControl(''),
     ReceviedTypeId: new FormControl(''),
     AcceptanceId: new FormControl(''),
@@ -50,168 +49,182 @@ export class EditFormService {
 
   form: FormGroup = new FormGroup({
     Id: new FormControl(0),
-    //M: new FormControl(0,[Validators.min(0),Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
-    CustomerName: new FormControl(''),/////777777
-    RecipientName: new FormControl(''),///////333333
-    OrderNumber: new FormControl(0),///////44444
+    CustomerName: new FormControl(''),
+    RecipientName: new FormControl(''),
+    OrderNumber: new FormControl(0),
     ReorderingPoint: new FormControl(null),
     BR: new FormControl(null),
     ItemCode: new FormControl(''),
     Meter: new FormControl(null),
     Number: new FormControl(null),
-    TeamId: new FormControl(null),/////11111
+    TeamId: new FormControl(null),
     Status: new FormControl(''),
-    
-    SerielNumber: new FormControl('',[Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),////6666
+    SerielNumber: new FormControl('', [Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),////6666
     Comment: new FormControl(''),
     ReceivedDate: new FormControl(''),
     ExpriyDate: new FormControl(''),
-    ReceviedStatusId: new FormControl(null),//,[Validators.required]),
+    ReceviedStatusId: new FormControl(null),
     OutgoingStatusId: new FormControl(null),
-    TypeStatusId: new FormControl(null),////////555555
+    TypeStatusId: new FormControl(null),
     CategoryId: new FormControl(null),
-    CompanyId: new FormControl(null),///////222222
+    CompanyId: new FormControl(null),
     ReceviedTypeId: new FormControl(null),
     AcceptanceId: new FormControl(null),
     LocationId: new FormControl(null),
-    CreationDate :new FormControl(null),
-    UpdateDate :new FormControl(null),
-    CreatedBy:new FormControl(null),
-    UpdatedBy :new FormControl(null),
-   
-  comeFrom:new FormControl(null)
-   
+    CreationDate: new FormControl(null),
+    UpdateDate: new FormControl(null),
+    CreatedBy: new FormControl(null),
+    UpdatedBy: new FormControl(null),
+    comeFrom: new FormControl(null,[Validators.required])
+
   });
 
   //////form1
- form1 : FormGroup = new FormGroup({
-  Id: new FormControl(0),
-  //M: new FormControl(0,[Validators.min(0),Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
-  CustomerName: new FormControl(''),
-  RecipientName: new FormControl(''),
-  OrderNumber: new FormControl(null),
-  ReorderingPoint: new FormControl(null),
-  BR: new FormControl(null),
-  ItemCode: new FormControl(''),
-  Meter: new FormControl(null),
-  Number: new FormControl(null),
-  TeamId: new FormControl(null),
-  Status: new FormControl(''),
-
-  SerielNumber: new FormControl('',[Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
-  Comment: new FormControl(''),
-  ReceivedDate: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
-  ExpriyDate: new FormControl(''),
-  ReceviedStatusId: new FormControl(null),//,[Validators.required]),
-  OutgoingStatusId: new FormControl(null),
-  TypeStatusId: new FormControl(null),
-  CategoryId: new FormControl(null),
-  CompanyId: new FormControl(null),
-  ReceviedTypeId: new FormControl(null),
-  AcceptanceId: new FormControl(null),
-  LocationId: new FormControl(null,[Validators.required]),
-  CreationDate :new FormControl(null),
-  UpdateDate :new FormControl(null),
-  CreatedBy:new FormControl(null),
-  UpdatedBy :new FormControl(null),
-  comeFrom:new FormControl(null)
- 
- 
-});
+  form1: FormGroup = new FormGroup({
+    Id: new FormControl(0),
+    CustomerName: new FormControl(''),
+    RecipientName: new FormControl(''),
+    OrderNumber: new FormControl(null),
+    ReorderingPoint: new FormControl(null),
+    BR: new FormControl(null),
+    ItemCode: new FormControl(''),
+    Meter: new FormControl(null),
+    Number: new FormControl(null),
+    TeamId: new FormControl(null),
+    Status: new FormControl(''),
+    SerielNumber: new FormControl('', [Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
+    Comment: new FormControl(''),
+    ReceivedDate: new FormControl('', [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
+    ExpriyDate: new FormControl(''),
+    ReceviedStatusId: new FormControl(null),
+    OutgoingStatusId: new FormControl(null),
+    TypeStatusId: new FormControl(null),
+    CategoryId: new FormControl(null),
+    CompanyId: new FormControl(null),
+    ReceviedTypeId: new FormControl(null),
+    AcceptanceId: new FormControl(null),
+    LocationId: new FormControl(null, [Validators.required]),
+    CreationDate: new FormControl(null),
+    UpdateDate: new FormControl(null),
+    CreatedBy: new FormControl(null),
+    UpdatedBy: new FormControl(null),
+    comeFrom: new FormControl(null, [Validators.required])
+  });
 
 
-  initializeFormGroup(){
+  initializeFormGroup() {
     this.form.setValue({
-      Id:0,
+      Id: 0,
       CustomerName: '',
-      TeamId:0,
+      TeamId: 0,
       OrderNumber: null,
       RecipientName: '',
-     
       Status: '',
-      ReorderingPoint :null,
-    BR :null,
-    ItemCode :'',
-    Meter :null,
-    Number :null,
-      SerielNumber:'',
+      ReorderingPoint: null,
+      BR: null,
+      ItemCode: '',
+      Meter: null,
+      Number: null,
+      SerielNumber: '',
       Comment: '',
       ReceivedDate: '',
       ExpriyDate: null,
       ReceviedStatusId: 0,
       OutgoingStatusId: 0,
-      TypeStatusId:0,
-      CategoryId:0,
-      CompanyId:0,
+      TypeStatusId: 0,
+      CategoryId: 0,
+      CompanyId: 0,
       ReceviedTypeId: 0,
       AcceptanceId: 0,
       LocationId: 0,
-      CreationDate:null,
-      CreatedBy:null,
-      UpdateDate:null,
-      UpdateBy:null,
+      CreationDate: null,
+      CreatedBy: null,
+      UpdateDate: null,
+      UpdateBy: null,
     })
     this.formSearch.setValue({
-      Id:0,
+      Id: 0,
       CustomerName: '',
-      TeamId:0,
+      TeamId: 0,
       OrderNumber: null,
       RecipientName: '',
-     
       Status: '',
-      ReorderingPoint :null,
-    BR :null,
-    ItemCode :'',
-    Meter :null,
-    Number :null,
-      SerielNumber:'',
+      ReorderingPoint: null,
+      BR: null,
+      ItemCode: '',
+      Meter: null,
+      Number: null,
+      SerielNumber: '',
       Comment: '',
       ReceivedDate: '',
       ExpriyDate: null,
       ReceviedStatusId: 0,
       OutgoingStatusId: 0,
-      TypeStatusId:0,
-      CategoryId:0,
-      CompanyId:0,
+      TypeStatusId: 0,
+      CategoryId: 0,
+      CompanyId: 0,
       ReceviedTypeId: 0,
       AcceptanceId: 0,
       LocationId: 0,
-      CreationDate:null,
-      CreatedBy:null,
-      UpdateDate:null,
-      UpdateBy:null,
+      CreationDate: null,
+      CreatedBy: null,
+      UpdateDate: null,
+      UpdateBy: null,
     })
 
     this.form1.setValue({
-      Id:0,
+      Id: 0,
       CustomerName: '',
-      TeamId:0,
+      TeamId: 0,
       OrderNumber: null,
       RecipientName: '',
-     
       Status: '',
-      ReorderingPoint :null,
-    BR :null,
-    ItemCode :'',
-    Meter :null,
-    Number :null,
-      SerielNumber:'',
+      ReorderingPoint: null,
+      BR: null,
+      ItemCode: '',
+      Meter: null,
+      Number: null,
+      SerielNumber: '',
       Comment: '',
       ReceivedDate: '',
       ExpriyDate: null,
       ReceviedStatusId: 0,
       OutgoingStatusId: 0,
-      TypeStatusId:0,
-      CategoryId:0,
-      CompanyId:0,
+      TypeStatusId: 0,
+      CategoryId: 0,
+      CompanyId: 0,
       ReceviedTypeId: 0,
       AcceptanceId: 0,
       LocationId: 0,
-      CreationDate:null,
-      CreatedBy:null,
-      UpdateDate:null,
-      UpdateBy:null,
+      CreationDate: null,
+      CreatedBy: null,
+      UpdateDate: null,
+      UpdateBy: null,
 
+    })
+  }
+
+  initializeForm() {
+    this.form1.patchValue({
+      Id: 0,
+      CustomerName: '',
+      OrderNumber: null,
+      RecipientName: '',
+      Status: '',
+      ReorderingPoint: null,
+      BR: null,
+      ItemCode: '',
+      Meter: null,
+      Number: null,
+      Comment: '',
+      ReceivedDate: '',
+      ExpriyDate: null,
+      ReceviedStatusId: null,
+      TypeStatusId: null,
+      CategoryId: null,
+      ReceviedTypeId: null,
+      LocationId: null,
+      comeFrom: null
     })
   }
 }

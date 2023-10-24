@@ -411,29 +411,7 @@ export class AddComponent implements OnInit {
       comeFrom: inventory.comeFrom
     })
   }
-  initializeForm() {
-    this.service.form1.patchValue({
-      Id: 0,
-      CustomerName: '',
-      OrderNumber: null,
-      RecipientName: '',
-      Status: '',
-      ReorderingPoint: null,
-      BR: null,
-      ItemCode: '',
-      Meter: null,
-      Number: null,
-      Comment: '',
-      ReceivedDate: '',
-      ExpriyDate: null,
-      ReceviedStatusId: null,
-      TypeStatusId: null,
-      CategoryId: null,
-      ReceviedTypeId: null,
-      LocationId: null,
-      comeFrom: null
-    })
-  }
+
   onCheckSerialIsalreadysign() {
 
     this.SerialNumber = this.service.form1.value.SerielNumber;
@@ -442,7 +420,7 @@ export class AddComponent implements OnInit {
       res => {
 
         if (res.status == 'New') {
-          this.initializeForm();
+          this.service.initializeForm();
           this.serialnew == 1;
           this.ReceivedStatuslist = res.data;
           var recviedstatuscount = 0;
