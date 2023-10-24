@@ -39,7 +39,7 @@ export class LogsService {
       params = params.append('sortcolumn' , sortcolumn.toString());
       params = params.append('sortcolumndir' , sortcolumndir.toString());
     }
-    return this.httpClient.get<any>(`${environment.API_URL}api/Logs/GetInventoryLogs`  , {observe:'response' , params}).pipe(
+    return this.httpClient.get<any>(`${environment.API_URL}api/Logs/GetInventoryLogs`, {observe:'response' , params}).pipe(
       map(response => {
          return response.body ;
       })

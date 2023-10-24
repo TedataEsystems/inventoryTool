@@ -48,9 +48,7 @@ export class InvetoryLogsComponent implements OnInit {
       private toastr:ToastrService,private router: Router,private route: ActivatedRoute, private LogsServ:LogsService
       ) {
         this.titleService.setTitle('سجلات المخزن');
-
     }
-
     ngOnInit(): void {
       if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
       {
@@ -188,10 +186,12 @@ applyFilter(filterValue: Event) {
     dialogGonfig.autoFocus = false;
     dialogGonfig.width = "50%";
     dialogGonfig.panelClass = 'modals-dialog';
-    this.dialog.open(LogsDetailsComponent, dialogGonfig).afterClosed().subscribe(() => {
-     this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
-    });
+    this.dialog.open(LogsDetailsComponent, dialogGonfig)
+    // .afterClosed().subscribe(() => {
+    //  this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+    // });
   }
+
   toggleTableRows() {
     this.isTableExpanded = !this.isTableExpanded;
     this.dataSource.data.forEach((row: any) => {
