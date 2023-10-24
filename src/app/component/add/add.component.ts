@@ -48,7 +48,6 @@ export class AddComponent implements OnInit {
 
   flag: boolean = false;
   SerialNumber: string = '';
-  ///////////////
   flagh: boolean = false;
   statusflag: number = 0;
   serialnew: number = 0;
@@ -64,16 +63,9 @@ export class AddComponent implements OnInit {
 
 
   ngOnInit() {
-
-
     if (localStorage.getItem("userGroup") == 'Inventory_Hady') {
       this.flagh = true
     }
-
-
-
-    // this.dialogTitle = this.data.dialogTitle;
-    console.log("rowOnInt", this.data);
 
     if (this.data.dialogTitle !== "اضافة جديد") {
       this.dialogTitle = 'تعديل';
@@ -97,9 +89,7 @@ export class AddComponent implements OnInit {
         this.CompanyName = res.companyName;
         this.Acceptance = res.acceptance;
         this.service.form1.controls['comeFrom'].setValue('1');
-        //console.log(this.ReceivedStatuslist)
         if (this.data) {
-          //set list in update
           var typstatuscount = 0;
           var teamcount = 0;
           var recviedstatuscount = 0;
@@ -135,8 +125,6 @@ export class AddComponent implements OnInit {
             this.service.form1.controls['OutgoingStatusId'].setValue(null);
 
           }
-          //////////////////
-          /////////Category
           for (var category of this.Category) {
 
 
@@ -176,8 +164,7 @@ export class AddComponent implements OnInit {
             this.service.form1.controls['TeamId'].setValue(null);
           }
 
-          //////////////////////////////
-          ///////////location
+
           for (var acceptance of this.Acceptance) {
             if (this.data.acceptanceId == acceptance.id) {
               acceptancecount++;
@@ -227,16 +214,13 @@ export class AddComponent implements OnInit {
   }
   toggle() {
     this.isHidden = !this.isHidden;
-    //this.outgoingisHidden=!this.outgoingisHidden;
   }
   outgoingtoggle() {
-    //this.isHidden=!this.isHidden;
     this.outgoingisHidden = !this.outgoingisHidden;
   }
 
   onSubmit() {
     let inventory = {
-      //M:this.service.form.value.M ,
       id: this.service.form1.value.Id,
       CustomerName: this.service.form1.value.CustomerName,
       OrderNumber: this.service.form1.value.OrderNumber,
@@ -273,23 +257,19 @@ export class AddComponent implements OnInit {
       CreatedBy: this.service.form1.value.CreatedBy,
       comeFrom: this.service.form1.value.comeFrom
     };
-    if (inventory.CategoryId != 46 || inventory.CategoryId != 47 || inventory.CategoryId != 48 || inventory.CategoryId != 49)
-    {
-      if (inventory.SerielNumber == null || inventory.SerielNumber == '')
-      {
+    if (inventory.CategoryId != 46 || inventory.CategoryId != 47 || inventory.CategoryId != 48 || inventory.CategoryId != 49) {
+      if (inventory.SerielNumber == null || inventory.SerielNumber == '') {
         this.serialreq = 1;
         return;
       }
     }
-    if (!this.service.form1.valid||this.serialflag==1) 
-    {
+    if (!this.service.form1.valid || this.serialflag == 1) {
       return;
     }
     if (this.data.dialogTitle == "اضافة جديد") {
 
 
-      if (inventory.id == null || inventory.id == 0)
-      {
+      if (inventory.id == null || inventory.id == 0) {
         inventory.CreatedBy = localStorage.getItem('userName') || '';
         this.inventoryserv.AddInventory(inventory).subscribe(
           res => {
@@ -316,8 +296,7 @@ export class AddComponent implements OnInit {
 
         )
       }
-       else 
-      {
+      else {
         this.service.form.controls['UpdatedBy'].setValue(localStorage.getItem('userName') || '');
         this.inventoryserv.UpdateInventory(inventory).subscribe(
           res => {
@@ -369,12 +348,6 @@ export class AddComponent implements OnInit {
     this.inventoryserv.GetCategoryByTypeId(event.value).subscribe(res => {
 
       if (res.status == true) {
-
-        // this.Category1 = res.data;
-
-
-
-
         var categorycount = 0;
         for (var category of this.Category) {
 
@@ -415,29 +388,28 @@ export class AddComponent implements OnInit {
 
   }
   FillFiledsForUsedSerial(inventory: any) {
-      this.service.form1.patchValue({
-        Id: inventory.id,
-        CustomerName: inventory.customerName,
-        RecipientName: inventory.recipientName,
-        OrderNumber: inventory.orderNumber,
-        ReorderingPoint: inventory.reorderingPoint,
-        BR: inventory.br,
-        ItemCode: inventory.itemCode,
-        Meter: inventory.meter,
-        Number: inventory.number,
-        TeamId: inventory.teamId,
-        Comment: inventory.comment,
-        //ReceivedDate: inventory.receivedDate,
-        ExpriyDate: inventory.expriyDate,
-        OutgoingStatusId: inventory.outgoingStatusId,
-        TypeStatusId: inventory.typeStatusId,
-        CategoryId: inventory.categoryId,
-        CompanyId: inventory.companyId,
-        ReceviedTypeId: inventory.receviedTypeId,
-        AcceptanceId: inventory.acceptanceId,
-        LocationId: inventory.locationId,
-        comeFrom: inventory.comeFrom
-      })
+    this.service.form1.patchValue({
+      Id: inventory.id,
+      CustomerName: inventory.customerName,
+      RecipientName: inventory.recipientName,
+      OrderNumber: inventory.orderNumber,
+      ReorderingPoint: inventory.reorderingPoint,
+      BR: inventory.br,
+      ItemCode: inventory.itemCode,
+      Meter: inventory.meter,
+      Number: inventory.number,
+      TeamId: inventory.teamId,
+      Comment: inventory.comment,
+      ExpriyDate: inventory.expriyDate,
+      OutgoingStatusId: inventory.outgoingStatusId,
+      TypeStatusId: inventory.typeStatusId,
+      CategoryId: inventory.categoryId,
+      CompanyId: inventory.companyId,
+      ReceviedTypeId: inventory.receviedTypeId,
+      AcceptanceId: inventory.acceptanceId,
+      LocationId: inventory.locationId,
+      comeFrom: inventory.comeFrom
+    })
   }
   initializeForm() {
     this.service.form1.patchValue({
@@ -489,8 +461,7 @@ export class AddComponent implements OnInit {
             this.service.form1.controls['Status'].setValue('وارد');
             this.OnChangeStatus('وارد');
             this.statusflag = 1;
-            /////
-            this.inventoryserv.GetLocationByReceivedId(this.selected).subscribe(res => {
+            this.inventoryserv.GetLocations().subscribe(res => {
 
               if (res.status == true) {
 
@@ -517,8 +488,6 @@ export class AddComponent implements OnInit {
 
             });
 
-            //
-
             this.serialflag = 0;
           }
           this.serialnew == 1;
@@ -537,13 +506,11 @@ export class AddComponent implements OnInit {
             }
           }
           if (recviedstatuscount == 0) {
-            // this.service.form1.controls['ReceviedStatusId'].setValue(null);
             this.selected = 2;
             this.service.form1.controls['ReceviedStatusId'].setValue(this.selected);
             this.service.form1.controls['Status'].setValue('وارد');
             this.OnChangeStatus('وارد');
             this.statusflag = 1;
-            /////
             this.inventoryserv.GetLocations().subscribe(res => {
               if (res.status == true) {
                 this.Location = res.data;
@@ -608,7 +575,7 @@ export class AddComponent implements OnInit {
 
   OnChangeReceivedName(event: any) {
 
-    this.inventoryserv.GetLocationByReceivedId(event.value).subscribe(res => {
+    this.inventoryserv.GetLocations().subscribe(res => {
 
       if (res.status == true) {
 

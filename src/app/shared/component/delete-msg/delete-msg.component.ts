@@ -22,12 +22,7 @@ export class DeleteMsgComponent implements OnInit {
 
   }
   onDelete(){
-    //if(confirm('Are you sure to delete this record ?')){
-
       this.dialogRef.close(true);
-
-        //this.toastr.success('Deleted successfully');
-    //}
   }
 
 }

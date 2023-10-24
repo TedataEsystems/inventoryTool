@@ -88,7 +88,6 @@ export class InvetoryLogsComponent implements OnInit {
     }
     }
   getRequestdata(pageNum: number, pageSize: number, search: string, sortColumn: string, sortDir: string) {
-    //debugger
     this.loader.busy();
     this.LogsServ.getInventoryLogs(pageNum, pageSize, search, sortColumn, sortDir).subscribe(response => {
       this.logsList = response?.data;
@@ -197,7 +196,6 @@ applyFilter(filterValue: Event) {
     }
     this.lastcol = sort.active; this.lastdir = sort.direction;
     var c = this.pageIn;
-   // this.getRequestdata(1, 100, '', sort.active, this.lastdir);
   }
 
   }

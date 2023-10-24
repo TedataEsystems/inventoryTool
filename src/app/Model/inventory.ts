@@ -1,6 +1,5 @@
 export interface Inventory {
     id:number;
-    //M:number;
     Comment :string;
     Customername :string;
     DeviceType :string;
@@ -13,7 +12,6 @@ export interface Inventory {
     SubItem:boolean;
     SerielNumber:string;
     RecipientName :string;
-   
     Status:string;
     ReceivedDate :Date;
     ExpriyDate :Date;

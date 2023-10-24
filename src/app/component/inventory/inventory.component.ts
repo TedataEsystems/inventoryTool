@@ -58,7 +58,6 @@ export class InventoryComponent implements OnInit {
   Location: LocationName[] = [];
   Acceptance: Acceptance[] = [];
   isNotAdmin = false;
-  //loader: boolean = false;
   @ViewChild('typeStatusSearch') typeStatusSearch!: ElementRef;
 
   valdata = ""; valuid = 0;
@@ -72,13 +71,13 @@ export class InventoryComponent implements OnInit {
 
   isFilterationData: Boolean = false;
   panelOpenState = false;
-  appear=false;
-  allow=false;
-  @ViewChild(MatSort) sort?:MatSort ;
-  @ViewChild(MatPaginator) paginator?:MatPaginator ;
-  displayedColumns: string[] = ['all','Id', 'TypeStatusName', 'Comment','CustomerName','SerielNumber','OrderNumber','RecipientName',
-  'TeamName','Status','ReceivedDate','ReceviedStatusName','ExpriyDate','OutgoingStatusName','CategoryName','CompanyName','ReceviedTypeName','AcceptanceName','LocationName','comeFrom','BR','ReorderingPoint','ItemCode','Meter','Number','CreationDate','CreatedBy','UpdateDate','UpdatedBy','action'];
-  dataSource =new MatTableDataSource();
+  appear = false;
+  allow = false;
+  @ViewChild(MatSort) sort?: MatSort;
+  @ViewChild(MatPaginator) paginator?: MatPaginator;
+  displayedColumns: string[] = ['all', 'Id', 'TypeStatusName', 'Comment', 'CustomerName', 'SerielNumber', 'OrderNumber', 'RecipientName',
+    'TeamName', 'Status', 'ReceivedDate', 'ReceviedStatusName', 'ExpriyDate', 'OutgoingStatusName', 'CategoryName', 'CompanyName', 'ReceviedTypeName', 'AcceptanceName', 'LocationName', 'comeFrom', 'BR', 'ReorderingPoint', 'ItemCode', 'Meter', 'Number', 'CreationDate', 'CreatedBy', 'UpdateDate', 'UpdatedBy', 'action'];
+  dataSource = new MatTableDataSource();
   columnsToDisplay: string[] = this.displayedColumns.slice();
   team = localStorage.getItem("userGroup");
 
@@ -104,30 +103,19 @@ export class InventoryComponent implements OnInit {
   public colname: string = 'Id';
   public coldir: string = 'asc';
 
-  // searchKey!:string;
-
   getRequestdata(pageNum: number, pageSize: number, search: string, sortColumn: string, sortDir: string) {
-    console.log("+++++++++++");
-    debugger;
     this.loader.busy();
     this.InventoryServ.getInventory(pageNum, pageSize, search, sortColumn, sortDir).subscribe(response => {
-       console.log(response?.data);
       this.InventoryList = response?.data as Inventory[];
-      //  console.log(this.InventoryList+"//////////////////////////////");
       this.InventoryList.length = response?.pagination.totalCount;
-
       this.Ids2 = [];
-
       for (var iny of this.InventoryList) {
-        debugger;
-        // console.log(iny);
         this.Ids2.push(iny?.id);
       }
 
       this.Ids = [];
 
       this.dataSource = new MatTableDataSource<any>(this.InventoryList);
-      console.log(this.dataSource,"list")
       this.dataSource._updateChangeSubscription();
       this.dataSource.paginator = this.paginator as MatPaginator;
 
@@ -156,13 +144,8 @@ export class InventoryComponent implements OnInit {
       this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
     }
 
-
-    ///////delete admin
-    if (this.team == 'Inventory_Hady' || this.team == 'Inventory_User')
-    // if(this.team =='admin')
-    {
+    if (this.team == 'Inventory_Hady' || this.team == 'Inventory_User') {
       this.allow = true;
-
     }
     else {
       this.allow = false;
@@ -220,7 +203,6 @@ export class InventoryComponent implements OnInit {
         } else {
           this.AdvancedSearch();
         }
-        // this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
       });
     }
   }
@@ -238,22 +220,13 @@ export class InventoryComponent implements OnInit {
       dialogGonfig.panelClass = 'modals-dialog';
       this.dialog.open(EditComponent, { panelClass: 'modals-dialog', disableClose: true, autoFocus: true, width: "50%", data: row }).afterClosed()
         .subscribe(result => {
-          // debugger;
-
           if (this.service.formSearch.value != '') {
-            //this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef)
-            // console.log("iffff");
             this.AdvancedSearch();
 
           } else {
-            // console.log("elllllsssss");
             this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
           }
-
-          //this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
-
         });
-      //this.form.reset();
 
     }
 
@@ -264,13 +237,8 @@ export class InventoryComponent implements OnInit {
       this.router.navigateByUrl('/login');
     }
     else {
-
-      //this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
-      // debugger;
-      //if (res) {
       this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
         if (res) {
-          //console.log("row"+row.id);
           this.InventoryServ.DeleteInventory(row.id).subscribe(
             rs => {
               this.toastr.success(':: successfully Deleted');
@@ -279,22 +247,16 @@ export class InventoryComponent implements OnInit {
               } else {
                 this.AdvancedSearch();
               }
-              // this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
-              // this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
-              //  this.getRequestdata(1, 100, searchData, this.sortColumnDef, "asc");
             },
             error => { this.toastr.warning(':: An Error Occured') }
           );
         }
         else {
-          // this.toastr.warning(':: An Error Occured')
         }
       });
     }
 
-    //}
   }
-  ///////////////////////////GetLogs
   GetLog(row: any) {
 
     if (localStorage.getItem("userName") == "" || localStorage.getItem("userName") == undefined || localStorage.getItem("userName") == null) {
@@ -305,11 +267,6 @@ export class InventoryComponent implements OnInit {
 
       this.logserv.SendLogId(row.id);
       this.router.navigateByUrl('/inventorylogs');
-
-
-
-
-      //}
     }
   }
 
@@ -385,7 +342,7 @@ export class InventoryComponent implements OnInit {
       this.getRequestdata(1, 100, '', sort.active, this.lastdir);
     }
   }
- 
+
   @Input() param = 'file';
   @ViewChild('LIST') template!: TemplateRef<any>;
   @ViewChild('LISTWithLocation') templateWithLocation!: TemplateRef<any>;
@@ -429,7 +386,6 @@ export class InventoryComponent implements OnInit {
 
 
   uploadFileEvtF(imgFile: any) {
-    //console.log("img",imgFile.target.files[0])
     this.fileuploaded = imgFile.target.files[0];
     if (imgFile.target.files && imgFile.target.files[0]) {
       this.fileAttr = '';
@@ -445,8 +401,6 @@ export class InventoryComponent implements OnInit {
         };
       };
       reader.readAsDataURL(imgFile.target.files[0]);
-
-      // Reset if duplicate image uploaded again
       (this.fileInput as ElementRef).nativeElement.value = "";
     } else {
       this.fileAttr = 'Choose File';
@@ -487,10 +441,8 @@ export class InventoryComponent implements OnInit {
   }
 
   upLoadF() {
-    //console.log("uploadF","param:",this.param,"fileUploaded:", this.fileuploaded)
     const fd = new FormData();
     fd.append(this.param, this.fileuploaded);
-    // console.log("data to api",fd)
     this.InventoryServ.importExcelFile(fd).subscribe(res => {
       if (res.status == true) {
         if (this.service.formSearch.value == '') {
@@ -498,7 +450,6 @@ export class InventoryComponent implements OnInit {
         } else {
           this.AdvancedSearch();
         }
-        // this.getRequestdata(1, 25, '', this.sortColumnDef, this.SortDirDef);
         this.fileAttr = 'Choose File';
         this.resetfile();
         this._bottomSheet.dismiss();
@@ -512,7 +463,6 @@ export class InventoryComponent implements OnInit {
         } else {
           this.AdvancedSearch();
         }
-        // this.getRequestdata(1, 25, '', this.sortColumnDef, this.SortDirDef);
         this.fileAttr = 'Choose File';
         this.resetfile();
         this.htmlToAdd = res.error;
@@ -526,47 +476,44 @@ export class InventoryComponent implements OnInit {
 
 
   }
-  upLoadFWithLocation()
-  {
-debugger;
-     const fd = new FormData();
-     fd.append(this.param, this.fileuploaded);
+  upLoadFWithLocation() {
+    const fd = new FormData();
+    fd.append(this.param, this.fileuploaded);
 
-     this.InventoryServ.importExcelFileWithLocation(fd).subscribe(res => {
-       if (res.status == true) {
-         if (this.service.formSearch.value == '') {
-           this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
-         } else {
-           this.AdvancedSearch();
-         }
+    this.InventoryServ.importExcelFileWithLocation(fd).subscribe(res => {
+      if (res.status == true) {
+        if (this.service.formSearch.value == '') {
+          this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+        } else {
+          this.AdvancedSearch();
+        }
 
-         this.fileAttr = 'Choose File';
-         this.resetfile();
-         this._bottomSheet.dismiss();
-         this.openBottomSheetMsg();
-         this.htmlToAdd = res.data+res.success
-       }
-       else {
-         this.openBottomSheetMsg();
-         if (this.service.formSearch.value == '') {
-           this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
-         } else {
-           this.AdvancedSearch();
-         }
+        this.fileAttr = 'Choose File';
+        this.resetfile();
+        this._bottomSheet.dismiss();
+        this.openBottomSheetMsg();
+        this.htmlToAdd = res.data + res.success
+      }
+      else {
+        this.openBottomSheetMsg();
+        if (this.service.formSearch.value == '') {
+          this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+        } else {
+          this.AdvancedSearch();
+        }
 
-         this.fileAttr = 'Choose File';
-         this.resetfile();
-         this.htmlToAdd = res.error;
-       }
-     }
-       , error => {
-         this.toastr.warning("!! Fail")
-         this.resetfile();
-       }
-     );
+        this.fileAttr = 'Choose File';
+        this.resetfile();
+        this.htmlToAdd = res.error;
+      }
+    }
+      , error => {
+        this.toastr.warning("!! Fail")
+        this.resetfile();
+      }
+    );
   }
   ExportTOEmptyExcel() {
-    //debugger
     if (localStorage.getItem("userName") == "" || localStorage.getItem("userName") == undefined || localStorage.getItem("userName") == null) {
       this.router.navigateByUrl('/login');
     }
@@ -582,7 +529,6 @@ debugger;
     }
   }
   Ids: number[] = [];
-  // select all
   isall: boolean = false;
   selectedRows: boolean = false;
   alll: boolean = false;
@@ -596,23 +542,13 @@ debugger;
       this.selectedRows = true;
       this.Ids = [];
       this.Ids = this.Ids2;
-      //this.Ids2 = [];
-      // this.InventoryList.map(({ Id }) => this.Ids.push(Id));
-
     }
 
     else {
-      //console.log("isall", this.isall);
-      // console.log("hhh", event);
       this.Ids = [];
-      //this.Ids2=[];
       this.selectedRows = false;
       this.alll = false;
       this.isall = false;
-      //console.log(this.Ids, "idsssss");
-      //console.log("all", this.alll);
-      //console.log("isall", this.isall);
-
     }
   }
   onselectcheck(event: any, row: any) {
@@ -621,16 +557,12 @@ debugger;
     if (event.checked) {
       this.selectedRows = true;
       this.Ids.push(row.id);
-      // console.log(this.Ids);
-
     }
 
     else {
-      //   this.selectedRows = true;
       for (let i = 0; i < this.Ids.length; i++) {
         if (this.Ids[i] == row.id) {
           this.Ids.splice(i, 1);
-          //   console.log("after splice",this.Ids);
         }
       }
       if (this.Ids.length == 0) {
@@ -677,27 +609,14 @@ debugger;
           else {
             this.toastr.warning(':: An Error Occured')
           }
-
-          // },
-          // error => { this.toastr.warning(':: An Error Occured')
         }
         );
 
-
-
       }
-
-
       else {
         this.toastr.warning(" يجب ان تختار صفوف اولا");
       }
-
-
-
-
     }
-
-    //
   }
   UpdateGroupToOutgoing() {
 
@@ -769,8 +688,6 @@ debugger;
     this.inventorySearch.RecipientName = this.service.formSearch.value.RecipientName;
     this.inventorySearch.TeamIDs = (this.service.formSearch.value.TeamId);
     this.inventorySearch.Status = this.service.formSearch.value.Status;
-    ////////////////////////////////
-
     this.inventorySearch.RemoveDuplicate = this.service.formSearch.get('RemoveDuplicate')?.value;
     this.inventorySearch.TypeStatusIDs = (this.service.formSearch.value.TypeStatusId);
     this.inventorySearch.ReceviedStatusIDs = (this.service.formSearch.value.ReceviedStatusId);
@@ -796,8 +713,8 @@ debugger;
 
       this.loader.idle();
     }
-    )//subsribe
-  }//advanced
+    )
+  }
   SaveFavoriteSearch() {
 
     this.isFilterationData = true;
@@ -805,10 +722,8 @@ debugger;
     this.loader.busy();
     this.inventorySearch.CreatedDateFrom = this.service.formSearch.value.CreatedDateFrom == "" ? null : this.service.formSearch.value.CreatedDateFrom;
     this.inventorySearch.CreatedDateTo = this.service.formSearch.value.CreatedDateTo == "" ? null : this.service.formSearch.value.CreatedDateTo;
-    //
     this.inventorySearch.UpdatedDateFrom = this.service.formSearch.value.UpdatedDateFrom == "" ? null : this.service.formSearch.value.UpdatedDateFrom;
     this.inventorySearch.UpdatedDateTo = this.service.formSearch.value.UpdatedDateTo == "" ? null : this.service.formSearch.value.UpdatedDateTo;
-    //
     this.inventorySearch.ExpriyDateFrom = this.service.formSearch.value.ExpriyDateFrom == "" ? null : this.service.formSearch.value.ExpriyDateFrom;
     this.inventorySearch.ExpriyDateTo = this.service.formSearch.value.ExpriyDateTo == "" ? null : this.service.formSearch.value.ExpriyDateTo;
     //
@@ -832,7 +747,6 @@ debugger;
     this.inventorySearch.TeamIDs = (this.service.formSearch.value.TeamId);
     this.inventorySearch.Status = this.service.formSearch.value.Status;
 
-    //this.inventorySearch.RemoveDuplicate= this.service.formSearch.get('RemoveDuplicate')?.value;
     this.inventorySearch.ActionType = this.service.formSearch.value.ActionType;
     this.inventorySearch.DateType = this.service.formSearch.value.DateType;
     this.inventorySearch.TypeStatusIDs = (this.service.formSearch.value.TypeStatusId);
@@ -857,8 +771,6 @@ debugger;
   IntialValCreateBy: string = "";
   IntialValDate: string = "";
   clearAdvancedSearch() {
-    debugger;
-
     this.Ids2 = [];
     this.appear = false
     this.isFilterationData = false;
@@ -884,11 +796,8 @@ debugger;
       if (res.status == true) {
         this.LocationList = res.location;
         this.CategoryList = res.category;
-
         this.CompanyNameList = res.companyName;
-
         this.OutgoingStatusList = res.outgoingStatus;
-        ////////////
         this.ReceviedStatusList = res.receviedStatus;
         this.AcceptanceList = res.acceptance;
         this.ReceviedTypeList = res.receviedType;
@@ -988,30 +897,22 @@ debugger;
       this.router.navigateByUrl('/login');
     }
     else {
-      // debugger;
       let invSearch: InventorySearch = <InventorySearch>{};
 
       invSearch.CreatedDateFrom = this.service.formSearch.value.CreatedDateFrom == "" ? null : this.service.formSearch.value.CreatedDateFrom;
       invSearch.CreatedDateTo = this.service.formSearch.value.CreatedDateTo == "" ? null : this.service.formSearch.value.CreatedDateTo;
-      //
       invSearch.UpdatedDateFrom = this.service.formSearch.value.UpdatedDateFrom == "" ? null : this.service.formSearch.value.UpdatedDateFrom;
       invSearch.UpdatedDateTo = this.service.formSearch.value.UpdatedDateTo == "" ? null : this.service.formSearch.value.UpdatedDateTo;
-      //
       invSearch.ExpriyDateFrom = this.service.formSearch.value.ExpriyDateFrom == "" ? null : this.service.formSearch.value.ExpriyDateFrom;
       invSearch.ExpriyDateTo = this.service.formSearch.value.ExpriyDateTo == "" ? null : this.service.formSearch.value.ExpriyDateTo;
-      //
       invSearch.ReceivedDateFrom = this.service.formSearch.value.ReceivedDateFrom == "" ? null : this.service.formSearch.value.ReceivedDateFrom;
       invSearch.ReceivedDateTo = this.service.formSearch.value.ReceivedDateTo == "" ? null : this.service.formSearch.value.ReceivedDateTo;
-      //
       invSearch.CreatedBy = this.service.formSearch.value.CreatedBy == "" ? null : this.service.formSearch.value.CreatedBy;
       invSearch.UpdatedBy = this.service.formSearch.value.UpdatedBy == "" ? null : this.service.formSearch.value.UpdatedBy;
       invSearch.Comment = this.service.formSearch.value.Comment == "" ? null : this.service.formSearch.value.Comment;
-
       invSearch.Customername = this.service.formSearch.value.Customername == "" ? null : this.service.formSearch.value.Customername;
       invSearch.DeviceType = this.service.formSearch.value.DeviceType == "" ? null : this.service.formSearch.value.DeviceType;
       invSearch.OrderNumber = this.service.formSearch.value.OrderNumber == 0 ? null : this.service.formSearch.value.OrderNumber;
-
-      // invSearch.OrderNumber = Number(this.service.formSearch.value.OrderNumber);
       invSearch.ReorderingPoint = this.service.formSearch.value.ReorderingPoint == 0 ? null : this.service.formSearch.value.ReorderingPoint;
       invSearch.BR = this.service.formSearch.value.BR == 0 ? null : this.service.formSearch.value.BR;
       invSearch.ItemCode = this.service.formSearch.value.ItemCode == "" ? null : this.service.formSearch.value.ItemCode;
@@ -1022,14 +923,10 @@ debugger;
       invSearch.TeamIDs = this.service.formSearch.value.TeamId == "" ? null : this.service.formSearch.value.TeamId;
       invSearch.Status = this.service.formSearch.value.Status == "" ? null : this.service.formSearch.value.Status;
 
-
-
       if (this.Ids.length == 0) {
 
         invSearch.IDs == null;
       } else {
-
-        //console.log(this.Ids);
         invSearch.IDs = this.Ids;
       }
 
@@ -1319,9 +1216,7 @@ debugger;
       });
   }
 
-  ExportTOEmptyExcelWithLocation()
-  {
-    debugger;
+  ExportTOEmptyExcelWithLocation() {
     if (localStorage.getItem("userName") == "" || localStorage.getItem("userName") == undefined || localStorage.getItem("userName") == null) {
       this.router.navigateByUrl('/login');
     }

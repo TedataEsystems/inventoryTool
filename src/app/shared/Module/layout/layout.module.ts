@@ -94,7 +94,6 @@ import { InvetoryLogsComponent } from 'src/app/component/invetory-logs/invetory-
     }),
 
 
-  ],
-  //providers:[{provide:HTTP_INTERCEPTORS , useClass:LoadingInterceptor , multi:true}]
+  ]
 })
 export class LayoutModule { }

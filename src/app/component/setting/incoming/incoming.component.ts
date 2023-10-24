@@ -377,7 +377,6 @@ export class IncomingComponent implements OnInit {
 
 
   onDelete(r: any) {
-    //debugger
     if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
     {
       this.router.navigateByUrl('/login');

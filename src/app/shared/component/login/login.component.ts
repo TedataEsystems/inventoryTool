@@ -14,75 +14,63 @@ import { LoginService } from '../../service/login.service';
 export class LoginComponent implements OnInit {
 
 
-  form:FormGroup=new FormGroup({
-    username: new FormControl('',Validators.required),
-    password: new FormControl('',Validators.required)
-    
+  form: FormGroup = new FormGroup({
+    username: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required)
+
   });
-  warning=false;
+  warning = false;
   returnUrl?: string;
-  
+
   loginmodel: Login = {
     userName: "",
     password: ""
   }
-  
+
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private titleService: Title,
     private config: ConfigureService,
-    private login : LoginService
-    )
-    {
+    private login: LoginService
+  ) {
 
-      this.titleService.setTitle("Inventory | Login");
-      this.config.Logout();
+    this.titleService.setTitle("Inventory | Login");
+    this.config.Logout();
 
-    }
+  }
 
   ngOnInit(): void {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 
   }
   onSubmit() {
-  //debugger
     if (this.form.invalid) {
       return;
     }
-    setInterval(()=>{     
-                      
+    setInterval(() => {
+
       this.config.Logout();
-  }, 3600000);
+    }, 3600000);
     this.loginmodel.userName = this.form.value.username.trim();
     this.loginmodel.password = this.form.value.password;
-    
+
     this.login.getLogin(this.loginmodel).subscribe(res => {
-   
+
       if (res.status == true) {
         localStorage.setItem("tokNum", res.token);
-        
         localStorage.setItem("userName", res.userName);
-      
         localStorage.setItem("userGroup", res.userGroup);
-      
- 
-      // window.location.href = "/"
-      this.router.navigate([this.returnUrl]);
-   
-         //this.router.navigate(['/'], { relativeTo: this.route });
+
+        this.router.navigate([this.returnUrl]);
       }
       else {
-        
-        this.warning=true;
-
+        this.warning = true;
       }
-
-      // Retrieve
     }, err => {
-      
-      this.warning=true;
+
+      this.warning = true;
 
     });
   }

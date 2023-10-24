@@ -28,46 +28,34 @@ export class RelocatLocationComponent implements OnInit {
 
   ngOnInit(): void {
     this.ids = this.data;
-    console.log(this.ids, "selected ids")
     this.inventoryService.GetLocationsLists().subscribe((res) => {
       if (res.status == true) {
         this.locations = res.locations;
       } else {
         this.toastr.warning('Failed');
       }
-      console.log(this.locations, "locations")
     });
 
   }
   onSubmit() {
-    console.log(this.ids, "in submit");
-    console.log(this.locations, "lo in submit")
-    console.log(this.form.value.locationTo, "loc To in submit")
-
     if (this.form.valid) {
       this.updatedLocations.ids = this.ids;
       this.updatedLocations.locationTo = this.form.value.locationTo;
-      console.log(this.updatedLocations, "updatedLoc in submit")
       this.inventoryService.UpdateInventoyLocations(this.updatedLocations).subscribe(res => {
-        console.log(res,"................................")
         if (res.status == true) {
-         // this.toastr.success(':added successfully');
          if(res.data !="")
          {
-          console.log("tests", res.data);
           this.toastr.success(res.data);
           
          }
          if(res.error !="")
          {
-          console.log("testtttt", res.error);
           this.toastr.error(res.error)
          }
          this.onClose()
         
         }
         else {
-         console.log("tests", res);
           this.toastr.error(res.error);
           
          

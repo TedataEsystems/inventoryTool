@@ -98,7 +98,6 @@ export class InventoryCapacityComponent implements OnInit {
     this.loader.busy();;
     this.inventoryCapacityServices.GetInventoryCapacity(pageNum, pageSize, search, sortColumn, sortDir).subscribe(response => {
       this.InventoryCapacityList = response?.data;
-      console.log( this.InventoryCapacityList)
       this.InventoryCapacityList.length = response?.pagination.totalCount;
       this.dataSource = new MatTableDataSource<any>(this.InventoryCapacityList);
       this.dataSource._updateChangeSubscription();
@@ -384,7 +383,6 @@ export class InventoryCapacityComponent implements OnInit {
   }
 
   onDelete(r: any) {
-    //debugger
     if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
     {
       this.router.navigateByUrl('/login');

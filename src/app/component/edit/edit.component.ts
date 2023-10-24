@@ -109,14 +109,11 @@ export class EditComponent implements OnInit {
         this.ReceivedStatuslist = res.receviedStatus;
         this.OutgoingStatuslist = res.outgoingStatus;
         this.Category = res.category;
-        //this.Category1 = res.category;
         this.ReceviedType = res.receviedType;
         this.Location = res.location;
         this.CompanyName = res.companyName;
         this.Acceptance = res.acceptance;
-        //console.log(this.ReceivedStatuslist)
         if (this.data) {
-          //set list in update
           var typstatuscount = 0;
           var teamcount = 0;
           var recviedstatuscount = 0;
@@ -161,7 +158,6 @@ export class EditComponent implements OnInit {
             this.service.form.controls['OutgoingStatusId'].setValue(null);
 
           }
-          //////////////////
           for (var recviedstat of this.ReceivedStatuslist) {
 
             if (this.data.receviedStatusId == recviedstat.id) {
@@ -176,7 +172,6 @@ export class EditComponent implements OnInit {
             this.service.form.controls['ReceviedStatusId'].setValue(null);
 
           }
-          /////////Category
           for (var category of this.Category) {
 
 
@@ -205,10 +200,6 @@ export class EditComponent implements OnInit {
           if (companynamecount == 0) {
             this.service.form.controls['CompanyId'].setValue(null);
           }
-
-
-          //////////////////////////////
-          ///////////location
           for (var location of this.Location) {
             if (this.data.locationId == location.id) {
               locationcount++;
@@ -230,18 +221,15 @@ export class EditComponent implements OnInit {
             this.service.form.controls['AcceptanceId'].setValue(null);
           }
           for (var received of this.ReceviedType) {
-            // debugger;
             if (this.data.receviedTypeId == received.id) {
               receviedtypecount++;
               this.service.form.controls['ReceviedTypeId'].setValue(this.data.receviedTypeId);
-              //this.isHidden=false;
               this.toggle();
               break;
             }
           }
           if (receviedtypecount == 0) {
             this.service.form.controls['ReceviedTypeId'].setValue(null);
-            //this.toggle();
           }
 
         }
@@ -255,11 +243,6 @@ export class EditComponent implements OnInit {
     this.inventoryserv.GetCategoryByTypeId(this.data.typeStatusId).subscribe(res => {
 
       if (res.status == true) {
-
-        // this.Category = res.data;
-
-
-
         var categorycount = 0;
         for (var category of this.Category1) {
           if (category.id == 47 || category.id == 48 || category.id == 49) {
@@ -292,37 +275,25 @@ export class EditComponent implements OnInit {
 
 
     });
-
-
-
-    //debugger
     if (this.data) {
-      console.log("subItem" + this.data.subItem)
       if (this.data.subItem) {
         this.subitem = this.data.subItem;
         this.subitem1 = this.data.subItem;
       }
       this.service.form.controls['Id'].setValue(this.data.id);
-      // this.service.form.controls['M'].setValue(this.data.m);
       this.service.form.controls['CustomerName'].setValue(this.data.customerName);
-      //this.service.form.controls['DeviceType'].setValue(this.data.deviceType);
       this.service.form.controls['OrderNumber'].setValue(this.data.orderNumber);
       this.service.form.controls['ReorderingPoint'].setValue(this.data.reorderingPoint);
       this.service.form.controls['BR'].setValue(this.data.br);
       this.service.form.controls['ItemCode'].setValue(this.data.itemCode);
       this.service.form.controls['Meter'].setValue(this.data.meter);
-      console.log("number++" + this.data.number);
       this.service.form.controls['Number'].setValue(this.data.number);
       this.service.form.controls['SerielNumber'].setValue(this.data.serielNumber);
       this.service.form.controls['RecipientName'].setValue(this.data.recipientName);
-      // this.service.form.controls['Team'].setValue(this.data.team);
       this.service.form.controls['Status'].setValue(this.data.status);
       this.service.form.controls['Comment'].setValue(this.data.comment);
       this.service.form.controls['ReceivedDate'].setValue(this.data.receivedDate);
       this.service.form.controls['ExpriyDate'].setValue(this.data.expriyDate);
-      /*this.service.form.controls['TypeStatusId'].setValue(this.data.typeStatusId);
-   this.service.form.controls['ReceviedStatusId'].setValue(this.data.receviedStatusId);
-   this.service.form.controls['OutgoingStatusId'].setValue(this.data.outgoingStatusId);*/
       this.service.form.controls['CreatedBy'].setValue(this.data.createdBy);
       this.service.form.controls['CreationDate'].setValue(this.data.creationDate);
       this.service.form.controls['comeFrom'].setValue(this.data.comeFrom);
@@ -332,14 +303,10 @@ export class EditComponent implements OnInit {
     if (this.service.form.controls['Status'].value == 'وارد') {
       this.statusflag = 1;
       this.rowHeig = "720px";
-      // this.isHidden=!this.isHidden;
-      // this.outgoingisHidden=this.outgoingisHidden;
     }
     else if (this.service.form.controls['Status'].value == 'منصرف') {
       this.statusflag = 2;
       this.rowHeig = "600px";
-      // this.isHidden=this.isHidden;
-      // this.outgoingisHidden=!this.outgoingisHidden;
     }
 
     else {
@@ -358,18 +325,14 @@ export class EditComponent implements OnInit {
   }
   toggle() {
     this.isHidden = !this.isHidden;
-    //this.outgoingisHidden=this.outgoingisHidden;
   }
   outgoingtoggle() {
-    //this.isHidden=this.isHidden;
     this.outgoingisHidden = !this.outgoingisHidden;
   }
   onSubmit() {
 
     let inventory = {
-      //M:this.service.form.value.M ,
       CustomerName: this.service.form.value.CustomerName,
-
       OrderNumber: this.service.form.value.OrderNumber,
       ReorderingPoint: this.service.form.value.ReorderingPoint,
       BR: this.service.form.value.BR,
@@ -421,21 +384,12 @@ export class EditComponent implements OnInit {
 
       return;
     }
-
-
-
-    //else
-    //1 {
-    //update
-
     if (inventory.Status == "منصرف") {
 
 
       if (inventory.ExpriyDate == null) {
         this.hidden1 = !this.hidden1;
         this.hidden11 = 1
-        //this.loader.idle();
-        //return;
       }
       else {
         this.hidden11 = 0;
@@ -443,8 +397,6 @@ export class EditComponent implements OnInit {
       if (inventory.OutgoingStatusId == null) {
         this.outgoinghidden1 = !this.outgoinghidden1;
         this.outgoinghidden11 = 1;
-        // this.loader.idle();
-        //return;
       }
       else {
         this.outgoinghidden11 = 0;
@@ -452,8 +404,6 @@ export class EditComponent implements OnInit {
       if (inventory.CustomerName == null || inventory.CustomerName == '') {
         this.CustomerNamehidden = !this.CustomerNamehidden;
         this.CustomerNamehidden1 = 1;
-        //this.loader.idle();
-        //return;
       }
 
       else {
@@ -463,8 +413,6 @@ export class EditComponent implements OnInit {
       if (inventory.RecipientName == null || inventory.RecipientName == "") {
         this.RecipientNamehidden = !this.RecipientNamehidden;
         this.RecipientNamehidden1 = 1;
-        //this.loader.idle();
-        // return;
       }
 
       else {
@@ -524,12 +472,6 @@ export class EditComponent implements OnInit {
 
               this.loader.idle();
               this.dialogRef.close('save');
-              // this.service.formSearch.reset();
-              // this.SearchForm.emit(true);
-
-              // this.onClose();
-
-
             }
             else {
               if (res.status == 'type') {
@@ -599,7 +541,7 @@ export class EditComponent implements OnInit {
     }
 
 
-    // }
+
 
 
 
@@ -610,8 +552,6 @@ export class EditComponent implements OnInit {
   }
   onClose() {
     this.service.form.reset();
-
-    // this.service.initializeFormGroup();
     this.dialogRef.close();
 
   }
@@ -627,11 +567,6 @@ export class EditComponent implements OnInit {
     this.inventoryserv.GetCategoryByTypeId(event.value).subscribe(res => {
 
       if (res.status == true) {
-
-        //this.Category = res.data;
-
-
-        // this.service.form.controls['CategoryId'].setValue(res.data.id);
         var categorycount = 0;
         for (var category of this.Category) {
           if (category.id == 47 || category.id == 48 || category.id == 49) {
@@ -666,31 +601,16 @@ export class EditComponent implements OnInit {
 
 
     });
-
-
-    // if(event.value>=169 && event.value <=180)
-    // {
-    //   this.MetterHidden=true;
-    // }
-    // else{
-    //   this.MetterHidden=false;
-    // }
   }
-
-  ////change-status
   OnChangeStatus(event: any) {
 
     if (event.value == 'وارد') {
       this.statusflag = 1;
       this.rowHeig = "720px";
-      // this.isHidden=!this.isHidden;
-      // this.outgoingisHidden=this.outgoingisHidden;
     }
     else {
       this.statusflag = 2;
       this.rowHeig = "600px";
-      // this.isHidden=this.isHidden;
-      // this.outgoingisHidden=!this.outgoingisHidden;
     }
   }
 
@@ -721,8 +641,7 @@ export class EditComponent implements OnInit {
             this.service.form1.controls['Status'].setValue('وارد');
             this.OnChangeStatus('وارد');
             this.statusflag = 1;
-            /////
-            this.inventoryserv.GetLocationByReceivedId(this.selected).subscribe(res => {
+            this.inventoryserv.GetLocations().subscribe(res => {
 
               if (res.status == true) {
 
@@ -749,8 +668,6 @@ export class EditComponent implements OnInit {
 
             });
 
-            //
-
             this.serialflag = 0;
           }
 
@@ -770,44 +687,7 @@ export class EditComponent implements OnInit {
           }
           if (recviedstatuscount == 0) {
             this.selected = 1;
-            // this.service.form1.controls['ReceviedStatusId'].setValue(this.selected);
-            // this.service.form1.controls['Status'].setValue('وارد');
-            // this.OnChangeStatus('وارد');
             this.statusflag = 1;
-            /////
-            // this.inventoryserv.GetLocationByReceivedId(this.selected).subscribe(res=>{
-
-            //  if(res.status==true)
-            //  {
-
-            //  this.Location = res.data;
-
-
-
-            //    var locationcount=0;
-            //    for(var location of this.Location )
-            //    {
-            //      if(this.data.locationId==location.id)
-            //      {
-            //        locationcount ++;
-            //        this.service.form1.controls['LocationId'].setValue(this.data.locationId);
-            //        break;
-            //      }
-            //    }
-            //    if(locationcount==0)
-            //    {
-            //      this.service.form1.controls['LocationId'].setValue(null);
-            //    }
-
-            //  }
-
-
-
-
-            // });
-
-            //
-
             this.serialflag = 0;
           }
 
@@ -826,14 +706,12 @@ export class EditComponent implements OnInit {
             }
           }
           if (recviedstatuscount == 0) {
-            // this.service.form1.controls['ReceviedStatusId'].setValue(null);
             this.selected = 2;
             this.service.form1.controls['ReceviedStatusId'].setValue(this.selected);
             this.service.form1.controls['Status'].setValue('وارد');
             this.OnChangeStatus('وارد');
             this.statusflag = 1;
-            /////
-            this.inventoryserv.GetLocationByReceivedId(this.selected).subscribe(res => {
+            this.inventoryserv.GetLocations().subscribe(res => {
 
               if (res.status == true) {
 
@@ -876,7 +754,7 @@ export class EditComponent implements OnInit {
   OnChangeReceivedName(event: any) {
 
 
-    this.inventoryserv.GetLocationByReceivedId(event.value).subscribe(res => {
+    this.inventoryserv.GetLocations().subscribe(res => {
 
       if (res.status == true) {
 
@@ -924,6 +802,5 @@ export class EditComponent implements OnInit {
 
   onLocationChange(event : any)
   {
-    console.log(event)
   }
 }

@@ -13,43 +13,43 @@ import { UpdatedLocation } from 'src/app/Model/updated-location';
 })
 export class InventoryService {
 
-  private headers = new HttpHeaders({  'Accept': 'application/json',
-  'zumo-api-version': '2.0.0',});
+  private headers = new HttpHeaders({
+    'Accept': 'application/json',
+    'zumo-api-version': '2.0.0',
+  });
   constructor(
     private httpClient: HttpClient,
     private config: ConfigureService) {
-      this.headers = this.headers.set('Authorization', "Bearer " + this.config.UserToken());
-   }
+    this.headers = this.headers.set('Authorization', "Bearer " + this.config.UserToken());
+  }
 
-   AddInventory(model: any): Observable<any> {
+  AddInventory(model: any): Observable<any> {
 
     return this.httpClient.post<any>(`${environment.API_URL}api/Inventory/AddInventory`, model);
   }
 
 
-  DeleteInventory(id:any):Observable<any>
-  {
+  DeleteInventory(id: any): Observable<any> {
 
-    return this.httpClient.delete(`${environment.API_URL}api/Inventory/DeleteInventory/`+id );
+    return this.httpClient.delete(`${environment.API_URL}api/Inventory/DeleteInventory/` + id);
   }
 
 
 
 
-  getInventory(PageNumber :number , PageSize :number , searchValue:string ,sortcolumn:string,sortcolumndir:string){
-    //debugger
+  getInventory(PageNumber: number, PageSize: number, searchValue: string, sortcolumn: string, sortcolumndir: string) {
     let params = new HttpParams();
-    if(PageNumber !== null && PageSize !== null){
-      params = params.append('pageNumber' , PageNumber.toString());
-      params = params.append('pageSize' , PageSize.toString());
-      params = params.append('searchValue' , searchValue.toString());
-      params = params.append('sortcolumn' , sortcolumn.toString());
-      params = params.append('sortcolumndir' , sortcolumndir.toString());
+    if (PageNumber !== null && PageSize !== null) {
+      params = params.append('pageNumber', PageNumber.toString());
+      params = params.append('pageSize', PageSize.toString());
+      params = params.append('searchValue', searchValue.toString());
+      params = params.append('sortcolumn', sortcolumn.toString());
+      params = params.append('sortcolumndir', sortcolumndir.toString());
     }
-    return this.httpClient.get<any>(`${environment.API_URL}api/Inventory/GetInventory` , {observe:'response' , params}).pipe(
+    return this.httpClient.get<any>(`${environment.API_URL}api/Inventory/GetInventory`, { observe: 'response', params }).pipe(
       map(response => {
 
-         return response.body ;
+        return response.body;
       })
     )
   }
@@ -64,90 +64,73 @@ export class InventoryService {
     return this.httpClient.get<any>(`${environment.API_URL}api/Inventory/getSettingsList`
     );
   }
-  GetCategoryByTypeId(id:any):Observable<any>
-  {
+  GetCategoryByTypeId(id: any): Observable<any> {
 
-    return this.httpClient.get(`${environment.API_URL}api/Inventory/GetCategoryByTypeId/`+id );
+    return this.httpClient.get(`${environment.API_URL}api/Inventory/GetCategoryByTypeId/` + id);
   }
 
-  DownloadAllDisplayDataOfExcel(ids:number[]):Observable<Blob>{
-    return this.httpClient.post(`${environment.API_URL}api/Inventory/ExportExcel`,ids,{responseType: 'blob',headers: this.headers});
+  DownloadAllDisplayDataOfExcel(ids: number[]): Observable<Blob> {
+    return this.httpClient.post(`${environment.API_URL}api/Inventory/ExportExcel`, ids, { responseType: 'blob', headers: this.headers });
   }
 
 
-  public importExcelFile(file : any)
-  {
+  public importExcelFile(file: any) {
 
-    return this.httpClient.post<any>(`${environment.API_URL}api/Inventory/ImportExcelFile` , file, {headers : this.headers});
-
-  }
-
-  public importExcelFileWithLocation(file : any)
-  {
-
-    return this.httpClient.post<any>(`${environment.API_URL}api/Inventory/importExcelFileWithLocation` , file, {headers : this.headers});
+    return this.httpClient.post<any>(`${environment.API_URL}api/Inventory/ImportExcelFile`, file, { headers: this.headers });
 
   }
 
-  ExportEmptyExcel():Observable<Blob>{
-    return this.httpClient.get(`${environment.API_URL}api/Inventory/ExportEmptyExcel`,{responseType: 'blob',headers: this.headers});
+  public importExcelFileWithLocation(file: any) {
+
+    return this.httpClient.post<any>(`${environment.API_URL}api/Inventory/importExcelFileWithLocation`, file, { headers: this.headers });
 
   }
-  ExportEmptyExcelWithLocation():Observable<Blob>{
-    console.log("servicessss");
-    return this.httpClient.get(`${environment.API_URL}api/Inventory/ExportEmptyExcelWithLocation`,{responseType: 'blob',headers: this.headers});
+
+  ExportEmptyExcel(): Observable<Blob> {
+    return this.httpClient.get(`${environment.API_URL}api/Inventory/ExportEmptyExcel`, { responseType: 'blob', headers: this.headers });
 
   }
-  UpdateInventoryStatusToRecevied(ids:number[]):Observable<any>
-{
+  ExportEmptyExcelWithLocation(): Observable<Blob> {
+    return this.httpClient.get(`${environment.API_URL}api/Inventory/ExportEmptyExcelWithLocation`, { responseType: 'blob', headers: this.headers });
 
-  return this.httpClient.post(`${environment.API_URL}api/Inventory/UpdateInventoryStatusToRecevied`,ids );
-}
+  }
+  UpdateInventoryStatusToRecevied(ids: number[]): Observable<any> {
 
-UpdateInventoryStatusToOutgoing(ids:number[]):Observable<any>
-{
+    return this.httpClient.post(`${environment.API_URL}api/Inventory/UpdateInventoryStatusToRecevied`, ids);
+  }
 
-  return this.httpClient.post(`${environment.API_URL}api/Inventory/UpdateInventoryStatusToOutgoing`,ids );
-}
+  UpdateInventoryStatusToOutgoing(ids: number[]): Observable<any> {
 
-  AdvancedSearch(data:any): Observable<any> {
+    return this.httpClient.post(`${environment.API_URL}api/Inventory/UpdateInventoryStatusToOutgoing`, ids);
+  }
+
+  AdvancedSearch(data: any): Observable<any> {
     return this.httpClient.post<any>(`${environment.API_URL}api/Inventory/AdvancedSearch`, data);
   }
 
-  SerielNumberIsAlreadySigned(SerielNumber:string ):Observable<any>
-  {
-   return this.httpClient.get<any>(`${environment.API_URL}api/Inventory/SerielNumberIsAlreadySigned/`+SerielNumber);
+  SerielNumberIsAlreadySigned(SerielNumber: string): Observable<any> {
+    return this.httpClient.get<any>(`${environment.API_URL}api/Inventory/SerielNumberIsAlreadySigned/` + SerielNumber);
   }
-///////////////
-SerielNumberIsAlreadySignedInEdit(SerielNumber:string,id:number ):Observable<any>
-{
- return this.httpClient.get<any>(`${environment.API_URL}api/Inventory/SerielNumberIsAlreadySignedInEdit/`+SerielNumber+`/`+id);
-}
-  GetLocationByReceivedId(id:any):Observable<any>
-  {
-
-    return this.httpClient.get(`${environment.API_URL}api/Inventory/GetLocationByReceivedId/`+id );
+  SerielNumberIsAlreadySignedInEdit(SerielNumber: string, id: number): Observable<any> {
+    return this.httpClient.get<any>(`${environment.API_URL}api/Inventory/SerielNumberIsAlreadySignedInEdit/` + SerielNumber + `/` + id);
   }
-
-  GetLocations():Observable<any>
-  {
+  GetLocations(): Observable<any> {
 
     return this.httpClient.get(`${environment.API_URL}api/Inventory/GetLocations/`);
   }
 
-   ExportExitPermitExcel(data:any): Observable<Blob> {
+  ExportExitPermitExcel(data: any): Observable<Blob> {
 
 
-      return this.httpClient.post(`${environment.API_URL}api/Inventory/ExportExitPermitExcel`,data,{responseType: 'blob',headers: this.headers});
+    return this.httpClient.post(`${environment.API_URL}api/Inventory/ExportExitPermitExcel`, data, { responseType: 'blob', headers: this.headers });
 
-   }
+  }
 
-   UpdateInventoyLocations(locations:UpdatedLocation):Observable<any>
-   {
+  UpdateInventoyLocations(locations: UpdatedLocation): Observable<any> {
 
-     return this.httpClient.post(`${environment.API_URL}api/Inventory/UpdateInventoryLocation`,locations );
-   }
-   GetLocationsLists(): Observable<any> {
+    return this.httpClient.post(`${environment.API_URL}api/Inventory/UpdateInventoryLocation`, locations);
+  }
+  GetLocationsLists(): Observable<any> {
     return this.httpClient.get<any>(`${environment.API_URL}api/Inventory/GetLists`);
   }
 

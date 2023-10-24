@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogConfig,MatDialog} from '@angular/material/dialog';
+import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
-import {  MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -44,23 +44,21 @@ export class TypeStatusComponent implements OnInit {
   isNameUpdatedRepeated: boolean = false;
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
-  displayedColumns: string[] = ['Id', 'Name','CategoryName','CreationDate','CreatedBy','UpdateDate','UpdateBy', 'action'];
+  displayedColumns: string[] = ['Id', 'Name', 'CategoryName', 'CreationDate', 'CreatedBy', 'UpdateDate', 'UpdateBy', 'action'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource = new MatTableDataSource(this.TypeList);
   settingtype = ''
 
   editUsr: any;
   editdisabled: boolean = false;
-  constructor(private titleService: Title,private dialog: MatDialog,
-    private toastr: ToastrService, private router: Router, private loader: LoaderService,private route: ActivatedRoute, private Typeserv:TypeStatusService, private dailogService: DeleteService
+  constructor(private titleService: Title, private dialog: MatDialog,
+    private toastr: ToastrService, private router: Router, private loader: LoaderService, private route: ActivatedRoute, private Typeserv: TypeStatusService, private dailogService: DeleteService
   ) {
     this.titleService.setTitle('Type');
 
   }
   TypeName: string = '';
   TypeId: number = 0;
- // show: boolean = false;
-  //loader: boolean = false;
   isDisabled = false;
   pageNumber = 1;
   pageSize = 100;
@@ -70,52 +68,50 @@ export class TypeStatusComponent implements OnInit {
   public coldir: string = 'asc';
 
   LoadCompanyName() {
-    if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-    {
+    if (localStorage.getItem("userName") == "" || localStorage.getItem("userName") == undefined || localStorage.getItem("userName") == null) {
       this.router.navigateByUrl('/login');
     }
-    else{
-    this.Typeserv.getTypeStatus(this.pageNumber, this.pageSize, '', this.colname, this.coldir).subscribe(response => {
-      this.TypeList.push(...response?.data);
-      this.TypeList.length = response?.pagination.totalCount;
-      this.dataSource = new MatTableDataSource<any>(this.TypeList);
-      this.dataSource.paginator = this.paginator as MatPaginator;
+    else {
+      this.Typeserv.getTypeStatus(this.pageNumber, this.pageSize, '', this.colname, this.coldir).subscribe(response => {
+        this.TypeList.push(...response?.data);
+        this.TypeList.length = response?.pagination.totalCount;
+        this.dataSource = new MatTableDataSource<any>(this.TypeList);
+        this.dataSource.paginator = this.paginator as MatPaginator;
 
-    })
-  }
+      })
+    }
   }
 
   getRequestdata(pageNum: number, pageSize: number, search: string, sortColumn: string, sortDir: string) {
 
-    if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-    {
+    if (localStorage.getItem("userName") == "" || localStorage.getItem("userName") == undefined || localStorage.getItem("userName") == null) {
       this.router.navigateByUrl('/login');
     }
-    else{
-    this.loader.busy();;
-    this.Typeserv.getTypeStatus(pageNum, pageSize, search, sortColumn, sortDir).subscribe(response => {
-      this.TypeList = response?.data;
+    else {
+      this.loader.busy();;
+      this.Typeserv.getTypeStatus(pageNum, pageSize, search, sortColumn, sortDir).subscribe(response => {
+        this.TypeList = response?.data;
 
-      this.TypeList.length = response?.pagination.totalCount;
-      this.dataSource = new MatTableDataSource<any>(this.TypeList);
-      this.dataSource._updateChangeSubscription();
-      this.dataSource.paginator = this.paginator as MatPaginator;
-    })
-    setTimeout(() => this.loader.idle(), 2000);
-  }
+        this.TypeList.length = response?.pagination.totalCount;
+        this.dataSource = new MatTableDataSource<any>(this.TypeList);
+        this.dataSource._updateChangeSubscription();
+        this.dataSource.paginator = this.paginator as MatPaginator;
+      })
+      setTimeout(() => this.loader.idle(), 2000);
+    }
   }
 
 
 
 
   ngOnInit(): void {
-    if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-    {
+    if (localStorage.getItem("userName") == "" || localStorage.getItem("userName") == undefined || localStorage.getItem("userName") == null) {
       this.router.navigateByUrl('/login');
     }
-    else{
-    this.editUsr = 0;
-    this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);}
+    else {
+      this.editUsr = 0;
+      this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+    }
   }
 
 
@@ -125,24 +121,24 @@ export class TypeStatusComponent implements OnInit {
   }
 
   onSearchClear() {
-    if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-    {
+    if (localStorage.getItem("userName") == "" || localStorage.getItem("userName") == undefined || localStorage.getItem("userName") == null) {
       this.router.navigateByUrl('/login');
     }
-    else{
-    this.searchKey = '';
-    this.applyFilter();}
+    else {
+      this.searchKey = '';
+      this.applyFilter();
+    }
   }
 
 
   applyFilter() {
-    if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-    {
+    if (localStorage.getItem("userName") == "" || localStorage.getItem("userName") == undefined || localStorage.getItem("userName") == null) {
       this.router.navigateByUrl('/login');
     }
-    else{
-    let searchData = this.searchKey.trim().toLowerCase();
-    this.getRequestdata(1, 100, searchData, this.sortColumnDef, "asc");}
+    else {
+      let searchData = this.searchKey.trim().toLowerCase();
+      this.getRequestdata(1, 100, searchData, this.sortColumnDef, "asc");
+    }
   }
   isDisable = false;
 
@@ -153,7 +149,7 @@ export class TypeStatusComponent implements OnInit {
     this.isDisable = true;
     this.Type.Name = this.form.value.Name;
     this.Type.Id = this.form.value.Id;
-    this.Type.CreatedBy =  localStorage.getItem('userName') || '';
+    this.Type.CreatedBy = localStorage.getItem('userName') || '';
     if (this.form.invalid || this.form.value.name == ' ') {
       if (this.form.value.name == ' ')
         this.setReactValue(Number(0), "");
@@ -163,20 +159,16 @@ export class TypeStatusComponent implements OnInit {
 
     else {
 
-      if (this.form.value.Id == 0 || this.form.value.Id == '' ) {
+      if (this.form.value.Id == 0 || this.form.value.Id == '') {
         this.isDisable = true;
         this.Typeserv.AddTypeStatus(this.Type).subscribe(res => {
           setTimeout(() => {
             this.loader.idle();
           }, 1500)
           this.toastr.success(":: add successfully");
-          //this.LoadCompanyName();
           this.form['controls']['Name'].setValue('');
           this.form['controls']['Id'].setValue(0);
-          //   this.form.reset();
-console.log("Hello1 ")
           this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
-          console.log("Hello2")
         },
           error => {
             setTimeout(() => {
@@ -185,15 +177,14 @@ console.log("Hello1 ")
             this.toastr.warning(":: failed");
           }
         );
-      }//if
+      }
       else {
-        //not used
         this.Typeserv.UpdateTypeStatus(this.Type).subscribe(res => {
           setTimeout(() => {
             this.loader.idle();
           }, 1500)
           this.toastr.success(":: update successfully");
-        this.LoadCompanyName();
+          this.LoadCompanyName();
           this.form['controls']['Name'].setValue('');
           this.form['controls']['Id'].setValue(0);
 
@@ -208,11 +199,11 @@ console.log("Hello1 ")
             this.toastr.warning(":: failed");
           }
         )
-      }//else
+      }
 
-  }
+    }
     this.isShowDiv = false;
-  }//end of
+  }
 
 
 
@@ -222,13 +213,13 @@ console.log("Hello1 ")
 
 
   editROw(r: any) {
-    if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-    {
+    if (localStorage.getItem("userName") == "" || localStorage.getItem("userName") == undefined || localStorage.getItem("userName") == null) {
       this.router.navigateByUrl('/login');
     }
-    else{
-    this.editUsr = r.id;
-    this.editdisabled = true;}
+    else {
+      this.editUsr = r.id;
+      this.editdisabled = true;
+    }
 
   }
 
@@ -246,8 +237,8 @@ console.log("Hello1 ")
     {
       id: row.id,
       name: row.name,
-      CreatedBy:row.createdBy,
-      CreationDate:row.creationDate,
+      CreatedBy: row.createdBy,
+      CreationDate: row.creationDate,
       UpdatedBy: localStorage.getItem('userName') || ''
     }
     this.Typeserv.UpdateTypeStatus(TypeStatusEdit).subscribe(res => {
@@ -257,11 +248,11 @@ console.log("Hello1 ")
         }, 1500);
 
         this.toastr.success(":: update successfully");
-      this.LoadCompanyName();
-            this.form['controls']['Name'].setValue('');
-         this.form['controls']['Id'].setValue(0);
+        this.LoadCompanyName();
+        this.form['controls']['Name'].setValue('');
+        this.form['controls']['Id'].setValue(0);
 
-     this.cancelEdit();
+        this.cancelEdit();
 
 
       }//if
@@ -280,53 +271,49 @@ console.log("Hello1 ")
   public pIn: number = 0;
 
   pageChanged(event: any) {
-    if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-    {
+    if (localStorage.getItem("userName") == "" || localStorage.getItem("userName") == undefined || localStorage.getItem("userName") == null) {
       this.router.navigateByUrl('/login');
     }
-    else{
-    this.loader.busy();;
-    this.pIn = event.pageIndex;
-    this.pageIn = event.pageIndex;
-    this.pagesizedef = event.pageSize;
-    let pageIndex = event.pageIndex;
-    let pageSize = event.pageSize;
-    let previousSize = pageSize * pageIndex;
-    this.previousSizedef = previousSize;
-    this.getRequestdataNext(previousSize, pageIndex + 1, pageSize, '', this.sortColumnDef, this.SortDirDef);}
+    else {
+      this.loader.busy();;
+      this.pIn = event.pageIndex;
+      this.pageIn = event.pageIndex;
+      this.pagesizedef = event.pageSize;
+      let pageIndex = event.pageIndex;
+      let pageSize = event.pageSize;
+      let previousSize = pageSize * pageIndex;
+      this.previousSizedef = previousSize;
+      this.getRequestdataNext(previousSize, pageIndex + 1, pageSize, '', this.sortColumnDef, this.SortDirDef);
+    }
   }
 
 
   getRequestdataNext(cursize: number, pageNum: number, pageSize: number, search: string, sortColumn: string, sortDir: string) {
 
 
-    if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-    {
+    if (localStorage.getItem("userName") == "" || localStorage.getItem("userName") == undefined || localStorage.getItem("userName") == null) {
       this.router.navigateByUrl('/login');
     }
-    else{
-    this.Typeserv.getTypeStatus(pageNum, pageSize, search, sortColumn, sortDir).subscribe(res => {
-      if (res.status == true) {
+    else {
+      this.Typeserv.getTypeStatus(pageNum, pageSize, search, sortColumn, sortDir).subscribe(res => {
+        if (res.status == true) {
 
-        this.TypeList.length = cursize;
-       console.log(this.TypeList.length);
-        this.TypeList.push(...res?.data);
-        console.log(this.TypeList.length);
-
-        this.TypeList.length = res?.pagination.totalCount;
-        this.dataSource = new MatTableDataSource<any>(this.TypeList);
-        this.dataSource._updateChangeSubscription();
-        this.dataSource.paginator = this.paginator as MatPaginator;
+          this.TypeList.length = cursize;
+          this.TypeList.push(...res?.data);
+          this.TypeList.length = res?.pagination.totalCount;
+          this.dataSource = new MatTableDataSource<any>(this.TypeList);
+          this.dataSource._updateChangeSubscription();
+          this.dataSource.paginator = this.paginator as MatPaginator;
+          this.loader.idle();
+        }
+        else this.toastr.success(":: add successfully");
+      }, err => {
+        this.toastr.warning(":: failed");
         this.loader.idle();
-      }
-      else this.toastr.success(":: add successfully");
-    }, err => {
-      this.toastr.warning(":: failed");
-      this.loader.idle();
 
-    })
+      })
 
-  }
+    }
   }
 
 
@@ -334,23 +321,22 @@ console.log("Hello1 ")
   lastcol: string = 'Id';
   lastdir: string = 'asc';
   sortData(sort: any) {
-    if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-    {
+    if (localStorage.getItem("userName") == "" || localStorage.getItem("userName") == undefined || localStorage.getItem("userName") == null) {
       this.router.navigateByUrl('/login');
     }
-    else{
-    if (this.pIn != 0)
-      window.location.reload();
-    if (this.lastcol == sort.active && this.lastdir == sort.direction) {
-      if (this.lastdir == 'asc')
-        sort.direction = 'desc';
-      else
-        sort.direction = 'asc';
+    else {
+      if (this.pIn != 0)
+        window.location.reload();
+      if (this.lastcol == sort.active && this.lastdir == sort.direction) {
+        if (this.lastdir == 'asc')
+          sort.direction = 'desc';
+        else
+          sort.direction = 'asc';
+      }
+      this.lastcol = sort.active; this.lastdir = sort.direction;
+      var c = this.pageIn;
+      this.getRequestdata(1, 100, '', sort.active, this.lastdir);
     }
-    this.lastcol = sort.active; this.lastdir = sort.direction;
-    var c = this.pageIn;
-    this.getRequestdata(1, 100, '', sort.active, this.lastdir);
-  }
   }
   onChecknameIsalreadysign() {
     this.Type.Name = this.form.value.Name;
@@ -397,95 +383,77 @@ console.log("Hello1 ")
 
 
   onDelete(r: any) {
-    //debugger
-    if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-    {
+    if (localStorage.getItem("userName") == "" || localStorage.getItem("userName") == undefined || localStorage.getItem("userName") == null) {
       this.router.navigateByUrl('/login');
     }
-    else{
-    this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
-      if (res) {
-        this.Typeserv.DeleteTypeStatus(r.id).subscribe(
-          rs => {
-            this.toastr.success(':: successfully Deleted');
-           // this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
-            //  this.getRequestdata(1, 100, searchData, this.sortColumnDef, "asc");
-            window.location.reload();
-          },
-          error => { this.toastr.warning(':: An Error Occured') }
-        );
-      }
-      else {
-       // this.toastr.warning(':: An Error Occured')
-      }
-    });
-  }
+    else {
+      this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
+        if (res) {
+          this.Typeserv.DeleteTypeStatus(r.id).subscribe(
+            rs => {
+              this.toastr.success(':: successfully Deleted');
+              window.location.reload();
+            },
+            error => { this.toastr.warning(':: An Error Occured') }
+          );
+        }
+        else {
+        }
+      });
+    }
   }
 
 
   toggleDisplay() {
-    if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-    {
+    if (localStorage.getItem("userName") == "" || localStorage.getItem("userName") == undefined || localStorage.getItem("userName") == null) {
       this.router.navigateByUrl('/login');
     }
-    else{
+    else {
       this.isShowDiv = !this.isShowDiv;
-      // this.form['controls']['name'].setValue('');
-      // this.form['controls']['id'].setValue(0);
-
     }
 
   }
 
 
 
-  onCreate(){
-    if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-    {
+  onCreate() {
+    if (localStorage.getItem("userName") == "" || localStorage.getItem("userName") == undefined || localStorage.getItem("userName") == null) {
       this.router.navigateByUrl('/login');
     }
-    else{
-     const dialogGonfig = new MatDialogConfig();
-    dialogGonfig.data = { dialogTitle: "اضافة جديد" };
-    dialogGonfig.disableClose = true;
-    dialogGonfig.autoFocus = false;
-    dialogGonfig.width = "50%";
-    dialogGonfig.height = "300px";
-    dialogGonfig.panelClass = 'modals-dialog';
-    this.dialog.open(AddTypeComponent, dialogGonfig).afterClosed().subscribe(result => {
-      //this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
-      window.location.reload();
-    });
-   }
+    else {
+      const dialogGonfig = new MatDialogConfig();
+      dialogGonfig.data = { dialogTitle: "اضافة جديد" };
+      dialogGonfig.disableClose = true;
+      dialogGonfig.autoFocus = false;
+      dialogGonfig.width = "50%";
+      dialogGonfig.height = "300px";
+      dialogGonfig.panelClass = 'modals-dialog';
+      this.dialog.open(AddTypeComponent, dialogGonfig).afterClosed().subscribe(result => {
+        window.location.reload();
+      });
+    }
   }
 
-  onEdit(row:any){
-    if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-    {
+  onEdit(row: any) {
+    if (localStorage.getItem("userName") == "" || localStorage.getItem("userName") == undefined || localStorage.getItem("userName") == null) {
       this.router.navigateByUrl('/login');
     }
-    else{
-     const dialogGonfig = new MatDialogConfig();
-    dialogGonfig.data= {dialogTitle: " تعديل"};
-    dialogGonfig.disableClose = true;
-    dialogGonfig.autoFocus = false;
-    dialogGonfig.width = "50%";
-    dialogGonfig.height = "300px";
-    dialogGonfig.panelClass ='confirm';
-     this.dialog.open(AddTypeComponent,{panelClass:'confirm',disableClose:true,autoFocus:false, width:"50%",data:row})
-     .afterClosed().subscribe(result => {
-      //this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef)
-      //console.log(":::::::::::::::::::");
-
-      //this.ngOnInit();
-      window.location.reload();
-      // console.log(":::::::::::::::::::");
-      // this.router.navigate(['/Type']);
-    });
+    else {
+      const dialogGonfig = new MatDialogConfig();
+      dialogGonfig.data = { dialogTitle: " تعديل" };
+      dialogGonfig.disableClose = true;
+      dialogGonfig.autoFocus = false;
+      dialogGonfig.width = "50%";
+      dialogGonfig.height = "300px";
+      dialogGonfig.panelClass = 'confirm';
+      this.dialog.open(AddTypeComponent, { panelClass: 'confirm', disableClose: true, autoFocus: false, width: "50%", data: row })
+        .afterClosed().subscribe(result => {
+          window.location.reload();
+        });
 
 
 
-     }
+    }
 
   }
 

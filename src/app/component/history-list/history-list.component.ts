@@ -73,7 +73,6 @@ export class HistoryListComponent implements OnInit {
   }
 
   getRequestdata(pageNum: number, pageSize: number, search: string, sortColumn: string, sortDir: string) {
-    //debugger
     this.loader.busy();
     this.LogsServ.getLogs(pageNum, pageSize, search, sortColumn, sortDir).subscribe(response => {
       this.logsList = response?.data;
@@ -250,32 +249,4 @@ applyFilter(filterValue: Event) {
 
   }
 
-/////////////////////
-// GetLogBY(row:any){
-//   debugger;
-//     if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-//     {
-//       this.router.navigateByUrl('/login');
-//     }
-//     else{
-//             this.LogsServ.GetLogsById().subscribe(res => {
-//               console.log("ff", res);
-//               this.logsList = res as Logs[];
-
-
-//               this.dataSource = new MatTableDataSource<any>(this.logsList);
-//               this.dataSource.paginator = this.paginator as MatPaginator;
-//               this.dataSource.sort = this.sort as MatSort;
-//               ////setTimeout(() => this.loader = false, 3000);
-//               // this.form.reset();
-//               this.loader.idle();
-//             }
-//             )//subsribe
-
-
-
-//       }
-
-//   //}
-//   }
 }

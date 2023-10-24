@@ -28,11 +28,7 @@ this.splitData();
 
   splitData(){
     var data=this.data.data
-    console.log('data',data);
     this.items=data.split(/[,]+/);
-    //  this.keys =this.items.filter((item, index) => index%2 == 0)
-    //  this.valus =this.items.filter((item, index) => index%2 != 0)
-   // this.items=data.split(/[,:]+/);
 
 
 
