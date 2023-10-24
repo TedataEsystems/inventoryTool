@@ -20,20 +20,11 @@ this.splitData();
 
   }
   onClose() {
-
-    // this.service.initializeFormGroup();
     this.dialogRef.close();
-
   }
-
   splitData(){
     var data=this.data.data
     this.items=data.split(/[,]+/);
-
-
-
-
-
   }
 
 }
