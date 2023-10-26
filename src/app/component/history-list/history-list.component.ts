@@ -91,36 +91,36 @@ export class HistoryListComponent implements OnInit {
     {
       this.router.navigateByUrl('/login');
     }
+    // else{
+    //   if(this.LogsServ.LogId !=0 && this.LogsServ.LogId !=null){
+
+
+    //         if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
+    //         {
+    //           this.router.navigateByUrl('/login');
+    //         }
+    //         else{
+    //                 this.LogsServ.GetLogsById().subscribe(res => {
+
+    //                   this.logsList = res?.data;
+
+    //                   this.dataSource = new MatTableDataSource<any>(this.logsList);
+    //                   this.dataSource._updateChangeSubscription();
+    //                   this.dataSource.paginator = this.paginator as MatPaginator;
+    //                   this.loader.idle();
+    //                   this.LogsServ.LogId=0;
+    //                 }
+    //                 )
+    //           }
+
+
+    //   }
     else{
-      if(this.LogsServ.LogId !=0 && this.LogsServ.LogId !=null){
-
-
-            if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-            {
-              this.router.navigateByUrl('/login');
-            }
-            else{
-                    this.LogsServ.GetLogsById().subscribe(res => {
-
-                      this.logsList = res?.data;
-
-                      this.dataSource = new MatTableDataSource<any>(this.logsList);
-                      this.dataSource._updateChangeSubscription();
-                      this.dataSource.paginator = this.paginator as MatPaginator;
-                      this.loader.idle();
-                      this.LogsServ.LogId=0;
-                    }
-                    )
-              }
-
-
-      }
-      else{
 
 
     this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
     }
-  }
+  //}
   }
 
   ngAfterViewInit() {
