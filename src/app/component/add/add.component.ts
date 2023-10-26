@@ -282,10 +282,14 @@ export class AddComponent implements OnInit {
               this.loader.idle();
               this.dialogRef.close('save');
             }
+           else if(res.status=='false')
+           {
+            this.toastr.error(res.error);
+           }
             else {
               if (res.status == 'type') {
                 this.serialflag = 3;
-              }
+              }              
               else {
                 this.toastr.warning(':: Failed');
                 this.loader.idle();

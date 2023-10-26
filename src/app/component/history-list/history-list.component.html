@@ -57,14 +57,14 @@
           <!-- {{element.creationDate|date : 'yyyy-MM-dd'}}  -->
           <mat-cell *matCellDef="let element" data-label="تاريخ الانشاء"> {{element.creationDate | date:"short"}} </mat-cell>
       </ng-container>
-      <ng-container matColumnDef="Descirption">
+      <!-- <ng-container matColumnDef="Descirption">
         <mat-header-cell mat-header-cell *matHeaderCellDef> التفاصيل</mat-header-cell>
         <mat-cell *matCellDef="let element ,let row" data-label="descirption">
       <button mat-button class="text-info"    matTooltip="View Details" (click)="Details(element.descirption)">
         <mat-icon>visibility</mat-icon>
        </button>
-    </mat-cell>
-    </ng-container>
+    </mat-cell> 
+    </ng-container>-->
       <ng-container matColumnDef="Descirption">
         <mat-header-cell mat-header-cell *matHeaderCellDef> التفاصيل</mat-header-cell>
         <mat-cell *matCellDef="let row" data-label="descirption">

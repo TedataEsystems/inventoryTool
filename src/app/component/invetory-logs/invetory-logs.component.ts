@@ -48,9 +48,7 @@ export class InvetoryLogsComponent implements OnInit {
       private toastr:ToastrService,private router: Router,private route: ActivatedRoute, private LogsServ:LogsService
       ) {
         this.titleService.setTitle('سجلات المخزن');
-
     }
-
     ngOnInit(): void {
       if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
       {
@@ -58,17 +56,13 @@ export class InvetoryLogsComponent implements OnInit {
       }
       else{
         if(this.LogsServ.LogId !=0 && this.LogsServ.LogId !=null){
-  
-  
               if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
               {
                 this.router.navigateByUrl('/login');
               }
               else{
                       this.LogsServ.GetLogsById().subscribe(res => {
-  
                         this.logsList = res?.data;
-  
                         this.dataSource = new MatTableDataSource<any>(this.logsList);
                         this.dataSource._updateChangeSubscription();
                         this.dataSource.paginator = this.paginator as MatPaginator;
@@ -77,12 +71,8 @@ export class InvetoryLogsComponent implements OnInit {
                       }
                       )
                 }
-  
-  
         }
         else{
-  
-  
       this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
       }
     }
@@ -98,7 +88,6 @@ export class InvetoryLogsComponent implements OnInit {
     })
     setTimeout(()=> this.loader.idle(),2000) ;
   }
-
   ngAfterViewInit() {
     this.dataSource.sort = this.sort as MatSort;
     this.dataSource.paginator = this.paginator as MatPaginator;
@@ -106,9 +95,7 @@ export class InvetoryLogsComponent implements OnInit {
   onSearchClear() {
     this.searchKey = '';
     this.getRequestdata(1, 10, this.searchKey, this.sortColumnDef, "desc");
-
   }
-
 applyFilter(filterValue: Event) {
   if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
     {
@@ -123,9 +110,7 @@ applyFilter(filterValue: Event) {
 }
 
 }
-
   isDisable=false;
-
   pageIn = 0;
   previousSizedef = 100;
   pagesizedef: number = 100;
@@ -147,7 +132,6 @@ applyFilter(filterValue: Event) {
     this.getRequestdataNext(previousSize,  pageIndex + 1, pageSize, '', this.sortColumnDef, this.SortDirDef);
   }
   }
-
   getRequestdataNext(cursize: number, pageNum: number, pageSize: number, search: string, sortColumn: string, sortDir: string) {
     if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
     {
@@ -175,11 +159,8 @@ applyFilter(filterValue: Event) {
 
     }
   }
-
-
   lastcol: string = 'Id';
   lastdir: string = 'asc';
-
   sortData(sort: any) {
     if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
     {
@@ -197,7 +178,6 @@ applyFilter(filterValue: Event) {
     this.lastcol = sort.active; this.lastdir = sort.direction;
     var c = this.pageIn;
   }
-
   }
   Details(row:any){
     const dialogGonfig = new MatDialogConfig();
@@ -206,23 +186,16 @@ applyFilter(filterValue: Event) {
     dialogGonfig.autoFocus = false;
     dialogGonfig.width = "50%";
     dialogGonfig.panelClass = 'modals-dialog';
-    this.dialog.open(LogsDetailsComponent, dialogGonfig).afterClosed().subscribe(() => {
-     this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
-    });
-
+    this.dialog.open(LogsDetailsComponent, dialogGonfig)
+    // .afterClosed().subscribe(() => {
+    //  this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+    // });
   }
-
-
 
   toggleTableRows() {
     this.isTableExpanded = !this.isTableExpanded;
-
     this.dataSource.data.forEach((row: any) => {
       row.isExpanded = this.isTableExpanded;
     })
   }
-
-
-
-
 }
