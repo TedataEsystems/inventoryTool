@@ -75,7 +75,7 @@ export class EditFormService {
     UpdateDate: new FormControl(null),
     CreatedBy: new FormControl(null),
     UpdatedBy: new FormControl(null),
-    comeFrom: new FormControl(null,[Validators.required])
+    comeFrom: new FormControl(null)
 
   });
 
@@ -108,7 +108,7 @@ export class EditFormService {
     UpdateDate: new FormControl(null),
     CreatedBy: new FormControl(null),
     UpdatedBy: new FormControl(null),
-    comeFrom: new FormControl(null, [Validators.required])
+    comeFrom: new FormControl(null)
   });
 
 
