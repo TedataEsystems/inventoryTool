@@ -52,6 +52,7 @@ export class AddComponent implements OnInit {
   statusflag: number = 0;
   serialnew: number = 0;
   serialflag: number = 0;
+  flagComeFrom = false;
   selected = 0;
   @ViewChild('typeStatusSearch') typeStatusSearch!: ElementRef;
   constructor(public inventoryserv: InventoryService, private loader: LoaderService, public service: EditFormService,
@@ -469,6 +470,7 @@ export class AddComponent implements OnInit {
             this.serialflag = 0;
           }
           this.serialnew == 1;
+          this.flagComeFrom = true;
         }
         else if (res.status == 'Old') {
           this.serialnew == 1;
@@ -539,10 +541,13 @@ export class AddComponent implements OnInit {
           }
           this.serialnew == 1;
           this.FillFiledsForUsedSerial(res.inventory);
+          this.flagComeFrom = false;
+
         }
         else {
           this.serialflag = 1;
           this.serialnew == 2;
+          this.flagComeFrom = false;
         }
 
       }

@@ -87,7 +87,7 @@
         </mat-form-field>
 
 
-        <mat-form-field *ngIf="statusflag==1">
+        <mat-form-field *ngIf="statusflag==1 && !flagComeFrom">
           <mat-select formControlName="comeFrom" placeholder="وارد من">
             <mat-option>-- Please select --</mat-option>
             <mat-option *ngFor="let Location of Location" [value]="Location.id">
