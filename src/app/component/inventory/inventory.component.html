@@ -363,30 +363,7 @@
 
 
 
-            <button mat-button class="opt " [matMenuTriggerFor]="menuChange" aria-label="">
-              <mat-icon  class="txt" >settings</mat-icon>
-              <span class="txt mr-1"> اعدادات تغيير المخزن</span>
-            </button>
-            <mat-menu #menuChange="matMenu" >
-              <button mat-menu-item class="text-right"  (click)="updateLocations()">
-
-             <span class="mr-1"> تحويل الى</span>
-             <mat-icon class="add-new ico" >swap_vertical_circle</mat-icon>
-            </button>
-            <button mat-menu-item class="text-right"   (click)="openBottomSheetWithLocation()">
-
-              <span class=" mr-1">اضافه من اكسل الي مخزن اخر</span>
-              <mat-icon class="txt" >add</mat-icon>
-
-          </button>
-            <button mat-menu-item class="text-right"  (click)="ExportTOEmptyExcelWithLocation()">
-
-              <span class=" mr-1">تحميل ملف اكسل فارغ الي مخزن اخر</span>
-              <mat-icon class="txt">file_download</mat-icon>
-
-          </button>
-
-              </mat-menu>
+          
 
       <button mat-button class="opt  " (click)="onCreate()">
           <mat-icon class="add-new ico" >add</mat-icon>
@@ -416,10 +393,32 @@
 
 
 </mat-menu>
+<button mat-button class="opt " [matMenuTriggerFor]="menuChange" aria-label="">
+  <mat-icon  class="txt" >settings</mat-icon>
+  <span class="txt mr-1"> اعدادات تغيير المخزن</span>
+</button>
+<mat-menu #menuChange="matMenu" >
+  <button mat-menu-item class="text-right"  (click)="updateLocations()">
 
+ <span class="mr-1"> تحويل الى</span>
+ <mat-icon class="add-new ico" >swap_vertical_circle</mat-icon>
+</button>
+<button mat-menu-item class="text-right"   (click)="openBottomSheetWithLocation()">
 
+  <span class=" mr-1">تحويل من اكسل الي مخزن اخر</span>
+  <mat-icon class="txt" >add</mat-icon>
 
+</button>
+<button mat-menu-item class="text-right"  (click)="ExportTOEmptyExcelWithLocation()">
+
+  <span class=" mr-1">تحميل ملف اكسل فارغ للتحويل الي مخزن اخر</span>
+  <mat-icon class="txt">file_download</mat-icon>
+
+</button>
+
+  </mat-menu>
 <!-- /end edit group -->
+
       <!-- ----------------------------------------- -->
       <button mat-button class="opt " [matMenuTriggerFor]="menu" aria-label="">
           <mat-icon  class="txt" >insert_drive_file</mat-icon>
