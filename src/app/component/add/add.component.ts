@@ -258,7 +258,7 @@ export class AddComponent implements OnInit {
       CreatedBy: this.service.form1.value.CreatedBy,
       comeFrom: this.service.form1.value.comeFrom
     };
-    if (inventory.CategoryId != 46 || inventory.CategoryId != 47 || inventory.CategoryId != 48 || inventory.CategoryId != 49) {
+    if (inventory.CategoryId != 46 && inventory.CategoryId != 47 && inventory.CategoryId != 48 && inventory.CategoryId != 49) {
       if (inventory.SerielNumber == null || inventory.SerielNumber == '') {
         this.serialreq = 1;
         return;
