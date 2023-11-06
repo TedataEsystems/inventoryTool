@@ -25,7 +25,7 @@ export class InventoryService {
 
   AddInventory(model: any): Observable<any> {
 
-    return this.httpClient.post<any>(`${environment.API_URL}api/Inventory/AddInventory`, model);
+    return this.httpClient.post<any>(`${environment.API_URL}api/Inventory/AddNewInventory`, model);
   }
 
 
