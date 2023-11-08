@@ -282,14 +282,13 @@ export class AddComponent implements OnInit {
               this.loader.idle();
               this.dialogRef.close('save');
             }
-           else if(res.status=='false')
-           {
-            this.toastr.error(res.error);
-           }
+            else if (res.status == 'false') {
+              this.toastr.error(res.error);
+            }
             else {
               if (res.status == 'type') {
                 this.serialflag = 3;
-              }              
+              }
               else {
                 this.toastr.warning(':: Failed');
                 this.loader.idle();
@@ -358,12 +357,25 @@ export class AddComponent implements OnInit {
 
           if (category.id == 47 || category.id == 48 || category.id == 49) {
             this.MetterHidden = true;
+            this.statusflag = 1;
+            this.flagComeFrom = true;
+            this.service.form1.controls['Status'].setValue('وارد');
+            this.OnChangeStatus('وارد');
+            this.service.form1.controls['ReceviedStatusId'].setValue(1);
+
           }
           else {
             this.MetterHidden = false;
           }
           if (category.id == 46) {
             this.numberHidden = true;
+            this.statusflag = 1;
+            this.flagComeFrom = true;
+            this.service.form1.controls['Status'].setValue('وارد');
+            this.OnChangeStatus('وارد');
+            this.service.form1.controls['ReceviedStatusId'].setValue(1);
+
+
           }
           else {
             this.numberHidden = false;
