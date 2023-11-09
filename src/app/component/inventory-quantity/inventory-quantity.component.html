@@ -173,6 +173,22 @@
             {{ element.deviceCount }}
           </mat-cell>
         </ng-container>
+        <ng-container matColumnDef="Meter">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+            Meter</mat-header-cell
+          >
+          <mat-cell *matCellDef="let element" data-label=" Category ">
+            {{ element.inventoryMeter }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Number">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+            Number</mat-header-cell
+          >
+          <mat-cell *matCellDef="let element" data-label=" Category ">
+            {{ element.inventoryNumber }}
+          </mat-cell>
+        </ng-container>
 
         <ng-container matColumnDef="Location">
           <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>

@@ -39,7 +39,7 @@ export class InventoryQuantityComponent implements OnInit, AfterViewInit {
   public pIn: number = 0;
   @ViewChild(MatSort) sort?: MatSort;
   @ViewChild(MatPaginator) paginator?: MatPaginator;
-  displayedColumns: string[] = ['DeviseName', 'DeviceCount', 'Location'];
+  displayedColumns: string[] = ['DeviseName', 'DeviceCount','Meter','Number', 'Location'];
   dataSource = new MatTableDataSource();
   columnsToDisplay: string[] = this.displayedColumns.slice();
   public _TypeStatusList: any[] = [];
