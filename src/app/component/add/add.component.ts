@@ -357,6 +357,8 @@ export class AddComponent implements OnInit {
 
           if (category.id == 47 || category.id == 48 || category.id == 49) {
             this.MetterHidden = true;
+            this.service.form1.controls['Meter'].setValidators([Validators.required]);
+            this.service.form1.controls['Meter'].updateValueAndValidity();
             this.statusflag = 1;
             this.flagComeFrom = true;
             this.service.form1.controls['Status'].setValue('وارد');
@@ -366,9 +368,13 @@ export class AddComponent implements OnInit {
           }
           else {
             this.MetterHidden = false;
+            this.service.form1.controls['Meter'].clearValidators();
+            this.service.form1.controls['Meter'].updateValueAndValidity();
           }
           if (category.id == 46) {
             this.numberHidden = true;
+            this.service.form1.controls['Number'].setValidators([Validators.required]);
+            this.service.form1.controls['Number'].updateValueAndValidity();
             this.statusflag = 1;
             this.flagComeFrom = true;
             this.service.form1.controls['Status'].setValue('وارد');
@@ -379,6 +385,8 @@ export class AddComponent implements OnInit {
           }
           else {
             this.numberHidden = false;
+            this.service.form1.controls['Number'].clearValidators();
+            this.service.form1.controls['Number'].updateValueAndValidity();
           }
           if (res.data.id == category.id) {
             this.Category1.pop();
@@ -521,15 +529,23 @@ export class AddComponent implements OnInit {
 
                   if (category.id == 47 || category.id == 48 || category.id == 49) {
                     this.MetterHidden = true;
+                    this.service.form1.controls['Meter'].setValidators([Validators.required]);
+                    this.service.form1.controls['Meter'].updateValueAndValidity();
                   }
                   else {
                     this.MetterHidden = false;
+                    this.service.form1.controls['Meter'].clearValidators();
+                    this.service.form1.controls['Meter'].updateValueAndValidity();
                   }
                   if (category.id == 46) {
                     this.numberHidden = true;
+                    this.service.form1.controls['Number'].setValidators([Validators.required]);
+                    this.service.form1.controls['Number'].updateValueAndValidity();
                   }
                   else {
                     this.numberHidden = false;
+                    this.service.form1.controls['Number'].clearValidators();
+                    this.service.form1.controls['Number'].updateValueAndValidity();
                   }
                   if (res.data.id == category.id) {
                     this.Category1.pop();

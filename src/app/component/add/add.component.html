@@ -38,6 +38,7 @@
         </mat-form-field>
         <mat-form-field *ngIf="MetterHidden">
           <input formControlName="Meter" type="number" min="0" matInput placeholder="Meter">
+          <mat-error>مطلوب</mat-error>
         </mat-form-field>
 
         <mat-form-field hidden="true">
@@ -124,6 +125,7 @@
       <div class="controles-container">
         <mat-form-field *ngIf="numberHidden">
           <input formControlName="Number" type="number" min="0" matInput placeholder="Number">
+          <mat-error>مطلوب</mat-error>
         </mat-form-field>
 
 
