@@ -1,5 +1,6 @@
 export interface UpdatedLocation {
 
-    ids:number[],
-    locationTo:string
+    inventory:any,
+    locationTo:string,
+    meterOrNumber:number
 }

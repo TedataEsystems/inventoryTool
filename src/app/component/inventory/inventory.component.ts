@@ -1201,9 +1201,9 @@ export class InventoryComponent implements OnInit {
       });
     }
   }
-  updateLocations() {
+  updateLocations(row:any) {
     const dialogGonfig = new MatDialogConfig();
-    dialogGonfig.data = this.Ids;
+    dialogGonfig.data = row;
     dialogGonfig.disableClose = true;
     dialogGonfig.autoFocus = true;
     dialogGonfig.width = '30%';

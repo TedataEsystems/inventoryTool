@@ -21,6 +21,10 @@
             </mat-select>
             <mat-error>مطلوب</mat-error>
           </mat-form-field> 
+          <mat-form-field *ngIf="ShowOrHideMeterNumberinput">
+            <input matInput type="number" min="0"  formControlName="meterORnumber" placeholder="Number Or Meter" />
+            <mat-error>مطلوب</mat-error>
+          </mat-form-field>
         
         </div>
       </mat-grid-tile>

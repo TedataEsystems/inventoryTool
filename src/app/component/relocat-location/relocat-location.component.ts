@@ -1,5 +1,7 @@
+import { sha1 } from '@angular/compiler/src/i18n/digest';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { validateBasis } from '@angular/flex-layout';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { InventoryLocations } from 'src/app/Model/inventory-locations';
@@ -14,20 +16,29 @@ import { InventoryService } from 'src/app/shared/service/inventory.service';
   styleUrls: ['./relocat-location.component.css']
 })
 export class RelocatLocationComponent implements OnInit {
-  ids: number[] = [];
+  //ids: number[] = [];
+  
   form: FormGroup = new FormGroup({
-    locationTo: new FormControl('')
+    locationTo: new FormControl('',[Validators.required]),
+    meterORnumber:new FormControl(0,[Validators.required])
   });
   updatedLocations: UpdatedLocation = {
-    ids: [],
-    locationTo: ''
+    inventory: {},
+    locationTo: '',
+    meterOrNumber:0
   };
+  ShowOrHideMeterNumberinput:boolean=false;
   locations: any[] = []
   constructor(public dialogRef: MatDialogRef<RelocatLocationComponent>, private toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: any, private inventoryService: InventoryService) { }
 
   ngOnInit(): void {
-    this.ids = this.data;
+    console.log(this.data,"Data")
+    this.updatedLocations.inventory = this.data;
+    if(this.data.categoryId==46||this.data.categoryId==48||this.data.categoryId==49)
+    {
+      this.ShowOrHideMeterNumberinput=true;
+    }
     this.inventoryService.GetLocationsLists().subscribe((res) => {
       if (res.status == true) {
         this.locations = res.locations;
@@ -38,22 +49,21 @@ export class RelocatLocationComponent implements OnInit {
 
   }
   onSubmit() {
-    if (this.form.valid) {
-      this.updatedLocations.ids = this.ids;
+    if (this.form.controls.locationTo.valid) {
+      //this.updatedLocations.ids = this.ids;
       this.updatedLocations.locationTo = this.form.value.locationTo;
+      this.updatedLocations.meterOrNumber=this.form.value.meterORnumber;
       this.inventoryService.UpdateInventoyLocations(this.updatedLocations).subscribe(res => {
         if (res.status == true) {
          if(res.data !="")
          {
           this.toastr.success(res.data);
-          
          }
          if(res.error !="")
          {
           this.toastr.error(res.error)
          }
          this.onClose()
-        
         }
         else {
           this.toastr.error(res.error);

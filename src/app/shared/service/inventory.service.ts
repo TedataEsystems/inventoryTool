@@ -128,7 +128,7 @@ export class InventoryService {
 
   UpdateInventoyLocations(locations: UpdatedLocation): Observable<any> {
 
-    return this.httpClient.post(`${environment.API_URL}api/Inventory/UpdateInventoryLocation`, locations);
+    return this.httpClient.post(`${environment.API_URL}api/Inventory/UpdateInvLocation`, locations);
   }
   GetLocationsLists(): Observable<any> {
     return this.httpClient.get<any>(`${environment.API_URL}api/Inventory/GetLists`);
