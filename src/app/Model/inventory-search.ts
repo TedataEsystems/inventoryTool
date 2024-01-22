@@ -9,7 +9,7 @@ export interface InventorySearch {
     Comment :string;
     Customername :string;
     DeviceType :string;
-    OrderNumber :number;
+    OrderNumber :string;
     ReorderingPoint :number;
     BR :number;
     ItemCode :string;

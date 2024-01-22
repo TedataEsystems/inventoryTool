@@ -3,7 +3,7 @@ export interface Inventory {
     Comment :string;
     Customername :string;
     DeviceType :string;
-    OrderNumber :number;
+    OrderNumber :string;
     ReorderingPoint :number;
     BR :number;
     ItemCode :string;

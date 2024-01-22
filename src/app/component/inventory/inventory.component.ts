@@ -913,7 +913,8 @@ export class InventoryComponent implements OnInit {
       invSearch.Comment = this.service.formSearch.value.Comment == "" ? null : this.service.formSearch.value.Comment;
       invSearch.Customername = this.service.formSearch.value.Customername == "" ? null : this.service.formSearch.value.Customername;
       invSearch.DeviceType = this.service.formSearch.value.DeviceType == "" ? null : this.service.formSearch.value.DeviceType;
-      invSearch.OrderNumber = this.service.formSearch.value.OrderNumber == 0 ? null : this.service.formSearch.value.OrderNumber;
+      // invSearch.OrderNumber = this.service.formSearch.value.OrderNumber == 0 ? null : this.service.formSearch.value.OrderNumber;
+      invSearch.OrderNumber = this.service.formSearch.value.OrderNumber == "" ? null : this.service.formSearch.value.OrderNumber;
       invSearch.ReorderingPoint = this.service.formSearch.value.ReorderingPoint == 0 ? null : this.service.formSearch.value.ReorderingPoint;
       invSearch.BR = this.service.formSearch.value.BR == 0 ? null : this.service.formSearch.value.BR;
       invSearch.ItemCode = this.service.formSearch.value.ItemCode == "" ? null : this.service.formSearch.value.ItemCode;
