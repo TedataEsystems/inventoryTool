@@ -227,7 +227,7 @@ export class TypeStatusComponent implements OnInit {
 
     this.editdisabled = false;
     this.isNameUpdatedRepeated = false;
-    this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+   // this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
   }
 
   updateEdit(row: any) {
@@ -429,7 +429,10 @@ export class TypeStatusComponent implements OnInit {
       dialogGonfig.height = "300px";
       dialogGonfig.panelClass = 'modals-dialog';
       this.dialog.open(AddTypeComponent, dialogGonfig).afterClosed().subscribe(result => {
-        window.location.reload();
+        if(result){
+          this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+        }
+        // window.location.reload();
       });
     }
   }
@@ -440,15 +443,19 @@ export class TypeStatusComponent implements OnInit {
     }
     else {
       const dialogGonfig = new MatDialogConfig();
-      dialogGonfig.data = { dialogTitle: " تعديل" };
+      dialogGonfig.data = { data:row, dialogTitle: " تعديل" };
       dialogGonfig.disableClose = true;
       dialogGonfig.autoFocus = false;
       dialogGonfig.width = "50%";
       dialogGonfig.height = "300px";
-      dialogGonfig.panelClass = 'confirm';
-      this.dialog.open(AddTypeComponent, { panelClass: 'confirm', disableClose: true, autoFocus: false, width: "50%", data: row })
+      dialogGonfig.panelClass = 'modals-dialog';
+      this.dialog.open(AddTypeComponent, dialogGonfig)
+    
         .afterClosed().subscribe(result => {
-          window.location.reload();
+          if(result){
+            this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+         // window.location.reload();
+          }
         });
 
 

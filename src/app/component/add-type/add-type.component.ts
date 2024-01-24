@@ -80,9 +80,9 @@ export class AddTypeComponent implements OnInit {
           var categorycount = 0;
 
           for (var category of this.Category) {
-            if (this.data.categoryId == category.id) {
+            if (this.data.data.categoryId == category.id) {
               categorycount++;
-              this.form3.controls['CategoryId'].setValue(this.data.categoryId);
+              this.form3.controls['CategoryId'].setValue(this.data.data.categoryId);
               break;
             }
           }
@@ -101,10 +101,10 @@ export class AddTypeComponent implements OnInit {
 
     if (this.data) {
 
-      this.form3.controls['Id'].setValue(this.data.id);
-      this.form3.controls['Name'].setValue(this.data.name);
-      this.form3.controls['CreatedBy'].setValue(this.data.createdBy);
-      this.form3.controls['CreationDate'].setValue(this.data.creationDate);
+      this.form3.controls['Id'].setValue(this.data.data.id);
+      this.form3.controls['Name'].setValue(this.data.data.name);
+      this.form3.controls['CreatedBy'].setValue(this.data.data.createdBy);
+      this.form3.controls['CreationDate'].setValue(this.data.data.creationDate);
     }
 
 

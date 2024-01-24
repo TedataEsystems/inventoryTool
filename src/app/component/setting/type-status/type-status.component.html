@@ -1,7 +1,7 @@
 <mat-card class="example-card">
   <mat-card-header>
       <mat-card-title>
-        نوع الجهاز 
+        نوع الجهاز
       </mat-card-title>
       <!-- <button mat-button class="opt"  (click)=ToggleDisplay()> -->
         <button mat-button class="opt"  (click)=onCreate()>
@@ -95,9 +95,9 @@
 </ng-container>
 
  <ng-container matColumnDef="action">
-    <mat-header-cell *matHeaderCellDef> الاجراء </mat-header-cell>
-    <mat-cell *matCellDef="let row" data-label="action">
-     
+    <mat-header-cell *matHeaderCellDef class="justify-content-center"> الاجراء </mat-header-cell>
+    <mat-cell *matCellDef="let row" data-label="action" class="justify-content-center">
+
     <ng-container>
 
       <button mat-button class="btn-success ml-1 font-weight-bolder" matTooltip="Edit"   (click)="onEdit(row)">

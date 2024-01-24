@@ -1,171 +1,26 @@
-<div>
-    <app-header></app-header>
 
-    <mat-toolbar>
-      <div class="brand-box">
-        <img src="../../../../assets/image/we-Logo/we-black.jpg" width="70" height="65px">
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
+  <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
+  <mat-sidenav-container >
+      <mat-sidenav   #sidenav  id="sidenav" [class.menu-open]="isMenuOpen" [class.menu-close]="!isMenuOpen" opened>
+          <app-sidenav></app-sidenav>
 
-      </div>
-      <div class="brandTitle">
-      <span class="brand ml-3"> Inventory</span>
-      </div>
-         <span class="example-spacer"></span>
+      </mat-sidenav>
+      <mat-sidenav-content #side  [ngStyle]="{ 'margin-left.px': contentMargin }">
 
-         <div fxShow="true" fxHide.lt-md="true" fxFlex fxLayout fxLayoutAlign="center" role="menu">
-           <!-- The following menu items will be hidden on both SM and XS screen sizes -->
+          <main #main>
 
-           <!-- <a  mat-button routerLink="/inventorylogs" routerLinkActive="active">سجل المخزن </a> -->
-           <a  mat-button routerLink="/inventoryQnt" routerLinkActive="active">سعة المخزن</a>
-           <a  mat-button routerLink="/inventory" routerLinkActive="active">حالة المخزن</a>
+              <router-outlet>
+              </router-outlet>
+              <button  (click)="scrollToTop()" [@fadeInOut] class="scroll-to-top" *ngIf="pageYoffset > 0" >
+                <mat-icon>arrow_upward</mat-icon>
+              </button>
+              <app-footer></app-footer>
 
-           <!-- <a  mat-button [matMenuTriggerFor]="menu">المخزن</a>
-           <mat-menu #menu="matMenu">
-               <button mat-menu-item routerLink="./inventory" routerLinkActive="active1">
-
-                 <span>حالة المخزن</span>
-               </button>
-               <button mat-menu-item routerLink="./inventoryQnt" routerLinkActive="active1">
-
-                 <span>سعة المخزن</span>
-               </button>
-               </mat-menu> -->
-           <a mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">الصفحة الرئيسية</a>
-           <!-- <a  mat-button [matMenuTriggerFor]="microwave">Microwave </a>
-
-           <mat-menu #microwave="matMenu">
-             <a  mat-menu-item routerLink="./microwave" routerLinkActive="active">Microwave </a>
-             <ng-container *ngFor="let status of statusList">
-               <a  mat-menu-item routerLink="./microwave" [queryParams]="{statusid:  status.id  }" routerLinkActive="active">{{status.value}}</a>
-              </ng-container>
-           </mat-menu>
-
-
-
-           <a  mat-button  [matMenuTriggerFor]="fiber">Fiber</a>
-           <mat-menu #fiber="matMenu">
-             <a  mat-menu-item routerLink="./fiber" routerLinkActive="active">Fiber</a>
-            <ng-container *ngFor="let status of statusList">
-             <a  mat-menu-item routerLink="./fiber" [queryParams]="{statusid:  status.id  }" routerLinkActive="active">{{status.value}}</a>
-
-            </ng-container>
-           </mat-menu>
-
-
-
-           <a mat-button  [matMenuTriggerFor]='copper'>Copper</a>
-           <mat-menu #copper="matMenu">
-             <a  mat-menu-item routerLink="./copper" routerLinkActive="active">Copper</a>
-             <ng-container *ngFor="let status of statusList">
-               <a  mat-menu-item routerLink="./copper" [queryParams]="{statusid:  status.id  }" routerLinkActive="active">{{status.value}}</a>
-              </ng-container>
-           </mat-menu>
-
-           <a mat-button [hidden]="isNotAdmin"  routerLink="./logs" routerLinkActive="active">Logs</a>
-           <a  mat-button [hidden]="isNotAdmin"  [matMenuTriggerFor]="menu">Settings</a>
-
-             <mat-menu #menu="matMenu">
-               <button mat-menu-item routerLink="/servicespeed" routerLinkActive="active1" [queryParams]="{serid: 1}">
-                 <mat-icon>power_input</mat-icon>
-                 <span>Copper Service Speed</span>
-               </button>
-               <button mat-menu-item routerLink="/servicespeed" routerLinkActive="active1" [queryParams]="{serid: 2}" >
-                   <mat-icon>cable</mat-icon>
-                 <span>Fiber Service Speed</span>
-
-                 </button>
-
-                 <button mat-menu-item routerLink="/servicespeed" routerLinkActive="active1" [queryParams]="{serid: 3}">
-                   <mat-icon>router</mat-icon>
-                 <span>Microwave Service Speed</span>
-
-                 </button>
-                 <button mat-menu-item routerLink="/contacts" routerLinkActive="active1" [queryParams]="{team: 1}">
-                   <mat-icon>group</mat-icon>
-                   <span>Presales Team</span>
-                 </button>
-                  <button mat-menu-item routerLink="/contacts" routerLinkActive="active" [queryParams]="{team: 2}" >
-                     <mat-icon>group</mat-icon>
-                   <span>ESPT Team</span>
-
-                   </button>
-                   <button mat-menu-item routerLink="/status" routerLinkActive="active1" >
-                     <mat-icon>event</mat-icon>
-                   <span>Service Status
-                   </span>
-
-                   </button>
-               </mat-menu> -->
-
-         </div>
-
-         <div class="menu-icon" fxFlex fxLayout fxLayoutAlign="end" fxShow="true" fxHide.gt-sm="true">
-           <span  (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></span>
-         </div>
-       </mat-toolbar>
-
-    <mat-sidenav-container fxFlexFill class="example-container">
-
-           <!-- start sidenav in sm screen -->
-            <mat-sidenav #sidenav fxLayout="column">
-              <div fxLayout="column">
-                <!-- <button (click)="sidenav.toggle()" href="#" mat-button class="arrow"><mat-icon>arrow_back_ios</mat-icon></button> -->
-                <a  mat-button  routerLink="./" routerLinkActive="active1" [routerLinkActiveOptions]="{exact:true}">الصفحة الرئيسية</a>
-                <!-- <a  mat-button  routerLink="./inventory" routerLinkActive="active1" >حالة المخزن</a> -->
-                <a  mat-button  routerLink="./inventory" routerLinkActive="active1" > حالة المخزن</a>
-                <a  mat-button  routerLink="./inventoryQnt" routerLinkActive="active1" > سعة المخزن</a>
-                <a  mat-button  routerLink="./inventorylogs" routerLinkActive="active1" > سجل المخزن</a>
-
-                <!-- <a  mat-button  [matMenuTriggerFor]='microwave'>Microwave</a>
-                <a mat-button  [matMenuTriggerFor]='fiber'>Fiber</a>
-                <a  mat-button  [matMenuTriggerFor]='copper'>Copper</a>
-                <a  mat-button [matMenuTriggerFor]="menu">Settings</a>
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item routerLink="/servicespeed" routerLinkActive="active1" [queryParams]="{serid: 1}">
-                      <mat-icon>power_input</mat-icon>
-                      <span>Copper Service Speed</span>
-                    </button>
-                    <button mat-menu-item routerLink="/servicespeed" routerLinkActive="active1" [queryParams]="{serid: 2}">
-                      <mat-icon>power_input</mat-icon>
-                    <span>Fiber Service Speed</span>
-                    </button>
-                    <button mat-menu-item routerLink="/servicespeed" routerLinkActive="active1" [queryParams]="{serid: 2}">
-                      <mat-icon>power_input</mat-icon>
-                    <span>Microwave Service Speed</span>
-                    </button>
-                    <button mat-menu-item routerLink="/contacts" routerLinkActive="active1" [queryParams]="{team: 1}">
-                      <mat-icon>group</mat-icon>
-                      <span>Presales Team</span>
-                    </button>
-                      <button mat-menu-item routerLink="/contacts" routerLinkActive="active" [queryParams]="{team: 2}" >
-                        <mat-icon>group</mat-icon>
-                      <span>ESPT Team</span>
-
-                      </button>
-                      <button mat-menu-item routerLink="/status" routerLinkActive="active1" >
-                        <mat-icon>event</mat-icon>
-                      <span>Service Status
-                      </span>
-
-                      </button>
-                  </mat-menu> -->
-
-              </div>
-            </mat-sidenav>
-            <!-- End sidenav -->
-
-        <mat-sidenav-content fxFlexFill>
-
-            <router-outlet>
-            </router-outlet>
-            <ngx-spinner type="timer">
-              <h5>Loading</h5>
-            </ngx-spinner>
-            <button  (click)="scrollToTop()" [@fadeInOut] class="scroll-to-top" *ngIf="pageYoffset > 0" >
-              <mat-icon>arrow_upward</mat-icon>
-            </button>
-         <app-footer></app-footer>
-
-        </mat-sidenav-content>
-      </mat-sidenav-container>
-
-    </div>
+          </main>
+      </mat-sidenav-content>
+  </mat-sidenav-container>
+  <ngx-spinner type="timer">
+    <h5>Loading</h5>
+  </ngx-spinner>
+  </div>

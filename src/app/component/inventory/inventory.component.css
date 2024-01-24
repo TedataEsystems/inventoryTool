@@ -119,7 +119,7 @@ li:last-of-type{
 
 .btn-color{
   color: #fff;
-  background-color: var(--forth-color);
+  background-color: var(--fifth-color);
   width: 120px;
   text-align: center;
  }
@@ -140,13 +140,28 @@ li:last-of-type{
   padding: 10px 15px;
   font-size: 15px;
  }
+ .Msg{
+  background: var(--cr4-color);
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  color: #fff;
+  left: 0;
+ }
+ .msg-box{
+  margin-top: 60px;
+  max-height:400px;
+  overflow: auto;
+}
  .sheet{
    width: 100% !important;
  }
 
 .mat-toolbar-row, .mat-toolbar-single-row {
   height: 40px !important;
+
 }
+
 .add:hover{
 cursor: pointer;
 }
@@ -220,10 +235,17 @@ word-break: break-word;
 hyphens: auto;
 
 }
+mat-cell:nth-child(1){
+  padding-right: 8px !important;
+}
+mat-header-cell:nth-child(1){
+  padding-right: 0px !important;
+}
+
 
 .txt{
 text-shadow: 2px 2px 4px #82919b;
-color:var(--main-color)
+color:var(--seconed-color)
 }
 .ico{
 box-shadow: 2px 2px 4px #82919b;
@@ -233,6 +255,7 @@ box-shadow: 2px 2px 4px #82919b;
 background-color: var(--body-color);
 border-radius: none !important;
 border-radius: 0 !important;
+margin-bottom: 4px;
 }
 mat-cell:nth-child(4), mat-header-cell:nth-child(4){
   word-wrap: break-word !important;
@@ -273,7 +296,7 @@ mat-cell:nth-child(4), mat-header-cell:nth-child(4){
     height: 48px;
     overflow-y: auto;
     text-align: right !important;
-  
+
     }
     .size{
       font-size: 30px;
@@ -299,23 +322,23 @@ mat-cell:nth-child(4), mat-header-cell:nth-child(4){
     outline: none;
     border: none !important;
   }
-  
+
 
 
   mat-form-field.serch{
     margin-top: 20px;
   }
 
-  
+
 div.serch{
-  
+
     margin-top: 40px;
     text-align: right;
     font-size: 19px;
     color: var(--cr3-color);
 }
 
-  
+
 .inputFilter{
   background-color: white !important;
 }

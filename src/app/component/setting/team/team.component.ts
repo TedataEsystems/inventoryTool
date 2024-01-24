@@ -213,7 +213,7 @@ export class TeamComponent implements OnInit {
 
     this.editdisabled = false;
     this.isNameUpdatedRepeated = false;
-    this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+   // this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
   }
 
   updateEdit(row: any) {

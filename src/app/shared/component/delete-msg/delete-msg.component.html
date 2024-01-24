@@ -1,17 +1,21 @@
+
+
+<mat-toolbar>
+
+  <span class="">حذف <mat-icon id="trash">delete_outline</mat-icon> </span>
+  <button  class="btn-dialog-close ml-0"  (click)="onClose()" id="close-icon" >
+      <mat-icon>clear</mat-icon></button>
+
+ </mat-toolbar>
 <div>
-  <div class="content-container pt-2 pr-3 pb-2 text-right">
+  <div class="content-container">
 
-     <span class="mr-1">حذف</span>
-     <mat-icon>warning</mat-icon>
 
-  </div>
-  <div  class="content-container py-3 text-right">
-      <span class="content-span ">
-          هل أنت متأكد أنك تريد حذف هذا السجل ؟
+     <span class="content-span full-width ">
+      هل أنت متأكد أنك تريد حذف هذا السجل ؟
       </span>
   </div>
-  <div class="content-container  full-width">
-  <button  id="yes-button" (click)="onDelete()">نعم</button>
-  <button    id="no-button" (click)="onClose()">لا</button>
+  <button   mat-stroked-button  id="no-button"  id="no-button" (click)="onClose()">لا</button>
+  <button  mat-stroked-button   id="yes-button" (click)="onDelete()">نعم</button>
 </div>
-</div>
+

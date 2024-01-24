@@ -1,1 +1,50 @@
-<p>sidenav works!</p>
+
+<mat-list>
+  <a
+    mat-list-item
+    routerLink="/"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+
+  >
+    <span class="nav-caption mr-1">الصفحة الرئيسية</span>
+  </a>
+  <!-- -------Fiber ------------ -->
+  <a mat-list-item (click)="showSubmenu = !showSubmenu" class="parent">
+    <span class="full-width nav-caption mr-1" *ngIf="isExpanded || isShowing"
+      >المخزن</span
+    >
+
+    <mat-icon
+      class="menu-button"
+      [ngClass]="{ rotated: showSubmenu}"
+      *ngIf="isExpanded || isShowing"
+      >expand_more
+    </mat-icon>
+  </a>
+  <div
+    class="submenu"
+    [ngClass]="{ expanded: showSubmenu }"
+    *ngIf="isShowing || isExpanded"
+  >
+    <a mat-list-item routerLink="/inventory" routerLinkActive="active">
+
+      <span class="nav-caption mr-3">حالة المخزن</span>
+    </a>
+
+
+    <a mat-list-item routerLink="/inventoryQnt" routerLinkActive="active">
+
+      <span class="nav-caption mr-3">سعة المخزن</span>
+    </a>
+
+
+
+
+
+
+  </div>
+
+</mat-list>
+
+

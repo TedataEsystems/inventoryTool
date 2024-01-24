@@ -4,7 +4,7 @@
 
     <button
       mat-icon-button
-      class="opt text-success"
+      class="text-success"
       (click)="SaveFavoriteSearch()"
       matTooltip="حفظ نتيجة البحث"
     >
@@ -14,7 +14,7 @@
     </button>
     <button
       mat-icon-button
-      class="opt text-warning"
+      class=" text-warning"
       (click)="GetFavoriteSearch()"
       matTooltip="استرجاع نتيجة البحث"
     >
@@ -35,13 +35,13 @@
     <!-- /end edit group -->
   </mat-card-header>
   <mat-divider></mat-divider>
-  <form [formGroup]="formSearch" class="form-normal" (submit)="Search()" dir="rtl">
+  <form [formGroup]="formSearch" class="form-normal mb-3" (submit)="Search()" dir="rtl">
     <mat-grid-list cols="3" rowHeight="150px">
       <mat-grid-tile>
         <div class="controles-container">
           <mat-form-field appearance="fill" class="serch">
             <mat-select
-             
+
               appendTo="body"
               formControlName="LocationId"
               placeholder=" *Location  (--اختر--) "
@@ -79,27 +79,24 @@
                 (keyup)="ontypeNameInputChange()"
                 (keydown)="$event.stopPropagation()"
               />
-
+<div class=" optionContainer">
               <mat-option
                 *ngFor="let typeStatus of TypeStatusList"
                 [value]="typeStatus.id"
               >
                 {{ typeStatus.name }}
               </mat-option>
+            </div>
             </mat-select>
           </mat-form-field>
         </div>
       </mat-grid-tile>
       <mat-grid-tile>
         <div class="controles-container">
-          <button mat-raised-button class="ser" color="warn">بحث</button>
-          <input
-            mat-raised-button
-            value="مسح "
-            class="btn-danger text-center mx-1 ser"
-            (click)="clearAdvancedSearch()"
-            readonly
-          />
+
+          <input  mat-raised-button  value="بحث " class="ser btn-main" type="submit">
+          <input mat-raised-button value="مسح " class="btn-secondary text-center mx-1 ser " (click)="clearAdvancedSearch()" readonly >
+
 
 
         </div>
@@ -107,35 +104,9 @@
     </mat-grid-list>
   </form>
   <div *ngIf="dataSource != null" #table>
-    <mat-divider></mat-divider>
-    <!-- <div class="search-div" fxLayout="row">
-      <mat-form-field class="search-form-field" floatLabel="never">
-        <input
-          matInput
-          [(ngModel)]="searchKey"
-          placeholder="بحث"
-          autocomplete="off"
-          (keyup)="applyFilter()"
-        />
-        <button
-          mat-button
-          matSuffix
-          mat-icon-button
-          aria-label="Clear"
-          *ngIf="searchKey"
-          (click)="onSearchClear()"
-        >
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-form-field>
-    </div> -->
 
-    <!-- <div *ngIf="dataSource==null;else table">
 
-<ngx-spinner type="timer">
-  <h5>Loading</h5>
-</ngx-spinner>
-</div> -->
+
 
     <div class="example-container mat-elevation-z8">
       <mat-table
@@ -146,14 +117,7 @@
         matSortDirection="desc"
         matSortDisableClear
       >
-        <!-- <ng-container matColumnDef="Id">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>
-            ID</mat-header-cell
-          >
-          <mat-cell *matCellDef="let element" data-label="رقم">
-            {{ element.id }}
-          </mat-cell>
-        </ng-container> -->
+
 
 
         <ng-container matColumnDef="DeviseName">

@@ -15,8 +15,11 @@ min-height: 0;
 }
 .student-detail-row mat-cell
 {
-background: var(--body-color);
+background: #fff;
   box-shadow: inset 3px 0px 5px var(--third-color),inset -3px 0px 5px var(--third-color);
+  max-height: 151px;
+    padding: 0 10px;
+    overflow: auto;
 
 }
 .text-success{

@@ -76,8 +76,8 @@
       </ng-container>
 
       <ng-container matColumnDef="action">
-        <mat-header-cell *matHeaderCellDef> الاجراء </mat-header-cell>
-        <mat-cell *matCellDef="let row" data-label="action">
+        <mat-header-cell *matHeaderCellDef class="justify-content-center"> الاجراء </mat-header-cell>
+        <mat-cell *matCellDef="let row" class="justify-content-center">
           <ng-container *ngIf="!editdisabled || row.id != editUsr">
 
             <button mat-button class="btn-success ml-1 font-weight-bolder" matTooltip="Edit" (click)="onEdit(row)">
@@ -90,11 +90,11 @@
             </button>
           </ng-container>
           <ng-container *ngIf="editdisabled  && row.id==editUsr">
-            <button class="btn-success btn ml-1" [disabled]="isDisabled" matTooltip="Update" (click)="updateEdit(row)">
+            <button mat-button class="btn-success btn ml-1" [disabled]="isDisabled" matTooltip="Update" (click)="updateEdit(row)">
               <mat-icon>check</mat-icon>
             </button>
 
-            <button class="btn-danger btn " matTooltip="Cancel" (click)="cancelEdit()">
+            <button  mat-button class="btn-danger btn " matTooltip="Cancel" (click)="cancelEdit()">
               <mat-icon>clear</mat-icon>
             </button>
           </ng-container>

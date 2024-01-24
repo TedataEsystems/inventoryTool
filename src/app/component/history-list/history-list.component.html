@@ -63,7 +63,7 @@
       <button mat-button class="text-info"    matTooltip="View Details" (click)="Details(element.descirption)">
         <mat-icon>visibility</mat-icon>
        </button>
-    </mat-cell> 
+    </mat-cell>
     </ng-container>-->
       <ng-container matColumnDef="Descirption">
         <mat-header-cell mat-header-cell *matHeaderCellDef> التفاصيل</mat-header-cell>
@@ -80,8 +80,8 @@
         <div class="row student-element-detail" [@detailExpand]="element.isExpanded ? 'expanded' : 'collapsed'">
           <mat-list>
 
-            <mat-list-item >
-              {{element.descirption}}
+            <mat-list-item class="my-3">
+            <span>{{element.descirption}}</span>
 
             </mat-list-item>
           </mat-list>

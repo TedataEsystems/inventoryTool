@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { OutgoingStatusList } from 'src/app/Model/outgoing-status-list';
 import { DeleteService } from 'src/app/shared/service/delete.service';
+import { LoaderService } from 'src/app/shared/service/loader.service';
 import { OutgoingStatusService } from 'src/app/shared/service/outgoing-status.service';
 
 @Component({
@@ -45,7 +46,7 @@ export class OutgoingComponent implements OnInit {
   editUsr: any;
   editdisabled: boolean = false;
   constructor(private titleService: Title
-    , private toastr: ToastrService, private router: Router, private route: ActivatedRoute, private OutgoingStatusServ: OutgoingStatusService, private dailogService: DeleteService
+    , private toastr: ToastrService, private router: Router, private loader: LoaderService,private route: ActivatedRoute, private OutgoingStatusServ: OutgoingStatusService, private dailogService: DeleteService
   ) {
     this.titleService.setTitle('Outgoing');
 
@@ -53,7 +54,7 @@ export class OutgoingComponent implements OnInit {
   TypeStatusName: string = '';
   TypeStatusId: number = 0;
  // show: boolean = false;
-  loader: boolean = false;
+
   isDisabled = false;
   pageNumber = 1;
   pageSize = 100;
@@ -85,7 +86,7 @@ export class OutgoingComponent implements OnInit {
       this.router.navigateByUrl('/login');
     }
     else{
-    this.loader = true;
+    this.loader.busy();
     this.OutgoingStatusServ.getOutgoingStatus(pageNum, pageSize, search, sortColumn, sortDir).subscribe(response => {
       this.outgoingStatusList = response?.data;
       this.outgoingStatusList.length = response?.pagination.totalCount;
@@ -93,7 +94,7 @@ export class OutgoingComponent implements OnInit {
       this.dataSource._updateChangeSubscription();
       this.dataSource.paginator = this.paginator as MatPaginator;
     })
-    setTimeout(() => this.loader = false, 2000);
+    setTimeout(() => this.loader.idle(), 2000);
   }
   }
   ngOnInit(): void {
@@ -152,7 +153,7 @@ export class OutgoingComponent implements OnInit {
         this.isDisable = true;
         this.OutgoingStatusServ.AddOutgoingStatus(this.Outgoing).subscribe(res => {
           setTimeout(() => {
-            this.loader = false;
+            this.loader.idle();
           }, 1500)
           this.toastr.success(":: add successfully");
           this.LoadCompanyName();
@@ -164,7 +165,7 @@ export class OutgoingComponent implements OnInit {
         },
           error => {
             setTimeout(() => {
-              this.loader = false;
+              this.loader.idle();
             }, 0)
             this.toastr.warning(":: failed");
           }
@@ -174,7 +175,7 @@ export class OutgoingComponent implements OnInit {
         //not used
         this.OutgoingStatusServ.UpdateOutgoingStatus(this.Outgoing).subscribe(res => {
           setTimeout(() => {
-            this.loader = false;
+            this.loader.idle();
           }, 1500)
           this.toastr.success(":: update successfully");
           this.LoadCompanyName();
@@ -184,7 +185,7 @@ export class OutgoingComponent implements OnInit {
         },
           error => {
             setTimeout(() => {
-              this.loader = false;
+              this.loader.idle();
             }, 0)
             this.toastr.warning(":: failed");
           }
@@ -210,12 +211,12 @@ export class OutgoingComponent implements OnInit {
 
     this.editdisabled = false;
     this.isNameUpdatedRepeated = false;
-    this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+    //this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
   }
 
   updateEdit(row: any) {
 
-    this.loader = true;
+    this.loader.busy();
     let OutgoingStatusEdit: OutgoingStatusList =
     {
       id: row.id,
@@ -227,7 +228,7 @@ export class OutgoingComponent implements OnInit {
     this.OutgoingStatusServ.UpdateOutgoingStatus(OutgoingStatusEdit).subscribe(res => {
       if (res.status == true) {
         setTimeout(() => {
-          this.loader = false;
+          this.loader.idle();
         }, 1500)
         this.toastr.success(":: update successfully");
         this.LoadCompanyName();
@@ -239,7 +240,7 @@ export class OutgoingComponent implements OnInit {
       }//if
       else {
         setTimeout(() => {
-          this.loader = false;
+          this.loader.idle();
         }, 0)
         this.toastr.warning(":: failed");
       }
@@ -257,7 +258,7 @@ export class OutgoingComponent implements OnInit {
       this.router.navigateByUrl('/login');
     }
     else{
-    this.loader = true;
+    this.loader.busy();
     this.pIn = event.pageIndex;
     this.pageIn = event.pageIndex;
     this.pagesizedef = event.pageSize;
@@ -286,12 +287,12 @@ export class OutgoingComponent implements OnInit {
         this.dataSource = new MatTableDataSource<any>(this.outgoingStatusList);
         this.dataSource._updateChangeSubscription();
         this.dataSource.paginator = this.paginator as MatPaginator;
-        this.loader = false;
+        this.loader.idle();
       }
       else this.toastr.success(":: add successfully");
     }, err => {
       this.toastr.warning(":: failed");
-      this.loader = false;
+      this.loader.idle();
 
     })
 

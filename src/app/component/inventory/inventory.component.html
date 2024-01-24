@@ -1,4 +1,4 @@
-<div class="my-3" dir="rtl">
+<div class="mb-3" dir="rtl">
   <mat-accordion>
     <mat-expansion-panel  (opened)="openAdvancedSearch()"
     (closed)="panelOpenState = true" >
@@ -7,7 +7,7 @@
        بحث متقدم
 
         </mat-panel-title>
-        <img src="../../../assets/image/ex.png" class="ml-3" (click)="ExportExitPermitExcel($event)" height="40px" width="40px">
+        <img src="../../../assets/image/ex.png" class="ml-3 mt-1" (click)="ExportExitPermitExcel($event)" height="40px" width="40px">
 
       </mat-expansion-panel-header>
       <mat-divider></mat-divider>
@@ -339,11 +339,11 @@
 
   <div class="w-100 justify-content-end btn-group   pl-3" style="margin-top:20px;" >
 
- 
-    <input mat-raised-button value="مسح " class="btn-danger text-center mx-1 ser " (click)="clearAdvancedSearch()" readonly >
+    <input  mat-raised-button  value="بحث " class="ser btn-main" type="submit">
+    <input mat-raised-button value="مسح " class="btn-secondary text-center mx-1 ser " (click)="clearAdvancedSearch()" readonly >
 
-    <button mat-raised-button class="ser " color="warn" >بحث</button>
-    
+
+
   </div>
 
 
@@ -360,11 +360,8 @@
       <mat-card-title>
       حالة المخزن
       </mat-card-title>
-     
 
 
-
-          
 
       <button mat-button class="opt  " (click)="onCreate()">
           <mat-icon class="add-new ico" >add</mat-icon>
@@ -394,12 +391,12 @@
 
 
 </mat-menu>
-<button mat-button class="opt " [matMenuTriggerFor]="menuChange" aria-label="">
+<button mat-button class="opt ml-1" [matMenuTriggerFor]="menuChange" aria-label="">
   <mat-icon  class="txt" >settings</mat-icon>
   <span class="txt mr-1"> اعدادات تغيير المخزن</span>
 </button>
 <mat-menu #menuChange="matMenu" >
- 
+
 <button mat-menu-item class="text-right"   (click)="openBottomSheetWithLocation()">
 
   <span class=" mr-1">تحويل من اكسل الي مخزن اخر</span>
@@ -470,7 +467,7 @@
 
   <ng-container matColumnDef="all">
     <mat-header-cell *matHeaderCellDef>
-      <mat-checkbox (change)="onselectcheckall($event)" [checked]="alll" >All</mat-checkbox>
+      <mat-checkbox (change)="onselectcheckall($event)" [checked]="alll" > &nbsp; All</mat-checkbox>
     </mat-header-cell>
     <mat-cell *matCellDef="let row" data-label="All" [ngClass]="{'highlight' : row.isToLate}">
       <mat-checkbox [checked]="isall" (change)="onselectcheck($event,row)"></mat-checkbox>
@@ -620,10 +617,10 @@
             <button mat-button   class="btn-success "  matTooltip="Edit" (click)="onEdit(row)">
                 <mat-icon>edit</mat-icon>
             </button>
-            <button mat-button   class="btn-secondary text-white mx-1 "  matTooltip="تحويل الى" (click)="updateLocations(row)">
+            <button mat-button   class="btn-secondary text-white mr-1 "  matTooltip="تحويل الى" (click)="updateLocations(row)">
               <mat-icon>swap_vertical_circle</mat-icon>
           </button>
-        <button mat-button   class="btn btn-info text-white mx-1"  matTooltip="Log Details" (click)="GetLog(row)">
+        <button mat-button   class="btn-warning text-white mx-1"  matTooltip="Log Details" (click)="GetLog(row)">
           <mat-icon>history</mat-icon>
       </button>
 
@@ -709,13 +706,13 @@
     </ng-template>
 
     <ng-template #Msg>
-      <mat-toolbar>
+      <mat-toolbar class="Msg">
         <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="closeMsg()">
           <mat-icon>close</mat-icon>
         </button>
       </mat-toolbar>
-      <div  class="sheet">
-        <div class="data" [innerHtml]="htmlToAdd">
+      <div  class="sheet msg-box">
+        <div class="data "  [innerHtml]="htmlToAdd">
 
         </div>
       </div>
@@ -761,12 +758,12 @@
     </ng-template>
 
     <ng-template #Msg>
-      <mat-toolbar>
+      <mat-toolbar class="Msg">
         <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="closeMsg()">
           <mat-icon>close</mat-icon>
         </button>
       </mat-toolbar>
-      <div  class="sheet">
+      <div  class="sheet msg-box">
         <div class="data" [innerHtml]="htmlToAdd">
 
         </div>

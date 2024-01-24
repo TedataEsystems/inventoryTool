@@ -198,12 +198,13 @@ export class InventoryComponent implements OnInit {
       dialogGonfig.width = "50%";
       dialogGonfig.panelClass = 'modals-dialog';
       this.dialog.open(AddComponent, dialogGonfig).afterClosed().subscribe(result => {
+        if(result){
         this.service.initializeForm();
         if (this.service.formSearch.value == '') {
           this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef)
         } else {
           this.AdvancedSearch();
-        }
+        }}
       });
     }
   }
@@ -221,12 +222,15 @@ export class InventoryComponent implements OnInit {
       dialogGonfig.panelClass = 'modals-dialog';
       this.dialog.open(EditComponent, { panelClass: 'modals-dialog', disableClose: true, autoFocus: true, width: "50%", data: row }).afterClosed()
         .subscribe(result => {
-          if (this.service.formSearch.value != '') {
-            this.AdvancedSearch();
+          if(result){
+            if (this.service.formSearch.value != '') {
+              this.AdvancedSearch();
 
-          } else {
-            this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+            } else {
+              this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+            }
           }
+
         });
 
     }
@@ -1207,14 +1211,16 @@ export class InventoryComponent implements OnInit {
     dialogGonfig.data = row;
     dialogGonfig.disableClose = true;
     dialogGonfig.autoFocus = true;
-    dialogGonfig.width = '30%';
-    // dialogGonfig.height='50%';
-    dialogGonfig.panelClass = 'modal2-dialog';
+     dialogGonfig.width = "30%";
+      dialogGonfig.height = "300px";
+      dialogGonfig.panelClass = 'modals-dialog';
     this.dialog
       .open(RelocatLocationComponent, dialogGonfig)
       .afterClosed()
       .subscribe((result) => {
+        if(result){
         this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
+        }
       });
   }
 
