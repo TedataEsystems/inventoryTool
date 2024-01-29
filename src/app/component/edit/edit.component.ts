@@ -369,7 +369,7 @@ export class EditComponent implements OnInit {
 
     };
 
-    if (inventory.CategoryId != 46 && inventory.CategoryId != 47 && inventory.CategoryId != 48 && inventory.CategoryId != 49) {
+    if (inventory.CategoryId != 45 && inventory.CategoryId != 46 && inventory.CategoryId != 47 && inventory.CategoryId != 48 && inventory.CategoryId !=63) {
       if (inventory.SerielNumber == null || inventory.SerielNumber == '') {
         this.serialreq = 1;
         return;
