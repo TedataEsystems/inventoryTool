@@ -245,13 +245,13 @@ export class EditComponent implements OnInit {
       if (res.status == true) {
         var categorycount = 0;
         for (var category of this.Category1) {
-          if (category.id == 47 || category.id == 48 || category.id == 49) {
+          if (category.id == 46 || category.id == 47 || category.id == 48) {
             this.MetterHidden = true;
           }
           else {
             this.MetterHidden = false;
           }
-          if (category.id == 46) {
+          if (category.id == 45 ||category.id==63) {
             this.numberHidden = true;
           }
           else {
@@ -575,7 +575,7 @@ export class EditComponent implements OnInit {
           else {
             this.MetterHidden = false;
           }
-          if (category.id == 46) {
+          if (category.id == 45||category.id==63) {
             this.numberHidden = true;
           }
           else {

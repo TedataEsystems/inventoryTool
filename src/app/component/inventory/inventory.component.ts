@@ -35,6 +35,7 @@ import { EditFormService } from 'src/app/shared/service/edit-form.service';
 import { Team } from 'src/app/Model/team';
 import { RelocatLocationComponent } from '../relocat-location/relocat-location.component';
 import { ToastrService } from 'ngx-toastr';
+import { formatDate } from '@angular/common';
 declare var require: any;
 const swal = require('sweetalert2')
 
@@ -966,7 +967,7 @@ export class InventoryComponent implements OnInit {
           const blob = new Blob([res], { type: 'application/vnd.ms.excel' });
           const file = new File([blob], 'تصريح _الخروج' + Date.now() + '.xlsx', { type: 'application/vnd.ms.excel' });
 
-          saveAs(file, 'تصريح _الخروج' + Date.now() + '.xlsx');
+          saveAs(file, 'تصريح _الخروج' +formatDate(new Date(), 'yyyy/MM/dd', 'en') + '.xlsx');
 
           this.selectedRows = false;
 
