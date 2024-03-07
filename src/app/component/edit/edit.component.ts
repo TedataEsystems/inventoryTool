@@ -151,16 +151,45 @@ this.GetCategoryByTypeId()
   GetCategoryByTypeId(){
     this.inventoryserv.GetCategoryByTypeId(this.data.typeStatusId).subscribe(res => {
 
+      // if (res.status == true) {
+      //   var categorycount = 0;
+      //   for (var category of this.Category1) {
+      //     if (category.id == 47 || category.id == 48 || category.id == 49) {
+      //       this.MetterHidden = true;
+      //     }
+      //     else {
+      //       this.MetterHidden = false;
+      //     }
+      //     if (category.id == 46) {
+      //       this.numberHidden = true;
+      //     }
+      //     else {
+      //       this.numberHidden = false;
+      //     }
+      //     if (this.data.categoryId == category.id) {
+      //       categorycount++;
+      //       this.service.form.controls['CategoryId'].setValue(category.id);
+
+      //       break;
+      //     }
+      //   }
+      //   if (categorycount == 0) {
+      //     this.service.form.controls['CategoryId'].setValue(null);
+
+      //   }
+
+      // }
+
       if (res.status == true) {
         var categorycount = 0;
         for (var category of this.Category1) {
-          if (category.id == 47 || category.id == 48 || category.id == 49) {
+          if (category.id == 46 || category.id == 47 || category.id == 48) {
             this.MetterHidden = true;
           }
           else {
             this.MetterHidden = false;
           }
-          if (category.id == 46) {
+          if (category.id == 45 ||category.id==63) {
             this.numberHidden = true;
           }
           else {
@@ -327,82 +356,7 @@ this.GetCategoryByTypeId()
 
     });
 
-    this.inventoryserv.GetCategoryByTypeId(this.data.typeStatusId).subscribe(res => {
-
-      if (res.status == true) {
-        var categorycount = 0;
-        for (var category of this.Category1) {
-          if (category.id == 46 || category.id == 47 || category.id == 48) {
-            this.MetterHidden = true;
-          }
-          else {
-            this.MetterHidden = false;
-          }
-          if (category.id == 45 ||category.id==63) {
-            this.numberHidden = true;
-          }
-          else {
-            this.numberHidden = false;
-          }
-          if (this.data.categoryId == category.id) {
-            categorycount++;
-            this.service.form.controls['CategoryId'].setValue(category.id);
-
-            break;
-          }
-        }
-        if (categorycount == 0) {
-          this.service.form.controls['CategoryId'].setValue(null);
-
-        }
-
-      }
-
-
-
-
-    });
-    if (this.data) {
-      if (this.data.subItem) {
-        this.subitem = this.data.subItem;
-        this.subitem1 = this.data.subItem;
-      }
-      this.service.form.controls['Id'].setValue(this.data.id);
-      this.service.form.controls['CustomerName'].setValue(this.data.customerName);
-      this.service.form.controls['OrderNumber'].setValue(this.data.orderNumber);
-      this.service.form.controls['ReorderingPoint'].setValue(this.data.reorderingPoint);
-      this.service.form.controls['BR'].setValue(this.data.br);
-      this.service.form.controls['ItemCode'].setValue(this.data.itemCode);
-      this.service.form.controls['Meter'].setValue(this.data.meter);
-      this.service.form.controls['Number'].setValue(this.data.number);
-      this.service.form.controls['SerielNumber'].setValue(this.data.serielNumber);
-      this.service.form.controls['RecipientName'].setValue(this.data.recipientName);
-      this.service.form.controls['Status'].setValue(this.data.status);
-      this.service.form.controls['Comment'].setValue(this.data.comment);
-      this.service.form.controls['ReceivedDate'].setValue(this.data.receivedDate);
-      this.service.form.controls['ExpriyDate'].setValue(this.data.expriyDate);
-      this.service.form.controls['CreatedBy'].setValue(this.data.createdBy);
-      this.service.form.controls['CreationDate'].setValue(this.data.creationDate);
-      this.service.form.controls['comeFrom'].setValue(this.data.comeFrom);
-
-    }
-
-    if (this.service.form.controls['Status'].value == 'وارد') {
-      this.statusflag = 1;
-      this.rowHeig = "720px";
-    }
-    else if (this.service.form.controls['Status'].value == 'منصرف') {
-      this.statusflag = 2;
-      this.rowHeig = "600px";
-    }
-
-    else {
-      this.rowHeig = "450px";
-      this.statusflag == 0;
-
-
-    }
-
+    
 
   }
   onClear() {
