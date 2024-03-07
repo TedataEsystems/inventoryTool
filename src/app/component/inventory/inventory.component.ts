@@ -713,7 +713,9 @@ export class InventoryComponent implements OnInit {
       }
       this.dataSource = new MatTableDataSource<any>(this.InventoryList);
       this.dataSource.paginator = this.paginator as MatPaginator;
+      this.dataSource._updateChangeSubscription();
       this.dataSource.sort = this.sort as MatSort;
+
 
 
       this.loader.idle();

@@ -35,6 +35,7 @@ export class EditComponent implements OnInit {
   hidden: boolean = true;
   hidden1: boolean = true;
   hidden11: number = 0;
+  isDisable=false;
   CustomerNamehidden: boolean = true;
   CustomerNamehidden1: number = 0;
   RecipientNamehidden: boolean = true;
@@ -99,7 +100,93 @@ export class EditComponent implements OnInit {
       this.dialogTitle = this.data.dialogTitle;
     }
 
+    if (this.data) {
+      if (this.data.subItem) {
+        this.subitem = this.data.subItem;
+        this.subitem1 = this.data.subItem;
+      }
+      this.service.form.controls['Id'].setValue(this.data.id);
+      this.service.form.controls['CustomerName'].setValue(this.data.customerName);
+      this.service.form.controls['OrderNumber'].setValue(this.data.orderNumber);
+      this.service.form.controls['ReorderingPoint'].setValue(this.data.reorderingPoint);
+      this.service.form.controls['BR'].setValue(this.data.br);
+      this.service.form.controls['ItemCode'].setValue(this.data.itemCode);
+      this.service.form.controls['Meter'].setValue(this.data.meter);
+      this.service.form.controls['Number'].setValue(this.data.number);
+      this.service.form.controls['SerielNumber'].setValue(this.data.serielNumber);
+      this.service.form.controls['RecipientName'].setValue(this.data.recipientName);
+      this.service.form.controls['Status'].setValue(this.data.status);
+      this.service.form.controls['Comment'].setValue(this.data.comment);
+      this.service.form.controls['ReceivedDate'].setValue(this.data.receivedDate);
+      this.service.form.controls['ExpriyDate'].setValue(this.data.expriyDate);
+      this.service.form.controls['CreatedBy'].setValue(this.data.createdBy);
+      this.service.form.controls['CreationDate'].setValue(this.data.creationDate);
+      this.service.form.controls['comeFrom'].setValue(this.data.comeFrom);
 
+    }
+this.GettingLists()
+this.GetCategoryByTypeId()
+
+
+
+    if (this.service.form.controls['Status'].value == 'وارد') {
+      this.statusflag = 1;
+      this.rowHeig = "720px";
+    }
+    else if (this.service.form.controls['Status'].value == 'منصرف') {
+      this.statusflag = 2;
+      this.rowHeig = "600px";
+    }
+
+    else {
+      this.rowHeig = "450px";
+      this.statusflag == 0;
+
+
+    }
+
+
+  }
+
+  GetCategoryByTypeId(){
+    this.inventoryserv.GetCategoryByTypeId(this.data.typeStatusId).subscribe(res => {
+
+      if (res.status == true) {
+        var categorycount = 0;
+        for (var category of this.Category1) {
+          if (category.id == 47 || category.id == 48 || category.id == 49) {
+            this.MetterHidden = true;
+          }
+          else {
+            this.MetterHidden = false;
+          }
+          if (category.id == 46) {
+            this.numberHidden = true;
+          }
+          else {
+            this.numberHidden = false;
+          }
+          if (this.data.categoryId == category.id) {
+            categorycount++;
+            this.service.form.controls['CategoryId'].setValue(category.id);
+
+            break;
+          }
+        }
+        if (categorycount == 0) {
+          this.service.form.controls['CategoryId'].setValue(null);
+
+        }
+
+      }
+
+
+
+
+    });
+  }
+
+  GettingLists(){
     this.inventoryserv.GettingLists().subscribe(res => {
 
       if (res.status == true) {
@@ -239,84 +326,6 @@ export class EditComponent implements OnInit {
 
 
     });
-
-    this.inventoryserv.GetCategoryByTypeId(this.data.typeStatusId).subscribe(res => {
-
-      if (res.status == true) {
-        var categorycount = 0;
-        for (var category of this.Category1) {
-          if (category.id == 47 || category.id == 48 || category.id == 49) {
-            this.MetterHidden = true;
-          }
-          else {
-            this.MetterHidden = false;
-          }
-          if (category.id == 46) {
-            this.numberHidden = true;
-          }
-          else {
-            this.numberHidden = false;
-          }
-          if (this.data.categoryId == category.id) {
-            categorycount++;
-            this.service.form.controls['CategoryId'].setValue(category.id);
-
-            break;
-          }
-        }
-        if (categorycount == 0) {
-          this.service.form.controls['CategoryId'].setValue(null);
-
-        }
-
-      }
-
-
-
-
-    });
-    if (this.data) {
-      if (this.data.subItem) {
-        this.subitem = this.data.subItem;
-        this.subitem1 = this.data.subItem;
-      }
-      this.service.form.controls['Id'].setValue(this.data.id);
-      this.service.form.controls['CustomerName'].setValue(this.data.customerName);
-      this.service.form.controls['OrderNumber'].setValue(this.data.orderNumber);
-      this.service.form.controls['ReorderingPoint'].setValue(this.data.reorderingPoint);
-      this.service.form.controls['BR'].setValue(this.data.br);
-      this.service.form.controls['ItemCode'].setValue(this.data.itemCode);
-      this.service.form.controls['Meter'].setValue(this.data.meter);
-      this.service.form.controls['Number'].setValue(this.data.number);
-      this.service.form.controls['SerielNumber'].setValue(this.data.serielNumber);
-      this.service.form.controls['RecipientName'].setValue(this.data.recipientName);
-      this.service.form.controls['Status'].setValue(this.data.status);
-      this.service.form.controls['Comment'].setValue(this.data.comment);
-      this.service.form.controls['ReceivedDate'].setValue(this.data.receivedDate);
-      this.service.form.controls['ExpriyDate'].setValue(this.data.expriyDate);
-      this.service.form.controls['CreatedBy'].setValue(this.data.createdBy);
-      this.service.form.controls['CreationDate'].setValue(this.data.creationDate);
-      this.service.form.controls['comeFrom'].setValue(this.data.comeFrom);
-
-    }
-
-    if (this.service.form.controls['Status'].value == 'وارد') {
-      this.statusflag = 1;
-      this.rowHeig = "720px";
-    }
-    else if (this.service.form.controls['Status'].value == 'منصرف') {
-      this.statusflag = 2;
-      this.rowHeig = "600px";
-    }
-
-    else {
-      this.rowHeig = "450px";
-      this.statusflag == 0;
-
-
-    }
-
-
   }
   onClear() {
     this.service.form.reset();
@@ -330,7 +339,7 @@ export class EditComponent implements OnInit {
     this.outgoingisHidden = !this.outgoingisHidden;
   }
   onSubmit() {
-
+    this.isDisable=true
     let inventory = {
       CustomerName: this.service.form.value.CustomerName,
       OrderNumber: this.service.form.value.OrderNumber,
@@ -372,16 +381,17 @@ export class EditComponent implements OnInit {
     if (inventory.CategoryId != 46 && inventory.CategoryId != 47 && inventory.CategoryId != 48 && inventory.CategoryId != 49) {
       if (inventory.SerielNumber == null || inventory.SerielNumber == '') {
         this.serialreq = 1;
+        this.isDisable=false
         return;
       }
 
     }
     if (!this.service.form.valid) {
-
+      this.isDisable=false
       return;
     }
     if (this.serialflag == 1) {
-
+      this.isDisable=false
       return;
     }
     if (inventory.Status == "منصرف") {
@@ -453,7 +463,7 @@ export class EditComponent implements OnInit {
 
       if (this.CustomerNamehidden1 == 1 || this.hidden11 == 1 || this.RecipientNamehidden1 == 1 || this.outgoinghidden11 == 1 ||
         this.OrderNumberhidden1 == 1 || this.TeamIdhidden1 == 1 || this.TypeStatusIdhidden1 == 1 || this.CompanyIdhidden1 == 1) {
-
+          this.isDisable=false
         this.loader.idle();
         return;
       }
@@ -469,16 +479,18 @@ export class EditComponent implements OnInit {
             if (res.status == 'true') {
               this.toastr.success(':: Updated successfully');
               this.service.form.reset();
-
+              this.isDisable=false
               this.loader.idle();
               this.dialogRef.close('save');
             }
             else {
               if (res.status == 'type') {
                 this.serialflag = 3;
+                this.isDisable=false
               }
               else if (res.status == 'metergreat') {
                 this.serialflag = 4;
+
               }
               else if (res.status == 'numbergreat') {
                 this.serialflag = 5;
@@ -498,7 +510,7 @@ export class EditComponent implements OnInit {
     else {
       if (inventory.ReceivedDate == null) {
 
-
+        this.isDisable=false
         this.ReceivedDatehidden = !this.ReceivedDatehidden;
         this.loader.idle();
         return;
@@ -512,6 +524,7 @@ export class EditComponent implements OnInit {
           if (res.status == 'true') {
             this.toastr.success(':: Updated successfully');
             this.service.form.reset();
+            this.isDisable=false
             this.loader.idle();
             this.dialogRef.close('save');
 
@@ -538,12 +551,14 @@ export class EditComponent implements OnInit {
         },
 
       )
+
+
     }
 
 
 
 
-
+    this.isDisable=false
 
     this.loader.idle();
 

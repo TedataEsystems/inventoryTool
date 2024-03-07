@@ -45,7 +45,7 @@ export class AddComponent implements OnInit {
   CompanyName: CompanyName[] = [];
   Location: LocationName[] = [];
   Acceptance: Acceptance[] = [];
-
+  isDisable=false
   flag: boolean = false;
   SerialNumber: string = '';
   flagh: boolean = false;
@@ -221,6 +221,7 @@ export class AddComponent implements OnInit {
   }
 
   onSubmit() {
+    this.isDisable=true
     let inventory = {
       id: this.service.form1.value.Id,
       CustomerName: this.service.form1.value.CustomerName,
@@ -261,10 +262,12 @@ export class AddComponent implements OnInit {
     if (inventory.CategoryId != 46 && inventory.CategoryId != 47 && inventory.CategoryId != 48 && inventory.CategoryId != 49) {
       if (inventory.SerielNumber == null || inventory.SerielNumber == '') {
         this.serialreq = 1;
+        this.isDisable=false
         return;
       }
     }
     if (!this.service.form1.valid || this.serialflag == 1) {
+      this.isDisable=false
       return;
     }
     if (this.data.dialogTitle == "اضافة جديد") {
@@ -279,18 +282,22 @@ export class AddComponent implements OnInit {
             if (res.status == 'true') {
               this.toastr.success(':: Submitted successfully');
               this.service.form1.reset();
+              this.isDisable=false
               this.loader.idle();
               this.dialogRef.close('save');
             }
             else if (res.status == 'false') {
+              this.isDisable=false
               this.toastr.error(res.error);
             }
             else {
               if (res.status == 'type') {
+                this.isDisable=false
                 this.serialflag = 3;
               }
               else {
                 this.toastr.warning(':: Failed');
+                this.isDisable=false
                 this.loader.idle();
               }
 
@@ -307,23 +314,27 @@ export class AddComponent implements OnInit {
             if (res.status == 'true') {
               this.toastr.success(':: Updated successfully');
               this.service.form.reset();
-
+              this.isDisable=false
               this.loader.idle();
               this.dialogRef.close('save');
             }
             else {
               if (res.status == 'type') {
                 this.serialflag = 3;
+                this.isDisable=false
               }
               else if (res.status == 'metergreat') {
                 this.serialflag = 4;
+                this.isDisable=false
               }
               else if (res.status == 'numbergreat') {
                 this.serialflag = 5;
+                this.isDisable=false
               }
               else {
                 this.toastr.warning(':: Failed');
                 this.loader.idle();
+                this.isDisable=false
               }
 
             }
