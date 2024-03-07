@@ -35,7 +35,7 @@ export class RelocatLocationComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.data,"Data")
     this.updatedLocations.inventory = this.data;
-    if(this.data.categoryId==46||this.data.categoryId==48||this.data.categoryId==49)
+    if(this.data.categoryId==45||this.data.categoryId==47||this.data.categoryId==48 || this.data.categoryId==63)
     {
       this.ShowOrHideMeterNumberinput=true;
     }

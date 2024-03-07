@@ -6,7 +6,6 @@ import { ReceivedStatusList } from 'src/app/Model/received-status-list';
 import { TypeStatus } from 'src/app/Model/type-status';
 import { EditFormService } from 'src/app/shared/service/edit-form.service';
 import { InventoryService } from 'src/app/shared/service/inventory.service';
-
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LoaderService } from 'src/app/shared/service/loader.service';
 import { Category } from 'src/app/Model/category';
@@ -17,7 +16,6 @@ import { LocationName } from 'src/app/Model/location';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { __values } from 'tslib';
 import { Team } from 'src/app/Model/team';
-
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
@@ -56,18 +54,11 @@ export class AddComponent implements OnInit {
   selected = 0;
   @ViewChild('typeStatusSearch') typeStatusSearch!: ElementRef;
   constructor(public inventoryserv: InventoryService, private loader: LoaderService, public service: EditFormService,
-    public dialogRef: MatDialogRef<AddComponent>, private toastr: ToastrService, @Inject(MAT_DIALOG_DATA) public data: any) {
-
-  }
-
-
-
-
+    public dialogRef: MatDialogRef<AddComponent>, private toastr: ToastrService, @Inject(MAT_DIALOG_DATA) public data: any) {}
   ngOnInit() {
     if (localStorage.getItem("userGroup") == 'Inventory_Hady') {
       this.flagh = true
     }
-
     if (this.data.dialogTitle !== "اضافة جديد") {
       this.dialogTitle = 'تعديل';
       this.flag = true;
@@ -75,8 +66,6 @@ export class AddComponent implements OnInit {
     else {
       this.dialogTitle = this.data.dialogTitle;
     }
-
-
     this.inventoryserv.GettingLists().subscribe(res => {
       if (res.status == true) {
         this.TypeStatuslist = res.typeStatus;
@@ -110,13 +99,9 @@ export class AddComponent implements OnInit {
           if (typstatuscount == 0) {
             this.service.form1.controls['TypeStatusId'].setValue(null);
           }
-
-
           for (var outgoing of this.OutgoingStatuslist) {
-
             if (this.data.outgoingStatusId == outgoing.id) {
               outgoingstatuscount++;
-
               this.service.form1.controls['OutgoingStatusId'].setValue(this.data.outgoingStatusId);
               this.outgoingtoggle();
               break;
@@ -124,24 +109,15 @@ export class AddComponent implements OnInit {
           }
           if (outgoingstatuscount == 0) {
             this.service.form1.controls['OutgoingStatusId'].setValue(null);
-
           }
           for (var category of this.Category) {
-
-
-
             if (this.data.categoryId == category.id) {
-
-
               categorycount++;
-
               this.service.form1.controls['CategoryId'].setValue(this.data.categoryId);
-
               break;
             }
           }
           if (categorycount == 0) {
-
             this.service.form1.controls['CategoryId'].setValue(null);
           }
           for (var company of this.CompanyName) {
@@ -164,8 +140,6 @@ export class AddComponent implements OnInit {
           if (teamcount == 0) {
             this.service.form1.controls['TeamId'].setValue(null);
           }
-
-
           for (var acceptance of this.Acceptance) {
             if (this.data.acceptanceId == acceptance.id) {
               acceptancecount++;
@@ -181,33 +155,19 @@ export class AddComponent implements OnInit {
             if (this.data.receviedTypeId == received.id) {
               receviedtypecount++;
               this.service.form1.controls['ReceviedTypeId'].setValue(this.data.receviedTypeId);
-
               this.toggle();
               break;
             }
           }
           if (receviedtypecount == 0) {
             this.service.form1.controls['ReceviedTypeId'].setValue(null);
-
           }
-
         }
       }
       else { this.toastr.warning(':: error') }
-
-
-
     });
-
-
-
-
-
     this.service.form1.controls['comeFrom'].setValue('1');
   }
-
-
-
   onClear() {
 
     this.service.form1.reset();
@@ -219,7 +179,6 @@ export class AddComponent implements OnInit {
   outgoingtoggle() {
     this.outgoingisHidden = !this.outgoingisHidden;
   }
-
   onSubmit() {
     this.isDisable=true
     let inventory = {
@@ -259,7 +218,7 @@ export class AddComponent implements OnInit {
       CreatedBy: this.service.form1.value.CreatedBy,
       comeFrom: this.service.form1.value.comeFrom
     };
-    if (inventory.CategoryId != 46 && inventory.CategoryId != 47 && inventory.CategoryId != 48 && inventory.CategoryId != 49) {
+    if (inventory.CategoryId != 45 && inventory.CategoryId != 46 && inventory.CategoryId != 47 && inventory.CategoryId != 48 && inventory.CategoryId != 63) {
       if (inventory.SerielNumber == null || inventory.SerielNumber == '') {
         this.serialreq = 1;
         this.isDisable=false
@@ -271,14 +230,10 @@ export class AddComponent implements OnInit {
       return;
     }
     if (this.data.dialogTitle == "اضافة جديد") {
-
-
       if (inventory.id == null || inventory.id == 0) {
         inventory.CreatedBy = localStorage.getItem('userName') || '';
         this.inventoryserv.AddInventory(inventory).subscribe(
           res => {
-
-
             if (res.status == 'true') {
               this.toastr.success(':: Submitted successfully');
               this.service.form1.reset();
@@ -300,11 +255,8 @@ export class AddComponent implements OnInit {
                 this.isDisable=false
                 this.loader.idle();
               }
-
             }
-
           },
-
         )
       }
       else {
@@ -336,14 +288,10 @@ export class AddComponent implements OnInit {
                 this.loader.idle();
                 this.isDisable=false
               }
-
             }
-
           },
-
         )
       }
-
     }
     this.loader.idle();
   }
@@ -358,15 +306,11 @@ export class AddComponent implements OnInit {
     this.hidden = true;
   }
   OnChangePopName(event: any) {
-
-
     this.inventoryserv.GetCategoryByTypeId(event.value).subscribe(res => {
-
       if (res.status == true) {
         var categorycount = 0;
         for (var category of this.Category) {
-
-          if (category.id == 47 || category.id == 48 || category.id == 49) {
+          if (category.id == 46 || category.id == 47 || category.id == 48) {
             this.MetterHidden = true;
             this.service.form1.controls['Meter'].setValidators([Validators.required]);
             this.service.form1.controls['Meter'].updateValueAndValidity();
@@ -375,14 +319,13 @@ export class AddComponent implements OnInit {
             this.service.form1.controls['Status'].setValue('وارد');
             this.OnChangeStatus('وارد');
             this.service.form1.controls['ReceviedStatusId'].setValue(1);
-
           }
           else {
             this.MetterHidden = false;
             this.service.form1.controls['Meter'].clearValidators();
             this.service.form1.controls['Meter'].updateValueAndValidity();
           }
-          if (category.id == 46) {
+          if (category.id == 45||category.id==63) {
             this.numberHidden = true;
             this.service.form1.controls['Number'].setValidators([Validators.required]);
             this.service.form1.controls['Number'].updateValueAndValidity();
@@ -391,8 +334,6 @@ export class AddComponent implements OnInit {
             this.service.form1.controls['Status'].setValue('وارد');
             this.OnChangeStatus('وارد');
             this.service.form1.controls['ReceviedStatusId'].setValue(1);
-
-
           }
           else {
             this.numberHidden = false;
@@ -402,26 +343,16 @@ export class AddComponent implements OnInit {
           if (res.data.id == category.id) {
             this.Category1.pop();
             this.Category1.push(category);
-
             categorycount++;
-
             this.service.form1.controls['CategoryId'].setValue(res.data.id);
-
             break;
           }
         }
         if (categorycount == 0) {
-
           this.service.form1.controls['CategoryId'].setValue(null);
         }
-
       }
-
-
-
-
     });
-
   }
   FillFiledsForUsedSerial(inventory: any) {
     this.service.form1.patchValue({
@@ -447,14 +378,10 @@ export class AddComponent implements OnInit {
       comeFrom: inventory.comeFrom
     })
   }
-
   onCheckSerialIsalreadysign() {
-
     this.SerialNumber = this.service.form1.value.SerielNumber;
-
     this.inventoryserv.SerielNumberIsAlreadySigned(this.SerialNumber).subscribe(
       res => {
-
         if (res.status == 'New') {
           this.service.initializeForm();
           this.serialnew == 1;
@@ -480,9 +407,6 @@ export class AddComponent implements OnInit {
               if (res.status == true) {
 
                 this.Location = res.data;
-
-
-
                 var locationcount = 0;
                 for (var location of this.Location) {
                   if (this.data.locationId == location.id) {
@@ -494,12 +418,7 @@ export class AddComponent implements OnInit {
                 if (locationcount == 0) {
                   this.service.form1.controls['LocationId'].setValue(null);
                 }
-
               }
-
-
-
-
             });
 
             this.serialflag = 0;
@@ -538,7 +457,7 @@ export class AddComponent implements OnInit {
                 var categorycount = 0;
                 for (var category of this.Category) {
 
-                  if (category.id == 47 || category.id == 48 || category.id == 49) {
+                  if (category.id == 46 || category.id == 47 || category.id == 48) {
                     this.MetterHidden = true;
                     this.service.form1.controls['Meter'].setValidators([Validators.required]);
                     this.service.form1.controls['Meter'].updateValueAndValidity();
@@ -548,7 +467,7 @@ export class AddComponent implements OnInit {
                     this.service.form1.controls['Meter'].clearValidators();
                     this.service.form1.controls['Meter'].updateValueAndValidity();
                   }
-                  if (category.id == 46) {
+                  if (category.id == 45||category.id==63) {
                     this.numberHidden = true;
                     this.service.form1.controls['Number'].setValidators([Validators.required]);
                     this.service.form1.controls['Number'].updateValueAndValidity();
@@ -573,19 +492,13 @@ export class AddComponent implements OnInit {
 
                   this.service.form1.controls['CategoryId'].setValue(null);
                 }
-
               }
-
-
-
-
             });
             this.serialflag = 0;
           }
           this.serialnew == 1;
           this.FillFiledsForUsedSerial(res.inventory);
           this.flagComeFrom = false;
-
         }
         else {
           this.serialflag = 1;
@@ -596,19 +509,10 @@ export class AddComponent implements OnInit {
       }
     );
   }
-
-
-
   OnChangeReceivedName(event: any) {
-
     this.inventoryserv.GetLocations().subscribe(res => {
-
       if (res.status == true) {
-
         this.Location = res.data;
-
-
-
         var locationcount = 0;
         for (var location of this.Location) {
           if (this.data.locationId == location.id) {
@@ -620,42 +524,23 @@ export class AddComponent implements OnInit {
         if (locationcount == 0) {
           this.service.form1.controls['LocationId'].setValue(null);
         }
-
       }
-
-
-
-
     });
   }
-
   OnChangeStatus(event: any) {
     this.rowHeig = "710px";
-
     if (event.value == 'وارد') {
       this.statusflag = 1;
-
-
     }
-
   }
-
   ontypeNameInputChange() {
 
     const searchInput = this.typeStatusSearch.nativeElement.value ?
       this.typeStatusSearch.nativeElement.value.toLowerCase() : '';
-
-
     this.TypeStatuslist = this._TypeStatuslist.filter(u => {
-
       const name: string = u.name.toLowerCase();
-
       return name.indexOf(searchInput) > -1;
-
     }
     );
-
-
-
   }
 }
