@@ -293,7 +293,12 @@ export class InventoryComponent implements OnInit {
       let pageSize = event.pageSize;
       let previousSize = pageSize * pageIndex;
       this.previousSizedef = previousSize;
-      this.getRequestdataNext(previousSize, pageIndex + 1, pageSize, '', this.sortColumnDef, this.SortDirDef);
+      if (this.service.formSearch.value == '') {
+        this.getRequestdataNext(previousSize, pageIndex + 1, pageSize, '', this.sortColumnDef, this.SortDirDef);
+      } else {
+        this.AdvancedSearch();
+      }
+
     }
   }
 

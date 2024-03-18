@@ -235,6 +235,7 @@ word-break: break-word;
 hyphens: auto;
 
 }
+
 mat-cell:nth-child(1){
   padding-right: 8px !important;
 }

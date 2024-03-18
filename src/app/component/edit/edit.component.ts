@@ -356,7 +356,7 @@ this.GetCategoryByTypeId()
 
     });
 
-    
+
 
   }
   onClear() {
