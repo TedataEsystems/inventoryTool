@@ -1,4 +1,14 @@
-import { Component, ElementRef, EventEmitter, Inject, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Inject,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { OutgoingStatusList } from 'src/app/Model/outgoing-status-list';
@@ -6,7 +16,6 @@ import { ReceivedStatusList } from 'src/app/Model/received-status-list';
 import { TypeStatus } from 'src/app/Model/type-status';
 import { EditFormService } from 'src/app/shared/service/edit-form.service';
 import { InventoryService } from 'src/app/shared/service/inventory.service';
-
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LoaderService } from 'src/app/shared/service/loader.service';
 import { Category } from 'src/app/Model/category';
@@ -16,17 +25,14 @@ import { Acceptance } from 'src/app/Model/acceptance';
 import { LocationName } from 'src/app/Model/location';
 import { Team } from 'src/app/Model/team';
 
-;
-
-
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.css']
+  styleUrls: ['./edit.component.css'],
 })
 export class EditComponent implements OnInit {
-  rowHeig = ""
-  dialogTitle: string = "";
+  rowHeig = '';
+  dialogTitle: string = '';
   appear: boolean = false;
   isHidden: boolean = false;
   outgoingisHidden: boolean = false;
@@ -35,7 +41,7 @@ export class EditComponent implements OnInit {
   hidden: boolean = true;
   hidden1: boolean = true;
   hidden11: number = 0;
-  isDisable=false;
+  isDisable = false;
   CustomerNamehidden: boolean = true;
   CustomerNamehidden1: number = 0;
   RecipientNamehidden: boolean = true;
@@ -56,7 +62,6 @@ export class EditComponent implements OnInit {
   numberHidden: boolean = false;
   selected = 0;
   TypeStatuslist: TypeStatus[] = [];
-  public _TypeStatuslist: any[] = [];
   Teamlist: Team[] = [];
   ReceivedStatuslist: ReceivedStatusList[] = [];
   OutgoingStatuslist: OutgoingStatusList[] = [];
@@ -75,28 +80,25 @@ export class EditComponent implements OnInit {
   flagh: boolean = false;
   SearchForm: boolean = false;
   @ViewChild('typeStatusSearch') typeStatusSearch!: ElementRef;
-  constructor(public inventoryserv: InventoryService, private loader: LoaderService, public service: EditFormService,
-    public dialogRef: MatDialogRef<EditComponent>, private toastr: ToastrService, @Inject(MAT_DIALOG_DATA) public data: any) {
-
-  }
-
-
-
-
+  constructor(
+    public inventoryserv: InventoryService,
+    private loader: LoaderService,
+    public service: EditFormService,
+    public dialogRef: MatDialogRef<EditComponent>,
+    private toastr: ToastrService,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 
   ngOnInit() {
-
-
-    if (localStorage.getItem("userGroup") == 'Inventory_Hady') {
-      this.flagh = true
+    this.service.form;
+    if (localStorage.getItem('userGroup') == 'Inventory_Hady') {
+      this.flagh = true;
     }
 
-
-    if (this.data.dialogTitle !== "اضافة جديد") {
+    if (this.data.dialogTitle !== 'اضافة جديد') {
       this.dialogTitle = 'تعديل';
       this.flag = true;
-    }
-    else {
+    } else {
       this.dialogTitle = this.data.dialogTitle;
     }
 
@@ -105,122 +107,62 @@ export class EditComponent implements OnInit {
         this.subitem = this.data.subItem;
         this.subitem1 = this.data.subItem;
       }
+
       this.service.form.controls['Id'].setValue(this.data.id);
-      this.service.form.controls['CustomerName'].setValue(this.data.customerName);
+      this.service.form.controls['CustomerName'].setValue(
+        this.data.customerName
+      );
       this.service.form.controls['OrderNumber'].setValue(this.data.orderNumber);
-      this.service.form.controls['ReorderingPoint'].setValue(this.data.reorderingPoint);
+      this.service.form.controls['ReorderingPoint'].setValue(
+        this.data.reorderingPoint
+      );
       this.service.form.controls['BR'].setValue(this.data.br);
       this.service.form.controls['ItemCode'].setValue(this.data.itemCode);
       this.service.form.controls['Meter'].setValue(this.data.meter);
       this.service.form.controls['Number'].setValue(this.data.number);
-      this.service.form.controls['SerielNumber'].setValue(this.data.serielNumber);
-      this.service.form.controls['RecipientName'].setValue(this.data.recipientName);
+      this.service.form.controls['SerielNumber'].setValue(
+        this.data.serielNumber
+      );
+      this.service.form.controls['RecipientName'].setValue(
+        this.data.recipientName
+      );
       this.service.form.controls['Status'].setValue(this.data.status);
       this.service.form.controls['Comment'].setValue(this.data.comment);
-      this.service.form.controls['ReceivedDate'].setValue(this.data.receivedDate);
+      this.service.form.controls['ReceivedDate'].setValue(
+        this.data.receivedDate
+      );
       this.service.form.controls['ExpriyDate'].setValue(this.data.expriyDate);
       this.service.form.controls['CreatedBy'].setValue(this.data.createdBy);
-      this.service.form.controls['CreationDate'].setValue(this.data.creationDate);
+      this.service.form.controls['CreationDate'].setValue(
+        this.data.creationDate
+      );
       this.service.form.controls['comeFrom'].setValue(this.data.comeFrom);
-
     }
-this.GettingLists()
-this.GetCategoryByTypeId()
 
+    this.GettingLists();
 
 
     if (this.service.form.controls['Status'].value == 'وارد') {
       this.statusflag = 1;
-      this.rowHeig = "720px";
-    }
-    else if (this.service.form.controls['Status'].value == 'منصرف') {
+      this.rowHeig = '720px';
+    } else if (this.service.form.controls['Status'].value == 'منصرف') {
       this.statusflag = 2;
-      this.rowHeig = "600px";
-    }
-
-    else {
-      this.rowHeig = "450px";
+      this.rowHeig = '600px';
+    } else {
+      this.rowHeig = '450px';
       this.statusflag == 0;
-
-
     }
-
-
   }
 
-  GetCategoryByTypeId(){
-    this.inventoryserv.GetCategoryByTypeId(this.data.typeStatusId).subscribe(res => {
-
-      // if (res.status == true) {
-      //   var categorycount = 0;
-      //   for (var category of this.Category1) {
-      //     if (category.id == 47 || category.id == 48 || category.id == 49) {
-      //       this.MetterHidden = true;
-      //     }
-      //     else {
-      //       this.MetterHidden = false;
-      //     }
-      //     if (category.id == 46) {
-      //       this.numberHidden = true;
-      //     }
-      //     else {
-      //       this.numberHidden = false;
-      //     }
-      //     if (this.data.categoryId == category.id) {
-      //       categorycount++;
-      //       this.service.form.controls['CategoryId'].setValue(category.id);
-
-      //       break;
-      //     }
-      //   }
-      //   if (categorycount == 0) {
-      //     this.service.form.controls['CategoryId'].setValue(null);
-
-      //   }
-
-      // }
-
-      if (res.status == true) {
-        var categorycount = 0;
-        for (var category of this.Category1) {
-          if (category.id == 46 || category.id == 47 || category.id == 48) {
-            this.MetterHidden = true;
-          }
-          else {
-            this.MetterHidden = false;
-          }
-          if (category.id == 45 ||category.id==63) {
-            this.numberHidden = true;
-          }
-          else {
-            this.numberHidden = false;
-          }
-          if (this.data.categoryId == category.id) {
-            categorycount++;
-            this.service.form.controls['CategoryId'].setValue(category.id);
-
-            break;
-          }
-        }
-        if (categorycount == 0) {
-          this.service.form.controls['CategoryId'].setValue(null);
-
-        }
-
-      }
 
 
 
 
-    });
-  }
 
-  GettingLists(){
-    this.inventoryserv.GettingLists().subscribe(res => {
-
+  GettingLists() {
+    this.inventoryserv.GettingLists().subscribe((res) => {
       if (res.status == true) {
         this.TypeStatuslist = res.typeStatus;
-        this._TypeStatuslist = res.typeStatus;
         this.Teamlist = res.team;
         this.ReceivedStatuslist = res.receviedStatus;
         this.OutgoingStatuslist = res.outgoingStatus;
@@ -230,135 +172,106 @@ this.GetCategoryByTypeId()
         this.CompanyName = res.companyName;
         this.Acceptance = res.acceptance;
         if (this.data) {
-          var typstatuscount = 0;
-          var teamcount = 0;
-          var recviedstatuscount = 0;
-          var outgoingstatuscount = 0;
-          var categorycount = 0;
-          var companynamecount = 0;
-          var acceptancecount = 0;
-          var receviedtypecount = 0;
-          var locationcount = 0;
-          for (var typeStatus of this.TypeStatuslist) {
-            if (this.data.typeStatusId == typeStatus.id) {
-              typstatuscount++;
-              this.service.form.controls['TypeStatusId'].setValue(this.data.typeStatusId);
-              break;
+
+          if (this.TypeStatuslist.length > 0) {
+            this.service.form.controls['TypeStatusId'].setValue(
+              this.data.typeStatusId
+            );
+          }
+          if (this.Teamlist.length > 0) {
+            this.service.form.controls['TeamId'].setValue(this.data.teamId);
+          }
+
+          if (this.OutgoingStatuslist.length > 0) {
+            this.service.form.controls['OutgoingStatusId'].setValue(
+              this.data.outgoingStatusId
+            );
+            this.outgoingtoggle();
+          }
+
+          if (this.ReceivedStatuslist.length > 0) {
+            this.service.form.controls['ReceviedStatusId'].setValue(
+              this.data?.receviedStatusId
+            );
+          }
+if(this.Category.length > 0){
+  for (var category of this.Category) {
+    if (this.data.categoryId == category.id) {
+      this.Category1.push(category);
+      if (category.id == 46 || category.id == 47 || category.id == 48) {
+        this.MetterHidden = true;
+
+      } else {
+        this.MetterHidden = false;
+      }
+
+
+      this.service.form.controls['CategoryId'].setValue(
+        this.data.categoryId
+      );
+
+
+    }
+  }
+
+}
+if(this.CompanyName.length > 0){
+  this.service.form.controls['CompanyId'].setValue(
+    this.data.companyId
+  );
+}
+
+
+if(this.Location.length > 0){
+  this.service.form.controls['LocationId'].setValue(
+    this.data.locationId
+  );
+}if(this.Acceptance.length > 0){
+  this.service.form.controls['AcceptanceId'].setValue(
+    this.data.acceptanceId
+  );
+}
+if(this.ReceviedType.length > 0){
+  this.service.form.controls['ReceviedTypeId'].setValue(
+    this.data.receviedTypeId
+  );
+  this.toggle();
+}
+
+        }
+
+        this.GetCategoryByTypeId()
+      } else {
+        this.toastr.warning(':: error');
+      }
+    });
+  }
+
+  GetCategoryByTypeId() {
+    this.inventoryserv
+      .GetCategoryByTypeId(this.data.typeStatusId)
+      .subscribe((res) => {
+        if (res.status == true) {
+
+
+          for (var category of this.Category1) {
+
+            if (category.id == 45 || category.id == 63) {
+              this.numberHidden = true;
+            } else {
+              this.numberHidden = false;
             }
-          }
-          if (typstatuscount == 0) {
-            this.service.form.controls['TypeStatusId'].setValue(null);
-          }
-          for (var team of this.Teamlist) {
-            if (this.data.teamId == team.id) {
-              teamcount++;
-              this.service.form.controls['TeamId'].setValue(this.data.teamId);
-              break;
-            }
-          }
-          if (teamcount == 0) {
-            this.service.form.controls['TeamId'].setValue(null);
-          }
-
-          for (var outgoing of this.OutgoingStatuslist) {
-
-            if (this.data.outgoingStatusId == outgoing.id) {
-              outgoingstatuscount++;
-
-              this.service.form.controls['OutgoingStatusId'].setValue(this.data.outgoingStatusId);
-              this.outgoingtoggle();
-              break;
-            }
-          }
-          if (outgoingstatuscount == 0) {
-            this.service.form.controls['OutgoingStatusId'].setValue(null);
-
-          }
-          for (var recviedstat of this.ReceivedStatuslist) {
-
-            if (this.data.receviedStatusId == recviedstat.id) {
-              recviedstatuscount++;
-
-              this.service.form.controls['ReceviedStatusId'].setValue(this.data.receviedStatusId);
-
-              break;
-            }
-          }
-          if (recviedstatuscount == 0) {
-            this.service.form.controls['ReceviedStatusId'].setValue(null);
-
-          }
-          for (var category of this.Category) {
-
-
             if (this.data.categoryId == category.id) {
 
-              this.Category1.push(category);
-              categorycount++;
+              this.service.form.controls['CategoryId'].setValue(category.id);
 
-              this.service.form.controls['CategoryId'].setValue(this.data.categoryId);
-
-              break;
             }
-          }
-          if (categorycount == 0) {
-
-            this.service.form.controls['CategoryId'].setValue(null);
-          }
-
-          for (var company of this.CompanyName) {
-            if (this.data.companyId == company.id) {
-              companynamecount++;
-              this.service.form.controls['CompanyId'].setValue(this.data.companyId);
-              break;
-            }
-          }
-          if (companynamecount == 0) {
-            this.service.form.controls['CompanyId'].setValue(null);
-          }
-          for (var location of this.Location) {
-            if (this.data.locationId == location.id) {
-              locationcount++;
-              this.service.form.controls['LocationId'].setValue(this.data.locationId);
-              break;
-            }
-          }
-          if (locationcount == 0) {
-            this.service.form.controls['LocationId'].setValue(null);
-          }
-          for (var acceptance of this.Acceptance) {
-            if (this.data.acceptanceId == acceptance.id) {
-              acceptancecount++;
-              this.service.form.controls['AcceptanceId'].setValue(this.data.acceptanceId);
-              break;
-            }
-          }
-          if (acceptancecount == 0) {
-            this.service.form.controls['AcceptanceId'].setValue(null);
-          }
-          for (var received of this.ReceviedType) {
-            if (this.data.receviedTypeId == received.id) {
-              receviedtypecount++;
-              this.service.form.controls['ReceviedTypeId'].setValue(this.data.receviedTypeId);
-              this.toggle();
-              break;
-            }
-          }
-          if (receviedtypecount == 0) {
-            this.service.form.controls['ReceviedTypeId'].setValue(null);
           }
 
         }
-      }
-      else { this.toastr.warning(':: error') }
-
-
-
-    });
-
-
-
+      });
   }
+
   onClear() {
     this.service.form.reset();
 
@@ -371,7 +284,7 @@ this.GetCategoryByTypeId()
     this.outgoingisHidden = !this.outgoingisHidden;
   }
   onSubmit() {
-    this.isDisable=true
+    this.isDisable = true;
     let inventory = {
       CustomerName: this.service.form.value.CustomerName,
       OrderNumber: this.service.form.value.OrderNumber,
@@ -406,201 +319,169 @@ this.GetCategoryByTypeId()
       AcceptanceName: this.service.form.value.Acceptance,
       CreationDate: this.service.form.value.CreationDate,
       CreatedBy: this.service.form.value.CreatedBy,
-      comeFrom: this.service.form1.value.comeFrom
-
+      comeFrom: this.service.form1.value.comeFrom,
     };
 
-    if (inventory.CategoryId != 45 && inventory.CategoryId != 46 && inventory.CategoryId != 47 && inventory.CategoryId != 48 && inventory.CategoryId !=63) {
+    if (
+      inventory.CategoryId != 45 &&
+      inventory.CategoryId != 46 &&
+      inventory.CategoryId != 47 &&
+      inventory.CategoryId != 48 &&
+      inventory.CategoryId != 63
+    ) {
       if (inventory.SerielNumber == null || inventory.SerielNumber == '') {
         this.serialreq = 1;
-        this.isDisable=false
+        this.isDisable = false;
         return;
       }
-
     }
     if (!this.service.form.valid) {
-      this.isDisable=false
+      this.isDisable = false;
       return;
     }
     if (this.serialflag == 1) {
-      this.isDisable=false
+      this.isDisable = false;
       return;
     }
-    if (inventory.Status == "منصرف") {
-
-
+    if (inventory.Status == 'منصرف') {
       if (inventory.ExpriyDate == null) {
         this.hidden1 = !this.hidden1;
-        this.hidden11 = 1
-      }
-      else {
+        this.hidden11 = 1;
+      } else {
         this.hidden11 = 0;
       }
       if (inventory.OutgoingStatusId == null) {
         this.outgoinghidden1 = !this.outgoinghidden1;
         this.outgoinghidden11 = 1;
-      }
-      else {
+      } else {
         this.outgoinghidden11 = 0;
       }
       if (inventory.CustomerName == null || inventory.CustomerName == '') {
         this.CustomerNamehidden = !this.CustomerNamehidden;
         this.CustomerNamehidden1 = 1;
-      }
-
-      else {
+      } else {
         this.CustomerNamehidden1 = 0;
       }
 
-      if (inventory.RecipientName == null || inventory.RecipientName == "") {
+      if (inventory.RecipientName == null || inventory.RecipientName == '') {
         this.RecipientNamehidden = !this.RecipientNamehidden;
         this.RecipientNamehidden1 = 1;
-      }
-
-      else {
+      } else {
         this.RecipientNamehidden1 = 0;
       }
 
       if (inventory.OrderNumber == null) {
         this.OrderNumberhidden = !this.OrderNumberhidden;
         this.OrderNumberhidden1 = 1;
-      }
-      else {
+      } else {
         this.OrderNumberhidden1 = 0;
       }
 
       if (inventory.TeamId == null) {
         this.TeamIdhidden = !this.TeamIdhidden;
         this.TeamIdhidden1 = 1;
-      }
-      else {
+      } else {
         this.TeamIdhidden1 = 0;
       }
 
       if (inventory.TypeStatusId == null) {
         this.TypeStatusIdhidden = !this.TypeStatusIdhidden;
         this.TypeStatusIdhidden1 = 1;
-      }
-      else {
+      } else {
         this.TypeStatusIdhidden1 = 0;
       }
 
       if (inventory.CompanyId == null) {
         this.CompanyIdhidden = !this.CompanyIdhidden;
         this.CompanyIdhidden1 = 1;
-      }
-      else {
+      } else {
         this.CompanyIdhidden1 = 0;
       }
 
-      if (this.CustomerNamehidden1 == 1 || this.hidden11 == 1 || this.RecipientNamehidden1 == 1 || this.outgoinghidden11 == 1 ||
-        this.OrderNumberhidden1 == 1 || this.TeamIdhidden1 == 1 || this.TypeStatusIdhidden1 == 1 || this.CompanyIdhidden1 == 1) {
-          this.isDisable=false
+      if (
+        this.CustomerNamehidden1 == 1 ||
+        this.hidden11 == 1 ||
+        this.RecipientNamehidden1 == 1 ||
+        this.outgoinghidden11 == 1 ||
+        this.OrderNumberhidden1 == 1 ||
+        this.TeamIdhidden1 == 1 ||
+        this.TypeStatusIdhidden1 == 1 ||
+        this.CompanyIdhidden1 == 1
+      ) {
+        this.isDisable = false;
         this.loader.idle();
         return;
-      }
+      } else {
+        this.service.form.controls['UpdatedBy'].setValue(
+          localStorage.getItem('userName') || ''
+        );
 
-      else {
-        this.service.form.controls['UpdatedBy'].setValue(localStorage.getItem('userName') || '');
-
-
-
-        this.inventoryserv.UpdateInventory(this.service.form.value).subscribe(
-          res => {
-
+        this.inventoryserv
+          .UpdateInventory(this.service.form.value)
+          .subscribe((res) => {
             if (res.status == 'true') {
               this.toastr.success(':: Updated successfully');
               this.service.form.reset();
-              this.isDisable=false
+              this.isDisable = false;
               this.loader.idle();
               this.dialogRef.close('save');
-            }
-            else {
+            } else {
               if (res.status == 'type') {
                 this.serialflag = 3;
-                this.isDisable=false
-              }
-              else if (res.status == 'metergreat') {
+                this.isDisable = false;
+              } else if (res.status == 'metergreat') {
                 this.serialflag = 4;
-
-              }
-              else if (res.status == 'numbergreat') {
+              } else if (res.status == 'numbergreat') {
                 this.serialflag = 5;
-              }
-              else {
+              } else {
                 this.toastr.warning(':: Failed');
                 this.loader.idle();
               }
-
             }
-
-          },
-
-        )
+          });
       }
-    }
-    else {
+    } else {
       if (inventory.ReceivedDate == null) {
-
-        this.isDisable=false
+        this.isDisable = false;
         this.ReceivedDatehidden = !this.ReceivedDatehidden;
         this.loader.idle();
         return;
       }
-      this.service.form.controls['UpdatedBy'].setValue(localStorage.getItem('userName') || '');
+      this.service.form.controls['UpdatedBy'].setValue(
+        localStorage.getItem('userName') || ''
+      );
 
-
-      this.inventoryserv.UpdateInventory(this.service.form.value).subscribe(
-        res => {
-
+      this.inventoryserv
+        .UpdateInventory(this.service.form.value)
+        .subscribe((res) => {
           if (res.status == 'true') {
             this.toastr.success(':: Updated successfully');
             this.service.form.reset();
-            this.isDisable=false
+            this.isDisable = false;
             this.loader.idle();
             this.dialogRef.close('save');
-
-
-
-          }
-          else {
+          } else {
             if (res.status == 'type') {
               this.serialflag = 3;
             } else if (res.status == 'metergreat') {
               this.serialflag = 4;
-            }
-            else if (res.status == 'numbergreat') {
+            } else if (res.status == 'numbergreat') {
               this.serialflag = 5;
-            }
-            else {
+            } else {
               this.toastr.warning(':: Failed');
               this.loader.idle();
             }
-
-
           }
-
-        },
-
-      )
-
-
+        });
     }
 
-
-
-
-    this.isDisable=false
+    this.isDisable = false;
 
     this.loader.idle();
-
-
-
   }
   onClose() {
     this.service.form.reset();
     this.dialogRef.close();
-
   }
   change() {
     this.hidden1 = true;
@@ -610,22 +491,20 @@ this.GetCategoryByTypeId()
   }
 
   OnChangePopName(event: any) {
-
-    this.inventoryserv.GetCategoryByTypeId(event.value).subscribe(res => {
-
+    this.inventoryserv.GetCategoryByTypeId(event.value).subscribe((res) => {
       if (res.status == true) {
         var categorycount = 0;
         for (var category of this.Category) {
           if (category.id == 47 || category.id == 48 || category.id == 49) {
             this.MetterHidden = true;
-          }
-          else {
+
+          } else {
             this.MetterHidden = false;
           }
-          if (category.id == 45||category.id==63) {
+          if (category.id == 45 || category.id == 63) {
             this.numberHidden = true;
-          }
-          else {
+
+          } else {
             this.numberHidden = false;
           }
           if (res.data.id == category.id) {
@@ -639,95 +518,78 @@ this.GetCategoryByTypeId()
         }
         if (categorycount == 0) {
           this.service.form.controls['CategoryId'].setValue(null);
-
         }
-
       }
-
-
-
-
     });
   }
   OnChangeStatus(event: any) {
-
     if (event.value == 'وارد') {
       this.statusflag = 1;
-      this.rowHeig = "720px";
-    }
-    else {
+      this.rowHeig = '720px';
+    } else {
       this.statusflag = 2;
-      this.rowHeig = "600px";
+      this.rowHeig = '600px';
     }
   }
 
-
   onCheckSerialIsalreadysign() {
-
     this.SerialNumber = this.service.form.value.SerielNumber;
     this.iid = this.service.form.value.Id;
-    this.inventoryserv.SerielNumberIsAlreadySignedInEdit(this.SerialNumber, this.iid).subscribe(
-      res => {
-
+    this.inventoryserv
+      .SerielNumberIsAlreadySignedInEdit(this.SerialNumber, this.iid)
+      .subscribe((res) => {
         if (res.status == 'New') {
-
           this.ReceivedStatuslist = res.data;
           var recviedstatuscount = 0;
           for (var received of this.ReceivedStatuslist) {
-
             if (this.data.receviedStatusId == received.id) {
               recviedstatuscount++;
-              this.service.form1.controls['ReceviedStatusId'].setValue(this.data.receviedStatusId);
+              this.service.form1.controls['ReceviedStatusId'].setValue(
+                this.data.receviedStatusId
+              );
               this.serialflag = 0;
               break;
             }
           }
           if (recviedstatuscount == 0) {
             this.selected = 1;
-            this.service.form1.controls['ReceviedStatusId'].setValue(this.selected);
+            this.service.form1.controls['ReceviedStatusId'].setValue(
+              this.selected
+            );
             this.service.form1.controls['Status'].setValue('وارد');
             this.OnChangeStatus('وارد');
             this.statusflag = 1;
-            this.inventoryserv.GetLocations().subscribe(res => {
-
+            this.inventoryserv.GetLocations().subscribe((res) => {
               if (res.status == true) {
-
                 this.Location = res.data;
-
-
 
                 var locationcount = 0;
                 for (var location of this.Location) {
                   if (this.data.locationId == location.id) {
                     locationcount++;
-                    this.service.form1.controls['LocationId'].setValue(this.data.locationId);
+                    this.service.form1.controls['LocationId'].setValue(
+                      this.data.locationId
+                    );
                     break;
                   }
                 }
                 if (locationcount == 0) {
                   this.service.form1.controls['LocationId'].setValue(null);
                 }
-
               }
-
-
-
-
             });
 
             this.serialflag = 0;
           }
-
-        }
-        else if (res.status == 'Same') {
-
+        } else if (res.status == 'Same') {
           this.ReceivedStatuslist = res.data;
           var recviedstatuscount = 0;
           for (var received of this.ReceivedStatuslist) {
-
             if (this.data.receviedStatusId == received.id) {
               recviedstatuscount++;
-              this.service.form1.controls['ReceviedStatusId'].setValue(this.data.receviedStatusId);
+              this.service.form1.controls['ReceviedStatusId'].setValue(
+                this.data.receviedStatusId
+              );
               this.serialflag = 0;
               break;
             }
@@ -737,117 +599,87 @@ this.GetCategoryByTypeId()
             this.statusflag = 1;
             this.serialflag = 0;
           }
-
-        }
-        else if (res.status == 'Old') {
-
+        } else if (res.status == 'Old') {
           this.ReceivedStatuslist = res.data;
 
           var recviedstatuscount = 0;
           for (var received of this.ReceivedStatuslist) {
             if (this.data.receviedStatusId == received.id) {
               recviedstatuscount++;
-              this.service.form1.controls['ReceviedStatusId'].setValue(this.data.receviedStatusId);
+              this.service.form1.controls['ReceviedStatusId'].setValue(
+                this.data.receviedStatusId
+              );
               this.serialflag = 0;
               break;
             }
           }
           if (recviedstatuscount == 0) {
             this.selected = 2;
-            this.service.form1.controls['ReceviedStatusId'].setValue(this.selected);
+            this.service.form1.controls['ReceviedStatusId'].setValue(
+              this.selected
+            );
             this.service.form1.controls['Status'].setValue('وارد');
             this.OnChangeStatus('وارد');
             this.statusflag = 1;
-            this.inventoryserv.GetLocations().subscribe(res => {
-
+            this.inventoryserv.GetLocations().subscribe((res) => {
               if (res.status == true) {
-
                 this.Location = res.data;
-
-
 
                 var locationcount = 0;
                 for (var location of this.Location) {
                   if (this.data.locationId == location.id) {
                     locationcount++;
-                    this.service.form1.controls['LocationId'].setValue(this.data.locationId);
+                    this.service.form1.controls['LocationId'].setValue(
+                      this.data.locationId
+                    );
                     break;
                   }
                 }
                 if (locationcount == 0) {
                   this.service.form1.controls['LocationId'].setValue(null);
                 }
-
               }
-
-
-
-
             });
             this.serialflag = 0;
           }
-
-        }
-        else {
+        } else {
           this.serialflag = 1;
-
         }
-
-      }
-    );
+      });
   }
 
-
   OnChangeReceivedName(event: any) {
-
-
-    this.inventoryserv.GetLocations().subscribe(res => {
-
+    this.inventoryserv.GetLocations().subscribe((res) => {
       if (res.status == true) {
-
         this.Location = res.data;
-
-
 
         var locationcount = 0;
         for (var location of this.Location) {
           if (this.data.locationId == location.id) {
             locationcount++;
-            this.service.form.controls['LocationId'].setValue(this.data.locationId);
+            this.service.form.controls['LocationId'].setValue(
+              this.data.locationId
+            );
             break;
           }
         }
         if (locationcount == 0) {
           this.service.form.controls['LocationId'].setValue(null);
         }
-
       }
-
-
-
-
     });
   }
   ontypeNameInputChange() {
+    const searchInput = this.typeStatusSearch.nativeElement.value
+      ? this.typeStatusSearch.nativeElement.value.toLowerCase()
+      : '';
 
-    const searchInput = this.typeStatusSearch.nativeElement.value ?
-      this.typeStatusSearch.nativeElement.value.toLowerCase() : '';
-
-
-    this.TypeStatuslist = this._TypeStatuslist.filter(u => {
-
+    this.TypeStatuslist = this.TypeStatuslist.filter((u) => {
       const name: string = u.name.toLowerCase();
 
       return name.indexOf(searchInput) > -1;
-
-    }
-    );
-
-
-
+    });
   }
 
-  onLocationChange(event : any)
-  {
-  }
+  onLocationChange(event: any) {}
 }

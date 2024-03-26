@@ -216,12 +216,13 @@ export class InventoryComponent implements OnInit {
     }
     else {
       const dialogGonfig = new MatDialogConfig();
-      dialogGonfig.data = { dialogTitle: " تعديل" };
+      dialogGonfig.data = { dialogTitle: " تعديل" ,data: row };
       dialogGonfig.disableClose = true;
       dialogGonfig.autoFocus = true;
       dialogGonfig.width = "50%";
+      dialogGonfig.height = "750px";
       dialogGonfig.panelClass = 'modals-dialog';
-      this.dialog.open(EditComponent, { panelClass: 'modals-dialog', disableClose: true, autoFocus: true, width: "50%", data: row }).afterClosed()
+      this.dialog.open(EditComponent, { panelClass: 'modals-dialog', disableClose: true, autoFocus: true,height: "550px" ,width: "50%", data: row }).afterClosed()
         .subscribe(result => {
           if(result){
             if (this.service.formSearch.value != '') {

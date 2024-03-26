@@ -8,6 +8,7 @@
 
 
 <form [formGroup]="service.form" class="normal-form mx-0" (submit)="onSubmit()" dir="rtl">
+  <div class="box">
   <mat-grid-list cols="2" [rowHeight]="rowHeig" class="mx-3">
     <mat-grid-tile>
       <div class="controles-container">
@@ -28,19 +29,12 @@
           <span class='req' *ngIf="TypeStatusIdhidden1==1">مطلوب</span>
         </mat-form-field>
         <mat-form-field *ngIf="MetterHidden">
-          <input formControlName="Meter" type="number" min="0" matInput placeholder="Meter" *ngIf="!subitem">
-          <input formControlName="Meter" type="number" min="0" matInput placeholder="Meter" *ngIf="subitem" readonly>
+
+          <input formControlName="Meter" type="number" min="0" matInput placeholder="Meter" [readonly]="subitem">
+
           <span class='req' *ngIf="serialflag==4">Meter is Greater than Old Meter </span>
         </mat-form-field>
-        <mat-form-field hidden="true">
-          <mat-select placeholder=" Category ">
-            <mat-option>-- Please select --</mat-option>
-            <mat-option *ngFor="let Category of Category" [value]="Category.id">
-              {{Category.name}}
-            </mat-option>
-          </mat-select>
 
-        </mat-form-field>
         <mat-form-field>
           <mat-select formControlName="CategoryId" placeholder=" Category ">
             <mat-option>-- Please select --</mat-option>
@@ -112,14 +106,13 @@
         </mat-form-field>
 
         <mat-form-field *ngIf="statusflag==1">
-          <input formControlName="BR" type="number" min="0" matInput placeholder="PR" *ngIf="flagh">
-          <input formControlName="BR" type="number" min="0" matInput placeholder="PR" *ngIf="!flagh" readonly>
+
+          <input formControlName="BR" type="number" min="0" matInput placeholder="PR" [readonly]="!flagh" >
         </mat-form-field>
         <mat-form-field *ngIf="statusflag==1">
+
           <input formControlName="ReorderingPoint" type="number" min="0" matInput placeholder="ReorderingPoint"
-            *ngIf="flagh">
-          <input formControlName="ReorderingPoint" type="number" min="0" matInput placeholder="ReorderingPoint"
-            *ngIf="!flagh" readonly>
+            [readonly]="!flagh" >
         </mat-form-field>
 
 
@@ -135,8 +128,8 @@
     <mat-grid-tile>
       <div class="controles-container">
         <mat-form-field *ngIf="numberHidden">
-          <input formControlName="Number" type="number" min="0" matInput placeholder="Number" *ngIf="!subitem1">
-          <input formControlName="Number" type="number" min="0" matInput placeholder="Number" *ngIf="subitem1" readonly>
+
+          <input formControlName="Number" type="number" min="0" matInput placeholder="Number" [readonly]="subitem1" >
           <span class='req' *ngIf="serialflag==5">Number is Greater than Old Number </span>
         </mat-form-field>
 
@@ -228,6 +221,7 @@
     </mat-grid-tile>
 
   </mat-grid-list>
+</div>
   <mat-toolbar class="bottom">
 
     <div class="button-row w-100 text-center">

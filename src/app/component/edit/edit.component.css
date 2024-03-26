@@ -20,6 +20,10 @@ mat-toolbar.top{
     top: 0;
     z-index: 2;
 }
+.box{
+height: 500px;
+overflow-y: auto;
+}
 mat-toolbar.bottom{
     background-color: #c6cacd;
     color:#fff;
